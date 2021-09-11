@@ -1,18 +1,20 @@
 <template>
-  <router-view>
-  </router-view>
+  <footer>
+    Footer
+  </footer>
 </template>
 
 <script>
 
 export default {
-  name: 'App',
+  name: 'Footer',
   components: {
 
   }
 }
+
 </script>
 
 <style>
-  
+
 </style>

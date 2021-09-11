@@ -1,13 +1,13 @@
 <template>
   <div>
-    AdminLoggedIn
+    Club Home
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'AdminLoggedIn'
+  name: 'ClubHome'
 }
 
 </script>

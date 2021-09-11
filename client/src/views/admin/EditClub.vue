@@ -1,13 +1,13 @@
 <template>
   <div>
-    Admin
+    Edit Club
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Admin'
+  name: 'EditClub'
 }
 
 </script>
