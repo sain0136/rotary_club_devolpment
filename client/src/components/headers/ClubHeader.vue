@@ -17,7 +17,7 @@
 import DonateButton from '../DonateButton.vue'
 
 export default {
-  name: 'Header',
+  name: 'ClubHeader',
   components: {
     DonateButton
   }
