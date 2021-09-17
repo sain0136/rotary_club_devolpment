@@ -47,12 +47,19 @@ export default {
 
 <style scoped>
 
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   background-color: #232323;
   height: 250px;
+  margin-top: 300px;
 }
 
 .social-icon {

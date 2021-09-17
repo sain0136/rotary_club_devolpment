@@ -1,13 +1,18 @@
 <template>
   <div>
-    Club Login
+    <LoginForm/>
   </div>
 </template>
 
 <script>
 
+import LoginForm from '../../components/forms/LoginForm.vue'
+
 export default {
-  name: 'ClubLogin'
+  name: 'ClubLogin',
+  components: {
+    LoginForm
+  }
 }
 
 </script>

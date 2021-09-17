@@ -3,7 +3,7 @@
     <ClubInfoHeader/>
     <ClubHeader/>
     <!-- <router-link to=></router-link> -->
-    <router-view></router-view>
+    <router-view class="view"></router-view>
     <ClubFooter/>
   </div>
 </template>
@@ -23,3 +23,13 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+.view {
+  text-align: center;
+  margin-top: auto;
+  font-size: 36px;
+}
+
+</style>

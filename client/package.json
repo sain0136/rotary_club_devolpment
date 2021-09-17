@@ -21,7 +21,9 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0"
+    "@vue/compiler-sfc": "^3.0.0",
+    "sass": "^1.41.1",
+    "sass-loader": "^10.1.1"
   },
   "browserslist": [
     "> 1%",

@@ -7,6 +7,9 @@
     <div class="social">
       <font-awesome-icon class="social-icon" :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
       <font-awesome-icon class="social-icon" :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
+      <router-link to="login">
+        <font-awesome-icon class="social-icon" icon="sign-in-alt"></font-awesome-icon>
+      </router-link>
     </div>
   </header>
 </template>
