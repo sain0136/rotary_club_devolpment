@@ -6,6 +6,9 @@
       <li><router-link class="link" to="/club/about">About</router-link></li>
       <li><router-link class="link" to="/club/projects">Projects</router-link></li>
       <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>
+
+      <li v-if="$store.state.isLoggedIn"><router-link class="link" to="/club/contactus">Admin</router-link></li>
+
       <li class="search-button"><font-awesome-icon icon="search" /></li>
       <li> <DonateButton/> </li>
   </ul>
@@ -20,6 +23,14 @@ export default {
   name: 'ClubHeader',
   components: {
     DonateButton
+  },
+  data() {
+    return {
+      isLoggedIn: Boolean
+    }
+  },
+  created() {
+    this.isLoggedIn = false
   }
 }
 

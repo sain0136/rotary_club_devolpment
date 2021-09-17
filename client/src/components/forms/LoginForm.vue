@@ -4,16 +4,18 @@
       <legend>Admin</legend> <br> <br>
       <input type="text" name="username" placeholder="username"> <br> <br>
       <input type="password" placeholder="password"> <br> <br> <br>
-      <button>Login</button>
-      <p>{{ $store.state.testing }}</p>
     </form>
+      <button @click="$store.dispatch('login', true)">Login</button>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ClubLogin'
+  name: 'ClubLogin',
+  computed: {
+
+  }
 }
 
 </script>
