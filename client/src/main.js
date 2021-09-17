@@ -16,6 +16,7 @@ import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import store from './store/index'
 
 library.add(faSearch);
 library.add(faEnvelope);
@@ -27,5 +28,6 @@ library.add(faSignInAlt);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
+  .use(store)
   .use(router)
   .mount('#app')

@@ -5,6 +5,7 @@
       <input type="text" name="username" placeholder="username"> <br> <br>
       <input type="password" placeholder="password"> <br> <br> <br>
       <button>Login</button>
+      <p>{{ $store.state.testing }}</p>
     </form>
   </div>
 </template>
