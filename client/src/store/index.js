@@ -2,19 +2,29 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    isLoggedIn: false
+    isAdminLoggedIn: false,
+    isAdminRejected: false
   },
   mutations: {
-    login(state, isValidCredentials) {
-      if(isValidCredentials) {
-        state.isLoggedIn = true
-        console.log('logged In!')
-      }
+    adminLogin(state) {
+      state.isAdminLoggedIn = true
+      state.isAdminRejected = false
+      console.log('logged In!')
+    },
+    adminReject(state) {
+      state.isAdminRejected = true
     }
   },
   actions: {
-    login({commit}, isValidCredentials) {
-      commit('login', isValidCredentials)
+    validateAdminCredentials({commit}, username, password) {
+      console.log(password)
+      if(username == 'apo') {
+        console.log('loggedin')
+        commit('adminLogin')
+      } else {
+        console.log('rejected')
+        commit('adminReject')
+      }
     } 
   },
   getters: {

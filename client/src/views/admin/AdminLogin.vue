@@ -1,13 +1,18 @@
 <template>
   <div>
-    Admin Login
+    <AdminLoginForm/>
   </div>
 </template>
 
 <script>
 
+import AdminLoginForm from '../../components/forms/AdminLoginForm.vue'
+
 export default {
-  name: 'AdminLogin'
+  name: 'AdminLogin',
+  components: {
+    AdminLoginForm
+  }
 }
 
 </script>

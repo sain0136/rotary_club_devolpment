@@ -2,10 +2,12 @@
   <div>
     <form>
       <legend>Admin</legend> <br> <br>
-      <input type="text" name="username" placeholder="username"> <br> <br>
-      <input type="password" placeholder="password"> <br> <br> <br>
+      <input type="text" name="username" placeholder="username"
+        v-model="username"> <br> <br>
+      <input type="password" placeholder="password"
+        v-model="password"> <br> <br> <br>
     </form>
-      <button @click="$store.dispatch('login', true)">Login</button>
+      <button @click="$store.dispatch('login', this.username, this.password)">Login</button>
   </div>
 </template>
 
@@ -13,8 +15,13 @@
 
 export default {
   name: 'ClubLogin',
-  computed: {
-
+  data() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
   }
 }
 
