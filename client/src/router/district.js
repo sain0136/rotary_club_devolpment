@@ -20,7 +20,7 @@ import EditClub from '../views/admin/EditClub'
 import ClubUsers from '../views/admin/ClubUsers'
 
 export default {
-  path: '/district',
+  path: '/district/:id',
   component: _District,
   name: '_District',
   children: [

@@ -1,42 +1,28 @@
 <template>
   <nav>
     <ul>
-      <li><img class="logo" src="../../assets/club-logo.png"></li>
-      <li><router-link class="link" to="/club/home">Home</router-link></li>
-      <li><router-link class="link" to="/club/about">About</router-link></li>
-      <li><router-link class="link" to="/club/projects">Projects</router-link></li>
-      <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>
-
-      <li v-if="$store.state.isLoggedIn"><router-link class="link" to="/club/contactus">Admin</router-link></li>
-
-      <li class="search-button"><font-awesome-icon icon="search" /></li>
-      <li> <DonateButton/> </li>
+      <li><img class="logo" src="../../assets/admin-logo.png"></li>
+      <li><router-link class="link" to="/admin/newdistrict">New District</router-link></li>
+      <li><router-link class="link" to="/admin/viewdistricts">View Districts</router-link></li>
+      <li><router-link class="link" to="/admin/viewdistricts">District Users</router-link></li>
+      <li><router-link class="link" to="/club/projects">Create Club</router-link></li>
+      <li><router-link class="link" to="/club/contactus">View Clubs</router-link></li>
+      <li><router-link class="link" to="/admin/viewdistricts">Club Users</router-link></li>
   </ul>
   </nav>
 </template>
 
 <script>
-
-import DonateButton from '../DonateButton.vue'
-
 export default {
-  name: 'ClubHeader',
-  components: {
-    DonateButton
-  },
-  data() {
-    return {
-      isLoggedIn: Boolean
-    }
-  },
-  created() {
-    this.isLoggedIn = false
-  }
-}
 
+}
 </script>
 
-<style scoped>
+<style>
+
+img {
+  height: 100px;
+}
 
 nav {
   background-color: white;
@@ -54,10 +40,6 @@ li {
   margin-right: 40px;
 }
 
-.logo {
-  height: 100px;
-}
-
 .link {
   text-decoration: none;
   color: black;
@@ -69,10 +51,6 @@ li {
 .link:hover {
   color: #ffb607;
   transition: color 0.5s;
-}
-
-.search-button {
-  margin-left: 200px;
 }
 
 </style>

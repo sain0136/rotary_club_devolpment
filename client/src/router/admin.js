@@ -1,5 +1,6 @@
 import Admin from '../views/admin/Admin'
 import NewDistrict from '../views/admin/NewDistrict'
+import ViewDistricts from '../views/admin/ViewDistricts'
 import EditDistrict from '../views/admin/EditDistrict'
 import NewClub from '../views/admin/NewClub'
 import EditClub from '../views/admin/EditClub'
@@ -14,6 +15,11 @@ export default {
       path: 'newdistrict',
       component: NewDistrict,
       name: 'NewDistrict'
+    },
+    {
+      path: 'viewdistricts',
+      component: ViewDistricts,
+      name: 'ViewDistricts'
     },
     {
       path: 'editdistrict',
