@@ -1,24 +1,55 @@
 <template>
   <div class="container">
     <!-- Make a call to the API and generate these districts -->
-    <router-link to="/district/1">District 1</router-link> <br>
-    <router-link to="/district/2">District 2</router-link> <br>
-    <router-link to="/district/3">District 3</router-link> <br>
+    <table>
+      <th>ID</th>
+      <th>District Name</th>
+      <th>Action</th>
+      <tr 
+        v-for="district in districts"
+        :key="district.id">
+        <td>{{district.id}}</td>  
+        <td>{{district.name}}</td>
+        <td>
+          <router-link to="/district/id">Go</router-link>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ViewtDistricts'
+  name: 'ViewtDistricts',
+  data() {
+    return {
+      districts: Array
+    }
+  },
+  methods: {
+    async fetchDistricts() {
+      const res = await fetch('/api/districts', { method: 'GET'})
+      const data = await res.json()
+      return data
+    }
+  },
+  async created() {
+    console.log(await this.fetchDistricts()) 
+    this.districts = await this.fetchDistricts()
+  }
 }
 
 </script>
 
 <style scoped>
 
-.container {
-  text-align: center;
+table {
+  margin: auto;
+}
+
+td {
+  width: 25%;
 }
 
 </style>
