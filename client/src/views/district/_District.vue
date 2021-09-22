@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header/>
+    <DistrictHeader/>
     <!-- <router-link to=></router-link> -->
     <router-view></router-view>
     <Footer/>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue'
+import DistrictHeader from '../../components/headers/DistrictHeader.vue'
 import Footer from '../../components/Footer.vue'
 
 export default {
   name: '_District',
   components: {
-    Header,
+    DistrictHeader,
     Footer
   }
 }

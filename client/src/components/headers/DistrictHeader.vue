@@ -1,0 +1,27 @@
+<template>
+  <nav>
+    <ul>
+      <li><h1>District Name</h1></li>
+      <li><router-link class="link" to="home">Home</router-link></li>
+      <li><router-link class="link" to="about">About</router-link></li>
+      <li><router-link class="link" to="clubs">Clubs</router-link></li>
+      <li><router-link class="link" to="contactus">Contact Us</router-link></li>
+      <li><router-link class="link" to="login">Login</router-link></li>
+
+      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="/club/contactus">Admin</router-link></li>
+
+      <li class="search-button"><font-awesome-icon icon="search" /></li>
+      <li> <DonateButton/> </li>
+  </ul>
+  </nav>  
+</template>
+
+<script>
+export default {
+  name: "DistrictHeader"
+}
+</script>
+
+<style>
+
+</style>

@@ -11,7 +11,7 @@
         <td>{{district.id}}</td>  
         <td>{{district.name}}</td>
         <td>
-          <router-link :to="`/district/${district.id}`">Go</router-link>
+          <router-link :to="`/district/${district.id}/home`">Go</router-link>
         </td>
       </tr>
     </table>

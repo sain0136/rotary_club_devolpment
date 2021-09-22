@@ -2,8 +2,8 @@
   <div>
     <form>
       <legend>Admin</legend> <br> <br>
-      <p v-if="$store.state.isAdminRejected" id="error">Credentials not valid!</p>
-      <div v-if="$store.state.isAdminLoggedIn && !$store.state.isAdminRejected">
+      <p v-if="$store.state.isSiteAdminRejected" id="error">Credentials not valid!</p>
+      <div v-if="$store.state.isSiteAdminLoggedIn && !$store.state.isSiteAdminRejected">
         <p id="success">Logged In!</p>
         <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br> 
       </div>
@@ -12,7 +12,11 @@
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
-      <button @click="$store.dispatch('validateAdminCredentials', this.username, this.password)">Login</button>
+      <button @click="$store.dispatch('validateAdminCredentials', {
+        username: this.username, 
+        password: this.password, 
+        roleId: 0})">
+      Login</button>
   </div>
 </template>
 
