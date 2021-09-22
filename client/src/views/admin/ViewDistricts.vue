@@ -11,7 +11,10 @@
         <td>{{district.id}}</td>  
         <td>{{district.name}}</td>
         <td>
-          <router-link :to="`/district/${district.id}/home`">Go</router-link>
+          <router-link 
+            :to="`/district/${district.id}/home`" 
+            @click="$store.dispatch('changeCurrentDistrict', district.id)">
+          Go</router-link>
         </td>
       </tr>
     </table>

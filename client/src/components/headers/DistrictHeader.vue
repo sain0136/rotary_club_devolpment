@@ -1,7 +1,7 @@
 <template>
   <nav>
     <ul>
-      <li><h1>District Name</h1></li>
+      <li><h1>District: {{ this.districtName }}</h1>  </li>
       <li><router-link class="link" to="home">Home</router-link></li>
       <li><router-link class="link" to="about">About</router-link></li>
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
@@ -17,11 +17,29 @@
 </template>
 
 <script>
+
+import store from '../../store/index'
+
 export default {
-  name: "DistrictHeader"
+  name: "DistrictHeader",
+  data() {
+    return {
+      districtName: store.state.currentDistrictId
+    }
+  },
+  async created() {
+    const res = await fetch(`/api/districts/${store.state.currentDistrictId}`, { method: 'GET'})
+    const data = await res.json()
+    this.districtName = data.name
+    console.log('District name: ', this.districtName)
+  }
 }
 </script>
 
 <style>
+
+nav {
+  text-align: center;
+}
 
 </style>

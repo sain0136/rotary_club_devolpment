@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
@@ -7,6 +8,8 @@ export default createStore({
 
     isDistrictAdminLoggedIn: false,
     isDistrictAdminRejected: false,
+
+    currentDistrictId: Number
   },
   mutations: {
     adminLogin(state, roleId) {
@@ -31,6 +34,9 @@ export default createStore({
         break
       }
     },
+    changeCurrentDistrict(state, districtId) {
+      state.currentDistrictId = districtId
+    }
   },
   actions: {
     validateAdminCredentials({commit}, data) {
@@ -54,15 +60,18 @@ export default createStore({
           }
           break
       }
-    } 
+    },
+    changeCurrentDistrict({commit}, districtId) {
+      commit('changeCurrentDistrict', districtId)
+    }
   },
   getters: {
 
   },
-
   modules: {
 
-  }
+  },
+  plugins: [createPersistedState()]
 })
 
 // States can be accessed directly
