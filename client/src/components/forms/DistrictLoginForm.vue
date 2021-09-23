@@ -1,11 +1,11 @@
 <template>
   <div>
     <form>
-      <legend>Admin</legend> <br> <br>
-      <p v-if="$store.state.isSiteAdminRejected" id="error">Credentials not valid!</p>
-      <div v-if="$store.state.isSiteAdminLoggedIn && !$store.state.isSiteAdminRejected">
+      <legend>District Login</legend> <br> <br>
+      <p v-if="$store.state.isDistrictAdminRejected" id="error">Credentials not valid!</p>
+      <div v-if="$store.state.isDistrictAdminLoggedIn && !$store.state.isDistrictAdminRejected">
         <p id="success">Logged In!</p>
-        <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br> 
+        <!-- <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br>  -->
       </div>
       <input type="text" name="username" placeholder="username"
         v-model="username"> <br> <br>
@@ -15,7 +15,7 @@
       <button @click="$store.dispatch('validateAdminCredentials', {
         username: this.username, 
         password: this.password, 
-        roleId: 0})">
+        roleId: 1})">
       Login</button>
   </div>
 </template>
@@ -23,7 +23,7 @@
 <script>
 
 export default {
-  name: 'AdminLogin',
+  name: 'DistrictLogin',
   data() {
     return {
       username: '',

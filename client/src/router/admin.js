@@ -29,17 +29,14 @@ export default {
     {
       path: 'newclub',
       component: NewClub,
-      name: 'NewClub'
     },
     {
       path: 'editclub',
       component: EditClub,
-      name: 'EditClub'
     },
     {
       path: 'clubusers',
       component: ClubUsers,
-      name: 'ClubUsers'
     },
   ]
 }

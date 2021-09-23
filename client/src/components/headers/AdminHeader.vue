@@ -5,7 +5,7 @@
       <li><router-link class="link" to="/admin/newdistrict">New District</router-link></li>
       <li><router-link class="link" to="/admin/viewdistricts">View Districts</router-link></li>
       <li><router-link class="link" to="/admin/viewdistricts">District Users</router-link></li>
-      <li><router-link class="link" to="/club/projects">Create Club</router-link></li>
+      <li><router-link class="link" to="/admin/newclub">Create Club</router-link></li>
       <li><router-link class="link" to="/club/contactus">View Clubs</router-link></li>
       <li><router-link class="link" to="/admin/viewdistricts">Club Users</router-link></li>
   </ul>
@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 img {
   height: 100px;

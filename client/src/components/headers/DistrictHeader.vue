@@ -7,8 +7,10 @@
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
       <li><router-link class="link" to="contactus">Contact Us</router-link></li>
       <li><router-link class="link" to="login">Login</router-link></li>
+      
+      <li><a class="link" id="logout">Logout</a></li>
 
-      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="/club/contactus">Admin</router-link></li>
+      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="newclub">New Club</router-link></li>
 
       <li class="search-button"><font-awesome-icon icon="search" /></li>
       <li> <DonateButton/> </li>
@@ -38,8 +40,46 @@ export default {
 
 <style>
 
-nav {
-  text-align: center;
+img {
+  height: 100px;
 }
+
+nav {
+  background-color: white;
+  height: 8%;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: 200px;
+  padding: 0;
+}
+
+li {
+  display: inline;
+  margin-right: 40px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  transition: color 0.5s;
+}
+
+.link:hover {
+  color: #ffb607;
+  transition: color 0.5s;
+}
+
+/* #logout {
+  margin-right: 50px;
+} */
+
+#logout:hover {
+  cursor: pointer;
+}
+
 
 </style>

@@ -14,8 +14,9 @@ import DistrictSimplifiedGrant from '../views/district/loggedin/DistrictSimplifi
 import DistrictVerifyClubQual from '../views/district/loggedin/DistrictVerifyClubQual'
 import DistrictVerifyTrainAttend from '../views/district/loggedin/DistrictVerifyTrainAttend'
 
+import DistrictNewClub from '../views/district/loggedin/DistrictNewClub'
+
 import EditDistrict from '../views/admin/EditDistrict'
-import NewClub from '../views/admin/NewClub'
 import EditClub from '../views/admin/EditClub'
 import ClubUsers from '../views/admin/ClubUsers'
 
@@ -90,9 +91,8 @@ export default {
       name: 'EditDistrict'
     },
     {
-      path: 'new-club',
-      component: NewClub,
-      name: 'NewClub'
+      path: 'newclub',
+      component: DistrictNewClub,
     },
     {
       path: 'edit-club',
