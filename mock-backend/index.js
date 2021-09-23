@@ -79,7 +79,7 @@ app.post('/clubs', (req, res) => {
     id: Date.now(),
     name: req.body.name
   }
-  districts.push(newClub)
+  clubs.push(newClub)
   res.send(newClub)
 })
 

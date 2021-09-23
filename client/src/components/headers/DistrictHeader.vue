@@ -11,9 +11,9 @@
       <li><a class="link" id="logout">Logout</a></li>
 
       <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="newclub">New Club</router-link></li>
+      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="clubs">View Clubs</router-link></li>
 
       <li class="search-button"><font-awesome-icon icon="search" /></li>
-      <li> <DonateButton/> </li>
   </ul>
   </nav>  
 </template>

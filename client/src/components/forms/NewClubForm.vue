@@ -22,7 +22,7 @@ export default {
     }
   },
   methods: {
-    async addNewDistrict(event) {
+    async addNewClub(event) {
       event.preventDefault()
       
       let clubToAdd = {

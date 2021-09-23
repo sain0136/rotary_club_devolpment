@@ -67,8 +67,7 @@ export default {
     },
     {
       path: 'clubs',
-      component: DistrictClubs,
-      name: 'Clubs'
+      component: DistrictClubs
     },
     {
       path: 'simplified-grant',
@@ -94,6 +93,7 @@ export default {
       path: 'newclub',
       component: DistrictNewClub,
     },
+    
     {
       path: 'edit-club',
       component: EditClub,
