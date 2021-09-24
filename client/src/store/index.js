@@ -40,6 +40,12 @@ export default createStore({
     },
     changeCurrentClub(state, clubId) {
       state.currentClubId = clubId
+    },
+    logout(state, roleIdToLogOut) {
+      switch(roleIdToLogOut) {
+        case 0: state.isSiteAdminLoggedIn = false; break
+        case 1: state.isDistrictAdminLoggedIn = false; break
+      }
     }
   },
   actions: {
@@ -71,6 +77,9 @@ export default createStore({
     changeCurrentClub({commit}, clubId) {
       commit('changeCurrentClub', clubId)
     },    
+    logout({commit}, roleIdToLogOut) {
+      commit('logout', roleIdToLogOut)
+    }
   },
   getters: {
 

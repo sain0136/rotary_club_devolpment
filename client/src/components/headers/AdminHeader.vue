@@ -8,13 +8,25 @@
       <li><router-link class="link" to="/admin/newclub">Create Club</router-link></li>
       <li><router-link class="link" to="/club/contactus">View Clubs</router-link></li>
       <li><router-link class="link" to="/admin/viewdistricts">Club Users</router-link></li>
+      <li v-if="$store.state.isSiteAdminLoggedIn">
+        <button class="link" @click="logout">Logout</button>
+      </li>
   </ul>
   </nav>
 </template>
 
 <script>
-export default {
 
+import store from '../../store/index'
+
+export default {
+  name: "AdminHeader",
+  methods: {
+    logout() {
+      store.dispatch('logout', 0)
+      this.$router.push('/adminlogin')
+    }
+  }
 }
 </script>
 

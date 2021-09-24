@@ -12,15 +12,14 @@
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
-      <button @click="$store.dispatch('validateAdminCredentials', {
-        username: this.username, 
-        password: this.password, 
-        roleId: 1})">
+      <button @click="districtAdminLoginHandler">
       Login</button>
   </div>
 </template>
 
 <script>
+
+import store from '../../store/index'
 
 export default {
   name: 'DistrictLogin',
@@ -31,6 +30,14 @@ export default {
     }
   },
   methods: {
+    districtAdminLoginHandler() {
+      store.dispatch('validateAdminCredentials', {
+        username: this.username,
+        password: this.password,
+        roleId: 1
+      })
+      this.$router.push(`/district/${store.state.currentDistrictId}/newclub`);
+    }
   }
 }
 

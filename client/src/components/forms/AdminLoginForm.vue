@@ -12,15 +12,14 @@
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
-      <button @click="$store.dispatch('validateAdminCredentials', {
-        username: this.username, 
-        password: this.password, 
-        roleId: 0})">
+      <button @click="adminLoginHandler">
       Login</button>
   </div>
 </template>
 
 <script>
+
+import store from '../../store/index'
 
 export default {
   name: 'AdminLogin',
@@ -31,6 +30,14 @@ export default {
     }
   },
   methods: {
+    adminLoginHandler() {
+      store.dispatch('validateAdminCredentials', {
+        username: this.username,
+        password: this.password,
+        roleId: 0
+      })
+      this.$router.push(`/admin`);
+    }
   }
 }
 
