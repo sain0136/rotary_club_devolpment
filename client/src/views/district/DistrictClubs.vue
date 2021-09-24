@@ -23,6 +23,8 @@
 
 <script>
 
+import store from '../../store/index'
+
 export default {
   name: 'DistrictClubs',
   data() {
@@ -32,7 +34,10 @@ export default {
   },
   methods: {
     async fetchClubs() {
-      const res = await fetch('/api/clubs', { method: 'GET'})
+      const res = await fetch(
+        `/api/districts/${store.state.currentDistrictId}/clubs`, 
+        { method: 'GET'}
+      )
       const data = await res.json()
       return data
     }

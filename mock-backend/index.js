@@ -1,30 +1,31 @@
 let districts = [
   {
     id: 1,
-    name: 'D1'
+    name: 'D1',
+    clubs: [
+      {
+        id: 1,
+        name: 'D1C1'
+      },
+      {
+        id: 2,
+        name: 'D1C2'
+      },
+    ] 
   },
   {
     id: 2,
-    name: 'D2'
+    name: 'D2',
+    clubs: [
+      {
+        id: 3,
+        name: 'D2C1'
+      },
+    ]
   },
   {
     id: 3,
     name: 'D3'
-  }
-]
-
-let clubs = [
-  {
-    id: 1,
-    name: 'C1'
-  },
-  {
-    id: 2,
-    name: 'C2'
-  },
-  {
-    id: 3,
-    name: 'C3'
   }
 ]
 
@@ -34,6 +35,8 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+
+/**DISTRICTS *//
 
 app.get('/districts', (req, res) => {
   res.send(districts)
@@ -61,11 +64,15 @@ app.delete('/districts/:id', async (req, res) => {
   res.send(districts)
 })
 
-app.get('/clubs', (req, res) => {
-  res.send(clubs)
+/**CLUBS *//
+ 
+//Get club by district id
+app.get('/districts/:id/clubs', (req, res) => {
+  res.send(districts.filter(district => district.id == req.params.id)[0].clubs)
 })
 
-app.get('/clubs/:id', (req, res) => {
+app.get('/districts/:id/clubs/:id', (req, res) => {
+  let clubs = districts.filter(district => district.id == req.params.id)[0].clubs
   clubs.forEach(club => {
     if(club.id == req.params.id) {
       res.send(club)
@@ -73,18 +80,18 @@ app.get('/clubs/:id', (req, res) => {
   })
 })
 
-app.post('/clubs', (req, res) => {
-  console.log(req.body)
+app.post('/districts/:id/clubs', (req, res) => {
   let newClub = {
     id: Date.now(),
     name: req.body.name
   }
-  clubs.push(newClub)
+  districts.filter(district => district.id == req.params.id)[0].clubs.push(newClub)
   res.send(newClub)
 })
 
-app.delete('/clubs/:id', async (req, res) => {
-  clubs = clubs.filter(club => club.id != req.params.id)
+app.delete('/districts/:id/clubs/:id', async (req, res) => {
+  districts.filter(district => district.id == req.params.id)[0].clubs = 
+  districts.filter(district => district.id == req.params.id)[0].clubs.filter(club => club.id != req.params.id)
   res.send(clubs)
 })
 
