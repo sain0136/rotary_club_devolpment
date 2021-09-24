@@ -20,6 +20,8 @@ import EditDistrict from '../views/admin/EditDistrict'
 import EditClub from '../views/admin/EditClub'
 import ClubUsers from '../views/admin/ClubUsers'
 
+import store from '../store/index'
+
 export default {
   path: '/district/:id',
   component: _District,
@@ -92,12 +94,27 @@ export default {
     {
       path: 'newclub',
       component: DistrictNewClub,
+      beforeEnter: (to, from, next) => {
+        if(store.state.isDistrictAdminLoggedIn || 
+           store.state.isSiteAdminLoggedIn) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     
     {
       path: 'edit-club',
       component: EditClub,
-      name: 'EditClub'
+      name: 'EditClub',
+      beforeEnter: (to, from, next) => {
+        if($store.state.isDistrictAdminLoggedIn) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: 'club-users',

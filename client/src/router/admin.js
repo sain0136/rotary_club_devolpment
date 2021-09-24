@@ -6,10 +6,19 @@ import NewClub from '../views/admin/NewClub'
 import EditClub from '../views/admin/EditClub'
 import ClubUsers from '../views/admin/ClubUsers'
 
+import store from '../store/index'
+
 export default {
   path: '/admin',
   component: Admin,
   name: 'Admin',
+  beforeEnter: (to, from, next) => {
+    if(store.state.isSiteAdminLoggedIn) {
+      next()
+    } else {
+      next(false)
+    }
+  },
   children: [
     {
       path: 'newdistrict',

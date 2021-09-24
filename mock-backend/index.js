@@ -75,7 +75,6 @@ app.get('/districts/:id/clubs', (req, res) => {
 
 app.get('/districts/:id/clubs/:id', (req, res) => {
   let clubs = districts.filter(district => district.id == req.params.id)[0].clubs
-  console.log(clubs)
   clubs.forEach(club => {
     if(club.id == req.params.id) {
       res.send(club)
