@@ -4,7 +4,8 @@ import ViewDistricts from '../views/admin/ViewDistricts'
 import EditDistrict from '../views/admin/EditDistrict'
 import NewClub from '../views/admin/NewClub'
 import EditClub from '../views/admin/EditClub'
-import ClubUsers from '../views/admin/ClubUsers'
+import DistrictUsers from '../views/admin/DistrictUsers'
+import NewDistrictUser from '../views/admin/NewDistrictUser'
 
 import store from '../store/index'
 
@@ -44,8 +45,12 @@ export default {
       component: EditClub,
     },
     {
-      path: 'clubusers',
-      component: ClubUsers,
+      path: 'newdistrictuser',
+      component: NewDistrictUser
+    },
+    {
+      path: 'districtusers',
+      component: DistrictUsers,
     },
   ]
 }
