@@ -11,8 +11,17 @@ let districts = [
         id: 2,
         name: 'D1C2'
       },
-    ] 
+    ],
+    users: [
+      {
+        id: 1,
+        name: 'Districto',
+        username: 'dapo',
+        password: 'dapo88'
+      }
+    ]
   },
+  
   {
     id: 2,
     name: 'D2',
@@ -27,6 +36,16 @@ let districts = [
     id: 3,
     name: 'D3',
     clubs: []
+  }
+]
+
+let districtAdmins = [
+  {
+    id: 1,
+    districtId: 1,
+    name: 'Districto',
+    username: 'dapo',
+    password: 'dapo88'
   }
 ]
 
@@ -95,6 +114,39 @@ app.delete('/districts/:id/clubs/:id', async (req, res) => {
   districts.filter(district => district.id == req.params.id)[0].clubs = 
   districts.filter(district => district.id == req.params.id)[0].clubs.filter(club => club.id != req.params.id)
   res.send(clubs)
+})
+
+/**USERS *//
+ 
+//Get club by district id
+app.get('/districts/:id/users', (req, res) => {
+  res.send(districts.filter(district => district.id == req.params.id)[0].users)
+})
+
+app.get('/districts/:id/users/:id', (req, res) => {
+  let users = districts.filter(district => district.id == req.params.id)[0].users
+  users.forEach(user => {
+    if(user.id == req.params.id) {
+      res.send(user)
+    }
+  })
+})
+
+app.post('/districts/:id/users', (req, res) => {
+  let newUser = {
+    id: Date.now(),
+    name: req.body.name,
+    username: req.body.name,
+    password: req.body.password
+  }
+  districts.filter(district => district.id == req.params.id)[0].users.push(newUser)
+  res.send(newUser)
+})
+
+app.delete('/districts/:id/users/:id', async (req, res) => {
+  districts.filter(district => district.id == req.params.id)[0].users = 
+  districts.filter(district => district.id == req.params.id)[0].users.filter(user => user.id != req.params.id)
+  res.send(users)
 })
 
 const PORT = process.env.PORT || 5000
