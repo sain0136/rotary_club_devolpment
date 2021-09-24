@@ -25,7 +25,8 @@ let districts = [
   },
   {
     id: 3,
-    name: 'D3'
+    name: 'D3',
+    clubs: []
   }
 ]
 
@@ -53,7 +54,8 @@ app.get('/districts/:id', (req, res) => {
 app.post('/districts', (req, res) => {
   let newDistrict = {
     id: Date.now(),
-    name: req.body.name
+    name: req.body.name,
+    clubs: []
   }
   districts.push(newDistrict)
   res.send(newDistrict)
@@ -73,6 +75,7 @@ app.get('/districts/:id/clubs', (req, res) => {
 
 app.get('/districts/:id/clubs/:id', (req, res) => {
   let clubs = districts.filter(district => district.id == req.params.id)[0].clubs
+  console.log(clubs)
   clubs.forEach(club => {
     if(club.id == req.params.id) {
       res.send(club)

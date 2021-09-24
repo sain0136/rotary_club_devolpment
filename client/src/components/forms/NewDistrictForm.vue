@@ -34,6 +34,8 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(districtToAdd)})
       console.log(res)
+
+      this.$router.push('/admin/viewdistricts');
     }
   }
 }

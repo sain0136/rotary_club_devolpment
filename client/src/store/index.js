@@ -9,7 +9,8 @@ export default createStore({
     isDistrictAdminLoggedIn: false,
     isDistrictAdminRejected: false,
 
-    currentDistrictId: Number
+    currentDistrictId: Number,
+    currentClubId: Number
   },
   mutations: {
     adminLogin(state, roleId) {
@@ -36,6 +37,9 @@ export default createStore({
     },
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
+    },
+    changeCurrentClub(state, clubId) {
+      state.currentClubId = clubId
     }
   },
   actions: {
@@ -63,7 +67,10 @@ export default createStore({
     },
     changeCurrentDistrict({commit}, districtId) {
       commit('changeCurrentDistrict', districtId)
-    }
+    },
+    changeCurrentClub({commit}, clubId) {
+      commit('changeCurrentClub', clubId)
+    },    
   },
   getters: {
 

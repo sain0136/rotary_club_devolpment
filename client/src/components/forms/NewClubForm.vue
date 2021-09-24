@@ -10,6 +10,9 @@
 </template>
 
 <script>
+
+import store from '../../store/index'
+
 export default {
   name: 'NewClubForm',
   components: {
@@ -29,11 +32,12 @@ export default {
         name: this.clubName
       }
 
-      const res = await fetch('/api/clubs', { 
+      const res = await fetch(`/api/districts/${store.state.currentDistrictId}/clubs`, { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(clubToAdd)})
-      console.log(res)
+
+      this.$router.push(`/district/${store.state.currentDistrictId}/clubs`);
     }
   }
 }
