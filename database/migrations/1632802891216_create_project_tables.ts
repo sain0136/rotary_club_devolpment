@@ -15,7 +15,7 @@ export default class Project extends BaseSchema {
       table.integer('created_by', 50).unsigned().references('user_id').inTable('user')
       table.string('region', 50).notNullable()
       table.string('rotary_year', 50).notNullable()
-      table.string('currency', 50).notNullable().defaultTo('CAD')
+      table.string('currency', 50).notNullable().defaultTo('USD')
       table.timestamps(true, true)
     })
   }

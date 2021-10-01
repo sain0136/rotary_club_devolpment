@@ -16,7 +16,7 @@ export default class User extends BaseSchema {
       table.string('user_country', 255).nullable()
       table.string('phone', 180).nullable()
       table.string('email', 50).notNullable()
-      table.string('password', 50).nullable()
+      table.string('password', 50).notNullable()
       //table.integer('role_id', 50).nullable().unsigned().references('role_id').inTable('club_role')
       table.integer('club_id', 50).nullable().unsigned().references('club_id').inTable('club')
       table
