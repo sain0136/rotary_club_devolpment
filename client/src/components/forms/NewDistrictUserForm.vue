@@ -1,7 +1,7 @@
 <template>
   <div>
     <form>
-      <label for="name">District ID</label> <br>
+      <label>District ID</label> <br>
       <input type="number"
         v-model="districtId"> <br> <br>
       <label>Name</label> <br>
@@ -37,18 +37,17 @@ export default {
       event.preventDefault()
       
       let userToAdd = {
-        name: this.districtName,
+        name: this.name,
         username: this.username,
         password: this.password
       }
 
-      // const res = await fetch('/api/districts', { 
-      //   method: 'POST', 
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(districtToAdd)})
-      // console.log(res)
+      const res = await fetch(`/api/districts/${this.districtId}/users`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userToAdd)})
 
-      this.$router.push('/admin/users');
+      this.$router.push('/admin/districtusers');
     }
   }
 }

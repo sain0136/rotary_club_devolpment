@@ -9,7 +9,7 @@ export default createStore({
     isDistrictAdminLoggedIn: false,
     isDistrictAdminRejected: false,
 
-    currentDistrictId: Number,
+    currentDistrictId: 1,
     currentClubId: Number
   },
   mutations: {
@@ -37,6 +37,7 @@ export default createStore({
     },
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
+      console.log(state.currentDistrictId)
     },
     changeCurrentClub(state, clubId) {
       state.currentClubId = clubId

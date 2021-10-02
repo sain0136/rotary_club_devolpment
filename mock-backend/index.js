@@ -30,12 +30,28 @@ let districts = [
         id: 3,
         name: 'D2C1'
       },
+    ],
+    users: [
+      {
+        id: 1,
+        name: 'Yarakov',
+        username: 'yarak',
+        password: 'yarak88'
+      }
     ]
   },
   {
     id: 3,
     name: 'D3',
-    clubs: []
+    clubs: [],
+    users: [
+      {
+        id: 1,
+        name: 'Anan',
+        username: 'anan',
+        password: 'anan88'
+      }
+    ]
   }
 ]
 
