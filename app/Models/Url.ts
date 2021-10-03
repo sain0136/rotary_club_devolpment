@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import District from './District'
+import Club from './Club'
 
 export default class Url extends BaseModel {
   @column({ isPrimary: true })
@@ -16,4 +18,14 @@ export default class Url extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @manyToMany(() => District, {
+    pivotTable: 'district_url',
+  })
+  public districtUrls: ManyToMany<typeof District>
+
+  @manyToMany(() => Club, {
+    pivotTable: 'club_url',
+  })
+  public clubUrls: ManyToMany<typeof Club>
 }
