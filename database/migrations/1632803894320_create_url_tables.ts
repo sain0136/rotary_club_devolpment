@@ -6,7 +6,7 @@ export default class Url extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('url_id').primary().unsigned()
-      table.string('url_type', 50).notNullable()
+      table.integer('url_type', 10).notNullable()
       table.string('url', 50).notNullable()
       table.timestamps(true, true)
     })

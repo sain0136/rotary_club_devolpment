@@ -3,8 +3,11 @@ import { BaseModel, column, HasMany, hasMany, manyToMany, ManyToMany } from '@io
 import Club from './Club'
 import User from './User'
 import Url from './Url'
+import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class District extends BaseModel {
+  public static namingStrategy = new NonPlurizeNamingStrategy()
+
   @column({ isPrimary: true })
   public districtId: number
 

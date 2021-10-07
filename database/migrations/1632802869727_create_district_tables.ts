@@ -13,7 +13,7 @@ export default class District extends BaseSchema {
       table.string('meeting_frequency', 255).nullable()
       table.string('charter_date', 180).nullable()
       table.string('district_president', 50).nullable()
-      table.string('district_description', 50).nullable()
+      table.string('district_description', 255).nullable()
       table.string('districtlogo_filepath', 255).nullable()
       table.timestamps(true, true)
     })

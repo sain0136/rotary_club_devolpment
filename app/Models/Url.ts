@@ -2,13 +2,14 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import District from './District'
 import Club from './Club'
+import SocialMedia from 'Contracts/Enums/SocialMedia'
 
 export default class Url extends BaseModel {
   @column({ isPrimary: true })
   public urlId: number
 
   @column()
-  public urlType: string
+  public urlType: SocialMedia
 
   @column()
   public url: string
