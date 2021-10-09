@@ -44,7 +44,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: 'rotarytesting.testing.Adonisjs',
+  origin: 'bgwz0156sspovhk22599.cleaver.rocks',
 
   /*
   |--------------------------------------------------------------------------
