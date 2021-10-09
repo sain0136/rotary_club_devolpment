@@ -5,6 +5,7 @@ export default class ClubUrl extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
+      table.increments('id').unsigned().primary()
       table.integer('club_id').unsigned().references('club_id').inTable('club')
       table.integer('url_id').unsigned().references('url_id').inTable('url')
       table.timestamps(true, true)

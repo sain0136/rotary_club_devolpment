@@ -39,6 +39,9 @@ export default class Club extends BaseModel {
   public clubPhone?: string
 
   @column()
+  public clubDescription?: string
+
+  @column()
   public clubEmail?: string
 
   @column()

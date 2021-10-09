@@ -5,6 +5,7 @@ export default class DistrictUrl extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
+      table.increments('id').unsigned().primary()
       table.integer('district_id').unsigned().references('district_id').inTable('district')
       table.integer('districturl_id').unsigned().references('url_id').inTable('url')
       table.timestamps(true, true)
