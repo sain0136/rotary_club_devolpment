@@ -63,7 +63,7 @@ export default class DistrictsController {
     return response.json({ updated, Hello: 'old file below', old })
   }
 
-  public async destroy({ response, params, request }: HttpContextContract) {
+  public async destroy({ response, params }: HttpContextContract) {
     let old = await District.findOrFail(params.id)
     const districtToBeDeleted = await District.findOrFail(params.id)
     await districtToBeDeleted.delete()
