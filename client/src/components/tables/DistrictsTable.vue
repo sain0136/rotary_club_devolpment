@@ -7,13 +7,13 @@
       <th>Action</th>
       <tr 
         v-for="district in districts"
-        :key="district.id">
-        <td>{{district.id}}</td>  
-        <td>{{district.name}}</td>
+        :key="district.district_id">
+        <td>{{district.district_id}}</td>  
+        <td>{{district.district_name}}</td>
         <td>
           <router-link 
-            :to="`/district/${district.id}/home`" 
-            @click="$store.dispatch('changeCurrentDistrict', district.id)">
+            :to="`/district/${district.district_id}/home`" 
+            @click="$store.dispatch('changeCurrentDistrict', district.district_id)">
           Go</router-link>
         </td>
       </tr>
@@ -32,14 +32,14 @@ export default {
   },
   methods: {
     async fetchDistricts() {
-      const res = await fetch('/api/districts', { method: 'GET'})
+      const res = await fetch('/api/district', { method: 'GET'})
       const data = await res.json()
-      return data
+      return data.districts
     }
   },
   async created() {
-    console.log(await this.fetchDistricts()) 
     this.districts = await this.fetchDistricts()
+    console.log(this.districts[1].district_id)
   }
 }
 

@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        target: 'http://localhost:5000',
+        target: 'https://bgwz0156sspovhk22599.cleaver.rocks',
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: { '^/api': '/' },

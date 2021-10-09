@@ -26,7 +26,7 @@ export default {
   name: "DistrictHeader",
   data() {
     return {
-      districtName: store.state.currentDistrictId
+      districtName: null
     }
   },
   methods: {
@@ -36,9 +36,9 @@ export default {
     }
   },
   async created() {
-    const res = await fetch(`/api/districts/${store.state.currentDistrictId}`, { method: 'GET'})
+    const res = await fetch(`/api/district/${store.state.currentDistrictId}`, { method: 'GET'})
     const data = await res.json()
-    this.districtName = data.name
+    this.districtName = data.districtById.district_name
     console.log('District name: ', this.districtName)
   }
 }
