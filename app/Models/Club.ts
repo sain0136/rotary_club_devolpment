@@ -12,8 +12,10 @@ import {
 import District from './District'
 import User from './User'
 import Url from './Url'
-
+import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 export default class Club extends BaseModel {
+  public static namingStrategy = new NonPlurizeNamingStrategy()
+
   @column({ isPrimary: true })
   public clubId: number
 

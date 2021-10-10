@@ -3,8 +3,10 @@ import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm
 import District from './District'
 import Club from './Club'
 import SocialMedia from 'Contracts/Enums/SocialMedia'
+import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class Url extends BaseModel {
+  public static namingStrategy = new NonPlurizeNamingStrategy()
   @column({ isPrimary: true })
   public urlId: number
 

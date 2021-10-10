@@ -12,8 +12,10 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import Club from './Club'
 import District from './District'
 import Project from './Project'
+import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class User extends BaseModel {
+  public static namingStrategy = new NonPlurizeNamingStrategy()
   @column({ isPrimary: true })
   public userId: number
 

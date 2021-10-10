@@ -2,8 +2,10 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import GrantType from 'Contracts/Enums/ProjectType'
 import User from './User'
+import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class Project extends BaseModel {
+  public static namingStrategy = new NonPlurizeNamingStrategy()
   @column({ isPrimary: true })
   public projectId: number
 
