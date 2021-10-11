@@ -4,6 +4,7 @@
       <li><img class="logo" src="../../assets/admin-logo.png"></li>
       <li><router-link class="link" to="/admin/viewdistricts">View Districts</router-link></li>
       <li><router-link class="link" to="/admin/viewusers">View Users</router-link></li>
+      <li><router-link class="link" to="/admin/viewclubs">View Clubs</router-link></li>
       <li v-if="$store.state.isSiteAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
       </li>

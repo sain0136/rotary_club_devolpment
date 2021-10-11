@@ -16,10 +16,6 @@ import DistrictVerifyTrainAttend from '../views/district/loggedin/DistrictVerify
 
 import DistrictNewClub from '../views/district/loggedin/DistrictNewClub'
 
-import EditDistrict from '../views/admin/EditDistrict'
-import EditClub from '../views/admin/EditClub'
-import ClubUsers from '../views/admin/ClubUsers'
-
 import store from '../store/index'
 
 export default {

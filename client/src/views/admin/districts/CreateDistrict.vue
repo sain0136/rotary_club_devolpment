@@ -6,7 +6,7 @@
 
 <script>
 
-import NewDistrictForm from '../../components/forms/NewDistrictForm.vue'
+import NewDistrictForm from '../../../components/forms/NewDistrictForm.vue'
 
 export default {
   name: 'NewDistrict',

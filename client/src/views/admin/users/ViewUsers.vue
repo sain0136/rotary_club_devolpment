@@ -1,29 +1,28 @@
 <template>
   <div>
     <div class="select-districts">
-      <label for="districts">Districts</label> <br>
-      <select @change="selectDistrict($event)">
+      <!-- <label for="clubs">Clubs</label> <br>
+      <select @change="filterWithClub($event)">
         <option 
           v-for="district in districts" :key="district.id"
           :value="district.id">
           {{district.name}}
         </option>
-      </select>
-      <!-- <button @click="$store.dispatch('changeCurrentDistrict', 1)">HAHA</button> -->
+      </select> -->
     </div>
-    <DistrictAdminsTable/>
+    <UsersTable/>
   </div>
 </template>
 
 <script>
 
-import DistrictAdminsTable from '../../components/tables/DistrictAdminsTable.vue'
-import store from '../../store/index'
+import UsersTable from '../../../components/tables/UsersTable.vue'
+import store from '../../../store/index'
 
 export default {
-  name: 'DistrictUsers',
+  name: 'ViewUsers',
   components: {
-    DistrictAdminsTable
+    UsersTable
   },
   data() {
     return {
@@ -31,13 +30,13 @@ export default {
     }
   },
   methods: {
-    selectDistrict(event) {
-      store.dispatch('changeCurrentDistrict', event.target.value)
-      this.$forceUpdate()
-    },
+    // filterWithClub(event) {
+    //   store.dispatch('changeCurrentDistrict', event.target.value)
+    //   this.$forceUpdate()
+    // },
     async fetchDistricts() {
       const res = await fetch(
-        '/api/districts', 
+        '/api/district', 
         { method: 'GET'}
       )
       const data = await res.json()

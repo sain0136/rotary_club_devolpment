@@ -1,11 +1,16 @@
 import Admin from '../views/admin/Admin'
-import NewDistrict from '../views/admin/NewDistrict'
-import ViewDistricts from '../views/admin/ViewDistricts'
-import EditDistrict from '../views/admin/EditDistrict'
-import NewClub from '../views/admin/NewClub'
-import EditClub from '../views/admin/EditClub'
-import Users from '../views/admin/Users'
-import NewDistrictUser from '../views/admin/NewDistrictUser'
+
+import ViewDistricts from '../views/admin/districts/ViewDistricts'
+import CreateDistrict from '../views/admin/districts/CreateDistrict'
+import EditDistrict from '../views/admin/districts/EditDistrict'
+
+import ViewClubs from '../views/admin/clubs/ViewClubs'
+import CreateClub from '../views/admin/clubs/CreateClub'
+import EditClub from '../views/admin/clubs/EditClub'
+
+import ViewUsers from '../views/admin/users/ViewUsers'
+import CreateUser from '../views/admin/users/CreateUser'
+import EditUser from '../views/admin/users/EditUser'
 
 import store from '../store/index'
 
@@ -21,36 +26,47 @@ export default {
     }
   },
   children: [
-    {
-      path: 'newdistrict',
-      component: NewDistrict,
-      name: 'NewDistrict'
-    },
+    //Districts
     {
       path: 'viewdistricts',
       component: ViewDistricts,
       name: 'ViewDistricts'
     },
     {
+      path: 'createdistrict',
+      component: CreateDistrict,
+      name: 'NewDistrict'
+    },
+    {
       path: 'editdistrict',
       component: EditDistrict,
       name: 'EditDistrict'
     },
+    //Clubs
     {
-      path: 'newclub',
-      component: NewClub,
+      path: 'viewclubs',
+      component: ViewClubs,
+    },
+    {
+      path: 'createclub',
+      component: CreateClub,
     },
     {
       path: 'editclub',
       component: EditClub,
     },
-    {
-      path: 'newdistrictuser',
-      component: NewDistrictUser
-    },
+    //Users
     {
       path: 'viewusers',
-      component: Users,
+      component: ViewUsers
+    },
+    {
+      path: 'createuser',
+      component: CreateUser,
+    },
+    {
+      path: 'edituser',
+      component: EditUser,
     },
   ]
 }

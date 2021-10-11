@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: 'NewClub'
+  name: 'CreateClub'
 }
 
 </script>
