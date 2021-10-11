@@ -82,40 +82,35 @@ export default {
       component: DistrictVerifyTrainAttend,
       name: 'VerifyTrainAttend'
     },
-    {
-      path: 'edit-district',
-      component: EditDistrict,
-      name: 'EditDistrict'
-    },
-    {
-      path: 'newclub',
-      component: DistrictNewClub,
-      beforeEnter: (to, from, next) => {
-        if(store.state.isDistrictAdminLoggedIn || 
-           store.state.isSiteAdminLoggedIn) {
-          next()
-        } else {
-          next(false)
-        }
-      }
-    },
+    // {
+    //   path: 'newclub',
+    //   component: DistrictNewClub,
+    //   beforeEnter: (to, from, next) => {
+    //     if(store.state.isDistrictAdminLoggedIn || 
+    //        store.state.isSiteAdminLoggedIn) {
+    //       next()
+    //     } else {
+    //       next(false)
+    //     }
+    //   }
+    // },
     
-    {
-      path: 'edit-club',
-      component: EditClub,
-      name: 'EditClub',
-      beforeEnter: (to, from, next) => {
-        if($store.state.isDistrictAdminLoggedIn) {
-          next()
-        } else {
-          next(false)
-        }
-      }
-    },
-    {
-      path: 'club-users',
-      component: ClubUsers,
-      name: 'ClubUsers'
-    },
+    // {
+    //   path: 'edit-club',
+    //   component: EditClub,
+    //   name: 'EditClub',
+    //   beforeEnter: (to, from, next) => {
+    //     if($store.state.isDistrictAdminLoggedIn) {
+    //       next()
+    //     } else {
+    //       next(false)
+    //     }
+    //   }
+    // },
+    // {
+    //   path: 'club-users',
+    //   component: ClubUsers,
+    //   name: 'ClubUsers'
+    // },
   ]
 }
