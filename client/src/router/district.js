@@ -23,7 +23,7 @@ import ClubUsers from '../views/admin/ClubUsers'
 import store from '../store/index'
 
 export default {
-  path: '/district/:id',
+  path: '/',
   component: _District,
   name: '_District',
   children: [
