@@ -24,11 +24,21 @@ export default class Url extends BaseModel {
 
   @manyToMany(() => District, {
     pivotTable: 'district_url',
+    localKey: 'urlId',
+    relatedKey: 'districtId',
+    pivotForeignKey: 'districturl_id',
+    pivotRelatedForeignKey: 'district_id',
+    pivotTimestamps: true,
   })
   public districtUrls: ManyToMany<typeof District>
 
   @manyToMany(() => Club, {
     pivotTable: 'club_url',
+    localKey: 'urlId',
+    relatedKey: 'clubId',
+    pivotForeignKey: 'url_id',
+    pivotRelatedForeignKey: 'club_id',
+    pivotTimestamps: true,
   })
   public clubUrls: ManyToMany<typeof Club>
 }

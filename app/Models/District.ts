@@ -55,6 +55,11 @@ export default class District extends BaseModel {
 
   @manyToMany(() => Url, {
     pivotTable: 'district_url',
+    localKey: 'districtId',
+    relatedKey: 'urlId',
+    pivotForeignKey: 'district_id',
+    pivotRelatedForeignKey: 'districturl_id',
+    pivotTimestamps: true,
   })
   public districtUrls: ManyToMany<typeof Url>
 }

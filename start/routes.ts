@@ -23,6 +23,8 @@ import 'App/Modules/District/routes'
 import 'App/Modules/Test/route'
 import 'App/Modules/User/routes'
 import 'App/Modules/Club/routes'
+import 'App/Modules/Url/routes'
+import 'App/Modules/Project/routes'
 
 Route.get('/', async () => {
   return { hello: 'world' }

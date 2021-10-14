@@ -1,5 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Club from 'App/Models/Club'
+import District from 'App/Models/District'
 import User from 'App/Models/User'
+import RoleType from 'Contracts/Enums/RoleType'
 
 export default class UsersController {
   public async index({ response }: HttpContextContract) {
@@ -29,6 +32,9 @@ export default class UsersController {
     const clubId = request.input('clubId')
     const districtId = request.input('districtId')
 
+    const clubRole = request.input('clubRole')
+    const role: RoleType = request.input('roleType')
+
     const newUser = await User.create({
       membershipId: membershipId,
       firstname: firstname,
@@ -44,6 +50,25 @@ export default class UsersController {
       clubId: clubId,
       districtId: districtId,
     })
+
+    if (clubId !== null) {
+      let club = await Club.findOrFail(clubId)
+      await newUser.related('clubRole').attach({
+        [club.clubId]: {
+          club_role: clubRole,
+          role_type: role,
+        },
+      })
+    } else {
+      let district = await District.findOrFail(districtId)
+
+      await newUser.related('districtRole').attach({
+        [district.districtId]: {
+          club_role: clubRole,
+          role_type: role,
+        },
+      })
+    }
     return response.json({ created: 'a new user', newUser })
   }
 
@@ -96,6 +121,7 @@ export default class UsersController {
   public async destroy({ params, response }: HttpContextContract) {
     let old = await User.findOrFail(params.id)
     const userToBeDeleted = await User.findOrFail(params.id)
+    await userToBeDeleted.related('clubRole').detach()
     await userToBeDeleted.delete()
     return response.json({ Deleted: 'old user below', old })
   }

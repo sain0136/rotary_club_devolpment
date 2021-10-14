@@ -10,8 +10,8 @@ export default class ClubsController {
   public async create({}: HttpContextContract) {}
 
   public async store({ request, response }: HttpContextContract) {
-    const clubName = request.input('clubName')
-    const clubAddress = request.input('clubAddress')
+    const name = request.input('name')
+    const address = request.input('address')
     const clubCity = request.input('clubCity')
     const clubPostal = request.input('clubPostal')
     const clubProvince = request.input('clubProvince')
@@ -23,9 +23,9 @@ export default class ClubsController {
     const motherClub = request.input('motherClub')
     const districtId = request.input('districtId')
 
-    const newClubs = await Club.create({
-      clubName: clubName,
-      clubAddress: clubAddress,
+    const newClub = await Club.create({
+      clubName: name,
+      clubAddress: address,
       clubCity: clubCity,
       clubPostal: clubPostal,
       clubProvince: clubProvince,
@@ -37,7 +37,7 @@ export default class ClubsController {
       motherClub: motherClub,
       districtId: districtId,
     })
-    return response.json({ newClubs })
+    return response.json({ newClubs: newClub })
   }
 
   public async show({ response, params }: HttpContextContract) {

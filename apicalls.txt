@@ -1,0 +1,51 @@
+in postman or others first bracket must start on line 1
+// post create new user example , so post request /user
+{
+        "membershipId":12313,
+        "firstname":"John",
+        "lastname":"saint Rose ",
+        "address":"234 bluders ave",
+        "userCity":"cornwall",
+        "userPostal":"K4V 2VC",
+        "userProvince":"Ontario",
+        "userCountry":"Canada",
+        "phone":"613-330-5423",
+        "email":"jssr26@gmail.com",
+        "password":"jean123",
+        "districtId":1
+    }
+	     create new club  /club
+	{ 
+        "name": "Cornwall rotary",
+        "address": "1281 blvd",
+        "clubCity": "cornwall",
+        "clubPostal": "K^H 4V2",
+        "clubProvince": "Ontario",
+        "clubCountry": "Canada",
+        "clubPhone": "613-902-7832",
+        "clubDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n",
+        "clubEmail": "rotary@gmail.com",
+        "charterDate": "09/07/1989",
+        "motherClub": "indian club",
+        "districtId": 1
+	}
+	 all the other methods delete and get all the same if you want to find by one id you do for example user/1 
+	 
+	 //
+	{
+        "isThisDistrict": false,
+		"objectId":"1",
+	    "socialMediaType":1,
+		"linkUrl":"https://www.facebook.com/hnny"
+    }
+
+
+    {
+        "name": "Peter11",
+        "email": "2apo@apo.com",
+        "location": "location",
+        "meeting": "meeting",
+        "charterdate": "2021-10-09",
+        "president": "Apo",
+        "description": "Apo"
+    }

@@ -66,12 +66,22 @@ export default class Club extends BaseModel {
 
   @manyToMany(() => User, {
     pivotTable: 'club_role',
-    pivotColumns: ['club_role', 'role_id'],
+    pivotColumns: ['club_role', 'role_type'],
+    localKey: 'clubId',
+    relatedKey: 'userId',
+    pivotForeignKey: 'club_id',
+    pivotRelatedForeignKey: 'user_id',
+    pivotTimestamps: true,
   })
   public clubRole: ManyToMany<typeof User>
 
   @manyToMany(() => Url, {
     pivotTable: 'club_url',
+    localKey: 'clubId',
+    relatedKey: 'urlId',
+    pivotForeignKey: 'club_id',
+    pivotRelatedForeignKey: 'url_id',
+    pivotTimestamps: true,
   })
   public clubUrls: ManyToMany<typeof Url>
 
