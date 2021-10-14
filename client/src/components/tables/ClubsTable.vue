@@ -17,7 +17,10 @@
         <td>{{club.club_phone}}</td>
         <td>{{club.club_email}}</td>
         <td>{{club.club_description}}</td>
-        <td>Actions</td>
+        <td>
+          <button @click="deleteClub(club.club_id)">Delete</button>
+          <button>Update</button>
+        </td>
       </tr>
     </table>
   </div>
@@ -28,7 +31,7 @@ export default {
   name: 'ClubsTable',
   data() {
     return {
-      clubs: this.fetchClubs()
+      clubs: []
     }
   },
   methods: {
@@ -37,6 +40,10 @@ export default {
       const data = await res.json()
       return data.clubs
     },
+    async deleteClub(clubId) {
+      const clubDeleteVal = await fetch(`/api/club/${clubId}`, {method: 'DELETE'})
+      this.clubs = await this.fetchClubs()
+    }
   },
   async created() {
     this.clubs = await this.fetchClubs()

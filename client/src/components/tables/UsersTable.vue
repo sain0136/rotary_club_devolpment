@@ -19,7 +19,10 @@
         <td>{{user.address}}</td>
         <td>{{user.phone}}</td>
         <td>{{user.email}}</td>
-        <td>Actions</td>
+        <td>
+          <button @click="deleteUser(user.user_id)">Delete</button>
+          <button>Update</button>
+        </td>
       </tr>
     </table>
   </div>
@@ -30,16 +33,19 @@ export default {
   name: 'UsersTable',
   data() {
     return {
-      users: this.fetchUsers()
+      users: []
     }
   },
   methods: {
     async fetchUsers() {
       const res = await fetch('/api/user', {method: 'GET'})
       const data = await res.json()
-      console.log(data.allUsers)
       return data.allUsers
     },
+    async deleteUser(userId) {
+      const userDeleteVar = await fetch(`/api/user/${userId}`, {method: 'DELETE'})
+      this.users = await this.fetchUsers()
+    }
   },
   async created() {
     this.users = await this.fetchUsers()

@@ -1,20 +1,25 @@
 <template>
   <div class="container">
     <!-- Make a call to the API and generate these districts -->
-    <table>
+    <table contenteditable="true">
       <th>ID</th>
       <th>District Name</th>
       <th>Action</th>
       <tr 
+        id="district-info"
         v-for="district in districts"
         :key="district.district_id">
-        <td>{{district.district_id}}</td>  
-        <td>{{district.district_name}}</td>
-        <td>
+        <td contenteditable="false">{{district.district_id}}</td>  
+        <td id="district-name">{{district.district_name}}</td>
+        <td contenteditable="false">
           <router-link 
-            :to="`/district/${district.district_id}/home`" 
-            @click="$store.dispatch('changeCurrentDistrict', district.district_id)">
+            :to="`/`" 
+            @click="$store.dispatch('changeCurrentDistrict', district.district_id)"> <!-- in case the app scales, now it's always 1 -->
           Go</router-link>
+          <button
+            @click="updateRow(district.district_id)">
+            Update
+          </button>
         </td>
       </tr>
     </table>
@@ -35,7 +40,16 @@ export default {
       const res = await fetch('/api/district', { method: 'GET'})
       const data = await res.json()
       return data.districts
-    }
+    },
+    // async updateRow(rowId) {
+    //   const districtToUpdate = {
+    //     'district_name': document.querySelector('#district-name').innerHTML
+    //   }
+    //   const res = await fetch(`/api/district/${rowId}`, { 
+    //     method: 'PATCH',
+    //     body: districtToUpdate 
+    //   })
+    // }
   },
   async created() {
     this.districts = await this.fetchDistricts()
