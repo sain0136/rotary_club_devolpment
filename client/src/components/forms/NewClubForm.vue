@@ -1,10 +1,43 @@
 <template>
   <div>
     <form>
-      <label for="club-name">Club Name</label> <br>
+      <input type="number"
+        placeholder="District ID"
+        v-model="districtId"> <br> <br> 
       <input type="text"
-        v-model="clubName"> <br> <br>
-      <button @click="addNewClub">Submit</button>
+        placeholder="Mother Club"
+        v-model="motherClub"> <br> <br> 
+      <input type="text"
+        placeholder="Club Name"
+        v-model="name"> <br> <br>
+      <input type="text"
+        placeholder="Club Address"
+        v-model="address"> <br> <br>
+      <input type="text"
+        placeholder="Postal Code"
+        v-model="postal"> <br> <br>
+      <input type="text"
+        placeholder="Province"
+        v-model="province"> <br> <br>
+      <input type="text"
+        placeholder="City"
+        v-model="city"> <br> <br>
+      <input type="text"
+        placeholder="Country"
+        v-model="country"> <br> <br>
+      <input type="tel"
+        placeholder="Phone"
+        v-model="phone"> <br> <br>   
+      <input type="email"
+        placeholder="Email"
+        v-model="email"> <br> <br>
+      <input type="text"
+        placeholder="Description"
+        v-model="description"> <br> <br>
+      <input type="date"
+        placeholder="Charter Date"
+        v-model="charterDate"> <br> <br>
+      <button @click="createNewClub">Submit</button>
     </form>
   </div>
 </template>
@@ -20,24 +53,47 @@ export default {
   },
   data() {
     return {
-      clubName: '',
-      // more will be added
+      districtId: 1,
+      motherClub: '',
+      name: '',
+      address: '',
+      city: '',
+      postal: '',
+      province: '',
+      country: '',
+      phone: '',
+      description: '',
+      email: '',
+      charterDate: '',
     }
   },
   methods: {
-    async addNewClub(event) {
+    async createNewClub(event) {
       event.preventDefault()
       
-      let clubToAdd = {
-        name: this.clubName
+      let clubToCreate = {
+        districtId: this.districtId,
+        motherClub: this.motherClub,
+        clubName: this.name,
+        clubAddress: this.address,
+        clubCity: this.city,
+        clubPostal: this.postal,
+        clubProvince: this.province,
+        clubCountry: this.country,
+        clubPhone: this.phone,
+        clubDescription: this.description,
+        clubEmail: this.email,
+        charterDate: this.charterDate
       }
 
-      const res = await fetch(`/api/districts/${store.state.currentDistrictId}/clubs`, { 
+      const res = await fetch('/api/club', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clubToAdd)})
+        body: JSON.stringify(clubToCreate)})
 
-      this.$router.push(`/district/${store.state.currentDistrictId}/clubs`);
+      console.log(res)
+
+      this.$router.push('/admin/viewclubs');
     }
   }
 }

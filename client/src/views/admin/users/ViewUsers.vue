@@ -1,5 +1,10 @@
 <template>
   <div>
+    <button id="create-user"
+    @click="() => {this.$router.push('/admin/createuser')}">
+      Create User
+    </button> 
+    <br> <br>
     <div class="select-districts">
       <!-- <label for="clubs">Clubs</label> <br>
       <select @change="filterWithClub($event)">
@@ -54,6 +59,10 @@ export default {
 
 .select-districts {
   text-align: center;
+}
+
+#create-user {
+  margin-left: 50%;
 }
 
 </style>

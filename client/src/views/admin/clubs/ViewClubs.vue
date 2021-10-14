@@ -1,5 +1,10 @@
 <template>
   <div>
+    <button id="create-user"
+    @click="() => {this.$router.push('/admin/createclub')}">
+      Create Club
+    </button> 
+    <br> <br>
     <div class="select-districts">
       <!-- <label for="clubs">Clubs</label> <br>
       <select @change="filterWithClub($event)">
