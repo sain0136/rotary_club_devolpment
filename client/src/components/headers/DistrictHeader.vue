@@ -7,11 +7,20 @@
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
       <li><router-link class="link" to="contactus">Contact Us</router-link></li>
 
-      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="newclub">New Club</router-link></li>
-      <li v-if="$store.state.isDistrictAdminLoggedIn"><router-link class="link" to="clubs">Edit Clubs</router-link></li>
+      <li v-if="$store.state.isDistrictAdminLoggedIn">
+        <router-link class="link" to="newclub">New Club</router-link>
+      </li>
+      <li v-if="$store.state.isDistrictAdminLoggedIn">
+        <router-link class="link" to="clubs">Edit Clubs</router-link></li>
 
-      <li><router-link class="link" to="login">Login</router-link></li>
-      <li v-if="$store.state.isDistrictAdminLoggedIn"><button class="link" @click="logout">Logout</button></li>
+      <li
+        v-if="!$store.state.isSiteAdminLoggedIn">
+        <router-link class="link" to="login">Login</router-link>
+      </li>
+      <li 
+        v-if="$store.state.isDistrictAdminLoggedIn">
+        <button class="link" @click="logout">Logout</button>
+      </li>
 
       <li class="search-button"><font-awesome-icon icon="search" /></li>
   </ul>
@@ -32,7 +41,7 @@ export default {
   methods: {
     logout() {
       store.dispatch('logout', 1)
-      this.$router.push(`/district/${store.state.currentDistrictId}/login`);
+      this.$router.push(`/login`);
     }
   },
   async created() {

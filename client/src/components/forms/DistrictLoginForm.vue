@@ -36,7 +36,7 @@ export default {
         password: this.password,
         roleId: 1
       })
-      this.$router.push(`/district/${store.state.currentDistrictId}/newclub`);
+      this.$router.push(`/`);
     }
   }
 }
