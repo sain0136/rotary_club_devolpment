@@ -32,7 +32,25 @@ in postman or others first bracket must start on line example:
 				"roleType":1
     }
     {
-        ////////////////////////////////////////////////////////club admin ex
+CLUB MEMBER EXAMPLE
+       "membershipId":25255,
+        "firstname":"Frank",
+        "lastname":"Islo",
+        "address":"343 bluders ave",
+        "userCity":"cornwall",
+        "userPostal":"K4V 2VC",
+        "userProvince":"Ontario",
+        "userCountry":"Canada",
+        "phone":"613-330-5423",
+        "email":"reADV@gmail.com",
+        "password":"jean123",
+        "districtId":1,
+	
+				"clubRole":"TREASURY",
+				"roleType":2
+
+}
+    {///club admin ex
         {
      "membershipId":465456,
         "firstname":"Kely",
@@ -70,6 +88,7 @@ in postman or others first bracket must start on line example:
 	 all the other methods delete and get all the same if you want to find by one id you do for example user/1 
 	 
 	 //
+     create a url post 
 	{
         "isThisDistrict": false,
 		"objectId":"1",
@@ -77,7 +96,7 @@ in postman or others first bracket must start on line example:
 		"linkUrl":"https://www.facebook.com/hnny"
     }
 
-
+        create a district 
     {
         "name": "Peter11",
         "email": "2apo@apo.com",
@@ -87,3 +106,77 @@ in postman or others first bracket must start on line example:
         "president": "Apo",
         "description": "Apo"
     }
+
+        create a pledge 
+
+        create a pldge by user 
+http://127.0.0.1:3333/pledge
+post
+            {
+    "pledgeAmount": 1001,
+	"projectId": 2,
+	"userId":6 
+}
+
+show Pledges for a user for one project 
+http://127.0.0.1:3333/pledge/user
+post
+      {
+{
+
+	"projectId": 2,
+	"userId":6
+}
+
+      }
+
+      Delete a pledge by its id 
+      http://127.0.0.1:3333/pledge/1
+      delete method 
+
+      [
+       {
+
+	"projectId": 2,
+	"pledgeId":6
+} 
+      ]
+
+
+
+    See all the pledges by every Project ---This is a huge call to the database though
+           http://127.0.0.1:3333/pledge/
+           get metho 
+           this will return json with associaed array of pledges 
+
+
+See a project and all the pleges on this project 
+                 http://127.0.0.1:3333/pledge/project/
+                 post
+{
+
+	"projectId": 8
+
+}
+
+
+CREATE A NEW PROJOECT 
+http://127.0.0.1:3333/project/
+POST
+
+{
+
+    "projectName":"lIBERATION FORCE",
+	"projectTheme":"hUMANITARIAN",
+	"grantType":1,
+	"pdfLabel":"sfds/DFD",
+	"fundingGoal":10000,
+	"currentFunds":0,
+	"createdBy":11,
+	"region":"AFRICA",
+	"rotaryYear":"2021",
+    
+	"roleType":1
+	
+
+}
