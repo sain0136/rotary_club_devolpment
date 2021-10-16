@@ -17,7 +17,13 @@ export default class Clubs extends BaseSchema {
       table.string('club_description', 1000).nullable()
       table.string('charter_date').nullable()
       table.string('mother_club', 50).nullable()
-      table.integer('district_id', 50).unsigned().references('district_id').inTable('district')
+      table
+        .integer('district_id', 50)
+        .unsigned()
+        .references('district_id')
+        .inTable('district')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }

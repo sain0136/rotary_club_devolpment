@@ -1,5 +1,19 @@
-in postman or others first bracket must start on line 1
-// post create new user example , so post request /user
+in postman or others first bracket must start on line example:
+1{
+"jh":"lj"
+}
+2
+---------> http://127.0.0.1:3333/district/            district cALL
+{
+        "name":"District 4052",
+        "location":"Pc center",
+        "meeting":"Pc center",
+        "charterdate":"Pc center",
+        "email":"jssr26@gmail.com",
+        "description":"These are better (and almost always) handled at the database level instead of the application level. It's the job of the DBMS to enforce this kind of referential integrity assuming you define your schema correctly so that entities are correctly linked together, via foreign keys."
+
+    }
+// post create new user example , so post request http://127.0.0.1:3333/user/ 
 {
         "membershipId":12313,
         "firstname":"John",
@@ -12,9 +26,33 @@ in postman or others first bracket must start on line 1
         "phone":"613-330-5423",
         "email":"jssr26@gmail.com",
         "password":"jean123",
-        "districtId":1
+        "districtId":1,
+	
+				"districtRole":"District Admin",
+				"roleType":1
     }
-	     create new club  /club
+    {
+        ////////////////////////////////////////////////////////club admin ex
+        {
+     "membershipId":465456,
+        "firstname":"Kely",
+        "lastname":"saint Rose ",
+        "address":"234 bluders ave",
+        "userCity":"cornwall",
+        "userPostal":"K4V 2VC",
+        "userProvince":"Ontario",
+        "userCountry":"Canada",
+        "phone":"613-330-5423",
+        "email":"jssr26@gmail.com",
+        "password":"jean123",
+        "clubId":3,
+	
+				"clubRole":"club Admin",
+				"roleType":1
+}
+////////////////////////////////////////////////
+    }
+	     create new club  http://127.0.0.1:3333/club/ 
 	{ 
         "name": "Cornwall rotary",
         "address": "1281 blvd",

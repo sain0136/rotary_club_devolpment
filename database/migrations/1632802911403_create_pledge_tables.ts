@@ -14,6 +14,8 @@ export default class Pledge extends BaseSchema {
         .unsigned()
         .references('project_id')
         .inTable('project')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }

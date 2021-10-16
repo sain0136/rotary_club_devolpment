@@ -50,6 +50,11 @@ export default class District extends BaseModel {
   @manyToMany(() => User, {
     pivotTable: 'district_role',
     pivotColumns: ['district_role', 'role_id'],
+    localKey: 'districtId',
+    relatedKey: 'userId',
+    pivotForeignKey: 'district_id',
+    pivotRelatedForeignKey: 'user_id',
+    pivotTimestamps: true,
   })
   public districtRole: ManyToMany<typeof User>
 

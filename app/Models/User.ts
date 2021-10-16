@@ -88,18 +88,33 @@ export default class User extends BaseModel {
   @manyToMany(() => District, {
     pivotTable: 'district_role',
     pivotColumns: ['district_role', 'role_id'],
+    localKey: 'userId',
+    relatedKey: 'districtId',
+    pivotForeignKey: 'user_id',
+    pivotRelatedForeignKey: 'district_id',
+    pivotTimestamps: true,
   })
   public districtRole: ManyToMany<typeof District>
 
   @manyToMany(() => Project, {
     pivotTable: 'project_role',
     pivotColumns: ['role', 'projectrole_id'],
+    localKey: 'userId',
+    relatedKey: 'projectId',
+    pivotForeignKey: 'user_id',
+    pivotRelatedForeignKey: 'project_id',
+    pivotTimestamps: true,
   })
   public projectRole: ManyToMany<typeof Project>
 
   @manyToMany(() => Project, {
     pivotTable: 'pledge',
     pivotColumns: ['pledge_id', 'pledge_amount'],
+    localKey: 'userId',
+    relatedKey: 'projectId',
+    pivotForeignKey: 'user_id',
+    pivotRelatedForeignKey: 'project_id',
+    pivotTimestamps: true,
   })
   public pledges: ManyToMany<typeof Project>
 

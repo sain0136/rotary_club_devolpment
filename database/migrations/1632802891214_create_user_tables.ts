@@ -18,13 +18,22 @@ export default class User extends BaseSchema {
       table.string('email', 50).notNullable()
       table.string('password', 255).notNullable()
       //table.integer('role_id', 50).nullable().unsigned().references('role_id').inTable('club_role')
-      table.integer('club_id', 50).nullable().unsigned().references('club_id').inTable('club')
+      table
+        .integer('club_id', 50)
+        .nullable()
+        .unsigned()
+        .references('club_id')
+        .inTable('club')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table
         .integer('district_id', 50)
         .nullable()
         .unsigned()
         .references('district_id')
         .inTable('district')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }

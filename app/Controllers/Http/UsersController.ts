@@ -12,7 +12,7 @@ export default class UsersController {
   public async create({}: HttpContextContract) {}
 
   public async jsonGetById({ request, response }: HttpContextContract) {
-    const id = request.input('id')
+    const id: number = request.input('id')
     const userById = await User.findOrFail(id)
     return response.json({ userById })
   }
@@ -32,6 +32,7 @@ export default class UsersController {
     const clubId = request.input('clubId')
     const districtId = request.input('districtId')
 
+    const districtRole = request.input('districtRole')
     const clubRole = request.input('clubRole')
     const role: RoleType = request.input('roleType')
 
@@ -51,7 +52,7 @@ export default class UsersController {
       districtId: districtId,
     })
 
-    if (clubId !== null) {
+    if (clubId !== null && clubId !== undefined) {
       let club = await Club.findOrFail(clubId)
       await newUser.related('clubRole').attach({
         [club.clubId]: {
@@ -59,22 +60,26 @@ export default class UsersController {
           role_type: role,
         },
       })
-    } else {
+    } else if (districtId !== null && districtId !== undefined) {
       let district = await District.findOrFail(districtId)
 
       await newUser.related('districtRole').attach({
         [district.districtId]: {
-          club_role: clubRole,
+          district_role: districtRole,
           role_type: role,
         },
       })
     }
-    return response.json({ created: 'a new user', newUser })
+
+    const roleTitle = async (role: number) => {
+      return RoleType[role]
+    }
+
+    return response.json({ created: 'a new user', newUser, AdminType: await roleTitle(role) })
   }
 
   public async show({ params, response }: HttpContextContract) {
     const userById = await User.findOrFail(params.id)
-
     return response.json({ userById })
   }
 
@@ -118,11 +123,19 @@ export default class UsersController {
     return response.json({ updatedUser, Hello: 'old file below', old })
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ request, params, response }: HttpContextContract) {
+    const isThisDistrict: boolean = request.input('isThisDistrict')
     let old = await User.findOrFail(params.id)
-    const userToBeDeleted = await User.findOrFail(params.id)
-    await userToBeDeleted.related('clubRole').detach()
-    await userToBeDeleted.delete()
-    return response.json({ Deleted: 'old user below', old })
+    if (isThisDistrict) {
+      const userToBeDeleted = await District.findOrFail(params.id)
+      await userToBeDeleted.related('districtRole').detach()
+      await userToBeDeleted.delete()
+      return response.json({ Deleted: 'old user below', old })
+    } else {
+      const userToBeDeleted = await User.findOrFail(params.id)
+      await userToBeDeleted.related('clubRole').detach()
+      await userToBeDeleted.delete()
+      return response.json({ Deleted: 'old user below', old })
+    }
   }
 }

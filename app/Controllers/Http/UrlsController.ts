@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
 import District from 'App/Models/District'
 import Url from 'App/Models/Url'
+import SocialMedia from 'Contracts/Enums/SocialMedia'
 
 export default class UrlsController {
   public async index({}: HttpContextContract) {}
@@ -11,7 +12,7 @@ export default class UrlsController {
   public async store({ request, response }: HttpContextContract) {
     const isThisDistrict: Boolean = request.input('isThisDistrict')
     const objectId = request.input('objectId')
-    const socialMediaType = request.input('socialMediaType')
+    const socialMediaType: SocialMedia = request.input('socialMediaType')
     const linkUrl = request.input('linkUrl')
 
     const url = await Url.create({
@@ -26,14 +27,47 @@ export default class UrlsController {
 
       await url.related('clubUrls').attach([club.clubId])
     }
-    return response.json({ url })
+    const urlTitle = async (socialMediaType: number) => {
+      return SocialMedia[socialMediaType]
+    }
+    return response.json({ url, RELTYPE: (await urlTitle(socialMediaType)) + ' link' })
   }
 
-  public async show({}: HttpContextContract) {}
+  public async show({ params, response }: HttpContextContract) {
+    const urlById = await Url.findOrFail(params.id)
+    return response.json({ urlById })
+  }
 
   public async edit({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update({ request, params, response }: HttpContextContract) {
+    const socialMediaType = request.input('socialMediaType')
+    const linkUrl = request.input('linkUrl')
+    let old = await Url.findOrFail(params.id)
 
-  public async destroy({}: HttpContextContract) {}
+    const urlToBeUpdated = await Url.findOrFail(params.id)
+    const updatedUser = await urlToBeUpdated
+      .merge({
+        url: linkUrl,
+        urlType: socialMediaType,
+      })
+      .save()
+    return response.json({ updatedUser, Hello: 'old file below', old })
+  }
+
+  public async destroy({ request, params, response }: HttpContextContract) {
+    let oldUrl = await Url.findOrFail(params.id)
+    const isThisDistrict = request.input('isThisDistrict')
+    if (!isThisDistrict) {
+      const urlToBeDeleted = await Url.findOrFail(params.id)
+      await urlToBeDeleted.related('clubUrls').detach()
+      await urlToBeDeleted.delete()
+      return response.json({ Deleted: 'old url below', oldUrl })
+    } else {
+      const urlToBeDeleted = await Url.findOrFail(params.id)
+      await urlToBeDeleted.related('districtUrls').detach()
+      await urlToBeDeleted.delete()
+      return response.json({ Deleted: 'old url below', oldUrl })
+    }
+  }
 }

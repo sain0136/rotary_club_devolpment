@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import GrantType from 'Contracts/Enums/ProjectType'
+import GrantType from 'Contracts/Enums/GrantType'
 import User from './User'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
@@ -10,31 +10,31 @@ export default class Project extends BaseModel {
   public projectId: number
 
   @column()
-  public project_name: string
+  public projectName: string
 
   @column()
-  public project_theme: string
+  public projectTheme: string
 
   @column()
-  public grant_type: GrantType
+  public grantType: GrantType
 
   @column()
-  public pdf_label?: string
+  public pdfLabel?: string
 
   @column()
-  public funding_goal: number
+  public fundingGoal: number
 
   @column()
-  public current_funds: number
+  public currentFunds: number
 
   @column()
-  public created_by: string
+  public createdBy: string
 
   @column()
   public region: string
 
   @column()
-  public rotary_year: string
+  public rotaryYear: string
 
   @column()
   public currency: string
@@ -48,12 +48,22 @@ export default class Project extends BaseModel {
   @manyToMany(() => User, {
     pivotTable: 'project_role',
     pivotColumns: ['role', 'projectrole_id'],
+    localKey: 'projectId',
+    relatedKey: 'userId',
+    pivotForeignKey: 'project_id',
+    pivotRelatedForeignKey: 'user_id',
+    pivotTimestamps: true,
   })
   public projectRole: ManyToMany<typeof User>
 
   @manyToMany(() => User, {
     pivotTable: 'pledge',
     pivotColumns: ['pledge_id', 'pledge_amount'],
+    localKey: 'projectId',
+    relatedKey: 'userId',
+    pivotForeignKey: 'project_id',
+    pivotRelatedForeignKey: 'user_id',
+    pivotTimestamps: true,
   })
   public pledges: ManyToMany<typeof User>
 }
