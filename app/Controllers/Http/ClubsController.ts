@@ -64,20 +64,22 @@ export default class ClubsController {
     const motherClub = request.input('motherClub')
     const districtId = request.input('districtId')
 
-    const updatedClub = await clubToBeUpdated.merge({
-      clubName: clubName,
-      clubAddress: clubAddress,
-      clubCity: clubCity,
-      clubPostal: clubPostal,
-      clubProvince: clubProvince,
-      clubCountry: clubCountry,
-      clubPhone: clubPhone,
-      clubDescription: clubDescription,
-      clubEmail: clubEmail,
-      charterDate: charterDate,
-      motherClub: motherClub,
-      districtId: districtId,
-    })
+    const updatedClub = await clubToBeUpdated
+      .merge({
+        clubName: clubName,
+        clubAddress: clubAddress,
+        clubCity: clubCity,
+        clubPostal: clubPostal,
+        clubProvince: clubProvince,
+        clubCountry: clubCountry,
+        clubPhone: clubPhone,
+        clubDescription: clubDescription,
+        clubEmail: clubEmail,
+        charterDate: charterDate,
+        motherClub: motherClub,
+        districtId: districtId,
+      })
+      .save()
 
     return response.json({ updatedClub, Hello: 'pre-update club below', old })
   }
