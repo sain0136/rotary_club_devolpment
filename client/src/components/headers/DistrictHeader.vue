@@ -65,7 +65,7 @@ img {
 }
 
 nav {
-  background-color: white;
+  background-color: rgb(74, 233, 180);
   height: 8%;
 }
 
