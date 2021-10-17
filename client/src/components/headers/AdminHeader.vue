@@ -1,34 +1,42 @@
 <template>
   <nav>
     <ul>
-      <li><img class="logo" src="../../assets/admin-logo.png"></li>
-      <li><router-link class="link" to="/admin/viewdistricts">View Districts</router-link></li>
-      <li><router-link class="link" to="/admin/viewusers">View Users</router-link></li>
-      <li><router-link class="link" to="/admin/viewclubs">View Clubs</router-link></li>
+      <li><img class="logo" src="../../assets/admin-logo.png" /></li>
+      <li>
+        <router-link class="link" to="/admin/viewdistricts">
+          Administer Districts</router-link
+        >
+      </li>
+      <li>
+        <router-link class="link" to="/admin/viewusers"
+          >Manage District Admins</router-link
+        >
+      </li>
+      <!--      <li>
+        <router-link class="link" to="/admin/viewclubs">View Clubs</router-link>
+      </li> -->
       <li v-if="$store.state.isSiteAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
       </li>
-  </ul>
+    </ul>
   </nav>
 </template>
 
 <script>
-
-import store from '../../store/index'
+import store from "../../store/index";
 
 export default {
   name: "AdminHeader",
   methods: {
     logout() {
-      store.dispatch('logout', 0)
-      this.$router.push('/adminlogin')
-    }
-  }
-}
+      store.dispatch("logout", 0);
+      this.$router.push("/adminlogin");
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 img {
   height: 100px;
 }
@@ -52,7 +60,7 @@ li {
 .link {
   text-decoration: none;
   color: black;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 16px;
   transition: color 0.5s;
 }
@@ -61,5 +69,4 @@ li {
   color: #ffb607;
   transition: color 0.5s;
 }
-
 </style>

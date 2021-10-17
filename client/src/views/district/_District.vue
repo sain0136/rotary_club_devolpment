@@ -1,22 +1,27 @@
 <template>
   <div>
-    <DistrictHeader/>
+    <DistrictHeader />
     <!-- <router-link to=></router-link> -->
     <router-view></router-view>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
 <script>
-import DistrictHeader from '../../components/headers/DistrictHeader.vue'
-import Footer from '../../components/Footer.vue'
+import DistrictHeader from "../../components/headers/DistrictHeader.vue";
+import Footer from "../../components/Footer.vue";
 
 export default {
-  name: '_District',
+  name: "_District",
   components: {
     DistrictHeader,
-    Footer
-  }
-}
-
+    Footer,
+  },
+};
 </script>
+
+<style scoped>
+div {
+  background-color: rgb(118, 255, 255);
+}
+</style>

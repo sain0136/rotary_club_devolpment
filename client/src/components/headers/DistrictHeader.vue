@@ -1,8 +1,14 @@
 <template>
   <nav>
     <ul>
-      <li><h1>District: {{ this.districtName }}</h1>  </li>
-      <li><router-link class="link" to="home">Home</router-link></li>
+      <li>
+        <h1>District: {{ this.districtName }}</h1>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary">
+          <router-link class="link" to="home">Home</router-link>
+        </button>
+      </li>
       <li><router-link class="link" to="about">About</router-link></li>
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
       <li><router-link class="link" to="contactus">Contact Us</router-link></li>
@@ -11,50 +17,49 @@
         <router-link class="link" to="newclub">New Club</router-link>
       </li>
       <li v-if="$store.state.isDistrictAdminLoggedIn">
-        <router-link class="link" to="clubs">Edit Clubs</router-link></li>
+        <router-link class="link" to="clubs">Edit Clubs</router-link>
+      </li>
 
-      <li
-        v-if="!$store.state.isSiteAdminLoggedIn">
+      <li v-if="!$store.state.isSiteAdminLoggedIn">
         <router-link class="link" to="login">Login</router-link>
       </li>
-      <li 
-        v-if="$store.state.isDistrictAdminLoggedIn">
+      <li v-if="$store.state.isDistrictAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
       </li>
 
       <li class="search-button"><font-awesome-icon icon="search" /></li>
-  </ul>
-  </nav>  
+    </ul>
+  </nav>
 </template>
 
 <script>
-
-import store from '../../store/index'
+import store from "../../store/index";
 
 export default {
   name: "DistrictHeader",
   data() {
     return {
-      districtName: null
-    }
+      districtName: null,
+    };
   },
   methods: {
     logout() {
-      store.dispatch('logout', 1)
+      store.dispatch("logout", 1);
       this.$router.push(`/login`);
-    }
+    },
   },
   async created() {
-    const res = await fetch(`/api/district/${store.state.currentDistrictId}`, { method: 'GET'})
-    const data = await res.json()
-    this.districtName = data.districtById.district_name
-    console.log('District name: ', this.districtName)
-  }
-}
+    const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    this.districtName = data.districtById.district_name;
+    console.log("District name: ", this.districtName);
+  },
+};
 </script>
 
 <style>
-
 img {
   height: 100px;
 }
@@ -78,7 +83,7 @@ li {
 .link {
   text-decoration: none;
   color: black;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 16px;
   transition: color 0.5s;
 }
@@ -95,6 +100,4 @@ li {
 #logout:hover {
   cursor: pointer;
 }
-
-
 </style>
