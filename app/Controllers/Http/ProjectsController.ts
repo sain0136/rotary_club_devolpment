@@ -70,8 +70,8 @@ export default class ProjectsController {
   }
 
   public async showAllProjectsByUser({ params, response }: HttpContextContract) {
-    const ProjectById = await Project.findOrFail(params.id)
-    return response.json({ ProjectById })
+    const ProjectsById = await Project.findOrFail(params.id)
+    return response.json({ ProjectsById })
   }
 
   public async edit({}: HttpContextContract) {}

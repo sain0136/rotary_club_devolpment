@@ -1,9 +1,9 @@
 in postman or others first bracket must start on line example:
 1{
-"jh":"lj"
 }
 2
 ---------> http://127.0.0.1:3333/district/            district cALL
+post
 {
         "name":"District 4052",
         "location":"Pc center",
@@ -91,7 +91,7 @@ CLUB MEMBER EXAMPLE
      create a url post 
 	{
         "isThisDistrict": false,
-		"objectId":"1",
+		"objectId":1,
 	    "socialMediaType":1,
 		"linkUrl":"https://www.facebook.com/hnny"
     }

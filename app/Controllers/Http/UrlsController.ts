@@ -11,7 +11,7 @@ export default class UrlsController {
 
   public async store({ request, response }: HttpContextContract) {
     const isThisDistrict: Boolean = request.input('isThisDistrict')
-    const objectId = request.input('objectId')
+    const objectId: number = request.input('objectId')
     const socialMediaType: SocialMedia = request.input('socialMediaType')
     const linkUrl = request.input('linkUrl')
 
