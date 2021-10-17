@@ -3,7 +3,7 @@ import Project from 'App/Models/Project'
 import User from 'App/Models/User'
 
 export default class PledgesController {
-  public async index({ request, response }: HttpContextContract) {
+  public async index({ response }: HttpContextContract) {
     const allProjects: Project[] = await Project.all()
     for (const project of allProjects) {
       const pledges: object[] = await project
