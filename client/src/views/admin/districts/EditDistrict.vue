@@ -1,6 +1,5 @@
 <template>
   <div>
-    Edit District
     <DistrictForm isEditOrCreate='Edit'/>
   </div>
 </template>

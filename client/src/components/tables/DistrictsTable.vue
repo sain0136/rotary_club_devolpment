@@ -56,10 +56,12 @@ export default {
       this.$router.push('editdistrict')
     },
     async deleteDistrict(districtId) {
-      const res = await fetch(`/api/district/${districtId}`, {
-        method: 'DELETE'
-      })
-      this.districts = await this.fetchDistricts()
+      if(confirm(`Are you sure you want to delete district ${districtId}?`)) {
+        const res = await fetch(`/api/district/${districtId}`, {
+          method: 'DELETE'
+        })
+        this.districts = await this.fetchDistricts()
+      }
     },
     // async updateRow(rowId) {
     //   const districtToUpdate = {

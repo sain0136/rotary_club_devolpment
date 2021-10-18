@@ -29,6 +29,10 @@
         @click="updateExistingDistrict">
         Update
       </button>
+      <button
+        @click="() => this.$router.push('viewdistricts')">
+        Cancel
+      </button>
     </form>
   </div>
 </template>
