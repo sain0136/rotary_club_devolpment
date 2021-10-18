@@ -8,9 +8,9 @@ import ViewClubs from '../views/admin/clubs/ViewClubs'
 import CreateClub from '../views/admin/clubs/CreateClub'
 import EditClub from '../views/admin/clubs/EditClub'
 
-import ViewUsers from '../views/admin/users/ViewUsers'
-import CreateUser from '../views/admin/users/CreateUser'
-import EditUser from '../views/admin/users/EditUser'
+import ViewDistrictAdmins from '../views/admin/district_admins/ViewDistrictAdmins'
+import CreateDistrictAdmin from '../views/admin/district_admins/CreateDistrictAdmin'
+import EditDistrictAdmin from '../views/admin/district_admins/EditDistrictAdmin'
 
 import store from '../store/index'
 
@@ -57,16 +57,16 @@ export default {
     },
     //Users
     {
-      path: 'viewusers',
-      component: ViewUsers
+      path: 'viewdistrictadmins',
+      component: ViewDistrictAdmins
     },
     {
-      path: 'createuser',
-      component: CreateUser,
+      path: 'createdistrictadmin',
+      component: CreateDistrictAdmin,
     },
     {
-      path: 'edituser',
-      component: EditUser,
+      path: 'editdistrictadmin',
+      component: EditDistrictAdmin,
     },
   ]
 }

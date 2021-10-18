@@ -1,7 +1,7 @@
 <template>
   <div>
     <button id="create-user"
-    @click="() => {this.$router.push('/admin/createuser')}">
+    @click="() => {this.$router.push('/admin/createdistrictadmin')}">
       Create User
     </button> 
     <br> <br>
@@ -15,19 +15,19 @@
         </option>
       </select> -->
     </div>
-    <UsersTable/>
+    <DistrictAdminsTable/>
   </div>
 </template>
 
 <script>
 
-import UsersTable from '../../../components/tables/UsersTable.vue'
+import DistrictAdminsTable from '../../../components/tables/DistrictAdminsTable.vue'
 import store from '../../../store/index'
 
 export default {
-  name: 'ViewUsers',
+  name: 'ViewDistrictAdmins',
   components: {
-    UsersTable
+    DistrictAdminsTable
   },
   data() {
     return {

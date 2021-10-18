@@ -8,7 +8,7 @@
         >
       </li>
       <li>
-        <router-link class="link" to="/admin/viewusers"
+        <router-link class="link" to="/admin/viewdistrictadmins"
           >Manage District Admins</router-link
         >
       </li>

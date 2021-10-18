@@ -21,7 +21,7 @@
             Delete
           </button>
           <button
-            @click="goToEditDistrictPage(district.district_id)">
+            @click="goToEditDistrictAdminPage(district.district_id)">
             Edit
           </button>
         </td>
@@ -51,7 +51,7 @@ export default {
       store.dispatch('changeCurrentDistrict', districtId)
       this.$router.push('/')
     },
-    goToEditDistrictPage(districtId) {
+    goToEditDistrictAdminPage(districtId) {
       store.dispatch('changeCurrentDistrict', districtId)
       this.$router.push('editdistrict')
     },
@@ -63,17 +63,6 @@ export default {
         this.districts = await this.fetchDistricts()
       }
     },
-    // async updateRow(rowId) {
-    //   const districtToUpdate = {
-    //     district_name : document.querySelector('#district-name').innerHTML
-
-    //   }
-    //   const res = await fetch(`/api/district/${rowId}`, { 
-    //     method: 'PATCH',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(districtToUpdate)
-    //   })
-    // }
   },
   async created() {
     this.districts = await this.fetchDistricts()

@@ -1,28 +1,26 @@
 <template>
   <div class="container">
     <!-- Make a call to the API and generate these districts -->
-    <table key="$store.state.currentDistrictId">
+    <table>
       <th>ID</th>
       <th>District ID</th>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Password</th>
+      <th>Admin Name</th>
       <th>Action</th>
       <tr 
         v-for="admin in admins"
-        :key="admin.id">
-        <!-- <td>{{admin.districtId}}</td>   -->
-        <td>{{admin.id}}</td>
-        <td>{{$store.state.currentDistrictId}}</td>
-        <td>{{admin.name}}</td>
-        <td>{{admin.username}}</td>
-        <td>{{admin.password}}</td>
-
+        :key="admin.user_id">
+        <td>{{admin.user_id}}</td>
+        <td>{{admin.district_id}}</td>
+        <td>{{admin.firstname + ' ' + admin.lastname}}</td>
         <td>
-          <!-- <router-link 
-            :to="`/club/${club.id}/home`" 
-            @click="$store.dispatch('changeCurrentClub', club.id)">
-          Delete</router-link> -->
+          <button
+            @click="deleteAdmin(admin.user_id)">
+            Delete
+          </button>
+          <button
+            @click="goToEditDistrictAdminPage(admin.user_id)">
+            Edit
+          </button>
         </td>
       </tr>
     </table>
@@ -42,13 +40,25 @@ export default {
   },
   methods: {
     async fetchAdmins() {
-      const res = await fetch(
-        `/api/districts/${store.state.currentDistrictId}/users`, 
-        { method: 'GET'}
-      )
-      console.log('Fetching: ', store.state.currentDistrictId)
+      const res = await fetch('/api/user', { method: 'GET'})
       const data = await res.json()
-      return data
+
+      const allUsers = await data.allUsers
+      // const districtAdmins = await allUsers.filter(user => user.role_type == 1)
+
+      return data.allUsers
+    },
+    async deleteAdmin(userId) {
+      if(confirm(`Are you sure you want to delete admin ${userId}?`)) {
+        const res = await fetch(`/api/user/${userId}`, {
+          method: 'DELETE'
+        })
+        this.admins = await this.fetchAdmins()
+      }
+    },
+    async goToEditDistrictAdminPage(userId) {
+      store.dispatch('changeCurrentUserIdToEdit', userId)
+      this.$router.push('editdistrictadmin')
     }
   },
   async created() {
@@ -60,13 +70,17 @@ export default {
 </script>
 
 <style scoped>
-
+/* 
 table {
-  margin: auto;
-}
+  margin-left: auto;
+} */
 
 td {
   width: 25%;
+}
+
+table {
+  margin: auto;
 }
 
 </style>
