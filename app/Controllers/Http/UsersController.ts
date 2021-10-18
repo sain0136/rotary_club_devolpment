@@ -18,23 +18,23 @@ export default class UsersController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const membershipId = request.input('membershipId')
+    const membershipId = request.input('membership_id')
     const firstname = request.input('firstname')
     const lastname = request.input('lastname')
     const address = request.input('address')
-    const userCity = request.input('userCity')
-    const userPostal = request.input('userPostal')
-    const userProvince = request.input('userProvince')
-    const userCountry = request.input('userCountry')
+    const userCity = request.input('user_city')
+    const userPostal = request.input('user_postal')
+    const userProvince = request.input('user_province')
+    const userCountry = request.input('user_country')
     const phone = request.input('phone')
     const email = request.input('email')
     const password = request.input('password')
-    const clubId = request.input('clubId')
-    const districtId = request.input('districtId')
+    const clubId = request.input('club_id')
+    const districtId = request.input('district_id')
 
-    const districtRole = request.input('districtRole')
-    const clubRole = request.input('clubRole')
-    const role: RoleType = request.input('roleType')
+    const districtRole = request.input('district_role')
+    const clubRole = request.input('club_role')
+    const role: RoleType = request.input('role_type')
 
     const newUser = await User.create({
       membershipId: membershipId,
@@ -75,7 +75,7 @@ export default class UsersController {
       return RoleType[role]
     }
 
-    return response.json({ created: 'a new user', newUser, AdminType: await roleTitle(role) })
+    return response.json({ created: 'a new user', newUser, Admin_type: await roleTitle(role) })
   }
 
   public async show({ params, response }: HttpContextContract) {
@@ -88,19 +88,19 @@ export default class UsersController {
   public async update({ request, params, response }: HttpContextContract) {
     let old = await User.findOrFail(params.id)
     const userToBeUpdated = await User.findOrFail(params.id)
-    const membershipId = request.input('membershipId')
+    const membershipId = request.input('membership_id')
     const firstname = request.input('firstname')
     const lastname = request.input('lastname')
     const address = request.input('address')
-    const userCity = request.input('userCity')
-    const userPostal = request.input('userPostal')
-    const userProvince = request.input('userProvince')
-    const userCountry = request.input('userCountry')
+    const userCity = request.input('user_city')
+    const userPostal = request.input('user_postal')
+    const userProvince = request.input('user_province')
+    const userCountry = request.input('user_country')
     const phone = request.input('phone')
     const email = request.input('email')
     const password = request.input('password')
-    const clubId = request.input('clubId')
-    const districtId = request.input('districtId')
+    const clubId = request.input('club_id')
+    const districtId = request.input('district_id')
 
     const updatedUser = await userToBeUpdated
       .merge({

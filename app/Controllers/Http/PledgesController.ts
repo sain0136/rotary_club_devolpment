@@ -18,7 +18,7 @@ export default class PledgesController {
   }
 
   public async showOneProjectWithPledges({ request, response }: HttpContextContract) {
-    const projectId = request.input('projectId')
+    const projectId = request.input('project_id')
     const project: Project = await Project.findOrFail(projectId)
 
     const pledges: object[] = await project
@@ -35,9 +35,9 @@ export default class PledgesController {
 
   public async store({ request, response }: HttpContextContract) {
     //create one pledge
-    const pledgeAmount: number = request.input('pledgeAmount')
-    const projectId = request.input('projectId')
-    const userId = request.input('userId')
+    const pledgeAmount: number = request.input('pledge_amount')
+    const projectId = request.input('project_id')
+    const userId = request.input('user_id')
 
     let project = await Project.findOrFail(projectId)
     let oldFunds = project.currentFunds
@@ -60,15 +60,15 @@ export default class PledgesController {
   }
 
   public async showPledgesByProjectIdByUserId({ request, response }: HttpContextContract) {
-    const projectId = request.input('projectId')
-    const userId = request.input('userId')
+    const projectId = request.input('project_id')
+    const userId = request.input('user_id')
     const project = await Project.findOrFail(projectId)
     const pledge = await project.related('pledges').pivotQuery().where({ userId: userId })
     return response.json({ Yourpledges: pledge })
   }
 
   public async show({ request, response, params }: HttpContextContract) {
-    const projectId = request.input('projectId')
+    const projectId = request.input('project_id')
     const userId = params.id
     const project = await Project.findOrFail(projectId)
     const pledge = await project.related('pledges').pivotQuery().where({ userId: userId })
@@ -80,8 +80,8 @@ export default class PledgesController {
   public async update({}: HttpContextContract) {}
 
   public async destroy({ request, response }: HttpContextContract) {
-    const projectId = request.input('projectId')
-    const pledgeId = request.input('pledgeId')
+    const projectId = request.input('project_id')
+    const pledgeId = request.input('pledge_id')
     const project = await Project.findOrFail(projectId)
     const pledge = await project
       .related('pledges')

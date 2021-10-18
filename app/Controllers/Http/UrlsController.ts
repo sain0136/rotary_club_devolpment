@@ -11,9 +11,9 @@ export default class UrlsController {
 
   public async store({ request, response }: HttpContextContract) {
     const isThisDistrict: Boolean = request.input('isThisDistrict')
-    const objectId: number = request.input('objectId')
-    const socialMediaType: SocialMedia = request.input('socialMediaType')
-    const linkUrl = request.input('linkUrl')
+    const objectId: number = request.input('object_id')
+    const socialMediaType: SocialMedia = request.input('url_type')
+    const linkUrl = request.input('url')
 
     const url = await Url.create({
       urlType: socialMediaType,
@@ -41,8 +41,8 @@ export default class UrlsController {
   public async edit({}: HttpContextContract) {}
 
   public async update({ request, params, response }: HttpContextContract) {
-    const socialMediaType = request.input('socialMediaType')
-    const linkUrl = request.input('linkUrl')
+    const socialMediaType = request.input('url_type')
+    const linkUrl = request.input('url')
     let old = await Url.findOrFail(params.id)
 
     const urlToBeUpdated = await Url.findOrFail(params.id)

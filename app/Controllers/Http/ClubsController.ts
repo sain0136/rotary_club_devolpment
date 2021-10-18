@@ -10,18 +10,18 @@ export default class ClubsController {
   public async create({}: HttpContextContract) {}
 
   public async store({ request, response }: HttpContextContract) {
-    const name = request.input('name')
-    const address = request.input('address')
-    const clubCity = request.input('clubCity')
-    const clubPostal = request.input('clubPostal')
-    const clubProvince = request.input('clubProvince')
-    const clubCountry = request.input('clubCountry')
-    const clubPhone = request.input('clubPhone')
-    const clubDescription = request.input('clubDescription')
-    const clubEmail = request.input('clubEmail')
-    const charterDate = request.input('charterDate')
-    const motherClub = request.input('motherClub')
-    const districtId = request.input('districtId')
+    const name = request.input('club_name')
+    const address = request.input('club_address')
+    const clubCity = request.input('club_city')
+    const clubPostal = request.input('club_postal')
+    const clubProvince = request.input('club_province')
+    const clubCountry = request.input('club_country')
+    const clubPhone = request.input('club_phone')
+    const clubDescription = request.input('club_description')
+    const clubEmail = request.input('club_email')
+    const charterDate = request.input('charter_date')
+    const motherClub = request.input('mother_club')
+    const districtId = request.input('district_id')
 
     const newClub = await Club.create({
       clubName: name,
@@ -51,18 +51,18 @@ export default class ClubsController {
   public async update({ request, params, response }: HttpContextContract) {
     let old = await Club.findOrFail(params.id)
     const clubToBeUpdated = await Club.findOrFail(params.id)
-    const clubName = request.input('clubName')
-    const clubAddress = request.input('clubAddress')
-    const clubCity = request.input('clubCity')
-    const clubPostal = request.input('clubPostal')
-    const clubProvince = request.input('clubProvince')
-    const clubCountry = request.input('clubCountry')
-    const clubPhone = request.input('clubPhone')
-    const clubDescription = request.input('clubDescription')
-    const clubEmail = request.input('clubEmail')
-    const charterDate = request.input('charterDate')
-    const motherClub = request.input('motherClub')
-    const districtId = request.input('districtId')
+    const clubName = request.input('club_name')
+    const clubAddress = request.input('club_address')
+    const clubCity = request.input('club_city')
+    const clubPostal = request.input('club_postal')
+    const clubProvince = request.input('club_province')
+    const clubCountry = request.input('club_country')
+    const clubPhone = request.input('club_phone')
+    const clubDescription = request.input('club_description')
+    const clubEmail = request.input('club_email')
+    const charterDate = request.input('charter_date')
+    const motherClub = request.input('mother_club')
+    const districtId = request.input('district_id')
 
     const updatedClub = await clubToBeUpdated
       .merge({

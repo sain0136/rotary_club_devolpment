@@ -13,16 +13,16 @@ export default class ProjectsController {
   public async create({}: HttpContextContract) {}
 
   public async store({ request, response }: HttpContextContract) {
-    const projectName = request.input('projectName')
-    const projectTheme = request.input('projectTheme')
-    const grantType: GrantType = request.input('grantType')
-    const pdfLabel = request.input('pdfLabel')
-    const fundingGoal = request.input('fundingGoal')
-    const currentFunds = request.input('currentFunds')
-    const createdByUserId = request.input('createdBy')
+    const projectName = request.input('project_name')
+    const projectTheme = request.input('project_theme')
+    const grantType: GrantType = request.input('grant_type')
+    const pdfLabel = request.input('pdf_label')
+    const fundingGoal = request.input('funding_goal')
+    const currentFunds = request.input('current_funds')
+    const createdByUserId = request.input('created_by')
     const region = request.input('region')
-    const rotaryYear = request.input('rotaryYear')
-    const roleType: ProjectRoleType = request.input('roleType')
+    const rotaryYear = request.input('rotary_year')
+    const roleType: ProjectRoleType = request.input('role_type')
 
     const newProject = await Project.create({
       projectName: projectName,
@@ -77,9 +77,9 @@ export default class ProjectsController {
   public async edit({}: HttpContextContract) {}
 
   public async addUserToProject({ request, response }: HttpContextContract) {
-    const projectId = request.input('projectId')
-    const userId = request.input('userId')
-    const roleType: ProjectRoleType = request.input('roleType')
+    const projectId = request.input('project_id')
+    const userId = request.input('user_id')
+    const roleType: ProjectRoleType = request.input('role_type')
 
     let user = await User.findOrFail(userId)
     const project = await Project.findOrFail(projectId)
@@ -106,15 +106,15 @@ export default class ProjectsController {
   }
 
   public async update({ params, request, response }: HttpContextContract) {
-    const projectName = request.input('projectName')
-    const projectTheme = request.input('projectTheme')
-    const grantType: GrantType = request.input('grantType')
-    const pdfLabel = request.input('pdfLabel')
-    const fundingGoal = request.input('fundingGoal')
-    const currentFunds = request.input('currentFunds')
-    const createdByUserId = request.input('createdBy')
+    const projectName = request.input('project_name')
+    const projectTheme = request.input('project_theme')
+    const grantType: GrantType = request.input('grant_type')
+    const pdfLabel = request.input('pdf_label')
+    const fundingGoal = request.input('funding_goal')
+    const currentFunds = request.input('current_funds')
+    const createdByUserId = request.input('created_by')
     const region = request.input('region')
-    const rotaryYear = request.input('rotaryYear')
+    const rotaryYear = request.input('rotary_year')
 
     const projectToBeUpdated = await Project.findOrFail(params.id)
 
@@ -140,6 +140,6 @@ export default class ProjectsController {
     await projectToBeDeleted.related('projectRole').detach()
     await projectToBeDeleted.related('pledges').detach()
     await projectToBeDeleted.delete()
-    return response.json({ Deleted: 'old user below', oldProject })
+    return response.json({ Deleted: 'old project below', oldProject })
   }
 }

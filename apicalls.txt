@@ -1,35 +1,46 @@
-in postman or others first bracket must start on line example:
-1{
-}
-2
----------> http://127.0.0.1:3333/district/            district cALL
+
+1
+2Name: Txt Syntax
+
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=xshrim.txt-syntax
+---------> http://127.0.0.1:3333/district/            
+
+
+create a District
 post
 {
-        "name":"District 4052",
-        "location":"Pc center",
-        "meeting":"Pc center",
-        "charterdate":"Pc center",
-        "email":"jssr26@gmail.com",
-        "description":"These are better (and almost always) handled at the database level instead of the application level. It's the job of the DBMS to enforce this kind of referential integrity assuming you define your schema correctly so that entities are correctly linked together, via foreign keys."
+ 	"district_name": "District 2345",
+    "district_email": "yoi@gmail.com",
+    "meeting_location": "Ac center",
+    "meeting_frequency": "Pc center",
+    "charter_date": "Pc center",
+	"district_president":"John Strewart",
+    "district_description": "These are better (and almost always) handled at the database level instead of the application level. It's the job of the DBMS to enforce this kind of referential integrity assuming you define your schema correctly so that entities are correctly linked together, via foreign keys."
+}
 
-    }
-// post create new user example , so post request http://127.0.0.1:3333/user/ 
+
+
+USER CALLS
+// post create new user example , so post
+ request http://127.0.0.1:3333/user/ 
+
+district admin example
 {
-        "membershipId":12313,
-        "firstname":"John",
-        "lastname":"saint Rose ",
-        "address":"234 bluders ave",
-        "userCity":"cornwall",
-        "userPostal":"K4V 2VC",
-        "userProvince":"Ontario",
-        "userCountry":"Canada",
-        "phone":"613-330-5423",
-        "email":"jssr26@gmail.com",
-        "password":"jean123",
-        "districtId":1,
+    "membership_id": 123513,
+    "firstname": "John",
+    "lastname": "saint Rose ",
+    "address": "234 bluders ave",
+    "user_city": "cornwall",
+    "user_postal": "K4V 2VC",
+    "user_province": "Ontario",
+    "user_country": "Canada",
+    "phone": "613-330-5423",
+    "email": "jssr26@gmail.com",
+    "password":"piter23",
+    "district_id": 1,
 	
-				"districtRole":"District Admin",
-				"roleType":1
+				"district_role":"District Admin",
+				"role_type":1
     }
     {
 CLUB MEMBER EXAMPLE
@@ -44,67 +55,88 @@ CLUB MEMBER EXAMPLE
         "phone":"613-330-5423",
         "email":"reADV@gmail.com",
         "password":"jean123",
-        "districtId":1,
+        "club_id":1,
 	
-				"clubRole":"TREASURY",
-				"roleType":2
+				"club_role":"TREASURY",
+				"role_type":2
+}
+    { club admin ex
+        {
+            "membership_id": 12323513,
+            "firstname": "Sandy",
+            "lastname": "saint Rose ",
+            "address": "34 bluders ave",
+            "user_city": "cornwall",
+            "user_postal": "K4V 2VC",
+            "user_province": "Ontario",
+            "user_country": "Canada",
+            "phone": "613-330-5423",
+            "email": "jss4r26@gmail.com",
+            "password":"10092",
+            "club_id": 2,
+            
+                        "club_role":"Club Admin",
+                        "role_type":1
+}
+
+
+//Delete a district add parem
+http://127.0.0.1:3333/district/3
+delet request
+{
+	"isThisDistrict": true
 
 }
-    {///club admin ex
-        {
-     "membershipId":465456,
-        "firstname":"Kely",
-        "lastname":"saint Rose ",
-        "address":"234 bluders ave",
-        "userCity":"cornwall",
-        "userPostal":"K4V 2VC",
-        "userProvince":"Ontario",
-        "userCountry":"Canada",
-        "phone":"613-330-5423",
-        "email":"jssr26@gmail.com",
-        "password":"jean123",
-        "clubId":3,
-	
-				"clubRole":"club Admin",
-				"roleType":1
-}
 ////////////////////////////////////////////////
+CLUB calls
     }
 	     create new club  http://127.0.0.1:3333/club/ 
 	{ 
-        "name": "Cornwall rotary",
-        "address": "1281 blvd",
-        "clubCity": "cornwall",
-        "clubPostal": "K^H 4V2",
-        "clubProvince": "Ontario",
-        "clubCountry": "Canada",
-        "clubPhone": "613-902-7832",
-        "clubDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n",
-        "clubEmail": "rotary@gmail.com",
-        "charterDate": "09/07/1989",
-        "motherClub": "indian club",
-        "districtId": 1
+        "club_name": "Cornwall rotary",
+        "club_address": "1281 blvd",
+        "club_city": "cornwall",
+        "club_postal": "K^H 4V2",
+        "club_province": "Ontario",
+        "club_country": "Canada",
+        "club_phone": "613-902-7832",
+        "club_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n",
+        "club_email": "rotary@gmail.com",
+        "charter_date": "09/07/1989",
+        "mother_club": "indian club",
+        "district_id": 1
 	}
 	 all the other methods delete and get all the same if you want to find by one id you do for example user/1 
 	 
-	 //
+	 //http://127.0.0.1:3333/url/
      create a url post 
+     post
 	{
-        "isThisDistrict": false,
-		"objectId":1,
-	    "socialMediaType":1,
-		"linkUrl":"https://www.facebook.com/hnny"
+        "isThisDistrict": true,
+		"object_id":1,
+	    "url_type":1,
+		"url":"https://www.facebook.com/hnny"
     }
 
-        create a district 
+
+    CREATE A NEW PROJOECT 
+    http://127.0.0.1:3333/project/
+    POST
+    
     {
-        "name": "Peter11",
-        "email": "2apo@apo.com",
-        "location": "location",
-        "meeting": "meeting",
-        "charterdate": "2021-10-09",
-        "president": "Apo",
-        "description": "Apo"
+    
+        "project_name": "lIBERATION FORCE",
+        "project_theme": "hUMANITARIAN",
+        "grant_type": 1,
+        "pdf_label": "sfds/DFD",
+        "funding_goal": 10000,
+        "current_funds": 0,
+        "created_by": 1,
+        "region": "AFRICA",
+        "rotary_year": "2021",
+        
+        "role_type":1
+        
+    
     }
 
         create a pledge 
@@ -113,9 +145,9 @@ CLUB MEMBER EXAMPLE
 http://127.0.0.1:3333/pledge
 post
             {
-    "pledgeAmount": 1001,
-	"projectId": 2,
-	"userId":6 
+    "pledge_amount": 1001,
+	"project_id": 2,
+	"user_id":6 
 }
 
 show Pledges for a user for one project 
@@ -124,8 +156,8 @@ post
       {
 {
 
-	"projectId": 2,
-	"userId":6
+	"project_id": 2,
+	"user_id":6
 }
 
       }
@@ -137,8 +169,8 @@ post
       [
        {
 
-	"projectId": 2,
-	"pledgeId":6
+		"project_id": 2,
+	"pledge_id":4
 } 
       ]
 
@@ -155,28 +187,7 @@ See a project and all the pleges on this project
                  post
 {
 
-	"projectId": 8
+	"project_id": 8
 
 }
 
-
-CREATE A NEW PROJOECT 
-http://127.0.0.1:3333/project/
-POST
-
-{
-
-    "projectName":"lIBERATION FORCE",
-	"projectTheme":"hUMANITARIAN",
-	"grantType":1,
-	"pdfLabel":"sfds/DFD",
-	"fundingGoal":10000,
-	"currentFunds":0,
-	"createdBy":11,
-	"region":"AFRICA",
-	"rotaryYear":"2021",
-    
-	"roleType":1
-	
-
-}
