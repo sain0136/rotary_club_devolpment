@@ -5,17 +5,20 @@
         v-model="name"
         placeholder="Name"> <br> <br>
       <input type="text"
-        v-model="location"
-        placeholder="Location"> <br> <br>  
+        v-model="email"
+        placeholder="Email"> <br> <br>
       <input type="text"
-        v-model="meeting"
-        placeholder="Meeting"> <br> <br>
+        v-model="meetingLocation"
+        placeholder="Meeting Location"> <br> <br>  
+      <input type="text"
+        v-model="meetingFrequency"
+        placeholder="Meeting Frequency"> <br> <br>
       <input type="date"
         v-model="charterdate"
         placeholder="Charter Date"> <br> <br>
       <input type="text"
-        v-model="email"
-        placeholder="Email"> <br> <br>
+        v-model="president"
+        placeholder="President"> <br> <br>
       <input type="text"
         v-model="description"
         placeholder="Description"> <br> <br>
@@ -49,10 +52,11 @@ export default {
   data() {
     return {
         name: '',
-        location: '',
-        meeting: '',
-        charterdate: '',
         email: '',
+        meetingLocation: '',
+        meetingFrequency: '',
+        charterdate: '',
+        president: '',
         description: ''
     }
   },
@@ -83,12 +87,13 @@ export default {
       event.preventDefault()
       
       let districtToAdd = {
-        name: this.name,
-        location: this.location,
-        meeting: this.meeting,
-        charterdate: this.charterdate,
-        email: this.email,
-        description: this.description
+        district_name: this.name,
+        district_email: this.email,
+        meeting_location: this.meetingLocation,
+        meeting_frequency: this.meetingFrequency,
+        charter_date: this.charterdate,
+        district_president: this.president,
+        district_description: this.description
       }
 
       const res = await fetch('/api/district', { 
@@ -104,12 +109,13 @@ export default {
       event.preventDefault()
 
       let districtToUpdate = {
-        name: this.name,
-        location: this.location,
-        meeting: this.meeting,
-        charterdate: this.charterdate,
-        email: this.email,
-        description: this.description
+        district_name: this.name,
+        district_email: this.email,
+        meeting_location: this.meetingLocation,
+        meeting_frequency: this.meetingFrequency,
+        charter_date: this.charterdate,
+        district_president: this.president,
+        district_description: this.description
       }
 
       const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
