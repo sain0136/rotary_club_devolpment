@@ -1,17 +1,17 @@
 <template>
   <div>
-    <NewDistrictForm/>
+    <DistrictForm isEditOrCreate='Create'/>
   </div>
 </template>
 
 <script>
 
-import NewDistrictForm from '../../../components/forms/NewDistrictForm.vue'
+import DistrictForm from '../../../components/forms/DistrictForm.vue'
 
 export default {
   name: 'NewDistrict',
   components: {
-    NewDistrictForm
+    DistrictForm
   }
 }
 

@@ -1,5 +1,14 @@
 <template>
-  <DistrictsTable/>
+  <div>
+    <button
+      @click="() => {
+        this.$router.push('createdistrict')
+      }">
+      Create District
+    </button>
+    <br><br>
+    <DistrictsTable/>
+  </div>
 </template>
 
 <script>
@@ -13,3 +22,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+button {
+  margin-left: 50%;
+}
+
+</style>

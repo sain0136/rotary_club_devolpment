@@ -1,36 +1,28 @@
 <template>
   <div class="container">
     <!-- Make a call to the API and generate these districts -->
-    <table contenteditable="true">
+    <table>
       <th>ID</th>
       <th>Name</th>
-      <th>Email</th>
-      <th>Location</th>
-      <th>Meeting Frequency</th>
-      <th>Charter Date</th>
-      <th>President</th>
-      <th>Description</th>
       <th>Action</th>
-      <tr 
+      <tr
         id="district-info"
         v-for="district in districts"
         :key="district.district_id">
-        <td contenteditable="false">{{district.district_id}}</td>  
+        <td>{{district.district_id}}</td>  
         <td id="name">{{district.district_name}}</td>
-        <td id="email">{{district.district_name}}</td>
-        <td id="location">{{district.meeting_location}}</td>
-        <td id="frequency">{{district.meeting_frequency}}</td>
-        <td id="charter-date">{{district.charter_date}}</td>
-        <td id="president">{{district.district_president}}</td>
-        <td id="description">{{district.description}}</td>
-        <td contenteditable="false">
-          <router-link 
-            :to="`/`" 
-            @click="$store.dispatch('changeCurrentDistrict', district.district_id)"> <!-- in case the app scales, now it's always 1 -->
-          Go</router-link>
+        <td>
           <button
-            @click="updateRow(district.district_id)">
-            Update
+            @click="goToDistrictPage(district.district_id)">
+            View
+          </button>
+          <button
+            @click="deleteDistrict(district.district_id)">
+            Delete
+          </button>
+          <button
+            @click="goToEditDistrictPage(district.district_id)">
+            Edit
           </button>
         </td>
       </tr>
@@ -39,6 +31,8 @@
 </template>
 
 <script>
+
+import store from '../../store/index'
 
 export default {
   name: 'DistrictsTable',
@@ -53,17 +47,31 @@ export default {
       const data = await res.json()
       return data.districts
     },
-    async updateRow(rowId) {
-      const districtToUpdate = {
-        district_name : document.querySelector('#district-name').innerHTML
-
-      }
-      const res = await fetch(`/api/district/${rowId}`, { 
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtToUpdate)
+    goToDistrictPage(districtId) {
+      store.dispatch('changeCurrentDistrict', districtId)
+      this.$router.push('/')
+    },
+    goToEditDistrictPage(districtId) {
+      store.dispatch('changeCurrentDistrict', districtId)
+      this.$router.push('editdistrict')
+    },
+    async deleteDistrict(districtId) {
+      const res = await fetch(`/api/district/${districtId}`, {
+        method: 'DELETE'
       })
-    }
+      this.districts = await this.fetchDistricts()
+    },
+    // async updateRow(rowId) {
+    //   const districtToUpdate = {
+    //     district_name : document.querySelector('#district-name').innerHTML
+
+    //   }
+    //   const res = await fetch(`/api/district/${rowId}`, { 
+    //     method: 'PATCH',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(districtToUpdate)
+    //   })
+    // }
   },
   async created() {
     this.districts = await this.fetchDistricts()
