@@ -7,6 +7,7 @@ import {
   column,
   manyToMany,
   ManyToMany,
+  computed,
 } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Club from './Club'
@@ -63,6 +64,11 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @computed()
+  public get fullName() {
+    return `${this.firstname} ${this.lastname}`
+  }
 
   @belongsTo(() => District, {
     localKey: 'districtId',

@@ -44,14 +44,14 @@ district admin example
     }
     {
 CLUB MEMBER EXAMPLE
-       "membershipId":25255,
+       "membership_id":25255,
         "firstname":"Frank",
         "lastname":"Islo",
-        "address":"343 bluders ave",
-        "userCity":"cornwall",
-        "userPostal":"K4V 2VC",
-        "userProvince":"Ontario",
-        "userCountry":"Canada",
+        "address": "234 bluders ave",
+        "user_city": "cornwall",
+        "user_postal": "K4V 2VC",
+        "user_province": "Ontario",
+        "user_country": "Canada",
         "phone":"613-330-5423",
         "email":"reADV@gmail.com",
         "password":"jean123",

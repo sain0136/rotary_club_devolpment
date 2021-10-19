@@ -1,5 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  computed,
+  HasMany,
+  hasMany,
+  manyToMany,
+  ManyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Club from './Club'
 import User from './User'
 import Url from './Url'
@@ -7,6 +15,9 @@ import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class District extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
+
+  @computed()
+  public socialmedia: Url[]
 
   @column({ isPrimary: true })
   public districtId: number

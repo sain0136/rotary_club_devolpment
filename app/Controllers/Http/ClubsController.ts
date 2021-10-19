@@ -1,31 +1,38 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
+import User from 'App/Models/User'
 
 export default class ClubsController {
   public async index({ response }: HttpContextContract) {
-    const clubs = await Club.all()
+    const clubs: Club[] = await Club.all()
     return response.json({ clubs })
+  }
+
+  public async getAllClubMembers({ request, response }: HttpContextContract) {
+    const clubID: number = request.input('club_id')
+    const allMembers: User[] = await User.query().where({ clubId: clubID })
+    return response.json({ allMembers })
   }
 
   public async create({}: HttpContextContract) {}
 
   public async store({ request, response }: HttpContextContract) {
-    const name = request.input('club_name')
-    const address = request.input('club_address')
-    const clubCity = request.input('club_city')
-    const clubPostal = request.input('club_postal')
-    const clubProvince = request.input('club_province')
-    const clubCountry = request.input('club_country')
-    const clubPhone = request.input('club_phone')
-    const clubDescription = request.input('club_description')
-    const clubEmail = request.input('club_email')
-    const charterDate = request.input('charter_date')
-    const motherClub = request.input('mother_club')
-    const districtId = request.input('district_id')
+    const clubName: string = request.input('club_name')
+    const clubAddress: string = request.input('club_address')
+    const clubCity: string = request.input('club_city')
+    const clubPostal: string = request.input('club_postal')
+    const clubProvince: string = request.input('club_province')
+    const clubCountry: string = request.input('club_country')
+    const clubPhone: string = request.input('club_phone')
+    const clubDescription: string = request.input('club_description')
+    const clubEmail: string = request.input('club_email')
+    const charterDate: string = request.input('charter_date')
+    const motherClub: string = request.input('mother_club')
+    const districtId: number = request.input('district_id')
 
-    const newClub = await Club.create({
-      clubName: name,
-      clubAddress: address,
+    const newClub: Club = await Club.create({
+      clubName: clubName,
+      clubAddress: clubAddress,
       clubCity: clubCity,
       clubPostal: clubPostal,
       clubProvince: clubProvince,
@@ -41,30 +48,31 @@ export default class ClubsController {
   }
 
   public async show({ response, params }: HttpContextContract) {
-    const clubsById = await Club.findOrFail(params.id)
-
-    return response.json({ clubsById })
+    const clubID: number = parseInt(params.id)
+    const clubById: Club = await Club.findOrFail(clubID)
+    return response.json({ clubsById: clubById })
   }
 
   public async edit({}: HttpContextContract) {}
 
   public async update({ request, params, response }: HttpContextContract) {
-    let old = await Club.findOrFail(params.id)
-    const clubToBeUpdated = await Club.findOrFail(params.id)
-    const clubName = request.input('club_name')
-    const clubAddress = request.input('club_address')
-    const clubCity = request.input('club_city')
-    const clubPostal = request.input('club_postal')
-    const clubProvince = request.input('club_province')
-    const clubCountry = request.input('club_country')
-    const clubPhone = request.input('club_phone')
-    const clubDescription = request.input('club_description')
-    const clubEmail = request.input('club_email')
-    const charterDate = request.input('charter_date')
-    const motherClub = request.input('mother_club')
-    const districtId = request.input('district_id')
+    const clubID: number = parseInt(params.id)
+    const old: Club = await Club.findOrFail(clubID)
+    const clubToBeUpdated = await Club.findOrFail(clubID)
+    const clubName: string = request.input('club_name')
+    const clubAddress: string = request.input('club_address')
+    const clubCity: string = request.input('club_city')
+    const clubPostal: string = request.input('club_postal')
+    const clubProvince: string = request.input('club_province')
+    const clubCountry: string = request.input('club_country')
+    const clubPhone: string = request.input('club_phone')
+    const clubDescription: string = request.input('club_description')
+    const clubEmail: string = request.input('club_email')
+    const charterDate: string = request.input('charter_date')
+    const motherClub: string = request.input('mother_club')
+    const districtId: number = request.input('district_id')
 
-    const updatedClub = await clubToBeUpdated
+    const updatedClub: Club = await clubToBeUpdated
       .merge({
         clubName: clubName,
         clubAddress: clubAddress,
@@ -85,8 +93,9 @@ export default class ClubsController {
   }
 
   public async destroy({ params, response }: HttpContextContract) {
-    let old = await Club.findOrFail(params.id)
-    const clubToBeDeleted = await Club.findOrFail(params.id)
+    const clubID: number = parseInt(params.id)
+    const old: Club = await Club.findOrFail(clubID)
+    const clubToBeDeleted: Club = await Club.findOrFail(clubID)
     await clubToBeDeleted.delete()
     return response.json({ Deleted: 'old club below', old })
   }

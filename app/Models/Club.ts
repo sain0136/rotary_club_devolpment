@@ -8,6 +8,7 @@ import {
   column,
   manyToMany,
   ManyToMany,
+  computed,
 } from '@ioc:Adonis/Lucid/Orm'
 import District from './District'
 import User from './User'
@@ -15,6 +16,9 @@ import Url from './Url'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 export default class Club extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
+
+  @computed()
+  public socialmedia: Url[]
 
   @column({ isPrimary: true })
   public clubId: number

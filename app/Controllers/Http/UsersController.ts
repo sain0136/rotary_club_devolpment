@@ -6,37 +6,37 @@ import RoleType from 'Contracts/Enums/RoleType'
 
 export default class UsersController {
   public async index({ response }: HttpContextContract) {
-    const allUsers = await User.all()
+    const allUsers: User[] = await User.all()
     return response.json({ allUsers })
   }
   public async create({}: HttpContextContract) {}
 
   public async jsonGetById({ request, response }: HttpContextContract) {
     const id: number = request.input('id')
-    const userById = await User.findOrFail(id)
+    const userById: User = await User.findOrFail(id)
     return response.json({ userById })
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const membershipId = request.input('membership_id')
-    const firstname = request.input('firstname')
-    const lastname = request.input('lastname')
-    const address = request.input('address')
-    const userCity = request.input('user_city')
-    const userPostal = request.input('user_postal')
-    const userProvince = request.input('user_province')
-    const userCountry = request.input('user_country')
-    const phone = request.input('phone')
-    const email = request.input('email')
-    const password = request.input('password')
-    const clubId = request.input('club_id')
-    const districtId = request.input('district_id')
+    const membershipId: string = request.input('membership_id')
+    const firstname: string = request.input('firstname')
+    const lastname: string = request.input('lastname')
+    const address: string = request.input('address')
+    const userCity: string = request.input('user_city')
+    const userPostal: string = request.input('user_postal')
+    const userProvince: string = request.input('user_province')
+    const userCountry: string = request.input('user_country')
+    const phone: string = request.input('phone')
+    const email: string = request.input('email')
+    const password: string = request.input('password')
+    const clubId: number = request.input('club_id')
+    const districtId: number = request.input('district_id')
 
-    const districtRole = request.input('district_role')
-    const clubRole = request.input('club_role')
+    const districtRole: RoleType = request.input('district_role')
+    const clubRole: RoleType = request.input('club_role')
     const role: RoleType = request.input('role_type')
 
-    const newUser = await User.create({
+    const newUser: User = await User.create({
       membershipId: membershipId,
       firstname: firstname,
       lastname: lastname,
@@ -53,7 +53,7 @@ export default class UsersController {
     })
 
     if (clubId !== null && clubId !== undefined) {
-      let club = await Club.findOrFail(clubId)
+      const club: Club = await Club.findOrFail(clubId)
       await newUser.related('clubRole').attach({
         [club.clubId]: {
           club_role: clubRole,
@@ -61,7 +61,7 @@ export default class UsersController {
         },
       })
     } else if (districtId !== null && districtId !== undefined) {
-      let district = await District.findOrFail(districtId)
+      const district: District = await District.findOrFail(districtId)
 
       await newUser.related('districtRole').attach({
         [district.districtId]: {
@@ -75,34 +75,40 @@ export default class UsersController {
       return RoleType[role]
     }
 
-    return response.json({ created: 'a new user', newUser, Admin_type: await roleTitle(role) })
+    return response.json({
+      created: 'a new user',
+      newUser,
+      Admin_type: await roleTitle(role),
+    })
   }
 
   public async show({ params, response }: HttpContextContract) {
-    const userById = await User.findOrFail(params.id)
+    const userId: number = parseInt(params.id)
+    const userById: User = await User.findOrFail(userId)
     return response.json({ userById })
   }
 
   public async edit({}: HttpContextContract) {}
 
   public async update({ request, params, response }: HttpContextContract) {
-    let old = await User.findOrFail(params.id)
-    const userToBeUpdated = await User.findOrFail(params.id)
-    const membershipId = request.input('membership_id')
-    const firstname = request.input('firstname')
-    const lastname = request.input('lastname')
-    const address = request.input('address')
-    const userCity = request.input('user_city')
-    const userPostal = request.input('user_postal')
-    const userProvince = request.input('user_province')
-    const userCountry = request.input('user_country')
-    const phone = request.input('phone')
-    const email = request.input('email')
-    const password = request.input('password')
-    const clubId = request.input('club_id')
-    const districtId = request.input('district_id')
+    const userId: number = parseInt(params.id)
+    const old = await User.findOrFail(userId)
+    const userToBeUpdated: User = await User.findOrFail(userId)
+    const membershipId: string = request.input('membership_id')
+    const firstname: string = request.input('firstname')
+    const lastname: string = request.input('lastname')
+    const address: string = request.input('address')
+    const userCity: string = request.input('user_city')
+    const userPostal: string = request.input('user_postal')
+    const userProvince: string = request.input('user_province')
+    const userCountry: string = request.input('user_country')
+    const phone: string = request.input('phone')
+    const email: string = request.input('email')
+    const password: string = request.input('password')
+    const clubId: number = request.input('club_id')
+    const districtId: number = request.input('district_id')
 
-    const updatedUser = await userToBeUpdated
+    const updatedUser: User = await userToBeUpdated
       .merge({
         membershipId: membershipId,
         firstname: firstname,
@@ -124,15 +130,16 @@ export default class UsersController {
   }
 
   public async destroy({ request, params, response }: HttpContextContract) {
+    const userId: number = parseInt(params.id)
     const isThisDistrict: boolean = request.input('isThisDistrict')
-    let old = await User.findOrFail(params.id)
+    const old = await User.findOrFail(userId)
     if (isThisDistrict) {
-      const userToBeDeleted = await District.findOrFail(params.id)
+      const userToBeDeleted: District = await District.findOrFail(userId)
       await userToBeDeleted.related('districtRole').detach()
       await userToBeDeleted.delete()
       return response.json({ Deleted: 'old user below', old })
     } else {
-      const userToBeDeleted = await User.findOrFail(params.id)
+      const userToBeDeleted: User = await User.findOrFail(userId)
       await userToBeDeleted.related('clubRole').detach()
       await userToBeDeleted.delete()
       return response.json({ Deleted: 'old user below', old })

@@ -1,24 +1,31 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Club from 'App/Models/Club'
 import District from 'App/Models/District'
 
 export default class DistrictsController {
   public async index({ response }: HttpContextContract) {
-    const districts = await District.all()
+    const districts: District[] = await District.all()
     return response.json({ districts })
   }
 
   public async create({}: HttpContextContract) {}
 
-  public async store({ request, response }: HttpContextContract) {
-    const name = request.input('district_name')
-    const email = request.input('district_email')
-    const location = request.input('meeting_location')
-    const meeting = request.input('meeting_frequency')
-    const charterdate = request.input('charter_date')
-    const president = request.input('district_president')
-    const description = request.input('district_description')
+  public async allClubsInDistrict({ request, response }: HttpContextContract) {
+    const districtID: number = request.input('district_id')
+    const allClubsForDistrict: Club[] = await Club.query().where({ district_id: districtID })
+    return response.json({ allClubs: allClubsForDistrict })
+  }
 
-    const newDistrict = await District.create({
+  public async store({ request, response }: HttpContextContract) {
+    const name: string = request.input('district_name')
+    const email: string = request.input('district_email')
+    const location: string = request.input('meeting_location')
+    const meeting: string = request.input('meeting_frequency')
+    const charterdate: string = request.input('charter_date')
+    const president: string = request.input('district_president')
+    const description: string = request.input('district_description')
+
+    const newDistrict: District = await District.create({
       districtName: name,
       districtEmail: email,
       meetingLocation: location,
@@ -31,25 +38,26 @@ export default class DistrictsController {
   }
 
   public async show({ params, response }: HttpContextContract) {
-    const districtById = await District.findOrFail(params.id)
-
+    const districtId: number = parseInt(params.id)
+    const districtById: District = await District.findOrFail(districtId)
     return response.json({ districtById })
   }
 
   public async edit({}: HttpContextContract) {}
 
   public async update({ response, params, request }: HttpContextContract) {
-    let old = await District.findOrFail(params.id)
-    const districtToBeUpdated = await District.findOrFail(params.id)
-    const name = request.input('district_name')
-    const email = request.input('district_email')
-    const location = request.input('meeting_location')
-    const meeting = request.input('meeting_frequency')
-    const charterdate = request.input('charter_date')
-    const president = request.input('district_president')
-    const description = request.input('district_description')
+    const districtId: number = parseInt(params.id)
+    let old = await District.findOrFail(districtId)
+    const districtToBeUpdated: District = await District.findOrFail(params.id)
+    const name: string = request.input('district_name')
+    const email: string = request.input('district_email')
+    const location: string = request.input('meeting_location')
+    const meeting: string = request.input('meeting_frequency')
+    const charterdate: string = request.input('charter_date')
+    const president: string = request.input('district_president')
+    const description: string = request.input('district_description')
 
-    const updated = await districtToBeUpdated
+    const updated: District = await districtToBeUpdated
       .merge({
         districtName: name,
         districtEmail: email,
@@ -64,10 +72,10 @@ export default class DistrictsController {
   }
 
   public async destroy({ response, params }: HttpContextContract) {
-    let old = await District.findOrFail(params.id)
-    const districtToBeDeleted = await District.findOrFail(params.id)
+    const districtId: number = parseInt(params.id)
+    const old: District = await District.findOrFail(districtId)
+    const districtToBeDeleted: District = await District.findOrFail(params.id)
     await districtToBeDeleted.delete()
-
     return response.json({ Deleted: 'old file below', old })
   }
 }
