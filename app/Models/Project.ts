@@ -32,7 +32,7 @@ export default class Project extends BaseModel {
   public currentFunds: number
 
   @column()
-  public createdBy: string
+  public createdBy: number
 
   @column()
   public region: string

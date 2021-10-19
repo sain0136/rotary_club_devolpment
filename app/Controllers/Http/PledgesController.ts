@@ -18,7 +18,7 @@ export default class PledgesController {
   }
 
   public async showOneProjectWithPledges({ request, response }: HttpContextContract) {
-    const projectId = request.input('project_id')
+    const projectId: number = request.input('project_id')
     const project: Project = await Project.findOrFail(projectId)
 
     const pledges: object[] = await project
@@ -36,13 +36,13 @@ export default class PledgesController {
   public async store({ request, response }: HttpContextContract) {
     //create one pledge
     const pledgeAmount: number = request.input('pledge_amount')
-    const projectId = request.input('project_id')
-    const userId = request.input('user_id')
+    const projectId: number = request.input('project_id')
+    const userId: number = request.input('user_id')
 
-    let project = await Project.findOrFail(projectId)
-    let oldFunds = project.currentFunds
-    const newAmount = project.currentFunds + pledgeAmount
-    let user = await User.findOrFail(userId)
+    const project: Project = await Project.findOrFail(projectId)
+    const oldFunds: number = project.currentFunds
+    const newAmount: number = project.currentFunds + pledgeAmount
+    const user: User = await User.findOrFail(userId)
     await project.related('pledges').attach({
       [user.userId]: {
         pledge_amount: pledgeAmount,
@@ -54,24 +54,24 @@ export default class PledgesController {
       })
       .save()
     return response.json({
-      ProjectyouPledged: 'You pledged to this old amount' + oldFunds,
+      ProjectyouPledged: 'You pledged to this old amount' + oldFunds + ' to this project:',
       project,
     })
   }
 
   public async showPledgesByProjectIdByUserId({ request, response }: HttpContextContract) {
-    const projectId = request.input('project_id')
-    const userId = request.input('user_id')
-    const project = await Project.findOrFail(projectId)
-    const pledge = await project.related('pledges').pivotQuery().where({ userId: userId })
+    const projectId: number = request.input('project_id')
+    const userId: number = request.input('user_id')
+    const project: Project = await Project.findOrFail(projectId)
+    const pledge: object[] = await project.related('pledges').pivotQuery().where({ userId: userId })
     return response.json({ Yourpledges: pledge })
   }
 
   public async show({ request, response, params }: HttpContextContract) {
-    const projectId = request.input('project_id')
-    const userId = params.id
-    const project = await Project.findOrFail(projectId)
-    const pledge = await project.related('pledges').pivotQuery().where({ userId: userId })
+    const projectId: number = request.input('project_id')
+    const userId: number = params.id
+    const project: Project = await Project.findOrFail(projectId)
+    const pledge: object[] = await project.related('pledges').pivotQuery().where({ userId: userId })
     return response.json({ Yourpledges: pledge })
   }
 
@@ -80,16 +80,16 @@ export default class PledgesController {
   public async update({}: HttpContextContract) {}
 
   public async destroy({ request, response }: HttpContextContract) {
-    const projectId = request.input('project_id')
-    const pledgeId = request.input('pledge_id')
-    const project = await Project.findOrFail(projectId)
-    const pledge = await project
+    const projectId: number = request.input('project_id')
+    const pledgeId: number = request.input('pledge_id')
+    const project: Project = await Project.findOrFail(projectId)
+    const pledge: {} = await project
       .related('pledges')
       .pivotQuery()
       .select()
       .where({ pledge_id: pledgeId })
-    let oldFunds = project.currentFunds
-    const newAmount = oldFunds - pledge[0].pledge_amount
+    const oldFunds: number = project.currentFunds
+    const newAmount: number = oldFunds - pledge[0].pledge_amount
     await project
       .merge({
         currentFunds: newAmount,
