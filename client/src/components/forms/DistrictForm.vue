@@ -1,6 +1,14 @@
 <template>
   <div>
     <form>
+      <h2
+        v-if="isEditOrCreate=='Create'">
+        Create District
+      </h2>
+      <h2
+        v-else>
+        Edit District
+      </h2> <br>
       <input type="text"
         v-model="name"
         placeholder="Name"> <br> <br>
@@ -44,6 +52,9 @@
 
 import store from '../../store/index'
 
+import useValidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
 export default {
   name: 'NewDistrictForm',
   props: {
@@ -51,6 +62,7 @@ export default {
   },
   data() {
     return {
+        v$: useValidate(),
         name: '',
         email: '',
         meetingLocation: '',
@@ -60,6 +72,17 @@ export default {
         description: ''
     }
   },
+    validations() {
+      return {
+        name: { required },
+        email: {required},
+        meetingLocation: {required},
+        meetingFrequency: {required},
+        charterdate: {required},
+        president: {required},
+        description: {required},
+      }
+    },
 
   async created() {
     //If the form is to be used for update, the data is pre-populated 
@@ -82,27 +105,33 @@ export default {
   },
 
   methods: {
-
     async addNewDistrict(event) {
       event.preventDefault()
-      
-      let districtToAdd = {
-        district_name: this.name,
-        district_email: this.email,
-        meeting_location: this.meetingLocation,
-        meeting_frequency: this.meetingFrequency,
-        charter_date: this.charterdate,
-        district_president: this.president,
-        district_description: this.description
+
+      this.v$.$validate()
+
+      if(!this.v$.$error) {
+        let districtToAdd = {
+          district_name: this.name,
+          district_email: this.email,
+          meeting_location: this.meetingLocation,
+          meeting_frequency: this.meetingFrequency,
+          charter_date: this.charterdate,
+          district_president: this.president,
+          district_description: this.description
+        }
+  
+        const res = await fetch('/api/district', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(districtToAdd)
+        })
+  
+        this.$router.push('viewdistricts');
+      } else {
+        alert('Error! Fill in all the fields')
       }
 
-      const res = await fetch('/api/district', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtToAdd)
-      })
-
-      this.$router.push('viewdistricts');
     },
 
     async updateExistingDistrict(event) {
