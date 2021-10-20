@@ -21,7 +21,7 @@
             Delete
           </button>
           <button
-            @click="goToEditDistrictAdminPage(district.district_id)">
+            @click="goToEditDistrictPage(district.district_id)">
             Edit
           </button>
         </td>
@@ -51,7 +51,7 @@ export default {
       store.dispatch('changeCurrentDistrict', districtId)
       this.$router.push('/')
     },
-    goToEditDistrictAdminPage(districtId) {
+    goToEditDistrictPage(districtId) {
       store.dispatch('changeCurrentDistrict', districtId)
       this.$router.push('editdistrict')
     },
@@ -62,7 +62,7 @@ export default {
         })
         this.districts = await this.fetchDistricts()
       }
-    },
+    }
   },
   async created() {
     this.districts = await this.fetchDistricts()
