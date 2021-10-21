@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form  onsubmit="event.preventDefault();">
+    <form onsubmit="event.preventDefault();">
       <h2
         v-if="isEditOrCreate=='Create'">
         Create District
@@ -74,12 +74,12 @@
         placeholder="Description"> <br> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
-        @click="validateNewDistrict">
+        @click="validateDistrict">
         Submit
       </button>
       <button 
         v-else
-        @click="updateExistingDistrict">
+        @click="validateDistrict">
         Update
       </button>
       <button
@@ -158,48 +158,36 @@ export default {
       const districtInfo = await data.districtById
 
       this.name = await districtInfo.district_name
-      this.location = await districtInfo.meeting_location
-      this.meeting = await districtInfo.meeting_frequency
-      this.charterdate = await districtInfo.charter_date
       this.email = await districtInfo.district_email
+      this.meetingLocation = await districtInfo.meeting_location
+      this.meetingFrequency = await districtInfo.meeting_frequency
+      this.charterdate = await districtInfo.charter_date
+      this.president = await districtInfo.district_president
       this.description = await districtInfo.district_description
+
+      console.log(await districtInfo)
     }
   },
 
   methods: {
-    validateNewDistrict() {
+    validateDistrict() {
 
       this.v$.$validate()
       
-      if(this.v$.$error) {
-        console.log(this.v$)
-        // if(!this.v$.name.required) {
-        //   document.querySelector('#district-name-error').style.display = 'block'
-        // }
-        // if(!this.v$.email.email || this.v$.name.required) {
-        //   document.querySelector('#district-email-error').style.display = 'block'
-        // }
-        // if(!this.v$.meetingLocation.required || this.v$.meetingLocation.maxLength) {
-        //   document.querySelector('#district-meetinglocation-error').style.display = 'block'
-        // }
-        // if(!this.v$.meetingFrequency.required || !this.v$.meetingFrequency.maxLength) {
-        //   document.querySelector('#district-meetingfrequency-error').style.display = 'block'
-        // }
-        // if(!this.v$.charterdate.required) {
-        //   document.querySelector('#district-charterdate-error').style.display = 'block'
-        // }
-        // if(!this.v$.president.required) {
-        //   document.querySelector('#district-president-error').style.display = 'block'
-        // }
-        // if(!this.v$.description.required || !this.v$.description.maxLength || !this.v$.description.minLength) {
-        //   document.querySelector('#district-description-error').style.display = 'block'
-        // }
-      } else {
-        this.addNewDistrict()
+      if(!this.v$.$error) {
+        if(this.isEditOrCreate == 'Create') {
+          this.addNewDistrict()
+        } else {
+          this.updateExistingDistrict()
+        }
       }
     },
 
     async addNewDistrict() {
+
+      console.log(this.meetingLocation)
+      console.log(this.meetingFrequency)
+
       let districtToAdd = {
         district_name: this.name,
         district_email: this.email,
@@ -220,8 +208,6 @@ export default {
     },
 
     async updateExistingDistrict(event) {
-      event.preventDefault()
-
       let districtToUpdate = {
         district_name: this.name,
         district_email: this.email,
@@ -254,7 +240,6 @@ form {
   color: red;
   font-size: 12px;
   padding: 0%;
-  /* display: none; */
 }
 
 </style>
