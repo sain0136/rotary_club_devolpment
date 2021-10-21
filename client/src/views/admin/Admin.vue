@@ -2,7 +2,7 @@
   <div>
     <AdminHeader />
     <router-view></router-view>
-    <AdminFooter />
+    <!-- <AdminFooter /> -->
   </div>
 </template>
 

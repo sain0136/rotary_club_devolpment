@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form>
+    <form  onsubmit="event.preventDefault();">
       <h2
         v-if="isEditOrCreate=='Create'">
         Create District
@@ -9,30 +9,72 @@
         v-else>
         Edit District
       </h2> <br>
+      <span 
+        class="district-error" 
+        id="district-name-error"
+        v-if="v$.name.$error">
+        Please enter a district name
+      </span> <br>
       <input type="text"
         v-model="name"
         placeholder="Name"> <br> <br>
+      <span 
+        class="district-error" 
+        id="district-email-error"
+        v-if="v$.email.$error">
+        Please enter a valid email address
+      </span> <br>
       <input type="text"
         v-model="email"
         placeholder="Email"> <br> <br>
+      <span 
+        class="district-error" 
+        id="district-meetinglocation-error"
+        v-if="v$.meetingLocation.$error">
+        Please enter a valid meeting location
+      </span> <br>
       <input type="text"
         v-model="meetingLocation"
         placeholder="Meeting Location"> <br> <br>  
+      <span 
+        class="district-error" 
+        id="district-meetingfrequency-error"
+        v-if="v$.meetingFrequency.$error">
+        Please enter a valid meeting frequency
+      </span> <br>
       <input type="text"
         v-model="meetingFrequency"
         placeholder="Meeting Frequency"> <br> <br>
+      <span 
+        class="district-error" 
+        id="district-charterdate-error"
+        v-if="v$.charterdate.$error">
+        Please enter a charter date
+      </span> <br>
       <input type="date"
         v-model="charterdate"
         placeholder="Charter Date"> <br> <br>
+      <span 
+        class="district-error" 
+        id="district-president-error"
+        v-if="v$.president.$error">
+        Please choose a president for the district
+      </span> <br>
       <input type="text"
         v-model="president"
         placeholder="President"> <br> <br>
+      <span 
+        class="district-error" 
+        id="district-description-error"
+        v-if="v$.description.$error">
+        Please enter a description between 100-1000 characters
+      </span> <br>
       <input type="text"
         v-model="description"
         placeholder="Description"> <br> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
-        @click="addNewDistrict">
+        @click="validateNewDistrict">
         Submit
       </button>
       <button 
@@ -53,7 +95,7 @@
 import store from '../../store/index'
 
 import useValidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
 export default {
   name: 'NewDistrictForm',
@@ -74,13 +116,33 @@ export default {
   },
     validations() {
       return {
-        name: { required },
-        email: {required},
-        meetingLocation: {required},
-        meetingFrequency: {required},
-        charterdate: {required},
-        president: {required},
-        description: {required},
+        name: { 
+          required,
+          maxLength: maxLength(30), 
+        },
+        email: { //This needs to be validated on the server via a verification email
+          required,
+          email,
+        },
+        meetingLocation: {
+          required,
+          maxLength: maxLength(50)
+        },
+        meetingFrequency: {
+          required,
+          maxLength: maxLength(255)
+        },
+        charterdate: {
+          required,
+        },
+        president: {
+          required
+        },
+        description: {
+          required,
+          minLength: minLength(100),
+          maxLength: maxLength(1000),
+        },
       }
     },
 
@@ -105,33 +167,56 @@ export default {
   },
 
   methods: {
-    async addNewDistrict(event) {
-      event.preventDefault()
+    validateNewDistrict() {
 
       this.v$.$validate()
-
-      if(!this.v$.$error) {
-        let districtToAdd = {
-          district_name: this.name,
-          district_email: this.email,
-          meeting_location: this.meetingLocation,
-          meeting_frequency: this.meetingFrequency,
-          charter_date: this.charterdate,
-          district_president: this.president,
-          district_description: this.description
-        }
-  
-        const res = await fetch('/api/district', { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(districtToAdd)
-        })
-  
-        this.$router.push('viewdistricts');
+      
+      if(this.v$.$error) {
+        console.log(this.v$)
+        // if(!this.v$.name.required) {
+        //   document.querySelector('#district-name-error').style.display = 'block'
+        // }
+        // if(!this.v$.email.email || this.v$.name.required) {
+        //   document.querySelector('#district-email-error').style.display = 'block'
+        // }
+        // if(!this.v$.meetingLocation.required || this.v$.meetingLocation.maxLength) {
+        //   document.querySelector('#district-meetinglocation-error').style.display = 'block'
+        // }
+        // if(!this.v$.meetingFrequency.required || !this.v$.meetingFrequency.maxLength) {
+        //   document.querySelector('#district-meetingfrequency-error').style.display = 'block'
+        // }
+        // if(!this.v$.charterdate.required) {
+        //   document.querySelector('#district-charterdate-error').style.display = 'block'
+        // }
+        // if(!this.v$.president.required) {
+        //   document.querySelector('#district-president-error').style.display = 'block'
+        // }
+        // if(!this.v$.description.required || !this.v$.description.maxLength || !this.v$.description.minLength) {
+        //   document.querySelector('#district-description-error').style.display = 'block'
+        // }
       } else {
-        alert('Error! Fill in all the fields')
+        this.addNewDistrict()
+      }
+    },
+
+    async addNewDistrict() {
+      let districtToAdd = {
+        district_name: this.name,
+        district_email: this.email,
+        meeting_location: this.meetingLocation,
+        meeting_frequency: this.meetingFrequency,
+        charter_date: this.charterdate,
+        district_president: this.president,
+       district_description: this.description
       }
 
+      const res = await fetch('/api/district', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(districtToAdd)
+      })
+  
+      this.$router.push('viewdistricts');
     },
 
     async updateExistingDistrict(event) {
@@ -163,6 +248,13 @@ export default {
 
 form {
   text-align: center;
+}
+
+.district-error {
+  color: red;
+  font-size: 12px;
+  padding: 0%;
+  /* display: none; */
 }
 
 </style>

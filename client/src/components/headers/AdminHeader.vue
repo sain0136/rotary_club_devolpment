@@ -1,8 +1,6 @@
 <template>
-  <nav
-    class="navbar navbar-expand-lg navbar-dark  justify-content-center px-0 py-3 flex-sm-column"
-  >
-    <ul class="nav ">
+  <nav>
+    <ul>
       <li class="nav-item">
         <img class="img-fluid" src="../../assets/Rotary_Admin.png" />
       </li>
@@ -49,7 +47,7 @@ nav {
   background-color: white;
   height: 8%;
 }
-/* 
+
 ul {
   list-style-type: none;
   margin-left: 200px;
@@ -59,8 +57,8 @@ ul {
 li {
   display: inline;
   margin-right: 40px;
-} */
-@media only screen and (max-width: 320px) {
+}
+/* @media only screen and (max-width: 320px) {
   .link {
     text-decoration: none;
     color: whitesmoke;
@@ -78,7 +76,7 @@ li {
     font-size: 3em;
     transition: color 0.5s;
   }
-}
+} */
 .link:hover {
   color: #ffb607;
   transition: color 0.5s;
@@ -89,7 +87,7 @@ button {
   border-radius: 10px;
 }
 
-nav {
+/* nav {
   background-color: #212529;
-}
+} */
 </style>
