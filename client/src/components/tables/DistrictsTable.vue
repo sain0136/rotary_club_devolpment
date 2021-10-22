@@ -66,7 +66,6 @@ export default {
   },
   async created() {
     this.districts = await this.fetchDistricts()
-    console.log(this.districts[1].district_id)
   }
 }
 
