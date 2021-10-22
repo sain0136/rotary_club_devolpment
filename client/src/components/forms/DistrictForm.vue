@@ -117,6 +117,8 @@ import store from '../../store/index'
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
+import { isUniqueEmail } from '../../validator'
+
 export default {
   name: 'NewDistrictForm',
   props: {
@@ -145,6 +147,7 @@ export default {
         email: { //This needs to be validated on the server via a verification email
           required,
           email,
+          isUniqueEmail
         },
         meetingLocation: {
           required,
@@ -251,7 +254,7 @@ export default {
       const res = await fetch('/api/user/', {method: 'GET'})
       const data = await res.json()
       return await data.allUsers
-    }
+    },
   },
 }
 </script>
