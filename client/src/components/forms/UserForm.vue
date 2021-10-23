@@ -1,56 +1,151 @@
 <template>
   <div>
-    <form>
-      <input type="number"
-        placeholder="District ID"
-        v-model="districtId"> <br> <br> 
-      <input type="number"
-        placeholder="Membership ID"
-        v-model="membershipId"> <br> <br> 
-      <input type="number"
-        placeholder="Role Type"
-        v-model="roleType"> <br> <br> 
-      <input type="text"
-        placeholder="District Role"
-        v-model="districtRole"> <br> <br> 
-      <input type="text"
-        placeholder="First Name"
-        v-model="firstName"> <br> <br>
-      <input type="text"
-        placeholder="Last Name"
-        v-model="lastName"> <br> <br>
-      <input type="text"
-        placeholder="Address"
-        v-model="address"> <br> <br> 
-      <input type="text"
-        placeholder="City"
-        v-model="city"> <br> <br>
-      <input type="text"
-        placeholder="Postal Code"
-        v-model="postal"> <br> <br>
-      <input type="text"
-        placeholder="Province"
-        v-model="province"> <br> <br>
-      <input type="text"
-        placeholder="Country"
-        v-model="country"> <br> <br>
-      <input type="tel"
-        placeholder="Phone"
-        v-model="phone"> <br> <br>      
-      <input type="email"
-        placeholder="Email"
-        v-model="email"> <br> <br>
-      <input type="password"
-        placeholder="Password"
-        v-model="password"> <br> <br>  
+    <form onsubmit="event.preventDefault();">
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-district-error"
+          v-if="v$.districtId.$error">
+          Please select a district to assign the admin 
+        </span> <br>
+        <select name="districts" v-model="districtId">
+          <option disabled selected>Districts</option>
+          <option 
+            v-for="district in districts"
+            :key="district.district_id"
+            value=71> 
+            {{district.district_name}} 
+          </option>
+        </select> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-role-error"
+          v-if="v$.roleType.$error">
+          Please select a role for the admin
+        </span> <br>
+        <select name="roles" v-model="roleType">
+          <option disabled>Roles</option>
+          <!-- Temporary, will be updated when the roles route created -->
+          <option value="1">Admin</option>
+        </select> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-firstname-error"
+          v-if="v$.firstName.$error">
+          Please enter the first name
+        </span> <br>
+        <input type="text"
+          placeholder="First Name"
+          v-model="firstName"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-lastname-error"
+          v-if="v$.lastName.$error">
+          Please enter the last name
+        </span> <br>
+        <input type="text"
+          placeholder="Last Name"
+          v-model="lastName"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-address-error"
+          v-if="v$.address.$error">
+          Please enter the address
+        </span> <br>
+        <input type="text"
+          placeholder="Address"
+          v-model="address"> <br> <br> 
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-city-error"
+          v-if="v$.city.$error">
+          Please enter the city
+        </span> <br>
+        <input type="text"
+          placeholder="City"
+          v-model="city"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-postal-error"
+          v-if="v$.postal.$error">
+          Please enter the postal code
+        </span> <br>
+        <input type="text"
+          placeholder="Postal Code"
+          v-model="postal"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-province-error"
+          v-if="v$.province.$error">
+          Please enter the province
+        </span> <br>
+        <select name="roles" v-model="province">
+          <option disabled>Province</option>
+          <option value="Ontario">Ontario</option>
+          <!-- Rest of 'em will to be added later -->
+        </select> <br> <br>
+      </div>
+      <div class="form-field">
+        <input type="text"
+          placeholder="Canada"
+          readonly
+          v-model="country"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-phone-error"
+          v-if="v$.phone.$error">
+          Please enter the phone number
+        </span> <br>
+        <input type="tel"
+          placeholder="Phone"
+          v-model="phone"> <br> <br>      
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-email-error"
+          v-if="v$.phone.$error">
+          Please enter a valid email address
+        </span> <br>
+        <input type="email"
+          placeholder="Email"
+          v-model="email"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="admin-error" 
+          id="admin-password-error"
+          v-if="v$.password.$error">
+          Please enter a valid password
+        </span> <br>
+        <input type="password"
+          placeholder="Password"
+          v-model="password"> <br> <br>  
+      </div>
       <button 
         v-if="isEditOrCreate=='Create'"
-        @click="createNewAdmin">
+        @click="validateDistrictAdmin">
         Submit
       </button>
       <button 
         v-else
-        @click="updateExistingAdmin">
+        @click="validateDistrictAdmin">
         Edit
       </button>
       <button
@@ -65,6 +160,13 @@
 
 import store from '../../store/index'
 
+import useValidate from '@vuelidate/core'
+import { required, maxLength, minLength, email } from '@vuelidate/validators'
+
+const roles = new Map()
+roles.set(1, 'Admin')
+roles.set(2, 'District Admin')
+
 export default {
   name: 'UserForm',
   props: {
@@ -72,9 +174,10 @@ export default {
   },
   data() {
     return {
+      v$: useValidate(),
       districtId: 0,
       membershipId: 0,
-      districtRole: '',
+      districtRole: '', //Will be enumerated to roleType
       roleType: 0,
       firstName: '',
       lastName: '',
@@ -86,9 +189,52 @@ export default {
       phone: '',
       email: '',
       password: '',
+
+      districts: []
+    }
+  },
+  validations() {
+    return {
+      districtId: {
+        required
+      },
+      roleType: {
+        required
+      },
+      firstName: {
+        required
+      },
+      lastName: {
+        required
+      },
+      address: {
+        required
+      },
+      city: {
+        required
+      },
+      postal: {
+        required
+      },
+      province: {
+        required
+      },
+      phone: {
+        required
+      },
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
     }
   },
   async created() {
+
+    this.districts = await this.fetchDistricts()
+
     //If the form is to be used for update, the data is pre-populated 
     //with the specific district's data coming from the API. If it's to be 
     //created, data is empty by default.
@@ -115,14 +261,29 @@ export default {
     }
   },
   methods: {
+    validateDistrictAdmin() {
+
+      console.log('Role', roles.get(this.roleType))
+
+      this.v$.$validate()
+      console.log(this.v$)
+      
+      if(!this.v$.$error) {
+        if(this.isEditOrCreate == 'Create') {
+          this.createNewAdmin()
+        } else {
+          this.updateExistingAdmin()
+        }
+      }
+    },
+
     async createNewAdmin(event) {
-      event.preventDefault()
       
       let userToCreate = {
         district_id: this.districtId,
-        membership_id: Date.now(),
-        district_role: this.districtRole,
+        membership_id: Date.now(), //Temporarily as a random value
         role_type: this.roleType,
+        district_role: roles.get(this.roleType),
         firstname: this.firstName,
         lastname: this.lastName,
         address: this.address,
@@ -139,6 +300,8 @@ export default {
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userToCreate)})
+
+      console.log(await res.json())
 
       this.$router.push('/admin/viewdistrictadmins');
     },
@@ -171,6 +334,12 @@ export default {
 
       this.$router.push('viewdistrictadmins');
     },
+
+    async fetchDistricts() {
+      const res = await fetch('/api/district/', {method: 'GET'})
+      const data = await res.json()
+      return await data.districts 
+    }
   },
 }
 </script>
@@ -179,6 +348,12 @@ export default {
 
 form {
   text-align: center;
+}
+
+.admin-error {
+  color: red;
+  font-size: 12px;
+  padding: 0%;
 }
 
 </style>

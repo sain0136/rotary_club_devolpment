@@ -144,7 +144,7 @@ export default {
           required,
           maxLength: maxLength(30), 
         },
-        email: { //This needs to be validated on the server via a verification email
+        email: { //This needs to be validated on the server too via a verification email
           required,
           email,
           isUniqueEmail
