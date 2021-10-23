@@ -1,1 +1,4 @@
 1. fix the cluburl field call it cluburl_id
+
+2. Ask diaz about destructing the user roles mabye ceate a class and define the class so that clubrole extr infrmation can be
+destucted off 

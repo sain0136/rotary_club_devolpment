@@ -17,6 +17,9 @@ import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
 export default class User extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
+  @computed()
+  public role: {}
+
   @column({ isPrimary: true })
   public userId: number
 

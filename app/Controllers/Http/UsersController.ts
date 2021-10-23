@@ -7,6 +7,13 @@ import RoleType from 'Contracts/Enums/RoleType'
 export default class UsersController {
   public async index({ response }: HttpContextContract) {
     const allUsers: User[] = await User.all()
+    for await (const user of allUsers) {
+      if (user.clubId !== null && user.clubId !== undefined) {
+        user.role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
+      } else {
+        user.role = await user.related('districtRole').pivotQuery().where({ user_id: user.userId })
+      }
+    }
     return response.json({ allUsers })
   }
   public async create({}: HttpContextContract) {}
@@ -14,6 +21,17 @@ export default class UsersController {
   public async jsonGetById({ request, response }: HttpContextContract) {
     const id: number = request.input('id')
     const userById: User = await User.findOrFail(id)
+    if (userById.clubId !== null && userById.clubId !== undefined) {
+      userById.role = await userById
+        .related('clubRole')
+        .pivotQuery()
+        .where({ user_id: userById.userId })
+    } else {
+      userById.role = await userById
+        .related('districtRole')
+        .pivotQuery()
+        .where({ user_id: userById.userId })
+    }
     return response.json({ userById })
   }
 
