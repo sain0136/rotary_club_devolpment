@@ -16,7 +16,7 @@ export default class DistrictsController {
     const allClubsForDistrict: Club[] = await Club.query().where({ district_id: districtID })
     return response.json({ allClubs: allClubsForDistrict })
   }
-  public async getDistictAdmins({ request, response }: HttpContextContract) {
+  public async getDistictAdmins({ response }: HttpContextContract) {
     const allAdmins: User[] = await User.query().where('district_id', '>', 0)
     for await (const user of allAdmins) {
       user.role = await user.related('districtRole').pivotQuery().where({ user_id: user.userId })
