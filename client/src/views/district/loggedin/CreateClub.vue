@@ -9,7 +9,7 @@
 import NewClubForm from '../../../components/forms/NewClubForm.vue'
 
 export default {
-  name: 'DistrictNewClub',
+  name: 'CreateClub',
   components: {
     NewClubForm
   }

@@ -9,12 +9,20 @@
         <td>{{ club.club_id }}</td>
         <td>{{ club.club_name }}</td>
         <td>
-          <router-link
-            :to="`/club/${club.id}/home`"
-            @click="$store.dispatch('changeCurrentClub', club.id)"
-          >
-            Go</router-link
-          >
+          <button
+            @click="goToClubPage(club.club_id)">
+            View
+          </button>
+          <button
+            v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
+            @click="deleteDistrict(club.club_id)">
+            Delete
+          </button>
+          <button
+            v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
+            @click="goToEditDistrictPage(club.club_id)">
+            Edit
+          </button>
         </td>
       </tr>
     </table>
@@ -40,6 +48,22 @@ export default {
       );
       return clubs;
     },
+    goToClubPage(clubId) {
+      store.dispatch('changeCurrentClub', clubId)
+      this.$router.push(`/club/${clubId}`)
+    },
+    goToEditClubtPage(clubId) {
+      store.dispatch('changeCurrentClub', clubId)
+      this.$router.push('editclub')
+    },
+    async deleteClub(clubId) {
+      if(confirm(`Are you sure you want to delete club ${clubId}?`)) {
+        const res = await fetch(`/api/club/${clubId}`, {
+          method: 'DELETE'
+        })
+        this.clubs = await this.fetchClubs()
+      }
+    }
   },
   async created() {
     console.log(await this.fetchClubs());

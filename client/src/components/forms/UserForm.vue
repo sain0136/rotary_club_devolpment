@@ -127,7 +127,8 @@
           placeholder="Email"
           v-model="email"> <br> <br>
       </div>
-      <div class="form-field">
+      <div class="form-field"
+        v-if="isEditOrCreate=='Create'">
         <span 
           class="admin-error" 
           id="admin-password-error"
@@ -249,8 +250,8 @@ export default {
       this.membership_id = await userInfo.membership_id
       this.districtRole = await userInfo.district_role
       this.roleType = await userInfo.role_type
-      this.firstname = await userInfo.firstname
-      this.lastname = await userInfo.lastName
+      this.firstName = await userInfo.firstname
+      this.lastName = await userInfo.lastname
       this.address = await userInfo.address
       this.city = await userInfo.user_city
       this.postal = await userInfo.user_postal
@@ -258,12 +259,15 @@ export default {
       this.country = await userInfo.user_country
       this.phone = await userInfo.phone
       this.email = await userInfo.email
+      this.password = await userInfo.password
     }
   },
   methods: {
     validateDistrictAdmin() {
 
-      console.log('Role', roles.get(this.roleType))
+      console.log('Role Type: ',this.roleType)
+      console.log('Role Type Statically: ', roles.get(1))
+      console.log('Role Type Dynamically: ', roles.get(this.roleType))
 
       this.v$.$validate()
       console.log(this.v$)
@@ -272,9 +276,10 @@ export default {
         if(this.isEditOrCreate == 'Create') {
           this.createNewAdmin()
         } else {
+          console.log('here')
           this.updateExistingAdmin()
         }
-      }
+      } 
     },
 
     async createNewAdmin(event) {
@@ -283,7 +288,8 @@ export default {
         district_id: this.districtId,
         membership_id: Date.now(), //Temporarily as a random value
         role_type: this.roleType,
-        district_role: roles.get(this.roleType),
+        // district_role: roles.get(this.roleType),
+        district_role: 1, //Temporarily till the above issue resolved
         firstname: this.firstName,
         lastname: this.lastName,
         address: this.address,
@@ -306,8 +312,9 @@ export default {
       this.$router.push('/admin/viewdistrictadmins');
     },
 
-    async updateExistingAdmin(event) {
-      event.preventDefault()
+    async updateExistingAdmin() {
+
+      console.log('updated!')
 
       let districtAdminToUpdate = {
         district_id: this.districtId,
@@ -323,7 +330,6 @@ export default {
         user_country: this.country,
         phone: this.phone,
         email: this.email,
-        password: this.password,
       }
 
       const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, {
