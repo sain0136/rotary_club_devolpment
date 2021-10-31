@@ -13,14 +13,7 @@
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
       <li><router-link class="link" to="contactus">Contact Us</router-link></li>
 
-      <li v-if="$store.state.isDistrictAdminLoggedIn">
-        <router-link class="link" to="newclub">New Club</router-link>
-      </li>
-      <li v-if="$store.state.isDistrictAdminLoggedIn">
-        <router-link class="link" to="clubs">Edit Clubs</router-link>
-      </li>
-
-      <li v-if="!$store.state.isSiteAdminLoggedIn">
+      <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" to="login">Login</router-link>
       </li>
       <li v-if="$store.state.isDistrictAdminLoggedIn">

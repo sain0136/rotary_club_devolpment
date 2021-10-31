@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
+import { getAdminsOfEachDistrict } from './credentials'
+
 export default createStore({
   state: {
     isSiteAdminLoggedIn: false,
@@ -9,7 +11,7 @@ export default createStore({
     isDistrictAdminLoggedIn: false,
     isDistrictAdminRejected: false,
 
-    currentDistrictId: 1,
+    currentDistrictId: 80,
 
     currentClubId: Number,
 
@@ -56,10 +58,19 @@ export default createStore({
     }
   },
   actions: {
-    validateAdminCredentials({commit}, data) {
+    async validateAdminCredentials({commit}, data) {
       let username = data.username
       let password = data.password
       let roleId = data.roleId
+
+      // console.log(await getAdminsOfEachDistrict())
+
+      const districtsIncludingAdmins = await getAdminsOfEachDistrict()
+
+      districtsIncludingAdmins.forEach(district => {
+        console.log(district)
+        
+      });
 
       switch(roleId) {
         case 0:

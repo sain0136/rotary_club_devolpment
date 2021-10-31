@@ -36,7 +36,9 @@ export default {
         password: this.password,
         roleId: 1
       })
-      this.$router.push(`/`);
+      if(store.state.isDistrictAdminLoggedIn) {
+        this.$router.push(`/`);
+      }
     }
   }
 }
