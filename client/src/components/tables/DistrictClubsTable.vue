@@ -15,12 +15,12 @@
           </button>
           <button
             v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
-            @click="deleteDistrict(club.club_id)">
+            @click="deleteClub(club.club_id)">
             Delete
           </button>
           <button
             v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
-            @click="goToEditDistrictPage(club.club_id)">
+            @click="goToEditClubPage(club.club_id)">
             Edit
           </button>
         </td>
@@ -52,7 +52,7 @@ export default {
       store.dispatch('changeCurrentClub', clubId)
       this.$router.push(`/club/${clubId}`)
     },
-    goToEditClubtPage(clubId) {
+    goToEditClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
       this.$router.push('editclub')
     },

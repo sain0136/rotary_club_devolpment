@@ -5,7 +5,7 @@
         @click="() => {
           this.$router.push('createclub')
         }">
-        Create District
+        Create Club
       </button>
       <br><br>
     <DistrictClubsTable/>

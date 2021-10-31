@@ -55,7 +55,6 @@ export default {
     {
       path: 'editclub',
       component: EditClub,
-      name: 'EditClub',
       beforeEnter: (to, from, next) => {
         if(store.state.isDistrictAdminLoggedIn || 
           store.state.isSiteAdminLoggedIn) {
