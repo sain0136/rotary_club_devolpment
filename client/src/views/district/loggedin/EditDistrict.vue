@@ -1,6 +1,6 @@
 <template>
   <div>
-    <DistrictForm isEditOrCreate='Edit' pageAccessed='Admin'/>
+    <DistrictForm isEditOrCreate='Edit'/>
   </div>
 </template>
 

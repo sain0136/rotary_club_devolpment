@@ -63,14 +63,10 @@ export default createStore({
       let password = data.password
       let roleId = data.roleId
 
-      // console.log(await getAdminsOfEachDistrict())
-
-      const districtsIncludingAdmins = await getAdminsOfEachDistrict()
-
-      districtsIncludingAdmins.forEach(district => {
-        console.log(district)
-        
-      });
+      console.log(await getAdminsOfEachDistrict())
+      
+      // const districtsIncludingAdmins = await getAdminsOfEachDistrict() 
+      //If the application grows
 
       switch(roleId) {
         case 0:

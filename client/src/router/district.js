@@ -4,6 +4,7 @@ import DistrictAbout from '../views/district/DistrictAbout'
 import DistrictHome from '../views/district/DistrictHome'
 import DistrictLogin from '../views/district/DistrictLogin'
 import DistrictContactUs from '../views/district/DistrictContactUs'
+import EditDistrict from '../views/district/loggedin/EditDistrict'
 
 import ViewClubs from '../views/district/ViewClubs'
 import CreateClub from '../views/district/loggedin/CreateClub'
@@ -39,6 +40,18 @@ export default {
     {
       path: 'clubs',
       component: ViewClubs
+    },
+    {
+      path: 'editdistrict',
+      component: EditDistrict,
+      beforeEnter: (to, from, next) => {
+        if(store.state.isDistrictAdminLoggedIn || 
+           store.state.isSiteAdminLoggedIn) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: 'createclub',

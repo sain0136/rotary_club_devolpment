@@ -103,6 +103,7 @@
         Update
       </button>
       <button
+        v-if="pageAccessed == 'Admin'"
         @click="() => this.$router.push('viewdistricts')">
         Cancel
       </button>
@@ -122,7 +123,8 @@ import { isUniqueEmail } from '../../validator'
 export default {
   name: 'NewDistrictForm',
   props: {
-    isEditOrCreate: String
+    isEditOrCreate: String,
+    pageAccessed: String
   },
   data() {
     return {

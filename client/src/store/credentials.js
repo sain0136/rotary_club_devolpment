@@ -1,4 +1,3 @@
-
 async function fetchDistrictAdmins(districtId) {
   const res = await fetch('/api/user', {method: 'GET'})
   const data = await res.json()
