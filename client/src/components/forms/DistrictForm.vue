@@ -92,6 +92,7 @@
           v-model="description"
           placeholder="Description"> <br> <br>
       </div>
+      <DistrictSocialTable v-if="isEditOrCreate=='Edit'"/> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateDistrict">
@@ -108,10 +109,13 @@
         Cancel
       </button>
     </form>
+
   </div>
 </template>
 
 <script>
+
+import DistrictSocialTable from '../tables/DistrictSocialTable.vue'
 
 import store from '../../store/index'
 
@@ -122,6 +126,9 @@ import { isUniqueEmail } from '../../validator'
 
 export default {
   name: 'NewDistrictForm',
+  components: {
+    DistrictSocialTable
+  },
   props: {
     isEditOrCreate: String,
     pageAccessed: String
