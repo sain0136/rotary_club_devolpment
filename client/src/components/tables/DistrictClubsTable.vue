@@ -50,7 +50,7 @@ export default {
     },
     goToClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
-      this.$router.push(`/club/${clubId}`)
+      this.$router.push(`/club`)
     },
     goToEditClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)

@@ -10,7 +10,7 @@
 
 <script>
 
-import store from '../../store/index'
+import { fetchDistrictData } from '../../data-bank/district-data'
 
 export default {
   name: 'DistrictContactUs',
@@ -20,24 +20,11 @@ export default {
       districtAddress: ''
     }
   },
-  methods: {
-    async fetchDistrictContactInfo() {
-      const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
-        method: 'GET'
-      })
-      const data = await res.json()
-      const districtInfo = await data.districtById
-      return {
-        email: await districtInfo.district_email,
-        address: await districtInfo.meeting_location
-      }
-    }
-  },
   async created() {
-    const contactInfo = await this.fetchDistrictContactInfo()
+    const contactInfo = await fetchDistrictData()
     
-    this.districtEmail = await contactInfo.email
-    this.districtAddress = await contactInfo.address
+    this.districtEmail = await contactInfo.district_email
+    this.districtAddress = await contactInfo.meeting_location
   }
 }
 

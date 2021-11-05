@@ -21,7 +21,7 @@
 
 <script>
 
-import store from '../../store/index'
+import { fetchClubData } from '../../data-bank/club-data'
 
 export default {
   name: 'ClubContactUs',
@@ -32,26 +32,12 @@ export default {
       clubAddress: '',
     }
   },
-  methods: {
-    async fetchClubContactInfo() {
-      const res = await fetch(`/api/club/${store.state.currentClubId}`, {
-        method: 'GET'
-      })
-      const data = await res.json()
-      const clubInfo = await data.clubsById
-      return {
-        email: await clubInfo.club_email,
-        phone: await clubInfo.club_phone,
-        address: await clubInfo.club_address
-      }
-    }
-  },
   async created() {
-    const contactInfo = await this.fetchClubContactInfo()
+    const contactInfo = await fetchClubData()
 
-    this.clubEmail = await contactInfo.email
-    this.clubPhone = await contactInfo.phone
-    this.clubAddress = await contactInfo.address
+    this.clubEmail = await contactInfo.club_email
+    this.clubPhone = await contactInfo.club_phone
+    this.clubAddress = await contactInfo.club_address
   }
 }
 

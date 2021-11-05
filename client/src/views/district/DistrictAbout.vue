@@ -9,7 +9,7 @@
 
 <script>
 
-import store from '../../store/index'
+import { fetchDistrictData } from '../../data-bank/district-data'
 
 export default {
   name: 'DistrictAbout',
@@ -18,17 +18,9 @@ export default {
       districtDescription: ''
     }
   },
-  methods: {
-    async fetchDistrictDescription() {
-      const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
-        method: 'GET'
-      })
-      const data = await res.json()
-      return data.districtById.district_description
-    }
-  },
   async created() {
-    this.districtDescription = await this.fetchDistrictDescription()
+    const districtInfo = await fetchDistrictData()
+    this.districtDescription = await districtInfo.district_description
   }
 }
 
