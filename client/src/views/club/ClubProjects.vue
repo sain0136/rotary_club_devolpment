@@ -1,6 +1,6 @@
 <template>
   <div>
-    Club Projects
+    <h1>Our Projects</h1>
   </div>
 </template>
 

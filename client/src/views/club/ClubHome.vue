@@ -1,6 +1,6 @@
 <template>
   <div>
-    Club {{ this.clubName }} Home
+    <h1>Club {{ this.clubName }} Home</h1>
   </div>
 </template>
 
@@ -12,17 +12,21 @@ export default {
   name: 'ClubHome',
   data() {
     return {
-      clubName: store.state.currentClubId
+      clubName: '',
     }
   },
   async created() {
-    const res = await fetch(
-      `/api/districts/${store.state.currentDistrictId}/clubs/${store.state.currentClubId}`,
-      { method: 'GET'}
-    )
-    const data = await res.json()
-    this.clubName = data.name
-    console.log('Club name: ', this.clubName)
+    const clubInfo = await this.fetchClubInfo()
+    this.clubName = await clubInfo.club_name
+  },
+  methods: {
+    async fetchClubInfo() {
+      const res = await fetch(`/api/club/${store.state.currentClubId}`, { 
+        method: 'GET'
+      })
+      const data = await res.json()
+      return await data.clubsById
+    }
   }
 }
 

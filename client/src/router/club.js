@@ -12,7 +12,7 @@ import EditClub from '../views/club/loggedin/EditClub'
 import EditProject from '../views/club/loggedin/EditProject'
 
 export default {
-  path: '/club/:id',
+  path: '/club',
   component: _Club,
   name: '_Club',
   children: [

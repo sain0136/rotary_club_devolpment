@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <li><img class="logo" src="../../assets/club-logo.png"></li>
-      <li><router-link class="link" to="/club/home">Home</router-link></li>
+      <li><router-link class="link" to="home">Home</router-link></li>
       <li><router-link class="link" to="/club/about">About</router-link></li>
       <li><router-link class="link" to="/club/projects">Projects</router-link></li>
       <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>

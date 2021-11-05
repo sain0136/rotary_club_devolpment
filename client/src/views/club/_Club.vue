@@ -2,7 +2,6 @@
   <div>
     <ClubInfoHeader/>
     <ClubHeader/>
-    <!-- <router-link to=></router-link> -->
     <router-view class="view"></router-view>
     <ClubFooter/>
   </div>
