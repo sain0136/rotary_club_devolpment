@@ -32,7 +32,6 @@ export async function getSocialLink(socialType) {
   let linkToReturn
 
   clubSocials.forEach(socialLink => {
-    console.log(socialLink.url_type == socialType)
     if(socialLink.url_type === socialType) {
       linkToReturn = socialLink.url
     }

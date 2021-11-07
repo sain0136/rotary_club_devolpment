@@ -1,31 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
       <div class="col-sm-6"
         v-for="project in projects" :key="project.id">
         <div class="card"
-          @click="goToProjectPage(project.id)">
+          @click="goToProjectPage(project.project_id)">
           <div class="card-body">
-            <h5 class="card-title">{{ project.name }}</h5>
-            <p class="card-text">{{ project.description }}</p>
+            <h5 class="card-title">{{ project.project_name }}</h5>
+            <p class="card-text">{{ project.project_theme }}</p>
             <a href="#" class="btn btn-primary">Edit</a>
           </div>
         </div>
@@ -47,10 +29,9 @@ export default {
     };
   },
   methods: {
-    goToProjectPage(clubId) {
-      // store.dispatch('changeCurrentClub', clubId)
-      // this.$router.push(`/club`)
-      console.log(clubId)
+    goToProjectPage(projectId) {
+      store.dispatch('changeCurrentProject', projectId)
+      this.$router.push('./project')
     },
     goToEditProjectPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
@@ -59,7 +40,6 @@ export default {
   },
   async created() {
     this.projects = await getProjects()
-    console.log(await getProjects())
   },
 };
 </script>

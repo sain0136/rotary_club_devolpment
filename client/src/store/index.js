@@ -15,6 +15,8 @@ export default createStore({
 
     currentClubId: Number,
 
+    currentProjectId: Number,
+
     currentUserIdToEdit: Number
   },
   mutations: {
@@ -46,6 +48,9 @@ export default createStore({
     },
     changeCurrentClub(state, clubId) {
       state.currentClubId = clubId
+    },
+    changeCurrentProject(state, projectId) {
+      state.currentProjectId = projectId
     },
     changeCurrentUserIdToEdit(state, userId) {
       state.currentUserIdToEdit = userId
@@ -91,6 +96,9 @@ export default createStore({
     changeCurrentClub({commit}, clubId) {
       commit('changeCurrentClub', clubId)
     },  
+    changeCurrentProject({commit}, projectId) {
+      commit('changeCurrentProject', projectId)
+    },
     changeCurrentUserIdToEdit({commit}, userId) {
       commit('changeCurrentUserIdToEdit', userId)
     },
