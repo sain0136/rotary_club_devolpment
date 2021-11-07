@@ -70,11 +70,19 @@ export default class ProjectsController {
     return response.json({ ProjectById })
   }
 
-  /*  public async showAllProjectsByUser({ params, response }: HttpContextContract) {
-    const userId: number = parseInt(params.id)
-    const ProjectsById: Project = await Project.findOrFail(userId)
-    return response.json({ ProjectsById })
-  } */
+  public async showAllProjectsByUser({ request, response }: HttpContextContract) {
+    const userId: number = request.input('user_id')
+    const user: User = await User.findOrFail(userId)
+    const usersProjects: Project[] = []
+    const projects: Project[] = await Project.query().select().where({ created_by: user.userId })
+    if (!projects.length == false) {
+      projects.forEach((element) => {
+        usersProjects.push(element)
+      })
+    }
+
+    return response.json({ usersProjects })
+  }
   public async showAllProjectsByClub({ request, response }: HttpContextContract) {
     const clubID: number = request.input('club_id')
     const allMembers: User[] = await User.query().where({ clubId: clubID })
@@ -84,7 +92,9 @@ export default class ProjectsController {
         .select()
         .where({ created_by: user.userId })
       if (!usersProjects.length == false) {
-        projects.push(usersProjects)
+        usersProjects.forEach((element) => {
+          projects.push(element)
+        })
       }
     }
 
