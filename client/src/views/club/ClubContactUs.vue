@@ -21,7 +21,7 @@
 
 <script>
 
-import { fetchClubData } from '../../data-bank/club-data'
+import { getClubData } from '../../data-bank/club-data'
 
 export default {
   name: 'ClubContactUs',
@@ -33,7 +33,7 @@ export default {
     }
   },
   async created() {
-    const contactInfo = await fetchClubData()
+    const contactInfo = await getClubData()
 
     this.clubEmail = await contactInfo.club_email
     this.clubPhone = await contactInfo.club_phone

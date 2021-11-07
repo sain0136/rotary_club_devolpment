@@ -2,11 +2,21 @@
   <header>
     <div class="mail">
       <font-awesome-icon class="envelope" icon="envelope"></font-awesome-icon>
-      <p> info@cornwallrotary.com</p>
+      <p> {{email}}</p>
     </div>
     <div class="social">
-      <font-awesome-icon class="social-icon" :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
-      <font-awesome-icon class="social-icon" :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
+      <a :href="facebookLink"
+        v-if="facebookLink != null">  
+        <font-awesome-icon 
+          class="social-icon" 
+          :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
+      </a>
+      <a :href="twitterLink"
+        v-if="twitterLink != null">
+        <font-awesome-icon 
+          class="social-icon" 
+          :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
+      </a>
       <router-link to="login">
         <font-awesome-icon class="social-icon" icon="sign-in-alt"></font-awesome-icon>
       </router-link>
@@ -16,10 +26,30 @@
 
 <script>
 
+import { getClubData, getSocialLink } from '../../data-bank/club-data'
+
 export default {
   name: 'ClubInfoHeader',
   components: {
 
+  },
+  data() {
+    return {
+      email: '',
+
+      facebookLink: null,
+      twitterLink: null,
+      instagramLink: null,
+    }
+
+  },
+  async created() {
+    const clubData = await getClubData()
+    this.email = await clubData.club_email
+
+    this.facebookLink = await getSocialLink(1)
+    this.twitterLink = await getSocialLink(2)
+    this.instagramLink = await getSocialLink(3)
   }
 }
 
