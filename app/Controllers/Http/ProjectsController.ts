@@ -70,12 +70,26 @@ export default class ProjectsController {
     return response.json({ ProjectById })
   }
 
-  public async showAllProjectsByUser({ params, response }: HttpContextContract) {
+  /*  public async showAllProjectsByUser({ params, response }: HttpContextContract) {
     const userId: number = parseInt(params.id)
     const ProjectsById: Project = await Project.findOrFail(userId)
     return response.json({ ProjectsById })
-  }
+  } */
+  public async showAllProjectsByClub({ request, response }: HttpContextContract) {
+    const clubID: number = request.input('club_id')
+    const allMembers: User[] = await User.query().where({ clubId: clubID })
+    const projects: any[] = []
+    for await (const user of allMembers) {
+      const usersProjects: Project[] = await Project.query()
+        .select()
+        .where({ created_by: user.userId })
+      if (!usersProjects.length == false) {
+        projects.push(usersProjects)
+      }
+    }
 
+    return response.json({ projects })
+  }
   public async edit({}: HttpContextContract) {}
 
   public async addUserToProject({ request, response }: HttpContextContract) {
