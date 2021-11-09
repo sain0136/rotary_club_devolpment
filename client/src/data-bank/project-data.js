@@ -7,10 +7,9 @@ export async function getProjects() {
   })
   const data = await res.json()
   const projects = await data.projects
-  const projectsArray = await projects[0] //??
-  console.log(projectsArray)
+  // console.log(projectsArray)
 
-  return await projectsArray
+  return await projects
 }
 
 export async function getProjectData(projectId) {

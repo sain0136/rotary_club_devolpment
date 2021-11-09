@@ -11,6 +11,9 @@ export default createStore({
     isDistrictAdminLoggedIn: false,
     isDistrictAdminRejected: false,
 
+    isClubAdminLoggedIn: false,
+    isClubAdminRejected: false,
+
     currentDistrictId: 80,
 
     currentClubId: Number,
@@ -30,6 +33,10 @@ export default createStore({
           state.isDistrictAdminLoggedIn = true
           state.isDistrictAdminRejected = false
         break
+        case 2:
+          state.isClubAdminLoggedIn = true
+          state.isClubAdminRejected = false
+        break
       }
     },
     adminReject(state, roleId) {
@@ -39,6 +46,9 @@ export default createStore({
         break
         case 1: 
         state.isDistrictAdminRejected = true
+        break
+        case 2: 
+        state.isClubAdminRejected = true
         break
       }
     },
@@ -57,8 +67,14 @@ export default createStore({
     },
     logout(state, roleIdToLogOut) {
       switch(roleIdToLogOut) {
-        case 0: state.isSiteAdminLoggedIn = false; break
-        case 1: state.isDistrictAdminLoggedIn = false; break
+        case 0: 
+        state.isSiteAdminLoggedIn = false
+        break
+        case 1: 
+        state.isDistrictAdminLoggedIn = false
+        break
+        case 2:
+        state.isClubAdminLoggedIn = false
       }
     }
   },
@@ -88,6 +104,12 @@ export default createStore({
             commit('adminReject', 1)
           }
           break
+        case 2:
+          if(username == 'capo' && password == 'capo88') {
+            commit('adminLogin', 2)
+          } else {
+            commit('adminReject', 2)
+          } 
       }
     },
     changeCurrentDistrict({commit}, districtId) {

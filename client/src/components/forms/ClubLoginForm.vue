@@ -1,17 +1,28 @@
 <template>
   <div>
     <form>
-      <legend>Admin</legend> <br> <br>
+      <legend>Club Login</legend> <br> <br>
+      <p 
+        v-if="$store.state.isClubAdminRejected" 
+        id="error">
+        Credentials not valid!
+      </p>
+      <div v-if="$store.state.isClubAdminLoggedIn && !$store.state.isClubAdminRejected">
+        <p id="success">Logged In!</p>
+      </div>
       <input type="text" name="username" placeholder="username"
         v-model="username"> <br> <br>
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
-      <button @click="$store.dispatch('login', this.username, this.password)">Login</button>
+      <button @click="clubAdminLoginHandler">
+      Login</button>
   </div>
 </template>
 
 <script>
+
+import store from '../../store/index'
 
 export default {
   name: 'ClubLogin',
@@ -22,6 +33,16 @@ export default {
     }
   },
   methods: {
+    clubAdminLoginHandler() {
+      store.dispatch('validateAdminCredentials', {
+        username: this.username,
+        password: this.password,
+        roleId: 2
+      })
+      if(store.state.isClubAdminLoggedIn) {
+        this.$router.push(`/`);
+      }
+    }
   }
 }
 
@@ -50,6 +71,7 @@ input {
 
 button {
   background-color: #ffb607;
+  font-size: 18px;
   opacity: 0.8;
   border: none;
   padding: 8px;

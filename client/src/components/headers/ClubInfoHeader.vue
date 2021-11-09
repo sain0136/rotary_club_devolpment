@@ -19,6 +19,7 @@
       </a>
       <router-link to="login">
         <font-awesome-icon class="social-icon" icon="sign-in-alt"></font-awesome-icon>
+        <p id="login-text">Login</p>
       </router-link>
     </div>
   </header>
@@ -98,6 +99,16 @@ p {
   opacity: 1;
   cursor: pointer;
   transition: opacity 300ms;
+}
+
+#login-text {
+  display: inline;
+  text-decoration: yellow;
+  opacity: 0.5;
+}
+
+#login-text:hover {
+  
 }
 
 </style>

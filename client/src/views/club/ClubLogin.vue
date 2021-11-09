@@ -1,17 +1,17 @@
 <template>
   <div>
-    <LoginForm/>
+    <ClubLoginForm/>
   </div>
 </template>
 
 <script>
 
-import LoginForm from '../../components/forms/LoginForm.vue'
+import ClubLoginForm from '../../components/forms/ClubLoginForm.vue'
 
 export default {
   name: 'ClubLogin',
   components: {
-    LoginForm
+    ClubLoginForm
   }
 }
 
