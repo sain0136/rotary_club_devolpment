@@ -12,6 +12,7 @@ import Project from '../views/club/Project'
 import Donate from '../views/club/loggedin/Donate'
 import EditClub from '../views/club/loggedin/EditClub'
 import EditProject from '../views/club/loggedin/EditProject'
+import CreateProject from '../views/club/loggedin/CreateProject'
 
 export default {
   path: '/club',
@@ -42,6 +43,11 @@ export default {
       path: 'projects',
       component: ClubProjects,
       name: 'ClubProjects'
+    },
+    {
+      path: 'createproject',
+      component: CreateProject,
+      name: 'CreateProject'
     },
     {
       path: 'project',
