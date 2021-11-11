@@ -9,6 +9,7 @@ import ClubUsers from '../views/club/ClubProjects'
 
 import Project from '../views/club/Project'
 
+import UserProjects from '../views/club/loggedin/UserProjects'
 import Donate from '../views/club/loggedin/Donate'
 import EditClub from '../views/club/loggedin/EditClub'
 import EditProject from '../views/club/loggedin/EditProject'
@@ -45,6 +46,11 @@ export default {
       name: 'ClubProjects'
     },
     {
+      path: 'userprojects',
+      component: UserProjects,
+      name: 'UserProjects'
+    },
+    {
       path: 'createproject',
       component: CreateProject,
       name: 'CreateProject'
@@ -65,7 +71,7 @@ export default {
       name: 'Donate'
     },
     {
-      path: 'edit-clup',
+      path: 'editclub',
       component: EditClub,
       name: 'EditClub'
     },

@@ -14,19 +14,19 @@ export async function getProjects() {
   return await projects
 }
 
-// export async function getProjectById(id) {
-//   const projects = await getProjects()
+export async function getUserProjects() {
+  const clubProjects = await getProjects()
+  const userProjects = []
 
-//   projects.forEach(project => {
-//     of)_
-//   })
+  //>>Filter method doesn't work for some reason
+  clubProjects.forEach(project => {
+    if(project.created_by == 28) { //>>TODO update it with the actual dynamic user Id logged in
+      userProjects.push(project)
+    }
+  })
 
-//   const projectById = projects.filter(project => {
-//     project.project_id == id
-//   })
-//   return projectById
-//   // return projectById[0]
-// }
+  return userProjects
+}
 
 export async function getProjectData(projectId) {
   const projects = await getProjects()

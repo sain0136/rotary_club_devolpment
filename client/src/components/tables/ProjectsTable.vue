@@ -19,10 +19,13 @@
 <script>
 
 import store from "../../store/index";
-import { getProjects } from '../../data-bank/project-data'
+import { getProjects, getUserProjects } from '../../data-bank/project-data'
 
 export default {
   name: "ProjectsTable",
+  props: {
+    isClubOrUserProjects: String
+  },
   data() {
     return {
       projects: Array,
@@ -39,7 +42,12 @@ export default {
     },
   },
   async created() {
-    this.projects = await getProjects()
+    if(this.isClubOrUserProjects == 'Club') {
+      this.projects = await getProjects()
+    } else {
+      this.projects = await getUserProjects()
+      console.log(await getUserProjects())
+    }
   },
 };
 </script>
