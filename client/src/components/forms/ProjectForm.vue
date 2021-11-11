@@ -5,6 +5,10 @@
         v-if="isEditOrCreate=='Create'">
         New Project  
       </h2>
+      <h2
+        v-else>
+        Edit Project
+      </h2>
       <div class="form-field">
         <span 
           class="project-error" 
@@ -101,6 +105,10 @@
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
+import { getProjectData } from '../../data-bank/project-data'
+
+import store from '../../store/index'
+
 export default {
   name: 'ProjectForm',
   props: {
@@ -150,7 +158,17 @@ export default {
     }
   },
   async created() {
+    if(this.isEditOrCreate == 'Edit') {
+      const projectData = await getProjectData(store.state.currentProjectId)
 
+      this.name = projectData.project_name
+      this.theme = projectData.project_theme
+      this.grantType = projectData.grant_type
+      this.pdfLabel = projectData.pdf_label
+      this.fundingGoal = projectData.funding_goal
+      this.currentFunds = projectData.current_funds
+      this.region = projectData.region
+    }
   },
   methods: {
     validateProject() {
@@ -186,6 +204,34 @@ export default {
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(projectToAdd)
+        })
+        console.log(await res.json())
+      } catch(err) {
+        console.log(err)
+      }
+      
+      this.$router.push('projects');
+    },
+
+    async updateExistingProject() {
+      let projectToUpdate = {
+        project_name: this.name,
+        project_theme: this.theme,
+        grant_type: this.grantType,
+        pdf_label: this.pdfLabel,
+        funding_goal: this.fundingGoal,
+        current_funds: this.currentFunds,
+        created_by: this.createdBy,
+        region: this.region,
+        rotary_year: this.rotaryYear,
+        role_type: this.roleType
+      }
+
+      try{
+        const res = await fetch(`/api/project/${store.state.currentProjectId}`, { 
+          method: 'PATCH', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(projectToUpdate)
         })
         console.log(await res.json())
       } catch(err) {

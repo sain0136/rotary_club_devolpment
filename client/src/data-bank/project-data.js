@@ -14,13 +14,26 @@ export async function getProjects() {
   return await projects
 }
 
+// export async function getProjectById(id) {
+//   const projects = await getProjects()
+
+//   projects.forEach(project => {
+//     of)_
+//   })
+
+//   const projectById = projects.filter(project => {
+//     project.project_id == id
+//   })
+//   return projectById
+//   // return projectById[0]
+// }
+
 export async function getProjectData(projectId) {
   const projects = await getProjects()
   let projectToReturn
 
   projects.forEach(project => {
     if(project.project_id == projectId) {
-      console.log(project)
       projectToReturn = project
     }
   })
