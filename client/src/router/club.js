@@ -70,7 +70,7 @@ export default {
       name: 'EditClub'
     },
     {
-      path: 'edit-project',
+      path: 'editproject',
       component: EditProject,
       name: 'EditProject'
     },

@@ -1,5 +1,7 @@
+import store from '../store/index'
+
 export async function getProjects() {
-  const queryHelper = {club_id: 5}
+  const queryHelper = {club_id: store.state.currentClubId}
   const res = await fetch('/api/project/clubProjects', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

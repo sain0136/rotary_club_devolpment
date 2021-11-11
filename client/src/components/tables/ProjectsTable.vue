@@ -8,7 +8,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ project.project_name }}</h5>
             <p class="card-text">{{ project.project_theme }}</p>
-            <a href="#" class="btn btn-primary">Edit</a>
+            <a href="/club/editproject" class="btn btn-primary">Edit</a>
           </div>
         </div>
       </div>

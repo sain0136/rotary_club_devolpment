@@ -117,7 +117,7 @@ export default {
       currentFunds: '',
       region: '',
 
-      createdBy: 24, //>> TODO update with the creator's user ID 
+      createdBy: 28, //>> TODO update with the creator's user ID 
       roleType: 1, //>> TODO update with the creator's role
       rotaryYear: '2021', //>> TODO update reasonably
     }
@@ -191,10 +191,7 @@ export default {
       } catch(err) {
         console.log(err)
       }
-
-
       
-
       this.$router.push('projects');
     }
   },

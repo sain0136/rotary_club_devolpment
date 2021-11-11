@@ -1,15 +1,15 @@
 <template>
-  <DistrictForm isEditOrCreate="Create"/>
+  <ProjectForm isEditOrCreate="Create"/>
 </template>
 
 <script>
 
-import DistrictForm from '../../../components/forms/ProjectForm.vue'
+import ProjectForm from '../../../components/forms/ProjectForm.vue'
 
 export default {
   name: 'CreateProject',
   components: {
-    DistrictForm
+    ProjectForm
   }
 
 }

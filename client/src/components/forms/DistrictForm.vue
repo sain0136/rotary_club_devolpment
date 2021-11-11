@@ -230,16 +230,11 @@ export default {
         district_description: this.description
       }
 
-      try {
-        const res = await fetch('/api/district', { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(districtToAdd)
-        })
-        console.log(await res.json())
-      } catch(err) {
-        console.log(err)
-      }
+      const res = await fetch('/api/district', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(districtToAdd)
+      })
 
       this.$router.push('viewdistricts');
     },
