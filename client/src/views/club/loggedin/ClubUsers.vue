@@ -1,13 +1,18 @@
 <template>
   <div>
-    Club Users
+    <ClubUsersTable/>
   </div>
 </template>
 
 <script>
 
+import ClubUsersTable from '../../../components/tables/ClubUsersTable.vue'
+
 export default {
-  name: 'ClubUsers'
+  name: 'ClubUsers',
+  components: {
+    ClubUsersTable
+  }
 }
 
 </script>

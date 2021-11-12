@@ -5,7 +5,8 @@ import ClubContactUs from '../views/club/ClubContactUs'
 import ClubHome from '../views/club/ClubHome'
 import ClubLogin from '../views/club/ClubLogin'
 import ClubProjects from '../views/club/ClubProjects'
-import ClubUsers from '../views/club/ClubProjects'
+
+import ClubUsers from '../views/club/loggedin/ClubUsers'
 
 import Project from '../views/club/Project'
 

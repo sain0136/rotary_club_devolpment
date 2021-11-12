@@ -22,6 +22,10 @@
           </div>
         </div>
       </li>
+      <li
+        v-if="$store.state.isClubAdminLoggedIn">
+        <router-link class="link" to="/club/users">Users</router-link>
+      </li>
       <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>
       
 
