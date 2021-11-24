@@ -59,9 +59,9 @@ export default {
         this.users = await this.fetchUsers()
       }
     },
-    async goToEditDistrictAdminPage(userId) {
+    async goToEditUserPage(userId) {
       store.dispatch('changeCurrentUserIdToEdit', userId)
-      this.$router.push('editdistrictadmin')
+      this.$router.push('editclubuser')
     }
   },
   async created() {

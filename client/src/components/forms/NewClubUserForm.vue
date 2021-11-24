@@ -182,15 +182,10 @@ export default {
       phone: '',
       email: '',
       password: '',
-
-      roles: new Map()
     }
   },
   validations() {
     return {
-      // clubRole: {
-      //   required        
-      // },
       roleType: {
         required
       },
@@ -225,9 +220,6 @@ export default {
     }
   },
   async created() {
-    
-    this.roles.set(1, 'Admin')
-    this.roles.set(2, 'User')
 
     //If the form is to be used for update, the data is pre-populated 
     //with the specific district's data coming from the API. If it's to be 
@@ -306,14 +298,14 @@ export default {
       this.$router.push('/club/users');
     },
 
-    async updateExistingAdmin() {
+    async updateExistingUser() {
 
       console.log('updated!')
 
-      let districtAdminToUpdate = {
-        district_id: this.districtId,
+      let clubUserToUpdate = {
+        club_id: this.clubId,
         membership_id: Date.now(),
-        district_role: this.districtRole,
+        club_role: this.clubRole,
         role_type: this.roleType,
         firstname: this.firstName,
         lastname: this.lastName,
@@ -329,10 +321,10 @@ export default {
       const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtAdminToUpdate)
+        body: JSON.stringify(clubUserToUpdate)
       })
 
-      this.$router.push('viewdistrictadmins');
+      this.$router.push('users');
     },
   },
 }
