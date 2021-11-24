@@ -7,6 +7,8 @@ import ClubLogin from '../views/club/ClubLogin'
 import ClubProjects from '../views/club/ClubProjects'
 
 import ClubUsers from '../views/club/loggedin/ClubUsers'
+import CreateClubUser from '../views/club/loggedin/CreateClubUser'
+
 
 import Project from '../views/club/Project'
 
@@ -65,6 +67,11 @@ export default {
       path: 'users',
       component: ClubUsers,
       name: 'ClubUsers'
+    },
+    {
+      path: 'createclubuser',
+      component: CreateClubUser,
+      name: 'CreateClubUser'
     },
     {
       path: 'donate',

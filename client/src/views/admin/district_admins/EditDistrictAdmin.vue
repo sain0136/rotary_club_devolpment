@@ -1,17 +1,17 @@
 <template>
   <div>
-    <UserForm isEditOrCreate='Edit'/>
+    <NewAdminForm isEditOrCreate='Edit'/>
   </div>
 </template>
 
 <script>
 
-import UserForm from '../../../components/forms/UserForm.vue'
+import NewAdminForm from '../../../components/forms/NewAdminForm.vue'
 
 export default {
   name: 'EditDistrictAdmin',
   components: {
-    UserForm
+    NewAdminForm
   }
 }
 

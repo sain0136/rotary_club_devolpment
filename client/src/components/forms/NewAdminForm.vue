@@ -21,19 +21,6 @@
       <div class="form-field">
         <span 
           class="admin-error" 
-          id="admin-role-error"
-          v-if="v$.roleType.$error">
-          Please select a role for the admin
-        </span> <br>
-        <select name="roles" v-model="roleType">
-          <option disabled>Roles</option>
-          <!-- Temporary, will be updated when the roles route created -->
-          <option value="1">Admin</option>
-        </select> <br> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
           id="admin-firstname-error"
           v-if="v$.firstName.$error">
           Please enter the first name
@@ -147,7 +134,7 @@
       <button 
         v-else
         @click="validateDistrictAdmin">
-        Edit
+        Update
       </button>
       <button
         @click="() => this.$router.push('viewdistrictadmins')">
@@ -169,17 +156,21 @@ roles.set(1, 'Admin')
 roles.set(2, 'District Admin')
 
 export default {
-  name: 'UserForm',
+  name: 'NewAdminForm',
   props: {
     isEditOrCreate: String
   },
   data() {
     return {
+      //Validation variables
       v$: useValidate(),
+
+      //Const values
+      districtRole: 'District Admin', 
+      roleType: 1,
+
       districtId: 0,
       membershipId: 0,
-      districtRole: '', //Will be enumerated to roleType
-      roleType: 0,
       firstName: '',
       lastName: '',
       address: '',
@@ -197,9 +188,6 @@ export default {
   validations() {
     return {
       districtId: {
-        required
-      },
-      roleType: {
         required
       },
       firstName: {
@@ -265,12 +253,8 @@ export default {
   methods: {
     validateDistrictAdmin() {
 
-      console.log('Role Type: ',this.roleType)
-      console.log('Role Type Statically: ', roles.get(1))
-      console.log('Role Type Dynamically: ', roles.get(this.roleType))
-
       this.v$.$validate()
-      console.log(this.v$)
+      console.log(this.v$.$errors)
       
       if(!this.v$.$error) {
         if(this.isEditOrCreate == 'Create') {
@@ -288,8 +272,7 @@ export default {
         district_id: this.districtId,
         membership_id: Date.now(), //Temporarily as a random value
         role_type: this.roleType,
-        // district_role: roles.get(this.roleType),
-        district_role: 1, //Temporarily till the above issue resolved
+        district_role: this.districtRole,
         firstname: this.firstName,
         lastname: this.lastName,
         address: this.address,

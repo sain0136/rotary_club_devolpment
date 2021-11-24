@@ -1,5 +1,13 @@
 <template>
   <div>
+    <button
+        v-if="$store.state.isSiteAdminLoggedIn || $store.state.isClubAdminLoggedIn"
+        @click="() => {
+          this.$router.push('createclubuser')
+        }">
+        Create User
+      </button>
+      <br><br>
     <ClubUsersTable/>
   </div>
 </template>
@@ -16,3 +24,12 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+button {
+  font-size: 14px;
+  margin-left: auto;
+}
+
+</style>
