@@ -1,3 +1,4 @@
+import Hash from '@ioc:Adonis/Core/Hash'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
 import District from 'App/Models/District'
@@ -18,8 +19,19 @@ export default class UsersController {
   }
   public async create({}: HttpContextContract) {}
 
+  public async passwordVerfication({ request, response }: HttpContextContract) {
+    const password: string = request.input('password')
+    const id: number = request.input('user_id')
+    const userById: User = await User.findOrFail(id)
+    let verified: Boolean = false
+    if (await Hash.verify(userById.password, password)) {
+      verified = true
+    }
+
+    return response.json({ verified, Hash: userById.password, PlainText: password })
+  }
   public async jsonGetById({ request, response }: HttpContextContract) {
-    const id: number = request.input('id')
+    const id: number = request.input('user_id')
     const userById: User = await User.findOrFail(id)
     if (userById.clubId !== null && userById.clubId !== undefined) {
       userById.role = await userById

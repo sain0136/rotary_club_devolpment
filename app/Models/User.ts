@@ -53,7 +53,7 @@ export default class User extends BaseModel {
   @column()
   public email: string
 
-  @column({ serializeAs: null })
+  @column({ serializeAs: 'pass' })
   public password: string
 
   @column()
