@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
-import { getAdminsOfEachDistrict } from './credentials'
+import { isUserValid } from './credentials'
 
 export default createStore({
   state: {
@@ -80,32 +80,28 @@ export default createStore({
   },
   actions: {
     async validateAdminCredentials({commit}, data) {
-      let username = data.username
+      let userId = data.userId
       let password = data.password
       let roleId = data.roleId
 
-      console.log(await getAdminsOfEachDistrict())
-      
-      // const districtsIncludingAdmins = await getAdminsOfEachDistrict() 
-      //If the application grows
-
       switch(roleId) {
         case 0:
-          if(username == 'apo' && password == 'apo88') {
+          if(isUserValid(userId, password)) {
             commit('adminLogin', 0)
           } else {
             commit('adminReject', 0)
           }
           break
         case 1:
-          if(username == 'dapo' && password == 'dapo88') {
+          if(isUserValid(userId, password)) {
             commit('adminLogin', 1)
           } else {
             commit('adminReject', 1)
+            console.log('hero')
           }
           break
         case 2:
-          if(username == 'capo' && password == 'capo88') {
+          if(isUserValid(userId, password)) {
             commit('adminLogin', 2)
           } else {
             commit('adminReject', 2)

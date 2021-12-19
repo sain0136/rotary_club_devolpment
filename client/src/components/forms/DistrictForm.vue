@@ -236,6 +236,8 @@ export default {
         body: JSON.stringify(districtToAdd)
       })
 
+      console.log(res)
+
       this.$router.push('viewdistricts');
     },
 

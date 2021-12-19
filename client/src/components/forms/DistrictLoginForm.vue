@@ -7,8 +7,8 @@
         <p id="success">Logged In!</p>
         <!-- <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br>  -->
       </div>
-      <input type="text" name="username" placeholder="username"
-        v-model="username"> <br> <br>
+      <input type="text" name="userId" placeholder="ID"
+        v-model="userId"> <br> <br>
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
@@ -25,14 +25,14 @@ export default {
   name: 'DistrictLogin',
   data() {
     return {
-      username: '',
+      userId: '',
       password: ''
     }
   },
   methods: {
     districtAdminLoginHandler() {
       store.dispatch('validateAdminCredentials', {
-        username: this.username,
+        userId: this.userId,
         password: this.password,
         roleId: 1
       })
