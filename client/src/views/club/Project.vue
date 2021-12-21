@@ -1,8 +1,16 @@
 <template>
   <div>
     <h1>{{ this.projectName }}</h1>
-    
     {{ this.projectDescription }}
+    <br>
+    <button
+    @click="goToViewPledges">
+      View Pledges
+    </button>
+    <button
+    @click="goToMakePledge">
+      Make Pledge
+    </button>
   </div>
 </template>
 
@@ -26,7 +34,12 @@ export default {
     this.projectDescription = await projectInfo.project_theme
   },
   methods: {
-
+    goToViewPledges() {
+      this.$router.push('viewpledges')
+    },
+    goToMakePledge() {
+      this.$router.push('createpledge')
+    }
   }
 }
 </script>
@@ -38,6 +51,10 @@ div {
   width: 50%;
   word-wrap: break-word;
   margin: auto;
+}
+
+button {
+  font-size: 24px;
 }
 
 </style>

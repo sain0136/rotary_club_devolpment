@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Our Projects</h1> <br>
-    <ProjectsTable/>
+    <ProjectsTable isClubOrUserProjects='Club'/>
   </div>
 </template>
 

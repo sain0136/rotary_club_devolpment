@@ -11,6 +11,8 @@ import CreateClubUser from '../views/club/loggedin/CreateClubUser'
 import EditClubUser from '../views/club/loggedin/EditClubUser'
 
 import Project from '../views/club/Project'
+import ViewPledges from '../views/club/ViewPledges'
+import CreatePledge from '../views/club/CreatePledge'
 
 import UserProjects from '../views/club/loggedin/UserProjects'
 import Donate from '../views/club/loggedin/Donate'
@@ -62,6 +64,16 @@ export default {
       path: 'project',
       component: Project,
       name: 'Project'
+    },
+    {
+      path: 'viewpledges',
+      component: ViewPledges,
+      name: 'ViewPledges'
+    },
+    {
+      path: 'createpledge',
+      component: CreatePledge,
+      name: 'CreatePledge'
     },
     {
       path: 'users',
