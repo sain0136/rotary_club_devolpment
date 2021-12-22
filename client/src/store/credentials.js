@@ -12,6 +12,7 @@ export async function isUserValid(id, password) {
   })
 
   const data = await res.json()
+  console.log(await data.verified)
   return await data.verified
 }
 

@@ -93,8 +93,9 @@ export default createStore({
           }
           break
         case 1:
-          if(isUserValid(userId, password)) {
+          if(await isUserValid(userId, password)) {
             commit('adminLogin', 1)
+            console.log('valid')
           } else {
             commit('adminReject', 1)
             console.log('hero')
