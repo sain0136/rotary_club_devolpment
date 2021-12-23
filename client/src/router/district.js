@@ -7,6 +7,7 @@ import DistrictContactUs from '../views/district/DistrictContactUs'
 import EditDistrict from '../views/district/loggedin/EditDistrict'
 
 import ViewClubs from '../views/district/ViewClubs'
+import DistrictProjects from '../views/district/DistrictProjects'
 import CreateClub from '../views/district/loggedin/CreateClub'
 import EditClub from '../views/district/loggedin/EditClub'
 
@@ -40,6 +41,10 @@ export default {
     {
       path: 'clubs',
       component: ViewClubs
+    },
+    {
+      path: 'projects',
+      component: DistrictProjects
     },
     {
       path: 'editdistrict',

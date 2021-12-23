@@ -11,6 +11,7 @@
       </li>
       <li><router-link class="link" to="about">About</router-link></li>
       <li><router-link class="link" to="clubs">Clubs</router-link></li>
+      <li><router-link class="link" to="projects">Projects</router-link></li>
       <li><router-link class="link" to="contactus">Contact Us</router-link></li>
       <li><router-link class="link" to="editdistrict">Edit District</router-link></li>
 

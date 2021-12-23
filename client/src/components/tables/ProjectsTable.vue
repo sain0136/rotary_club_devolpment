@@ -19,12 +19,12 @@
 <script>
 
 import store from "../../store/index";
-import { getProjects, getUserProjects } from '../../data-bank/project-data'
+import { getDistrictProjects, getClubProjects, getUserProjects } from '../../data-bank/project-data'
 
 export default {
   name: "ProjectsTable",
   props: {
-    isClubOrUserProjects: String
+    pageToDisplay: String
   },
   data() {
     return {
@@ -42,11 +42,14 @@ export default {
     },
   },
   async created() {
-    if(this.isClubOrUserProjects == 'Club') {
-      this.projects = await getProjects()
-    } else {
+    if(this.pageToDisplay == 'District') {
+      this.projects = await getDistrictProjects()
+    } 
+    else if(this.pageToDisplay == 'Club') {
+      this.projects = await getClubProjects()
+    } 
+    else {
       this.projects = await getUserProjects()
-      console.log(await getUserProjects())
     }
   },
 };

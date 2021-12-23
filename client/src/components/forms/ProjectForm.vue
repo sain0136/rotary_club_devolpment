@@ -126,7 +126,7 @@ export default {
       region: '',
 
       createdBy: 28, //>> TODO update with the creator's user ID 
-      roleType: 1, //>> TODO update with the creator's role
+      roleType: 2,
       rotaryYear: '2021', //>> TODO update reasonably
     }
   },
@@ -158,8 +158,18 @@ export default {
     }
   },
   async created() {
+
+    if(store.state.isClubAdminLoggedIn) {
+      this.roleType = 2
+    } else {
+      this.roleType = 3
+    }
+
+    this.createdBy = store.state.loggedInClubUserId
+
+    const projectData = await getProjectData(store.state.currentProjectId)
+    
     if(this.isEditOrCreate == 'Edit') {
-      const projectData = await getProjectData(store.state.currentProjectId)
 
       this.name = projectData.project_name
       this.theme = projectData.project_theme

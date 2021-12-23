@@ -1,6 +1,16 @@
 import store from '../store/index'
 
-export async function getProjects() {
+export async function getDistrictProjects() {
+  const res = await fetch('/api/project', {
+    method: 'GET'
+  })
+  const data = await res.json()
+  const allProjects = await data.allProjects
+  
+  return await allProjects
+}
+
+export async function getClubProjects() {
   const queryHelper = {club_id: store.state.currentClubId}
   const res = await fetch('/api/project/clubProjects', {
     method: 'POST',
@@ -20,7 +30,7 @@ export async function getUserProjects() {
 
   //>>Filter method doesn't work for some reason
   clubProjects.forEach(project => {
-    if(project.created_by == 28) { //>>TODO update it with the actual dynamic user Id logged in
+    if(project.created_by == store.state.loggedInClubUserId) {
       userProjects.push(project)
     }
   })

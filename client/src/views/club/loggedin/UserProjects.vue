@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Your Projects</h1> <br>
-    <ProjectsTable isClubOrUserProjects = 'User'/>
+    <ProjectsTable pageToDisplay='User'/>
   </div>
 </template>
 

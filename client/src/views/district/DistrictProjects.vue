@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Our Projects</h1> <br>
-    <ProjectsTable pageToDisplay='Club'/>
+    <h1>All Projects</h1> <br>
+    <ProjectsTable pageToDisplay='District'/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import ProjectsTable from '../../components/tables/ProjectsTable.vue'
 
 export default {
-  name: 'ClubProjects',
+  name: 'DistrictProjects',
   components: {
     ProjectsTable
   }
@@ -19,6 +19,10 @@ export default {
 </script>
 
 <style scoped>
+
+div {
+  text-align: center;
+}
 
 
 
