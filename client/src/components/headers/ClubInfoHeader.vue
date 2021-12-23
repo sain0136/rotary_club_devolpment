@@ -17,9 +17,16 @@
           class="social-icon" 
           :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
       </a>
-      <router-link to="login">
-        <font-awesome-icon class="social-icon" icon="sign-in-alt"></font-awesome-icon>
-        <p id="login-text">Login</p>
+      <router-link 
+        v-if="!($store.state.isDistrictAdminLoggedIn || $store.state.isSiteAdminLoggedIn)"
+        to="/club/login">
+        <font-awesome-icon 
+          v-if="!($store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn)"
+          class="social-icon" icon="sign-in-alt"></font-awesome-icon>
+        <p
+          @click="logout"
+          v-else 
+          id="login-text">Logout</p>
       </router-link>
     </div>
   </header>
@@ -28,6 +35,7 @@
 <script>
 
 import { getClubData, getSocialLink } from '../../data-bank/club-data'
+import store from '../../store/index'
 
 export default {
   name: 'ClubInfoHeader',
@@ -51,6 +59,16 @@ export default {
     this.facebookLink = await getSocialLink(1)
     this.twitterLink = await getSocialLink(2)
     this.instagramLink = await getSocialLink(3)
+  },
+  methods: {
+    logout() {
+      if(store.state.isClubAdminLoggedIn) {
+        store.dispatch("logout", 2)
+      } else {
+        store.dispatch("logout", 3)
+      }
+      this.$router.push('login')
+    },
   }
 }
 
@@ -105,10 +123,6 @@ p {
   display: inline;
   text-decoration: yellow;
   opacity: 0.5;
-}
-
-#login-text:hover {
-  
 }
 
 </style>

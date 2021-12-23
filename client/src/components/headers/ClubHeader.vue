@@ -10,12 +10,12 @@
           <div class="dropdown-content">
             <router-link to="/club/projects">All Projects</router-link>
             <router-link 
-              v-if="$store.state.isClubAdminLoggedIn"
+              v-if="$store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn"
               to="/club/createproject">
               Create Project
             </router-link>
             <router-link 
-              v-if="$store.state.isClubAdminLoggedIn"
+              v-if="$store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn"
               to="/club/userprojects">
               Your Projects
             </router-link>
@@ -23,7 +23,7 @@
         </div>
       </li>
       <li
-        v-if="$store.state.isClubAdminLoggedIn">
+        v-if="$store.state.isClubAdminLoggedIn || $store.state.isSiteAdminLoggedIn">
         <router-link class="link" to="/club/users">Users</router-link>
       </li>
       <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>

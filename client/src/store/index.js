@@ -14,6 +14,10 @@ export default createStore({
     isClubAdminLoggedIn: false,
     isClubAdminRejected: false,
 
+    isClubUserLoggedIn: false,
+    isClubUserRejected: false,
+    loggedInClubUserId: 0,
+
     currentDistrictId: 80,
 
     currentClubId: Number,
@@ -52,6 +56,16 @@ export default createStore({
         break
       }
     },
+
+    clubUserLogin(state, userId) {
+      state.isClubUserLoggedIn = true
+      state.isClubUserRejected = false
+      state.loggedInClubUserId = userId
+    },
+    clubUserReject(state, userId) {
+      state.isClubUserRejected = true
+    },
+
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
       console.log(state.currentDistrictId)
@@ -75,11 +89,14 @@ export default createStore({
         break
         case 2:
         state.isClubAdminLoggedIn = false
+        break
+        case 3:
+        state.isClubUserLoggedIn = false
       }
     }
   },
   actions: {
-    async validateAdminCredentials({commit}, data) {
+    async validateAdminCredentials({commit}, data) { //Also for the regular user
       let userId = data.userId
       let password = data.password
       let roleId = data.roleId
@@ -102,11 +119,16 @@ export default createStore({
           }
           break
         case 2:
-          if(isUserValid(userId, password)) {
+          if(await isUserValid(userId, password)) {
             commit('adminLogin', 2)
           } else {
             commit('adminReject', 2)
           } 
+          break
+        case 3:
+          if(await isUserValid(userId, password)) {
+            commit('clubUserLogin', userId)
+          }
       }
     },
     changeCurrentDistrict({commit}, districtId) {

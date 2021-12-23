@@ -7,6 +7,23 @@
         id="error">
         Credentials not valid!
       </p>
+      <div class="form-field">
+        <label for="Admin">Admin</label>
+        <input 
+          type="radio" 
+          name="Admin" 
+          value="2"
+          v-model="roleType">
+        <br><br>
+        <label for="User">User</label>
+        <input 
+          checked="checked"
+          type="radio" 
+          name="User" 
+          value="3"
+          v-model="roleType">          
+        <br> <br>
+      </div>
       <div v-if="$store.state.isClubAdminLoggedIn && !$store.state.isClubAdminRejected">
         <p id="success">Logged In!</p>
       </div>
@@ -29,18 +46,19 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      roleType: 3,
     }
   },
   methods: {
     clubAdminLoginHandler() {
       store.dispatch('validateAdminCredentials', {
-        username: this.username,
+        userId: this.username,
         password: this.password,
-        roleId: 2
+        roleId: this.roleType
       })
-      if(store.state.isClubAdminLoggedIn) {
-        this.$router.push(`/`);
+      if(store.state.isClubAdminLoggedIn || store.state.isClubUserLoggedIn) {
+        this.$router.push('/club/home');
       }
     }
   }

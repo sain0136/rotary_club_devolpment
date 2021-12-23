@@ -258,7 +258,7 @@ export default {
         body: JSON.stringify(districtToUpdate)
       })
 
-      this.$router.push('viewdistricts');
+      this.$router.push('home');
     },
 
     async fetchAdmins() {
