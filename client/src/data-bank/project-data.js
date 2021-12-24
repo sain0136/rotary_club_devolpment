@@ -25,7 +25,7 @@ export async function getClubProjects() {
 }
 
 export async function getUserProjects() {
-  const clubProjects = await getProjects()
+  const clubProjects = await getDistrictProjects()
   const userProjects = []
 
   //>>Filter method doesn't work for some reason
@@ -39,7 +39,7 @@ export async function getUserProjects() {
 }
 
 export async function getProjectData(projectId) {
-  const projects = await getProjects()
+  const projects = await getDistrictProjects()
   let projectToReturn
 
   projects.forEach(project => {
