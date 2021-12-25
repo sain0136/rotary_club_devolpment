@@ -3,12 +3,19 @@ import { BaseModel, column, computed, manyToMany, ManyToMany } from '@ioc:Adonis
 import GrantType from 'Contracts/Enums/GrantType'
 import User from './User'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
+import AreaFocus from 'Contracts/Enums/AreaFocus'
 
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
 
   @computed()
   public pledgesAssociated: object
+
+  @computed()
+  public extraDescriptionsObject: object
+
+  @computed()
+  public itemisedBudgetArray: object
 
   @column({ isPrimary: true })
   public projectId: number
@@ -20,10 +27,13 @@ export default class Project extends BaseModel {
   public projectTheme: string
 
   @column()
-  public grantType: GrantType
+  public areaFocus: AreaFocus
 
   @column()
-  public pdfLabel?: string
+  public grantType: GrantType
+
+  @column.date()
+  public estimatedCompletion: DateTime
 
   @column()
   public fundingGoal: number
@@ -38,10 +48,19 @@ export default class Project extends BaseModel {
   public region: string
 
   @column()
-  public rotaryYear: string
+  public rotaryYear: number
 
   @column()
   public currency: string
+
+  @column({ serializeAs: null })
+  public extraDescriptions: string
+
+  @column({ serializeAs: null })
+  public itemisedBudget: string
+
+  @column()
+  public clubId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

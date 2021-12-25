@@ -12,6 +12,8 @@ export default class PledgesController {
         .select()
         .where({ project_id: project.projectId })
       project.pledgesAssociated = pledges
+      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
     }
 
     return response.json({ allProjects })
@@ -27,6 +29,8 @@ export default class PledgesController {
       .select()
       .where({ project_id: project.projectId })
     project.pledgesAssociated = pledges
+    project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+    project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
 
     return response.json({ project })
   }
@@ -40,6 +44,8 @@ export default class PledgesController {
     const userId: number = request.input('user_id')
 
     const project: Project = await Project.findOrFail(projectId)
+    project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+    project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
     const oldFunds: number = project.currentFunds
     const newAmount: number = project.currentFunds + pledgeAmount
     const user: User = await User.findOrFail(userId)

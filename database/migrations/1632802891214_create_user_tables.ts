@@ -17,7 +17,6 @@ export default class User extends BaseSchema {
       table.string('phone', 180).nullable()
       table.string('email', 50).notNullable()
       table.string('password', 255).notNullable()
-      //table.integer('role_id', 50).nullable().unsigned().references('role_id').inTable('club_role')
       table
         .integer('club_id', 50)
         .nullable()

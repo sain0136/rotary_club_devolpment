@@ -6,7 +6,6 @@ export default class District extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('district_id').primary().unsigned()
-      //table.integer('admin_id', 50).unsigned().references('user_id').inTable('user')
       table.string('district_name', 50).unique().notNullable()
       table.string('district_email', 50).notNullable().unique()
       table.string('meeting_location', 50).nullable()

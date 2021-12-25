@@ -1,12 +1,19 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
+import AreaFocus from 'Contracts/Enums/AreaFocus'
 import GrantType from 'Contracts/Enums/GrantType'
 import ProjectRoleType from 'Contracts/Enums/ProjectRoleType'
+import { DateTime } from 'luxon'
 
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
-    const allProjects: Project[] = await Project.all()
+    let allProjects: Project[] = await Project.all()
+    for await (const project of allProjects) {
+      const conver = JSON.parse(project.extraDescriptions)
+      project.extraDescriptionsObject = conver
+      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+    }
     return response.json({ allProjects })
   }
 
@@ -15,25 +22,34 @@ export default class ProjectsController {
   public async store({ request, response }: HttpContextContract) {
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
+    const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
-    const pdfLabel: string = request.input('pdf_label')
+    const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const createdByUserId: number = request.input('created_by')
     const region: string = request.input('region')
-    const rotaryYear: string = request.input('rotary_year')
+    const rotaryYear: number = request.input('rotary_year')
     const roleType: ProjectRoleType = request.input('role_type')
+    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
+    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
+    const convertedEstimatedCompletion = DateTime.fromFormat(estimatedCompletion, 'D')
+    const clubId: number = request.input('club_id')
 
     const newProject = await Project.create({
       projectName: projectName,
       projectTheme: projectTheme,
       grantType: grantType,
-      pdfLabel: pdfLabel,
+      areaFocus: areaFocus,
+      estimatedCompletion: convertedEstimatedCompletion,
       fundingGoal: fundingGoal,
       currentFunds: currentFunds,
       createdBy: createdByUserId,
       region: region,
       rotaryYear: rotaryYear,
+      extraDescriptions: extraDescriptions,
+      itemisedBudget: itemisedBudget,
+      clubId: clubId,
     })
     const user: User = await User.findOrFail(createdByUserId)
     await newProject.related('projectRole').attach({
@@ -48,7 +64,8 @@ export default class ProjectsController {
     const grantTitle = async (grantType: number) => {
       return GrantType[grantType]
     }
-
+    newProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+    newProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
     return response.json({
       created: 'new project',
       newProject,
@@ -93,6 +110,8 @@ export default class ProjectsController {
         .where({ created_by: user.userId })
       if (!usersProjects.length == false) {
         usersProjects.forEach((element) => {
+          element.extraDescriptionsObject = JSON.parse(element.extraDescriptions)
+          element.itemisedBudgetArray = JSON.parse(element.itemisedBudget)
           projects.push(element)
         })
       }
@@ -134,13 +153,18 @@ export default class ProjectsController {
   public async update({ params, request, response }: HttpContextContract) {
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
+    const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
-    const pdfLabel: string = request.input('pdf_label')
+    const estimatedCompletion: Date = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const createdByUserId: number = request.input('created_by')
     const region: string = request.input('region')
-    const rotaryYear: string = request.input('rotary_year')
+    const rotaryYear: number = request.input('rotary_year')
+    const extraDescriptions: any = JSON.stringify(request.input('rotary_year'))
+    const itemisedBudget: any = JSON.stringify(request.input('rotary_year'))
+    const convertedEstimatedCompletion = DateTime.fromJSDate(estimatedCompletion)
+    const clubId: number = request.input('club_id')
 
     const projectToBeUpdated: Project = await Project.findOrFail(params.id)
 
@@ -149,14 +173,20 @@ export default class ProjectsController {
         projectName: projectName,
         projectTheme: projectTheme,
         grantType: grantType,
-        pdfLabel: pdfLabel,
+        areaFocus: areaFocus,
+        estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
         createdBy: createdByUserId,
         region: region,
         rotaryYear: rotaryYear,
+        extraDescriptions: extraDescriptions,
+        itemisedBudget: itemisedBudget,
+        clubId: clubId,
       })
       .save()
+    updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+    updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
     return response.json({ updatedProject, Hello: 'old file below', projectToBeUpdated })
   }
 
