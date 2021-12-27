@@ -10,7 +10,7 @@ export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
     let allProjects: Project[] = await Project.all()
     for await (const project of allProjects) {
-      const conver = JSON.parse(project.extraDescriptions)
+      const conver: Object = JSON.parse(project.extraDescriptions)
       project.extraDescriptionsObject = conver
       project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
     }
@@ -33,7 +33,7 @@ export default class ProjectsController {
     const roleType: ProjectRoleType = request.input('role_type')
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
-    const convertedEstimatedCompletion = DateTime.fromFormat(estimatedCompletion, 'D')
+    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
     const clubId: number = request.input('club_id')
 
     const newProject = await Project.create({
@@ -119,6 +119,24 @@ export default class ProjectsController {
 
     return response.json({ projects })
   }
+  public async showAllProjectsByDistrict({ request, response }: HttpContextContract) {
+    const districtId: number = request.input('district_Id')
+    const allMembers: User[] = await User.query().where({ districtId: districtId })
+    const projects: any[] = []
+    for await (const user of allMembers) {
+      const usersProjects: Project[] = await Project.query()
+        .select()
+        .where({ created_by: user.userId })
+      if (!usersProjects.length == false) {
+        usersProjects.forEach((element) => {
+          element.extraDescriptionsObject = JSON.parse(element.extraDescriptions)
+          element.itemisedBudgetArray = JSON.parse(element.itemisedBudget)
+          projects.push(element)
+        })
+      }
+    }
+    return response.json({ projects })
+  }
   public async edit({}: HttpContextContract) {}
 
   public async addUserToProject({ request, response }: HttpContextContract) {
@@ -155,16 +173,23 @@ export default class ProjectsController {
     const projectTheme: string = request.input('project_theme')
     const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
-    const estimatedCompletion: Date = request.input('estimated_completion')
+    const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const createdByUserId: number = request.input('created_by')
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
-    const extraDescriptions: any = JSON.stringify(request.input('rotary_year'))
-    const itemisedBudget: any = JSON.stringify(request.input('rotary_year'))
-    const convertedEstimatedCompletion = DateTime.fromJSDate(estimatedCompletion)
+    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
+    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
+    var convertedEstimatedCompletion: any
+    if (estimatedCompletion != null && estimatedCompletion != undefined) {
+      convertedEstimatedCompletion = DateTime.fromFormat(estimatedCompletion, 'D')
+    } else {
+      convertedEstimatedCompletion = undefined
+    }
+
     const clubId: number = request.input('club_id')
+    const oldPoject: Project = await Project.findOrFail(params.id)
 
     const projectToBeUpdated: Project = await Project.findOrFail(params.id)
 
@@ -185,9 +210,15 @@ export default class ProjectsController {
         clubId: clubId,
       })
       .save()
+    oldPoject.extraDescriptionsObject = JSON.parse(oldPoject.extraDescriptions)
+    oldPoject.itemisedBudgetArray = JSON.parse(oldPoject.itemisedBudget)
     updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
     updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
-    return response.json({ updatedProject, Hello: 'old file below', projectToBeUpdated })
+    return response.json({
+      updatedProject,
+      Hello: 'old file below',
+      oldPoject,
+    })
   }
 
   public async destroy({ params, response }: HttpContextContract) {

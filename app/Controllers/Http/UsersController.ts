@@ -84,21 +84,38 @@ export default class UsersController {
 
     if (clubId !== null && clubId !== undefined) {
       const club: Club = await Club.findOrFail(clubId)
-      await newUser.related('clubRole').attach({
-        [club.clubId]: {
-          club_role: clubRole,
-          role_type: role,
-        },
-      })
+      if (clubRole == null && clubRole == undefined) {
+        await newUser.related('clubRole').attach({
+          [club.clubId]: {
+            club_role: RoleType[role],
+            role_type: role,
+          },
+        })
+      } else {
+        await newUser.related('clubRole').attach({
+          [club.clubId]: {
+            club_role: clubRole,
+            role_type: role,
+          },
+        })
+      }
     } else if (districtId !== null && districtId !== undefined) {
       const district: District = await District.findOrFail(districtId)
-
-      await newUser.related('districtRole').attach({
-        [district.districtId]: {
-          district_role: districtRole,
-          role_type: role,
-        },
-      })
+      if (districtRole == null || districtRole == undefined) {
+        await newUser.related('districtRole').attach({
+          [district.districtId]: {
+            district_role: RoleType[role],
+            role_type: role,
+          },
+        })
+      } else {
+        await newUser.related('districtRole').attach({
+          [district.districtId]: {
+            district_role: districtRole,
+            role_type: role,
+          },
+        })
+      }
     }
 
     const roleTitle = async (role: number) => {
