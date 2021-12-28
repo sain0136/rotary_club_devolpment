@@ -3,8 +3,8 @@
     <input 
       type="text"
       placeholder="Search Projects"
-      v-model="searchText"
-    >
+      v-model="searchText">
+    
     <div class="row">
       <div class="col-sm-6"
         v-for="project in filteredProjects" :key="project.id">
@@ -33,8 +33,8 @@ export default {
   },
   data() {
     return {
-      projects: Array,
-      searchText: null,
+      projects: [],
+      searchText: '',
     };
   },
   computed: {

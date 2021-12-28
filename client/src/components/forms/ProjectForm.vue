@@ -112,7 +112,8 @@ import store from '../../store/index'
 export default {
   name: 'ProjectForm',
   props: {
-    isEditOrCreate: String
+    isEditOrCreate: String,
+    projectType: Number
   },
   data() {
     return {
@@ -158,6 +159,8 @@ export default {
     }
   },
   async created() {
+
+    console.log(this.projectType)
 
     if(store.state.isClubAdminLoggedIn) {
       this.roleType = 2
