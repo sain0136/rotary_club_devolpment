@@ -35,6 +35,7 @@ export default class ProjectsController {
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
     const clubId: number = request.input('club_id')
+    const districtId: number = request.input('district_id')
 
     const newProject = await Project.create({
       projectName: projectName,
@@ -50,6 +51,7 @@ export default class ProjectsController {
       extraDescriptions: extraDescriptions,
       itemisedBudget: itemisedBudget,
       clubId: clubId,
+      districtId: districtId,
     })
     const user: User = await User.findOrFail(createdByUserId)
     await newProject.related('projectRole').attach({

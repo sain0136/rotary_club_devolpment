@@ -220,7 +220,8 @@ get user by json instead of attching to url
         "role_type":1,
         "extra_descriptions":{},
         "itemised_budget":[],
-        "club_id":1
+        "club_id":1,
+        "district_id":1
         
     
 }

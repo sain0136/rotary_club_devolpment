@@ -62,6 +62,9 @@ export default class Project extends BaseModel {
   @column()
   public clubId: number
 
+  @column()
+  public districtId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
