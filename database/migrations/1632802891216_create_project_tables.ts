@@ -20,6 +20,8 @@ export default class Project extends BaseSchema {
       table.jsonb('extra_descriptions').notNullable()
       table.jsonb('itemised_budget').notNullable()
       table.integer('club_id').notNullable()
+      table.integer('district_id').notNullable()
+
       table.timestamps(true, true)
     })
   }

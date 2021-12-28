@@ -121,9 +121,9 @@ export default class ProjectsController {
   }
   public async showAllProjectsByDistrict({ request, response }: HttpContextContract) {
     const districtId: number = request.input('district_Id')
-    const allMembers: User[] = await User.query().where({ districtId: districtId })
-    const projects: any[] = []
-    for await (const user of allMembers) {
+    const allProjects: Project[] = await Project.query().where({ districtId: districtId })
+    /* const projects: any[] = []
+         for await (const user of allMembers) {
       const usersProjects: Project[] = await Project.query()
         .select()
         .where({ created_by: user.userId })
@@ -134,8 +134,8 @@ export default class ProjectsController {
           projects.push(element)
         })
       }
-    }
-    return response.json({ projects })
+    } */
+    return response.json({ allProjects })
   }
   public async edit({}: HttpContextContract) {}
 
