@@ -13,6 +13,7 @@ export default class Project extends BaseSchema {
       table.date('estimated_completion').notNullable()
       table.double('funding_goal', 180).notNullable()
       table.double('current_funds', 50).notNullable()
+      table.double('anticipated_funding', 50).notNullable()
       table.integer('created_by', 50).notNullable()
       table.string('region', 50).notNullable()
       table.integer('rotary_year', 50).notNullable()
@@ -21,7 +22,6 @@ export default class Project extends BaseSchema {
       table.jsonb('itemised_budget').notNullable()
       table.integer('club_id').notNullable()
       table.integer('district_id').notNullable()
-
       table.timestamps(true, true)
     })
   }

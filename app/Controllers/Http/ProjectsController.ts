@@ -27,6 +27,7 @@ export default class ProjectsController {
     const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
+    const anticipatedFunding: number = request.input('anticipated_funding')
     const createdByUserId: number = request.input('created_by')
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -45,6 +46,7 @@ export default class ProjectsController {
       estimatedCompletion: convertedEstimatedCompletion,
       fundingGoal: fundingGoal,
       currentFunds: currentFunds,
+      anticipatedFunding: anticipatedFunding,
       createdBy: createdByUserId,
       region: region,
       rotaryYear: rotaryYear,
@@ -178,6 +180,7 @@ export default class ProjectsController {
     const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
+    const anticipatedFunding: number = request.input('anticipated_funding')
     const createdByUserId: number = request.input('created_by')
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -204,6 +207,7 @@ export default class ProjectsController {
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
+        anticipatedFunding: anticipatedFunding,
         createdBy: createdByUserId,
         region: region,
         rotaryYear: rotaryYear,

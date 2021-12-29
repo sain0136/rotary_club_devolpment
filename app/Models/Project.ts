@@ -42,6 +42,9 @@ export default class Project extends BaseModel {
   public currentFunds: number
 
   @column()
+  public anticipatedFunding: number
+
+  @column()
   public createdBy: number
 
   @column()

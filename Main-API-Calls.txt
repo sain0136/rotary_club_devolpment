@@ -3,7 +3,7 @@ CTL-F to find what you need
 
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=xshrim.txt-syntax
 
----------> http://127.0.0.1:3333/district/            
+--------------> http://127.0.0.1:3333/district/            
 create a District
 post
 ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ post
 =============================================================================
 Post
 Get all clubs in a district
----------> http://127.0.0.1:3333/districtClubs/
+---------------> http://127.0.0.1:3333/districtClubs/
 
 {
     "district_id":1
