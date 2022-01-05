@@ -1,6 +1,7 @@
 <template>
   <div>
     <form onsubmit="event.preventDefault();">
+      <h1>Rotary Club of {{ this.clubName }}</h1>
       <h2
         v-if="isEditOrCreate=='Create'">
         New Project  
@@ -31,22 +32,78 @@
           v-model="theme"
           placeholder="Theme"> <br> <br>
       </div>
+      <!-- TODO area of focus will be a dropdown menu -->
+      <div class="form-field">
+        <input type="text"
+          v-model="area"
+          placeholder="Area of Focus"> <br> <br>
+      </div>
       <div class="form-field">
         <span 
           class="project-error" 
           id="project-grant-error"
           v-if="v$.grantType.$error">
-          Please enter a valid grant type
+          Please select an estimated completion date
         </span> <br>
-        <input type="text"
-          v-model="grantType"
-          placeholder="Grant Type"> <br> <br>
-      </div>    
+        <!-- TODO update the min to the current date -->
+        <input type="date"
+          min="2022-10-01"
+          v-model="estimatedCompletion"
+          placeholder="Estimated Completion"> <br> <br>
+      </div>
+      <h4>Extra Info</h4>
       <div class="form-field">
+        <span 
+          class="project-error" 
+          id="project-theme-error"
+          v-if="v$.theme.$error">
+          Please enter a valid project theme
+        </span> <br>
+        <label for="q1">Describe the project, its location and objectives. Which area of focus is addressed?  Describe how.</label> <br>
         <input type="text"
-          v-model="pdfLabel"
-          placeholder="PDF Label"> <br> <br>
-      </div> 
+          name="q1"
+          v-model="question1"
+          placeholder="Answer"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="project-error" 
+          id="project-theme-error"
+          v-if="v$.theme.$error">
+          Please enter a valid project theme
+        </span> <br>
+        <label for="q2">Describe how the project will benefit the community or address a community need.</label> <br>
+        <input type="text"
+          name="q2"
+          v-model="question2"
+          placeholder="Answer"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="project-error" 
+          id="project-theme-error"
+          v-if="v$.theme.$error">
+          Please enter a valid project theme
+        </span> <br>
+        <label for="q3">Describe the non-financial participation by Rotarians in the project.</label> <br>
+        <input type="text"
+          name="q3"
+          v-model="question3"
+          placeholder="Answer"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="project-error" 
+          id="project-theme-error"
+          v-if="v$.theme.$error">
+          Please enter a valid project theme
+        </span> <br>
+        <label for="q4">If a co-operating organisation will be involved in the project, provide a letter stating its role in the project and how Rotarians will interface with the organisation.</label> <br>
+        <input type="text"
+          name="q4"
+          v-model="question4"
+          placeholder="Answer"> <br> <br>
+      </div>
       <div class="form-field">
         <span 
           class="project-error" 
@@ -82,6 +139,8 @@
           v-model="region"
           placeholder="Region"> <br> <br>
       </div>   
+      <ProjectItemizedBudget/> <br> <br>
+      <ProjectFunding/> <br> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateProject">
@@ -106,29 +165,48 @@ import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
 import { getProjectData } from '../../data-bank/project-data'
+import { getClubData } from '../../data-bank/club-data'
 
 import store from '../../store/index'
+
+import ProjectItemizedBudget from '../other/ProjectItemizedBudget.vue'
+import ProjectFunding from '../other/ProjectFunding.vue'
 
 export default {
   name: 'ProjectForm',
   props: {
     isEditOrCreate: String,
-    projectType: Number
+    projectType: Number,
+  },
+  components: {
+    ProjectItemizedBudget,
+    ProjectFunding,
   },
   data() {
     return {
+      clubName: '',
+
       v$: useValidate(),
       name: '',
       theme: '',
-      grantType: '',
-      pdfLabel: '',
+      area: '',
+      grantType: 2, //TODO autofill this with the user's role
+      estimatedCompletion: '',
       fundingGoal: '',
       currentFunds: '',
       region: '',
+      extraDescriptions: '',
+      clubId: store.state.currentClubId,
+      districtId: store.state.currentDistrictId,
+
+      question1: '',
+      question2: '',
+      question3: '',
+      question4: '',
 
       createdBy: 28, //>> TODO update with the creator's user ID 
       roleType: 2,
-      rotaryYear: '2021', //>> TODO update reasonably
+      rotaryYear: new Date().getFullYear() 
     }
   },
   validations() {
@@ -160,7 +238,8 @@ export default {
   },
   async created() {
 
-    console.log(this.projectType)
+    const clubData = await getClubData()
+    this.clubName = await clubData.club_name
 
     if(store.state.isClubAdminLoggedIn) {
       this.roleType = 2
@@ -177,7 +256,6 @@ export default {
       this.name = projectData.project_name
       this.theme = projectData.project_theme
       this.grantType = projectData.grant_type
-      this.pdfLabel = projectData.pdf_label
       this.fundingGoal = projectData.funding_goal
       this.currentFunds = projectData.current_funds
       this.region = projectData.region
@@ -203,7 +281,6 @@ export default {
         project_name: this.name,
         project_theme: this.theme,
         grant_type: this.grantType,
-        pdf_label: this.pdfLabel,
         funding_goal: this.fundingGoal,
         current_funds: this.currentFunds,
         created_by: this.createdBy,
@@ -231,7 +308,6 @@ export default {
         project_name: this.name,
         project_theme: this.theme,
         grant_type: this.grantType,
-        pdf_label: this.pdfLabel,
         funding_goal: this.fundingGoal,
         current_funds: this.currentFunds,
         created_by: this.createdBy,
