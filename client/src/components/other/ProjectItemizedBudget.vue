@@ -18,7 +18,6 @@
       </tr>
     </table>
     <br> <br>
-    <h4>Total Budget: {{ this.totalItemizedBudget }}</h4>
     <legend v-if="!isEdit">Add an item</legend>
     <legend v-else>Edit Item</legend>
     <input 
@@ -41,7 +40,9 @@
       v-else
       @click="addNewItem">
       Add
-    </button> <br> <br>
+    </button> <br> <br> <br>
+    <h4>Total Budget: {{ this.totalItemizedBudget }}</h4>
+    <button @click="approveBudget">Submit</button> <br> <br>
   </div>
 </template>
 
@@ -67,7 +68,7 @@ export default {
 
   },
   methods: {
-    async addNewItem() {
+    addNewItem() {
       let newItemToAdd = {
         id: Date.now(),
         name: this.itemName,
@@ -80,12 +81,12 @@ export default {
       this.itemName = '',
       this.itemCost = Number
     },
-    async deleteItem(id) {
+    deleteItem(id) {
       let itemToDelete = this.items.find(item => item.id == id)
       this.totalItemizedBudget -= itemToDelete.cost
       this.items = this.items.filter(item => item.id != id)
     },
-    async editItem(id) {
+    editItem(id) {
       this.isEdit = true
       this.items.forEach(item => {
         if(item.id == id) {
@@ -95,7 +96,7 @@ export default {
         }
       })
     },
-    async updateItem() {
+    updateItem() {
       let newItemToUpdate = {
         id: this.itemIdToUpdate,
         name: this.itemName,
@@ -109,10 +110,13 @@ export default {
       this.items[foundIndex] = newItemToUpdate
       this.cancel()
     },
-    async cancel() {
+    cancel() {
       this.isEdit = false
       this.itemName = '',
       this.itemCost = Number
+    },
+    approveBudget() {
+      this.$emit('approveBudget', {budget: this.totalItemizedBudget, items: this.items})
     }
   }
 }

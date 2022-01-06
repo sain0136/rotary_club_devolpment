@@ -115,19 +115,7 @@
           min="0"
           v-model="fundingGoal"
           placeholder="Funding Goal"> <br> <br>
-      </div>   
-      <div class="form-field">
-        <span 
-          class="project-error" 
-          id="project-current-funs-error"
-          v-if="v$.currentFunds.$error">
-          Please enter the current funds
-        </span> <br>
-        <input type="number"
-          min="0"
-          v-model="currentFunds"
-          placeholder="Current Funds"> <br> <br>
-      </div>    
+      </div>  
       <div class="form-field">
         <span 
           class="project-error" 
@@ -139,8 +127,8 @@
           v-model="region"
           placeholder="Region"> <br> <br>
       </div>   
-      <ProjectItemizedBudget/> <br> <br>
-      <ProjectFunding/> <br> <br>
+      <ProjectItemizedBudget @approveBudget = 'updateBudget'/> <br> <br>
+      <ProjectFunding @approveFunding = 'updateFunding'/> <br> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateProject">
@@ -195,7 +183,8 @@ export default {
       fundingGoal: '',
       currentFunds: '',
       region: '',
-      extraDescriptions: '',
+      itemisedBudget: [],
+      extraDescriptions: {},
       clubId: store.state.currentClubId,
       districtId: store.state.currentDistrictId,
 
@@ -205,7 +194,7 @@ export default {
       question4: '',
 
       createdBy: 28, //>> TODO update with the creator's user ID 
-      roleType: 2,
+      roleType: 2, //>> TODO update with the creator's role type
       rotaryYear: new Date().getFullYear() 
     }
   },
@@ -225,10 +214,6 @@ export default {
       },
       fundingGoal: {
         required,
-      },
-      currentFunds: {
-        required,
-        //>> TODO add a custom validator to fix maxx to the funding goal
       },
       region: {
         required,
@@ -262,6 +247,21 @@ export default {
     }
   },
   methods: {
+    updateBudget(event) {
+      console.log(event.items)
+      this.itemisedBudget = event.items
+      console.log(this.itemisedBudget)
+    },
+    updateFunding(funding) {
+      this.currentFunds = funding
+    },
+    formatDate(dateString) {
+      let date = new Date(dateString)
+      let day = date.getDate()
+      let month = date.getMonth()
+      let year = date.getFullYear()
+      return month + '/' + day + '/' + year
+    },
     validateProject() {
 
       this.v$.$validate()
@@ -280,14 +280,27 @@ export default {
       let projectToAdd = {
         project_name: this.name,
         project_theme: this.theme,
+        area_focus: this.area,
         grant_type: this.grantType,
+        estimated_completion: this.formatDate(this.estimatedCompletion),
         funding_goal: this.fundingGoal,
         current_funds: this.currentFunds,
         created_by: this.createdBy,
         region: this.region,
         rotary_year: this.rotaryYear,
-        role_type: this.roleType
+        role_type: this.roleType,
+        extra_descriptions: {
+          Q1: this.question1,
+          Q2: this.question2,
+          Q3: this.question3,
+          Q4: this.question4
+        },
+        itemised_budget: this.itemisedBudget,
+        club_id: this.clubId,
+        district_id: this.districtId,
       }
+
+      console.log(projectToAdd)
 
       try{
         const res = await fetch('/api/project', { 
@@ -300,7 +313,7 @@ export default {
         console.log(err)
       }
       
-      this.$router.push('projects');
+      // this.$router.push('projects');
     },
 
     async updateExistingProject() {

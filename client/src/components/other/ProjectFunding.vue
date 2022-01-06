@@ -17,6 +17,7 @@
       name="grant" 
       v-model="grant"> <br> <br>
     <h4>Total Fundings: {{ this.totalFundings }}</h4>
+    <button @click="approveFunding">Submit</button> <br> <br>
   </div>
 </template>
 
@@ -37,6 +38,9 @@ export default {
     }
   },
   methods: {
+    approveFunding() {
+      this.$emit('approveFunding', this.totalFundings)
+    }
   }
 }
 </script>
