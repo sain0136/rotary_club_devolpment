@@ -126,9 +126,21 @@
         <input type="text"
           v-model="region"
           placeholder="Region"> <br> <br>
-      </div>   
-      <ProjectItemizedBudget @approveBudget = 'updateBudget'/> <br> <br>
-      <ProjectFunding @approveFunding = 'updateFunding'/> <br> <br>
+      </div>
+      <div v-if="itemizedBudgetSubmitted">
+        <h3>Itemized budget successfully submitted!</h3> 
+        <button @click="() => itemizedBudgetSubmitted = false">Undo</button> <br> <br>
+      </div>
+      <div v-else>
+        <ProjectItemizedBudget @approveBudget = 'updateBudget'/> <br> <br>
+      </div>
+      <div v-if="fundingSubmitted">
+        <h3>Funding successfully submitted!</h3>
+        <button @click="() => fundingSubmitted = false">Undo</button> <br> <br>
+      </div>
+      <div v-else>
+        <ProjectFunding @approveFunding = 'updateFunding'/> <br> <br>
+      </div>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateProject">
@@ -182,6 +194,7 @@ export default {
       estimatedCompletion: '',
       fundingGoal: '',
       currentFunds: '',
+      anticipatedFunding: '',
       region: '',
       itemisedBudget: [],
       extraDescriptions: {},
@@ -195,7 +208,10 @@ export default {
 
       createdBy: 28, //>> TODO update with the creator's user ID 
       roleType: 2, //>> TODO update with the creator's role type
-      rotaryYear: new Date().getFullYear() 
+      rotaryYear: new Date().getFullYear() ,
+
+      itemizedBudgetSubmitted: false,
+      fundingSubmitted: false,
     }
   },
   validations() {
@@ -248,12 +264,12 @@ export default {
   },
   methods: {
     updateBudget(event) {
-      console.log(event.items)
       this.itemisedBudget = event.items
-      console.log(this.itemisedBudget)
+      this.itemizedBudgetSubmitted = true
     },
     updateFunding(funding) {
       this.currentFunds = funding
+      this.fundingSubmitted = true
     },
     formatDate(dateString) {
       let date = new Date(dateString)
@@ -284,6 +300,7 @@ export default {
         grant_type: this.grantType,
         estimated_completion: this.formatDate(this.estimatedCompletion),
         funding_goal: this.fundingGoal,
+        anticipated_funding: this.currentFunds,
         current_funds: this.currentFunds,
         created_by: this.createdBy,
         region: this.region,
