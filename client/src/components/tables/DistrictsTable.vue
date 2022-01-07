@@ -53,7 +53,7 @@ export default {
     },
     goToEditDistrictPage(districtId) {
       store.dispatch('changeCurrentDistrict', districtId)
-      this.$router.push('editdistrict')
+      this.$router.push('./edit')
     },
     async deleteDistrict(districtId) {
       if(confirm(`Are you sure you want to delete district ${districtId}?`)) {

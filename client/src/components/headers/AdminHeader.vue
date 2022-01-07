@@ -5,7 +5,7 @@
         <img class="img-fluid" src="../../assets/Rotary_Admin.png" />
       </li>
       <li class="nav-item">
-        <router-link class="link" to="/admin/viewdistricts">
+        <router-link class="link" to="/admin/districts/view">
           Administer Districts</router-link
         >
       </li>

@@ -5,7 +5,7 @@
       <p v-if="$store.state.isSiteAdminRejected" id="error">Credentials not valid!</p>
       <div v-if="$store.state.isSiteAdminLoggedIn && !$store.state.isSiteAdminRejected">
         <p id="success">Logged In!</p>
-        <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br> 
+        <router-link id="admin-page" to="/admin/home">Admin Page</router-link> <br> <br> 
       </div>
       <input type="text" name="username" placeholder="username"
         v-model="username"> <br> <br>
@@ -32,11 +32,10 @@ export default {
   methods: {
     adminLoginHandler() {
       store.dispatch('validateAdminCredentials', {
-        username: this.username,
+        userId: this.username,
         password: this.password,
         roleId: 0
       })
-      this.$router.push(`/admin`);
     }
   }
 }

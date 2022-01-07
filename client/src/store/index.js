@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
+import { isSiteAdminValid } from './credentials';
 import { isUserValid } from './credentials'
 
 export default createStore({
@@ -32,6 +33,7 @@ export default createStore({
         case 0: 
           state.isSiteAdminLoggedIn = true
           state.isSiteAdminRejected = false
+          window.location.replace('/admin/home')
         break
         case 1:
           state.isDistrictAdminLoggedIn = true
@@ -100,10 +102,10 @@ export default createStore({
       let userId = data.userId
       let password = data.password
       let roleId = data.roleId
-
+      
       switch(roleId) {
         case 0:
-          if(isUserValid(userId, password)) {
+          if(await isSiteAdminValid(userId, password)) {
             commit('adminLogin', 0)
           } else {
             commit('adminReject', 0)

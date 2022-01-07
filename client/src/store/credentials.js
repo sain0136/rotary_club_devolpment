@@ -1,3 +1,11 @@
+export async function isSiteAdminValid(id, password) {
+  if(id == 'apo' && password == 'apo88') {
+    return true
+  } else {
+    return false
+  }
+}
+
 export async function isUserValid(id, password) {
 
   const userToVerify = {

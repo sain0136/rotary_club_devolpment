@@ -2,7 +2,7 @@
   <div>
     <button
       @click="() => {
-        this.$router.push('createdistrict')
+        this.$router.push('/admin/districts/create')
       }">
       Create District
     </button>

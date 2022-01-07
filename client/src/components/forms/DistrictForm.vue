@@ -105,7 +105,7 @@
       </button>
       <button
         v-if="pageAccessed == 'Admin'"
-        @click="() => this.$router.push('viewdistricts')">
+        @click="() => this.$router.push('./view')">
         Cancel
       </button>
     </form>
@@ -238,10 +238,10 @@ export default {
 
       console.log(res)
 
-      this.$router.push('viewdistricts');
+      this.$router.push('./view');
     },
 
-    async updateExistingDistrict(event) {
+    async updateExistingDistrict() {
       let districtToUpdate = {
         district_name: this.name,
         district_email: this.email,
@@ -257,8 +257,12 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(districtToUpdate)
       })
-
-      this.$router.push('home');
+      
+      if(window.location.pathname == '/admin/districts/edit') {
+        this.$router.push('./view')
+      } else {
+        this.$router.push('home')
+      }
     },
 
     async fetchAdmins() {
