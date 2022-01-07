@@ -118,7 +118,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('clubs')">
+        @click="() => this.$router.push('/district/:id/clubs/view')">
         Cancel
       </button>
     </form>
@@ -247,7 +247,7 @@ export default {
 
       console.log(await res.json())
 
-      this.$router.push('clubs');
+      this.$router.push('./view')
     },
     async updateExistingClub() {
       let clubToAdd = {
@@ -271,7 +271,7 @@ export default {
         body: JSON.stringify(clubToAdd)
       })
 
-      this.$router.push('clubs');
+      this.$router.push('../view');
     },
 
     async getCurrentDistrictData() {

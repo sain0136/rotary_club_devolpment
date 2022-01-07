@@ -54,7 +54,7 @@ export default {
     },
     goToEditClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
-      this.$router.push('editclub')
+      this.$router.push(`${clubId}/edit`)
     },
     async deleteClub(clubId) {
       if(confirm(`Are you sure you want to delete club ${clubId}?`)) {

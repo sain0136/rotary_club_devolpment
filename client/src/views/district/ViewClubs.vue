@@ -3,7 +3,7 @@
     <button
         v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
         @click="() => {
-          this.$router.push('createclub')
+          this.$router.push('create')
         }">
         Create Club
       </button>

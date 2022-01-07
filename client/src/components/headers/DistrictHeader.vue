@@ -9,11 +9,11 @@
           <router-link class="link" to="home">Home</router-link>
         </button>
       </li>
-      <li><router-link class="link" to="about">About</router-link></li>
-      <li><router-link class="link" to="clubs">Clubs</router-link></li>
-      <li><router-link class="link" to="projects">Projects</router-link></li>
-      <li><router-link class="link" to="contactus">Contact Us</router-link></li>
-      <li><router-link class="link" to="editdistrict">Edit District</router-link></li>
+      <li><router-link class="link" to="/district/:id/about">About</router-link></li>
+      <li><router-link class="link" to="/district/:id/clubs/view">Clubs</router-link></li>
+      <li><router-link class="link" to="/district/:id/projects">Projects</router-link></li>
+      <li><router-link class="link" to="/district/:id/contact-us">Contact Us</router-link></li>
+      <li><router-link class="link" to="/district/:id/edit">Edit District</router-link></li>
 
       <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" to="login">Login</router-link>
