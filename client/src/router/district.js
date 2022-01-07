@@ -27,12 +27,12 @@ export default {
     {
       path: 'about',
       component: DistrictAbout,
-      name: 'About'
+      name: 'DistrictAbout'
     },
     {
       path: 'contact-us',
       component: DistrictContactUs,
-      name: 'ContactUs'
+      name: 'DistrictContactUs'
     },
     {
       path: 'login',
@@ -41,11 +41,13 @@ export default {
     },
     {
       path: 'projects',
-      component: DistrictProjects
+      component: DistrictProjects,
+      name: 'DistrictProjects'
     },
     {
       path: 'edit',
       component: EditDistrict,
+      name: 'EditDistrict',
       beforeEnter: (to, from, next) => {
         if(store.state.isDistrictAdminLoggedIn || 
            store.state.isSiteAdminLoggedIn) {

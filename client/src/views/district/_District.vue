@@ -1,9 +1,8 @@
 <template>
   <div>
-    <DistrictHeader />
-    <!-- <router-link to=></router-link> -->
+    <DistrictHeader/>
     <router-view></router-view>
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -16,6 +15,11 @@ export default {
   components: {
     DistrictHeader,
     Footer,
+  },
+  data() {
+    return {
+      districtId: Number
+    }
   },
 };
 </script>

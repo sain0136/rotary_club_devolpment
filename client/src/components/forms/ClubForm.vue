@@ -118,7 +118,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('/district/:id/clubs/view')">
+        @click="() => this.$router.push(`/district/${this.$router.currentRoute.value.params.id}/clubs/view`)">
         Cancel
       </button>
     </form>

@@ -9,11 +9,12 @@
           <router-link class="link" to="home">Home</router-link>
         </button>
       </li>
-      <li><router-link class="link" to="/district/:id/about">About</router-link></li>
-      <li><router-link class="link" to="/district/:id/clubs/view">Clubs</router-link></li>
-      <li><router-link class="link" to="/district/:id/projects">Projects</router-link></li>
-      <li><router-link class="link" to="/district/:id/contact-us">Contact Us</router-link></li>
-      <li><router-link class="link" to="/district/:id/edit">Edit District</router-link></li>
+      <!-- <li><router-link class="link" to="/district/:id/about">About</router-link></li> -->
+      <li><router-link class="link" :to="{name: 'DistrictAbout', params: {id: this.districtId}}">About</router-link></li>
+      <li><router-link class="link" :to="{name: 'ViewClubs', params: {id: this.districtId}}">Clubs</router-link></li>
+      <li><router-link class="link" :to="{name: 'DistrictProjects', params: {id: this.districtId}}">Projects</router-link></li>
+      <li><router-link class="link" :to="{name: 'DistrictContactUs', params: {id: this.districtId}}">Contact Us</router-link></li>
+      <li><router-link class="link" :to="{name: 'EditDistrict', params: {id: this.districtId}}">Edit District</router-link></li>
 
       <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" to="login">Login</router-link>
@@ -35,6 +36,7 @@ export default {
   data() {
     return {
       districtName: null,
+      districtId: this.$router.currentRoute.value.params.id
     };
   },
   methods: {
