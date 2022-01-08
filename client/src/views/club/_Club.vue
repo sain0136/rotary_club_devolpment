@@ -8,9 +8,12 @@
 </template>
 
 <script>
+
 import ClubInfoHeader from '../../components/headers/ClubInfoHeader.vue'
 import ClubHeader from '../../components/headers/ClubHeader.vue'
 import ClubFooter from '../../components/footers/ClubFooter.vue'
+
+import store from '../../store/index'
 
 export default {
   name: '_Club',
@@ -18,6 +21,9 @@ export default {
     ClubInfoHeader,
     ClubHeader,
     ClubFooter
+  },
+  created() {
+    store.dispatch('changeCurrentClubData', this.$router.currentRoute.value.params.id)
   }
 }
 

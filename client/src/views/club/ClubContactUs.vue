@@ -5,15 +5,15 @@
     <table>
       <tr>
         <td id="type">Email</td>
-        <td>{{this.clubEmail}}</td>
+        <td>{{this.clubData.club_email}}</td>
       </tr>
       <tr>
         <td id="type">Phone</td>
-        <td>{{this.clubPhone}}</td>
+        <td>{{this.clubData.club_phone}}</td>
       </tr>
       <tr>
         <td id="type">Address</td>
-        <td>{{this.clubAddress}}</td>
+        <td>{{this.clubData.club_address}}</td>
       </tr>
     </table>
   </div>
@@ -21,24 +21,15 @@
 
 <script>
 
-import { getClubData } from '../../data-bank/club-data'
+import store from '../../store/index'
 
 export default {
   name: 'ClubContactUs',
   data() {
     return {
-      clubEmail: '',
-      clubPhone: '',
-      clubAddress: '',
+      clubData: store.state.currentClubData
     }
   },
-  async created() {
-    const contactInfo = await getClubData()
-
-    this.clubEmail = await contactInfo.club_email
-    this.clubPhone = await contactInfo.club_phone
-    this.clubAddress = await contactInfo.club_address
-  }
 }
 
 </script>

@@ -22,6 +22,9 @@ export default {
     return {
     }
   },
+  created() {
+    store.dispatch('changeCurrentDistrictData', this.$router.currentRoute.value.params.id)
+  }
 };
 </script>
 

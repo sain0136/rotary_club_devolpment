@@ -5,7 +5,7 @@ import { isSiteAdminValid } from './credentials';
 import { isUserValid } from './credentials'
 
 import { fetchDistrictDataById } from './api-calls';
-import { fetchDistrictData } from '../data-bank/district-data';
+import { fetchClubDataById } from './api-calls';
 
 export default createStore({
   state: {
@@ -31,7 +31,8 @@ export default createStore({
     currentUserIdToEdit: Number,
 
 
-    currentDistrictData: Object
+    currentDistrictData: Object,
+    currentClubData: Object,
     
   },
   mutations: {
@@ -106,7 +107,11 @@ export default createStore({
 
     changeCurrentDistrictData(state, districtData) {
       state.currentDistrictData = districtData
-    }
+    },
+
+    changeCurrentClubData(state, clubData) {
+      state.currentClubData = clubData
+    },
   },
   actions: {
     async validateAdminCredentials({commit}, data) { //Also for the regular user
@@ -159,10 +164,15 @@ export default createStore({
     logout({commit}, roleIdToLogOut) {
       commit('logout', roleIdToLogOut)
     },
-
+    
     async changeCurrentDistrictData({commit}, districtId) {
       let districtData = await fetchDistrictDataById(districtId)
       commit('changeCurrentDistrictData', districtData)
+    },
+
+    async changeCurrentClubData({commit}, clubId) {
+      let clubData = await fetchClubDataById(clubId)
+      commit('changeCurrentClubData', clubData)
     }
 
   },
