@@ -4,6 +4,9 @@ import createPersistedState from "vuex-persistedstate";
 import { isSiteAdminValid } from './credentials';
 import { isUserValid } from './credentials'
 
+import { fetchDistrictDataById } from './api-calls';
+import { fetchDistrictData } from '../data-bank/district-data';
+
 export default createStore({
   state: {
     isSiteAdminLoggedIn: false,
@@ -25,7 +28,11 @@ export default createStore({
 
     currentProjectId: Number,
 
-    currentUserIdToEdit: Number
+    currentUserIdToEdit: Number,
+
+
+    currentDistrictData: Object
+    
   },
   mutations: {
     adminLogin(state, roleId) {
@@ -95,6 +102,10 @@ export default createStore({
         case 3:
         state.isClubUserLoggedIn = false
       }
+    },
+
+    changeCurrentDistrictData(state, districtData) {
+      state.currentDistrictData = districtData
     }
   },
   actions: {
@@ -147,7 +158,13 @@ export default createStore({
     },
     logout({commit}, roleIdToLogOut) {
       commit('logout', roleIdToLogOut)
+    },
+
+    async changeCurrentDistrictData({commit}, districtId) {
+      let districtData = await fetchDistrictDataById(districtId)
+      commit('changeCurrentDistrictData', districtData)
     }
+
   },
   getters: {
 

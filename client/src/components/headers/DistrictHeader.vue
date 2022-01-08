@@ -2,20 +2,28 @@
   <nav>
     <ul>
       <li>
-        <h1>District: {{ this.districtName }}</h1>
+        <h1>District: {{ $store.state.currentDistrictData.district_name }}</h1>
+
+        <!-- <h1>District: {{ this.districtName }}</h1> -->
       </li>
       <li>
-        <button type="button" class="btn btn-primary">
-          <router-link class="link" to="home">Home</router-link>
-        </button>
+          <router-link class="link" :to="{name: 'DistrictHome', params: {id: this.districtId}}">Home</router-link>
       </li>
-      <!-- <li><router-link class="link" to="/district/:id/about">About</router-link></li> -->
-      <li><router-link class="link" :to="{name: 'DistrictAbout', params: {id: this.districtId}}">About</router-link></li>
-      <li><router-link class="link" :to="{name: 'ViewClubs', params: {id: this.districtId}}">Clubs</router-link></li>
-      <li><router-link class="link" :to="{name: 'DistrictProjects', params: {id: this.districtId}}">Projects</router-link></li>
-      <li><router-link class="link" :to="{name: 'DistrictContactUs', params: {id: this.districtId}}">Contact Us</router-link></li>
-      <li><router-link class="link" :to="{name: 'EditDistrict', params: {id: this.districtId}}">Edit District</router-link></li>
-
+      <li>
+        <router-link class="link" :to="{name: 'DistrictAbout', params: {id: this.districtId}}">About</router-link>
+      </li>
+      <li>
+        <router-link class="link" :to="{name: 'ViewClubs', params: {id: this.districtId}}">Clubs</router-link>
+      </li>
+      <li>
+        <router-link class="link" :to="{name: 'DistrictProjects', params: {id: this.districtId}}">Projects</router-link>
+      </li>
+      <li>
+        <router-link class="link" :to="{name: 'DistrictContactUs', params: {id: this.districtId}}">Contact Us</router-link>
+        </li>
+      <li>
+        <router-link class="link" :to="{name: 'EditDistrict', params: {id: this.districtId}}">Edit District</router-link>
+        </li>
       <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" to="login">Login</router-link>
       </li>
@@ -45,15 +53,7 @@ export default {
       this.$router.push(`/login`);
     },
   },
-  async created() {
-    const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
-      method: "GET",
-    });
-    const data = await res.json();
-    this.districtName = data.districtById.district_name;
-    console.log("District name: ", this.districtName);
-  },
-};
+}
 </script>
 
 <style>

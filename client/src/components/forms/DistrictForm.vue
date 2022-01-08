@@ -188,11 +188,8 @@ export default {
     this.admins = await this.fetchAdmins()
 
     if(this.isEditOrCreate == 'Edit') {
-      const res = await fetch(`/api/district/${store.state.currentDistrictId}`, 
-        {method: 'GET'}
-      )
-      const data = await res.json()
-      const districtInfo = await data.districtById
+
+      const districtInfo = store.state.currentDistrictData
 
       this.name = await districtInfo.district_name
       this.email = await districtInfo.district_email
@@ -252,12 +249,18 @@ export default {
         district_description: this.description
       }
 
-      const res = await fetch(`/api/district/${store.state.currentDistrictId}`, {
+      const res = await fetch(`/api/district/${store.state.currentDistrictData.district_id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(districtToUpdate)
       })
-      
+
+      //To dynamically update right after making the edit
+      store.dispatch('changeCurrentDistrictData', store.state.currentDistrictData.district_id)
+      this.redirectFromEdit()
+    },
+
+    redirectFromEdit() {
       if(window.location.pathname == '/admin/districts/edit') {
         this.$router.push('./view')
       } else {

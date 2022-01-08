@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- Make a call to the API and generate these districts -->
     <table>
       <th>ID</th>
       <th>Club Name</th>
@@ -30,7 +29,9 @@
 </template>
 
 <script>
+
 import store from "../../store/index";
+import { fetchClubs } from '../../data-bank/district-data'
 
 export default {
   name: "DistrictClubsTable",
@@ -40,14 +41,6 @@ export default {
     };
   },
   methods: {
-    async fetchClubs() {
-      const res = await fetch(`/api/club`, { method: "GET" });
-      const data = await res.json();
-      const clubs = data.clubs.filter(
-        (club) => club.district_id == store.state.currentDistrictId
-      );
-      return clubs;
-    },
     goToClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
       this.$router.push(`/club`)
@@ -61,13 +54,12 @@ export default {
         const res = await fetch(`/api/club/${clubId}`, {
           method: 'DELETE'
         })
-        this.clubs = await this.fetchClubs()
+        this.clubs = await fetchClubs()
       }
     }
   },
   async created() {
-    console.log(await this.fetchClubs());
-    this.clubs = await this.fetchClubs();
+    this.clubs = await fetchClubs();
   },
 };
 </script>

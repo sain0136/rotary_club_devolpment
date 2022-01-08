@@ -22,7 +22,7 @@ export default {
     {
       path: 'home',
       component: DistrictHome,
-      name: 'Home'
+      name: 'DistrictHome'
     },
     {
       path: 'about',

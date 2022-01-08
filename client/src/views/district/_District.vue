@@ -10,6 +10,8 @@
 import DistrictHeader from "../../components/headers/DistrictHeader.vue";
 import Footer from "../../components/Footer.vue";
 
+import store from '../../store/index'
+
 export default {
   name: "_District",
   components: {
@@ -18,7 +20,6 @@ export default {
   },
   data() {
     return {
-      districtId: Number
     }
   },
 };

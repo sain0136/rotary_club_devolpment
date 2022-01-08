@@ -49,6 +49,7 @@ export default {
     },
     goToDistrictPage(districtId) {
       store.dispatch('changeCurrentDistrict', districtId)
+      store.dispatch('changeCurrentDistrictData', districtId)
       this.$router.push(`/district/${districtId}`)
     },
     goToEditDistrictPage(districtId) {
