@@ -3,8 +3,6 @@
     <ul>
       <li>
         <h1>District: {{ $store.state.currentDistrictData.district_name }}</h1>
-
-        <!-- <h1>District: {{ this.districtName }}</h1> -->
       </li>
       <li>
           <router-link class="link" :to="{name: 'DistrictHome', params: {id: this.districtId}}">Home</router-link>
@@ -25,7 +23,7 @@
         <router-link class="link" :to="{name: 'EditDistrict', params: {id: this.districtId}}">Edit District</router-link>
         </li>
       <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
-        <router-link class="link" to="login">Login</router-link>
+        <router-link class="link" :to="{name: 'DistrictLogin', params: {id: this.districtId}}">Login</router-link>
       </li>
       <li v-if="$store.state.isDistrictAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
@@ -50,7 +48,7 @@ export default {
   methods: {
     logout() {
       store.dispatch("logout", 1);
-      this.$router.push(`/login`);
+      this.$router.push(`/district/${this.districtId}/login`);
     },
   },
 }
@@ -89,10 +87,6 @@ li {
   color: #ffb607;
   transition: color 0.5s;
 }
-
-/* #logout {
-  margin-right: 50px;
-} */
 
 #logout:hover {
   cursor: pointer;

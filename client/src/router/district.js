@@ -37,7 +37,7 @@ export default {
     {
       path: 'login',
       component: DistrictLogin,
-      name: 'Login'
+      name: 'DistrictLogin'
     },
     {
       path: 'projects',

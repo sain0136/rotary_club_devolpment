@@ -13,7 +13,7 @@
           <option 
             v-for="district in districts"
             :key="district.district_id"
-            value=71> 
+            :value="district.district_id"> 
             {{district.district_name}} 
           </option>
         </select> <br> <br>
@@ -182,7 +182,7 @@ export default {
       email: '',
       password: '',
 
-      districts: []
+      districts: [],
     }
   },
   validations() {
@@ -228,6 +228,8 @@ export default {
     //with the specific district's data coming from the API. If it's to be 
     //created, data is empty by default.
     if(this.isEditOrCreate == 'Edit') {
+      
+      
       const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, 
         {method: 'GET'}
       )
@@ -290,6 +292,7 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userToCreate)})
 
+      console.log(userToCreate)
       console.log(await res.json())
 
       this.$router.push('./view')
