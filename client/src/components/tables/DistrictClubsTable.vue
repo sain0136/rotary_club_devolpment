@@ -43,7 +43,7 @@ export default {
   methods: {
     goToClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
-      this.$router.push(`/club`)
+      this.$router.push(`/club/${clubId}`)
     },
     goToEditClubPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)

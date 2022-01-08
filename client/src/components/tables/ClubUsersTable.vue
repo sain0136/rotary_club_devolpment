@@ -61,7 +61,7 @@ export default {
     },
     async goToEditUserPage(userId) {
       store.dispatch('changeCurrentUserIdToEdit', userId)
-      this.$router.push('editclubuser')
+      this.$router.push(`${userId}/edit`)
     }
   },
   async created() {

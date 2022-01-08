@@ -5,7 +5,7 @@
 <script>
 
 export default {
-  name: 'ClubProjects',
+  name: 'Pledges',
   components: {
   }
 }

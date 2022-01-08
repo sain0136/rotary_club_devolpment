@@ -14,7 +14,8 @@
         <td>{{pledge.pledge_amount}}</td>
         <td>{{pledge.user_id}}</td>
       </tr>
-    </table>
+    </table> <br>
+    <button @click="() => this.$router.push('../view')">Project Page</button>
   </div>
 </template>
 

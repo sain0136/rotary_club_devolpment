@@ -190,7 +190,7 @@ export default {
   },
   async created() {
     if(this.isEditOrCreate == 'Edit') {
-      const res = await fetch(`/api/club/${store.state.currentClubId}`, 
+      const res = await fetch(`/api/club/${this.$router.currentRoute.value.params.clubid}`, 
         {method: 'GET'}
       )
       const data = await res.json()

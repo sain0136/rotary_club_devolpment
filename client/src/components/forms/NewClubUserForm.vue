@@ -142,7 +142,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('users')">
+        @click="() => this.$router.push('./view')">
         Cancel
       </button>
     </form>
@@ -170,7 +170,7 @@ export default {
       clubRole: '', 
       roleType: 0,
 
-      clubId: store.state.currentClubId,
+      clubId: this.$router.currentRoute.value.params.id,
       membershipId: 0,
       firstName: '',
       lastName: '',
@@ -225,7 +225,7 @@ export default {
     //with the specific district's data coming from the API. If it's to be 
     //created, data is empty by default.
     if(this.isEditOrCreate == 'Edit') {
-      const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, 
+      const res = await fetch(`/api/user/${this.$router.currentRoute.value.params.userid}`, 
         {method: 'GET'}
       )
       const data = await res.json()
@@ -295,7 +295,7 @@ export default {
 
       console.log(await res.json())
 
-      this.$router.push('/club/users');
+      this.$router.push('../view');
     },
 
     async updateExistingUser() {
@@ -324,7 +324,7 @@ export default {
         body: JSON.stringify(clubUserToUpdate)
       })
 
-      this.$router.push('users');
+      this.$router.push('./view')
     },
   },
 }

@@ -137,7 +137,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('./view')">
+        @click="() => this.$router.push('../view')">
         Cancel
       </button>
     </form>
@@ -324,7 +324,7 @@ export default {
         body: JSON.stringify(districtAdminToUpdate)
       })
 
-      this.$router.push('./view')
+      this.$router.push('../view')
     },
 
     async fetchDistricts() {

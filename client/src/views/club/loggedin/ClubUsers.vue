@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <button
-        v-if="$store.state.isSiteAdminLoggedIn || $store.state.isClubAdminLoggedIn"
-        @click="() => {
-          this.$router.push('createclubuser')
-        }">
-        Create User
-      </button>
-      <br><br>
-    <ClubUsersTable/>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>

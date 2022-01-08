@@ -83,7 +83,7 @@ export default {
           component: CreateDistrictAdmin,
         },
         {
-          path: 'edit',
+          path: ':userid/edit',
           component: EditDistrictAdmin,
         },
       ]

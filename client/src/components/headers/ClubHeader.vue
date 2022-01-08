@@ -2,21 +2,25 @@
   <nav>
     <ul>
       <li><img class="logo" src="../../assets/club-logo.png"></li>
-      <li><router-link class="link" to="home">Home</router-link></li>
-      <li><router-link class="link" to="/club/about">About</router-link></li>
+      <li>
+        <router-link class="link" :to="{name: 'ClubHome', params: {id: this.clubId}}">Home</router-link>
+      </li>
+      <li>
+        <router-link class="link" :to="{name: 'ClubAbout', params: {id: this.clubId}}">About</router-link>
+      </li>
       <li>
         <div class="dropdown">
           <button class="link dropbtn">Projects</button>
           <div class="dropdown-content">
-            <router-link to="/club/projects">All Projects</router-link>
+            <router-link :to="{name: 'ViewClubProjects', params: {id: this.clubId}}">All Projects</router-link>
             <router-link 
               v-if="$store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn"
-              to="/club/createproject">
+              :to="{name: 'CreateProject', params: {id: this.clubId}}">
               Create Project
             </router-link>
             <router-link 
               v-if="$store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn"
-              to="/club/userprojects">
+              :to="{name: 'ViewUserProjects', params: {id: this.clubId}}">
               Your Projects
             </router-link>
           </div>
@@ -24,12 +28,14 @@
       </li>
       <li
         v-if="$store.state.isClubAdminLoggedIn || $store.state.isSiteAdminLoggedIn">
-        <router-link class="link" to="/club/users">Users</router-link>
+        <router-link class="link" :to="{name: 'ViewClubUsers', params: {id: this.clubId}}">Users</router-link>
       </li>
-      <li><router-link class="link" to="/club/contactus">Contact Us</router-link></li>
-      
-
-      <li v-if="$store.state.isLoggedIn"><router-link class="link" to="/club/contactus">Admin</router-link></li>
+      <li>
+        <router-link class="link" :to="{name: 'ClubContactUs', params: {id: this.clubId}}">Contact Us</router-link>
+      </li>
+      <li v-if="$store.state.isLoggedIn">
+        <router-link class="link" to="/club/contactus">Admin</router-link>
+      </li>
 
       <li> <DonateButton/> </li>
   </ul>
@@ -47,7 +53,8 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: Boolean
+      isLoggedIn: Boolean,
+      clubId: this.$router.currentRoute.value.params.id
     }
   },
   created() {

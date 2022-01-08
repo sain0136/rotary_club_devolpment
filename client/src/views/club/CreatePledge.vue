@@ -27,8 +27,8 @@ export default {
     async makePledge() {
       let pledgeToAdd = {
         pledge_amount: this.pledgeAmount,
-        project_id: store.state.currentProjectId,
-        user_id: 45 //TODO temporary value
+        project_id: this.$router.currentRoute.value.params.projectid,
+        user_id: 8 //TODO temporary value
       }
 
       try{
@@ -41,6 +41,8 @@ export default {
       } catch(err) {
         console.log(err)
       }
+
+      this.$router.push('view')
     }
   }
 }

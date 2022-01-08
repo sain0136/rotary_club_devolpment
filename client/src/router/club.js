@@ -4,24 +4,16 @@ import ClubAbout from '../views/club/ClubAbout'
 import ClubContactUs from '../views/club/ClubContactUs'
 import ClubHome from '../views/club/ClubHome'
 import ClubLogin from '../views/club/ClubLogin'
-import ClubProjects from '../views/club/ClubProjects'
 
 import ClubUsers from '../views/club/loggedin/ClubUsers'
+import ViewClubUsers from '../views/club/loggedin/ViewClubUsers'
 import CreateClubUser from '../views/club/loggedin/CreateClubUser'
 import EditClubUser from '../views/club/loggedin/EditClubUser'
 
-import Project from '../views/club/Project'
-import ViewPledges from '../views/club/ViewPledges'
-import CreatePledge from '../views/club/CreatePledge'
-
-import UserProjects from '../views/club/loggedin/UserProjects'
-import Donate from '../views/club/loggedin/Donate'
-import EditClub from '../views/club/loggedin/EditClub'
-import EditProject from '../views/club/loggedin/EditProject'
-import CreateProject from '../views/club/loggedin/CreateProject'
+import project from './project'
 
 export default {
-  path: '/club',
+  path: '/club/:id',
   component: _Club,
   name: '_Club',
   children: [
@@ -31,7 +23,7 @@ export default {
       name: 'ClubAbout'
     },
     {
-      path: 'contactus',
+      path: 'contact-us',
       component: ClubContactUs,
       name: 'ClubContactUs'
     },
@@ -46,64 +38,27 @@ export default {
       name: 'ClubLogin'
     },
     {
-      path: 'projects',
-      component: ClubProjects,
-      name: 'ClubProjects'
-    },
-    {
-      path: 'userprojects',
-      component: UserProjects,
-      name: 'UserProjects'
-    },
-    {
-      path: 'createproject',
-      component: CreateProject,
-      name: 'CreateProject'
-    },
-    {
-      path: 'project',
-      component: Project,
-      name: 'Project'
-    },
-    {
-      path: 'viewpledges',
-      component: ViewPledges,
-      name: 'ViewPledges'
-    },
-    {
-      path: 'createpledge',
-      component: CreatePledge,
-      name: 'CreatePledge'
-    },
-    {
       path: 'users',
       component: ClubUsers,
-      name: 'ClubUsers'
+      name: 'ClubUsers',
+      children: [
+        {
+          path: 'view',
+          component: ViewClubUsers,
+          name: 'ViewClubUsers'
+        },
+        {
+          path: 'create',
+          component: CreateClubUser,
+          name: 'CreateClubUser'
+        },
+        {
+          path: ':userid/edit',
+          component: EditClubUser,
+          name: 'EditClubUser'
+        },
+      ]
     },
-    {
-      path: 'createclubuser',
-      component: CreateClubUser,
-      name: 'CreateClubUser'
-    },
-    {
-      path: 'editclubuser',
-      component: EditClubUser,
-      name: 'EditClubUser'
-    },
-    {
-      path: 'donate',
-      component: Donate,
-      name: 'Donate'
-    },
-    {
-      path: 'editclub',
-      component: EditClub,
-      name: 'EditClub'
-    },
-    {
-      path: 'editproject',
-      component: EditProject,
-      name: 'EditProject'
-    },
+    project
   ]
 }

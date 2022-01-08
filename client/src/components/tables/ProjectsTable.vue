@@ -13,7 +13,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ project.project_name }}</h5>
             <p class="card-text">{{ project.project_theme }}</p>
-            <a href="/club/editproject" class="btn btn-primary">Edit</a>
+            <a :href="`./edit`" class="btn btn-primary">Edit</a>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default {
   methods: {
     goToProjectPage(projectId) {
       store.dispatch('changeCurrentProject', projectId)
-      this.$router.push('./project')
+      this.$router.push(`./${projectId}/view`)
     },
     goToEditProjectPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)

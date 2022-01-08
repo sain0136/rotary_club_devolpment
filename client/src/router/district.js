@@ -81,7 +81,7 @@ export default {
           }
         },
         {
-          path: ':id/edit',
+          path: ':clubid/edit',
           component: EditClub,
           beforeEnter: (to, from, next) => {
             if(store.state.isDistrictAdminLoggedIn || 
