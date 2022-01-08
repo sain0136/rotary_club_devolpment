@@ -1,20 +1,10 @@
 <template>
   <div>
     <button id="create-user"
-    @click="() => {this.$router.push('/admin/createdistrictadmin')}">
-      Create User
+    @click="() => this.$router.push('/admin/district-admins/create')">
+      Create Admin
     </button> 
     <br> <br>
-    <div class="select-districts">
-      <!-- <label for="clubs">Clubs</label> <br>
-      <select @change="filterWithClub($event)">
-        <option 
-          v-for="district in districts" :key="district.id"
-          :value="district.id">
-          {{district.name}}
-        </option>
-      </select> -->
-    </div>
     <DistrictAdminsTable/>
   </div>
 </template>

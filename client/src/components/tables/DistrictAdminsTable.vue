@@ -58,7 +58,7 @@ export default {
     },
     async goToEditDistrictAdminPage(userId) {
       store.dispatch('changeCurrentUserIdToEdit', userId)
-      this.$router.push('editdistrictadmin')
+      this.$router.push('edit')
     }
   },
   async created() {

@@ -10,7 +10,7 @@
         >
       </li>
       <li class="nav-item">
-        <router-link class="link" to="/admin/viewdistrictadmins"
+        <router-link class="link" to="/admin/district-admins/view"
           >Manage District Admins</router-link
         >
       </li>

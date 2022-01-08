@@ -11,6 +11,7 @@ import ViewClubs from '../views/admin/clubs/ViewClubs'
 import CreateClub from '../views/admin/clubs/CreateClub'
 import EditClub from '../views/admin/clubs/EditClub'
 
+import DistrictAdmins from '../views/admin/district_admins/DistrictAdmins'
 import ViewDistrictAdmins from '../views/admin/district_admins/ViewDistrictAdmins'
 import CreateDistrictAdmin from '../views/admin/district_admins/CreateDistrictAdmin'
 import EditDistrictAdmin from '../views/admin/district_admins/EditDistrictAdmin'
@@ -69,18 +70,23 @@ export default {
       path: 'editclub',
       component: EditClub,
     },
-    //Users
     {
-      path: 'viewdistrictadmins',
-      component: ViewDistrictAdmins
-    },
-    {
-      path: 'createdistrictadmin',
-      component: CreateDistrictAdmin,
-    },
-    {
-      path: 'editdistrictadmin',
-      component: EditDistrictAdmin,
+      path: 'district-admins',
+      component: DistrictAdmins,
+      children: [
+        {
+          path: 'view',
+          component: ViewDistrictAdmins
+        },
+        {
+          path: 'create',
+          component: CreateDistrictAdmin,
+        },
+        {
+          path: 'edit',
+          component: EditDistrictAdmin,
+        },
+      ]
     },
   ]
 }

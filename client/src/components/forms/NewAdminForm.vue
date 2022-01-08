@@ -137,7 +137,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('viewdistrictadmins')">
+        @click="() => this.$router.push('./view')">
         Cancel
       </button>
     </form>
@@ -266,7 +266,7 @@ export default {
       } 
     },
 
-    async createNewAdmin(event) {
+    async createNewAdmin() {
       
       let userToCreate = {
         district_id: this.districtId,
@@ -292,7 +292,7 @@ export default {
 
       console.log(await res.json())
 
-      this.$router.push('/admin/viewdistrictadmins');
+      this.$router.push('./view')
     },
 
     async updateExistingAdmin() {
@@ -321,7 +321,7 @@ export default {
         body: JSON.stringify(districtAdminToUpdate)
       })
 
-      this.$router.push('viewdistrictadmins');
+      this.$router.push('./view')
     },
 
     async fetchDistricts() {
