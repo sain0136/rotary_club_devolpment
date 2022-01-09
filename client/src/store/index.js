@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
-import { isSiteAdminValid } from './credentials';
-import { isUserValid } from './credentials'
+import { isSiteAdminValid } from './api-calls';
+import { isUserValid } from './api-calls'
 
 import { fetchDistrictDataById } from './api-calls';
 import { fetchClubDataById } from './api-calls';
@@ -20,20 +20,17 @@ export default createStore({
 
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
-    loggedInClubUserId: 0,
-
-    currentDistrictId: 80,
-
-    currentClubId: Number,
-
-    currentProjectId: Number,
-
-    currentUserIdToEdit: Number,
-
+    
+    loggedInClubUserId: Number,
 
     currentDistrictData: Object,
     currentClubData: Object,
-    
+
+    //TODO trash data, remove later from the whole app
+    currentDistrictId: Number,
+    currentClubId: Number,
+    currentProjectId: Number,
+    currentUserIdToEdit: Number,
   },
   mutations: {
     adminLogin(state, roleId) {
@@ -47,7 +44,7 @@ export default createStore({
           state.isDistrictAdminLoggedIn = true
           state.isDistrictAdminRejected = false
         break
-        case 2:
+        case 5:
           state.isClubAdminLoggedIn = true
           state.isClubAdminRejected = false
         break
@@ -61,7 +58,7 @@ export default createStore({
         case 1: 
         state.isDistrictAdminRejected = true
         break
-        case 2: 
+        case 5: 
         state.isClubAdminRejected = true
         break
       }
@@ -71,11 +68,36 @@ export default createStore({
       state.isClubUserLoggedIn = true
       state.isClubUserRejected = false
       state.loggedInClubUserId = userId
+      console.log('logged in as: ', state.loggedInClubUserId)
     },
     clubUserReject(state, userId) {
       state.isClubUserRejected = true
     },
+    logout(state, roleIdToLogOut) {
+      switch(roleIdToLogOut) {
+        case 0: 
+        state.isSiteAdminLoggedIn = false
+        break
+        case 1: 
+        state.isDistrictAdminLoggedIn = false
+        break
+        case 5:
+        state.isClubAdminLoggedIn = false
+        break
+        case 7:
+        state.isClubUserLoggedIn = false
+      }
+    },
 
+    changeCurrentDistrictData(state, districtData) {
+      state.currentDistrictData = districtData
+    },
+
+    changeCurrentClubData(state, clubData) {
+      state.currentClubData = clubData
+    },
+
+    /////////All thrash
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
       console.log(state.currentDistrictId)
@@ -89,36 +111,15 @@ export default createStore({
     changeCurrentUserIdToEdit(state, userId) {
       state.currentUserIdToEdit = userId
     },
-    logout(state, roleIdToLogOut) {
-      switch(roleIdToLogOut) {
-        case 0: 
-        state.isSiteAdminLoggedIn = false
-        break
-        case 1: 
-        state.isDistrictAdminLoggedIn = false
-        break
-        case 2:
-        state.isClubAdminLoggedIn = false
-        break
-        case 3:
-        state.isClubUserLoggedIn = false
-      }
-    },
-
-    changeCurrentDistrictData(state, districtData) {
-      state.currentDistrictData = districtData
-    },
-
-    changeCurrentClubData(state, clubData) {
-      state.currentClubData = clubData
-    },
+    ///////////////////
+  
   },
   actions: {
     async validateAdminCredentials({commit}, data) { //Also for the regular user
       let userId = data.userId
       let password = data.password
       let roleId = data.roleId
-      
+
       switch(roleId) {
         case 0:
           if(await isSiteAdminValid(userId, password)) {
@@ -136,19 +137,34 @@ export default createStore({
             console.log('hero')
           }
           break
-        case 2:
+        case 5:
           if(await isUserValid(userId, password)) {
-            commit('adminLogin', 2)
+            commit('adminLogin', 5)
           } else {
-            commit('adminReject', 2)
+            commit('adminReject', 5)
           } 
           break
-        case 3:
+        case 7:
           if(await isUserValid(userId, password)) {
             commit('clubUserLogin', userId)
+          } else {
+            commit('clubUserReject', userId)
           }
       }
     },
+    logout({commit}, roleIdToLogOut) {
+      commit('logout', roleIdToLogOut)
+    },
+    async changeCurrentDistrictData({commit}, districtId) {
+      let districtData = await fetchDistrictDataById(districtId)
+      commit('changeCurrentDistrictData', districtData)
+    },
+    async changeCurrentClubData({commit}, clubId) {
+      let clubData = await fetchClubDataById(clubId)
+      commit('changeCurrentClubData', clubData)
+    },
+
+    ////////All thrash
     changeCurrentDistrict({commit}, districtId) {
       commit('changeCurrentDistrict', districtId)
     },
@@ -161,20 +177,7 @@ export default createStore({
     changeCurrentUserIdToEdit({commit}, userId) {
       commit('changeCurrentUserIdToEdit', userId)
     },
-    logout({commit}, roleIdToLogOut) {
-      commit('logout', roleIdToLogOut)
-    },
-    
-    async changeCurrentDistrictData({commit}, districtId) {
-      let districtData = await fetchDistrictDataById(districtId)
-      commit('changeCurrentDistrictData', districtData)
-    },
-
-    async changeCurrentClubData({commit}, clubId) {
-      let clubData = await fetchClubDataById(clubId)
-      commit('changeCurrentClubData', clubData)
-    }
-
+    ////////////////
   },
   getters: {
 

@@ -3,7 +3,7 @@
     <form>
       <legend>Club Login</legend> <br> <br>
       <p 
-        v-if="$store.state.isClubAdminRejected" 
+        v-if="$store.state.isClubAdminRejected || $store.state.isClubUserRejected"
         id="error">
         Credentials not valid!
       </p>
@@ -12,15 +12,14 @@
         <input 
           type="radio" 
           name="Admin" 
-          value="2"
+          value="5"
           v-model="roleType">
         <br><br>
         <label for="User">User</label>
         <input 
-          checked="checked"
           type="radio" 
           name="User" 
-          value="3"
+          value="7"
           v-model="roleType">          
         <br> <br>
       </div>
@@ -47,18 +46,22 @@ export default {
     return {
       username: '',
       password: '',
-      roleType: 3,
+      roleType: '7',
     }
   },
   methods: {
-    clubAdminLoginHandler() {
-      store.dispatch('validateAdminCredentials', {
+    async clubAdminLoginHandler() {
+      console.log(this.roleType)
+      await store.dispatch('validateAdminCredentials', {
         userId: this.username,
         password: this.password,
-        roleId: this.roleType
+        roleId: parseInt(this.roleType)
       })
+      this.redirect()
+    },
+    redirect() {
       if(store.state.isClubAdminLoggedIn || store.state.isClubUserLoggedIn) {
-        this.$router.push('/club/home');
+        this.$router.push('./home');
       }
     }
   }

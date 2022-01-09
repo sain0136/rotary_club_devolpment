@@ -24,7 +24,7 @@
 <script>
 
 import store from "../../store/index";
-import { getDistrictProjects, getClubProjects, getUserProjects } from '../../data-bank/project-data'
+import { getDistrictProjects, getClubProjects, getUserProjects } from '../../store/api-calls'
 
 export default {
   name: "ProjectsTable",
@@ -59,13 +59,14 @@ export default {
   },
   async created() {
     if(this.pageToDisplay == 'District') {
-      this.projects = await getDistrictProjects()
+      this.projects = await getDistrictProjects(this.$router.currentRoute.value.params.id)
     } 
     else if(this.pageToDisplay == 'Club') {
-      this.projects = await getClubProjects()
+      this.projects = await getClubProjects(this.$router.currentRoute.value.params.id)
     } 
     else {
-      this.projects = await getUserProjects()
+      console.log(store.state.loggedInClubUserId + '\'s' + ' projects')
+      this.projects = await getUserProjects(store.state.loggedInClubUserId)
     }
   },
 };

@@ -249,14 +249,14 @@ export default {
         district_description: this.description
       }
 
-      const res = await fetch(`/api/district/${store.state.currentDistrictData.district_id}`, {
+      const res = await fetch(`/api/district/${this.$router.currentRoute.value.params.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(districtToUpdate)
       })
 
       //To dynamically update right after making the edit
-      store.dispatch('changeCurrentDistrictData', store.state.currentDistrictData.district_id)
+      store.dispatch('changeCurrentDistrictData', this.$router.currentRoute.value.params.id)
       this.redirectFromEdit()
     },
 

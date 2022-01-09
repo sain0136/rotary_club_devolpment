@@ -30,14 +30,18 @@ export default {
     }
   },
   methods: {
-    districtAdminLoginHandler() {
-      store.dispatch('validateAdminCredentials', {
+    async districtAdminLoginHandler() {
+      await store.dispatch('validateAdminCredentials', {
         userId: this.userId,
         password: this.password,
         roleId: 1
       })
+      this.redirect()
+    },
+    redirect() {
       if(store.state.isDistrictAdminLoggedIn) {
-        this.$router.push(`/`);
+        console.log('hello')
+        this.$router.push('./home')
       }
     }
   }

@@ -12,16 +12,21 @@
           <input 
             type="radio" 
             name="User" 
-            value="1"
+            value="5"
             v-model="roleType">
           <br><br>
           <label for="Admin">User</label>
           <input 
             type="radio" 
             name="User" 
-            value="2"
+            value="7"
             v-model="roleType">          
          <br> <br>
+      </div>
+      <div class="form-field">
+        <input type="text"
+          placeholder="Membership Id"
+          v-model="membershipId"> <br> <br>
       </div>
       <div class="form-field">
         <span 
@@ -142,7 +147,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('./view')">
+        @click="() => this.$router.push(`/club/${this.$router.currentRoute.value.params.id}/users/view`)">
         Cancel
       </button>
     </form>
@@ -171,7 +176,7 @@ export default {
       roleType: 0,
 
       clubId: this.$router.currentRoute.value.params.id,
-      membershipId: 0,
+      membershipId: '',
       firstName: '',
       lastName: '',
       address: '',
@@ -265,15 +270,15 @@ export default {
 
     async createNewUser() {
 
-      if(this.roleType == 1) {
+      if(this.roleType == '5') {
         this.clubRole = 'Admin'
-      } else {
+      } else if (this.roleType == '7'){
         this.clubRole = 'User'
       }
       
       let userToCreate = {
         club_id: this.clubId,
-        membership_id: Date.now(), //Temporarily as a random value
+        membership_id: this.membershipId,
         role_type: this.roleType,
         club_role: this.clubRole,
         firstname: this.firstName,
@@ -295,7 +300,7 @@ export default {
 
       console.log(await res.json())
 
-      this.$router.push('../view');
+      this.$router.push('./view');
     },
 
     async updateExistingUser() {
@@ -324,7 +329,7 @@ export default {
         body: JSON.stringify(clubUserToUpdate)
       })
 
-      this.$router.push('./view')
+      this.$router.push('../view')
     },
   },
 }

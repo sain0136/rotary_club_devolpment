@@ -37,7 +37,16 @@ export default {
     {
       path: 'login',
       component: DistrictLogin,
-      name: 'DistrictLogin'
+      name: 'DistrictLogin',
+      beforeEnter: (to, from, next) => {
+        if(store.state.isDistrictAdminLoggedIn || 
+           store.state.isSiteAdminLoggedIn) {
+          next(false)
+          window.location.replace('./')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: 'projects',

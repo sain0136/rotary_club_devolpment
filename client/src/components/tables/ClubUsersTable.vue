@@ -28,35 +28,22 @@
 <script>
 
 import store from '../../store/index'
-
+import { getAllClubMembers } from '../../store/api-calls'
+ 
 export default {
   name: 'ClubUsersTable',
   data() {
     return {
-      users: this.fetchUsers()
+      users: Array
     }
   },
   methods: {
-    async fetchUsers() {
-      const res = await fetch('/api/user', { method: 'GET'})
-      const data = await res.json()
-
-      const allUsers = await data.allUsers
-      const clubUsers = []
-
-      await allUsers.forEach(user => {
-        if(user.club_id == store.state.currentClubId) {
-          clubUsers.push(user)
-        }
-      })
-      return clubUsers
-    },
     async deleteUser(userId) {
       if(confirm(`Are you sure you want to delete user ${userId}?`)) {
         const res = await fetch(`/api/user/${userId}`, {
           method: 'DELETE'
         })
-        this.users = await this.fetchUsers()
+        this.users = await getAllClubMembers(this.$router.currentRoute.value.params.id)
       }
     },
     async goToEditUserPage(userId) {
@@ -65,8 +52,7 @@ export default {
     }
   },
   async created() {
-    this.users = await this.fetchUsers()
-    console.log(this.admins)
+    this.users = await getAllClubMembers(this.$router.currentRoute.value.params.id)
   }
 }
 

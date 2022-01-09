@@ -19,7 +19,7 @@
       </a>
       <router-link 
         v-if="!($store.state.isDistrictAdminLoggedIn || $store.state.isSiteAdminLoggedIn)"
-        to="/club/login">
+        :to="`/club/${this.$router.currentRoute.value.params.id}/login`">
         <font-awesome-icon 
           v-if="!($store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn)"
           class="social-icon" icon="sign-in-alt"></font-awesome-icon>
@@ -62,12 +62,15 @@ export default {
   },
   methods: {
     logout() {
-      if(store.state.isClubAdminLoggedIn) {
-        store.dispatch("logout", 2)
-      } else {
-        store.dispatch("logout", 3)
-      }
-      this.$router.push('login')
+      store.dispatch("logout", 5)
+      store.dispatch("logout", 7)
+
+      // if(store.state.isClubAdminLoggedIn) {
+      //   store.dispatch("logout", 5)
+      // } else {
+      //   store.dispatch("logout", 3)
+      // }
+      // this.$router.push('login')
     },
   }
 }

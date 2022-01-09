@@ -33,11 +33,9 @@
       <li>
         <router-link class="link" :to="{name: 'ClubContactUs', params: {id: this.clubId}}">Contact Us</router-link>
       </li>
-      <li v-if="$store.state.isLoggedIn">
-        <router-link class="link" to="/club/contactus">Admin</router-link>
+      <li> 
+        <DonateButton/> 
       </li>
-
-      <li> <DonateButton/> </li>
   </ul>
   </nav>
 </template>

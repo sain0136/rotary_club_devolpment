@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      districtId: 1,
+      districtId: this.$router.currentRoute.value.params.id,
       motherClub: '',
       name: '',
       address: '',

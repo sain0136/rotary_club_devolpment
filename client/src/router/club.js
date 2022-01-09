@@ -12,6 +12,8 @@ import EditClubUser from '../views/club/loggedin/EditClubUser'
 
 import project from './project'
 
+import store from '../store/index'
+
 export default {
   path: '/club/:id',
   component: _Club,
@@ -35,12 +37,31 @@ export default {
     {
       path: 'login',
       component: ClubLogin,
-      name: 'ClubLogin'
+      name: 'ClubLogin',
+      beforeEnter: (to, from, next) => {
+        if(store.state.isClubAdminLoggedIn || 
+           store.state.isDistrictAdminLoggedIn ||
+           store.state.isSiteAdminLoggedIn) {
+          next(false)
+          window.location.replace('./home')
+        } else {
+          next()
+        }
+      },
     },
     {
       path: 'users',
       component: ClubUsers,
       name: 'ClubUsers',
+      beforeEnter: (to, from, next) => {
+        if(store.state.isClubAdminLoggedIn || 
+           store.state.isSiteAdminLoggedIn) {
+          next()
+        } else {
+          next(false)
+          // window.location.replace(`/club/${store.state.currentClubData.club_id}/login`)
+        }
+      },
       children: [
         {
           path: 'view',

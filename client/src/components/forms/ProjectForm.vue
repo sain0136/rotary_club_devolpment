@@ -152,7 +152,7 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('projects')">
+        @click="() => this.$router.push('./view')">
         Cancel
       </button>   
     </form>
@@ -198,7 +198,7 @@ export default {
       region: '',
       itemisedBudget: [],
       extraDescriptions: {},
-      clubId: store.state.currentClubId,
+      clubId: this.$router.currentRoute.value.params.id,
       districtId: store.state.currentDistrictId,
 
       question1: '',
@@ -243,9 +243,9 @@ export default {
     this.clubName = await clubData.club_name
 
     if(store.state.isClubAdminLoggedIn) {
-      this.roleType = 2
+      this.roleType = 5
     } else {
-      this.roleType = 3
+      this.roleType = 7
     }
 
     this.createdBy = store.state.loggedInClubUserId
@@ -330,7 +330,7 @@ export default {
         console.log(err)
       }
       
-      // this.$router.push('projects');
+      this.$router.push('./view');
     },
 
     async updateExistingProject() {

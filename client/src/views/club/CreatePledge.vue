@@ -28,7 +28,7 @@ export default {
       let pledgeToAdd = {
         pledge_amount: this.pledgeAmount,
         project_id: this.$router.currentRoute.value.params.projectid,
-        user_id: 8 //TODO temporary value
+        user_id: store.state.loggedInClubUserId
       }
 
       try{
