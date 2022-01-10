@@ -1,18 +1,19 @@
 <template>
   <div>
-    <DistrictForm isEditOrCreate='Edit' pageAccessed='Admin'/>
+    <DistrictForm
+      isEditOrCreate="Edit"
+      pageAccessed="Admin"
+    />
   </div>
 </template>
 
 <script>
-
 import DistrictForm from '../../../components/forms/DistrictForm.vue'
 
 export default {
   name: 'EditDistrict',
   components: {
-    DistrictForm
-  }
+    DistrictForm,
+  },
 }
-
 </script>

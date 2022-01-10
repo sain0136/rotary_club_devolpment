@@ -6,10 +6,8 @@
 
 <script>
 export default {
-  name: "DistrictAdmins"
+  name: 'DistrictAdmins',
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

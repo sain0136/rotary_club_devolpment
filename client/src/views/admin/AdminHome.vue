@@ -5,19 +5,14 @@
 </template>
 
 <script>
-
 export default {
   name: 'AdminHome',
-  components: {
-  }
+  components: {},
 }
-
 </script>
 
 <style scoped>
-
 h2 {
   text-align: center;
 }
-
 </style>
