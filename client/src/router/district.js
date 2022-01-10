@@ -4,13 +4,13 @@ import DistrictAbout from '../views/district/DistrictAbout'
 import DistrictHome from '../views/district/DistrictHome'
 import DistrictLogin from '../views/district/DistrictLogin'
 import DistrictContactUs from '../views/district/DistrictContactUs'
-import EditDistrict from '../views/district/loggedin/EditDistrict'
+import EditDistrict from '../views/district/EditDistrict'
 
-import _Clubs from '../views/district/_Clubs'
-import ViewClubs from '../views/district/ViewClubs'
+import _Clubs from '../views/district/clubs/_Clubs'
+import ViewClubs from '../views/district/clubs/ViewClubs'
 import DistrictProjects from '../views/district/DistrictProjects'
-import CreateClub from '../views/district/loggedin/CreateClub'
-import EditClub from '../views/district/loggedin/EditClub'
+import CreateClub from '../views/district/clubs/CreateClub'
+import EditClub from '../views/district/clubs/EditClub'
 
 import store from '../store/index'
 
@@ -22,49 +22,54 @@ export default {
     {
       path: 'home',
       component: DistrictHome,
-      name: 'DistrictHome'
+      name: 'DistrictHome',
     },
     {
       path: 'about',
       component: DistrictAbout,
-      name: 'DistrictAbout'
+      name: 'DistrictAbout',
     },
     {
       path: 'contact-us',
       component: DistrictContactUs,
-      name: 'DistrictContactUs'
+      name: 'DistrictContactUs',
     },
     {
       path: 'login',
       component: DistrictLogin,
       name: 'DistrictLogin',
       beforeEnter: (to, from, next) => {
-        if(store.state.isDistrictAdminLoggedIn || 
-           store.state.isSiteAdminLoggedIn) {
+        if (
+          store.state
+            .isDistrictAdminLoggedIn ||
+          store.state
+            .isSiteAdminLoggedIn
+        ) {
           next(false)
           window.location.replace('./')
         } else {
           next()
         }
-      }
+      },
     },
     {
       path: 'projects',
       component: DistrictProjects,
-      name: 'DistrictProjects'
+      name: 'DistrictProjects',
     },
     {
       path: 'edit',
       component: EditDistrict,
       name: 'EditDistrict',
       beforeEnter: (to, from, next) => {
-        if(store.state.isDistrictAdminLoggedIn || 
-           store.state.isSiteAdminLoggedIn) {
+        if (store.state.isDistrictAdminLoggedIn ||
+            store.state.isSiteAdminLoggedIn
+        ) {
           next()
         } else {
           next(false)
         }
-      }
+      },
     },
     {
       path: 'clubs',
@@ -74,34 +79,37 @@ export default {
         {
           path: 'view',
           component: ViewClubs,
-          name: 'ViewClubs'
+          name: 'ViewClubs',
         },
         {
           path: 'create',
           component: CreateClub,
           name: 'CreateClub',
           beforeEnter: (to, from, next) => {
-            if(store.state.isDistrictAdminLoggedIn || 
-               store.state.isSiteAdminLoggedIn) {
+            if (store.state.isDistrictAdminLoggedIn ||
+                store.state.isSiteAdminLoggedIn
+            ) {
               next()
             } else {
               next(false)
             }
-          }
+          },
         },
         {
           path: ':clubid/edit',
           component: EditClub,
           beforeEnter: (to, from, next) => {
-            if(store.state.isDistrictAdminLoggedIn || 
-              store.state.isSiteAdminLoggedIn) {
-             next()
-           } else {
-             next(false)
-           }
-          }
-        }
-      ]
+            if (
+              store.state.isDistrictAdminLoggedIn ||
+              store.state.isSiteAdminLoggedIn
+            ) {
+              next()
+            } else {
+              next(false)
+            }
+          },
+        },
+      ],
     },
-  ]
+  ],
 }

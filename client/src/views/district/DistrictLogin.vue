@@ -1,18 +1,16 @@
 <template>
   <div>
-    <DistrictLoginForm/>
+    <DistrictLoginForm />
   </div>
 </template>
 
 <script>
-
 import DistrictLoginForm from '../../components/forms/DistrictLoginForm.vue'
 
 export default {
   name: 'DistrictLogin',
   components: {
-    DistrictLoginForm
-  }
+    DistrictLoginForm,
+  },
 }
-
 </script>

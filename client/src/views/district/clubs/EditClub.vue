@@ -1,18 +1,16 @@
 <template>
   <div>
-    <ClubForm isEditOrCreate='Create'/>
+    <ClubForm isEditOrCreate="Edit" />
   </div>
 </template>
 
 <script>
-
 import ClubForm from '../../../components/forms/ClubForm.vue'
 
 export default {
-  name: 'CreateClub',
+  name: 'EditClub',
   components: {
-    ClubForm
-  }
+    ClubForm,
+  },
 }
-
 </script>

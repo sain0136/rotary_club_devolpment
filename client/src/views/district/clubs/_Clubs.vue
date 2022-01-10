@@ -5,14 +5,10 @@
 </template>
 
 <script>
-
 export default {
-  name: "_Clubs",
-  components: {
-  },
-};
+  name: '_Clubs',
+  components: {},
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

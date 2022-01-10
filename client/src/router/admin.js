@@ -19,18 +19,20 @@ export default {
   component: Admin,
   name: 'Admin',
   beforeEnter: (to, from, next) => {
-    if(store.state.isSiteAdminLoggedIn) {
+    if (store.state.isSiteAdminLoggedIn) {
       next()
     } else {
       next(false)
-      window.location.replace('/adminlogin')
+      window.location.replace(
+        '/adminlogin',
+      )
     }
   },
   children: [
     {
       path: 'home',
       component: AdminHome,
-      name: 'AdminHome'
+      name: 'AdminHome',
     },
     {
       path: 'districts',
@@ -40,19 +42,19 @@ export default {
         {
           path: 'view',
           component: ViewDistricts,
-          name: 'ViewDistricts'
+          name: 'ViewDistricts',
         },
         {
           path: 'create',
           component: CreateDistrict,
-          name: 'NewDistrict'
+          name: 'NewDistrict',
         },
         {
           path: 'edit',
           component: EditDistrict,
-          name: 'EditDistrict'
+          name: 'EditDistrict',
         },
-      ]
+      ],
     },
     {
       path: 'district-admins',
@@ -60,7 +62,7 @@ export default {
       children: [
         {
           path: 'view',
-          component: ViewDistrictAdmins
+          component: ViewDistrictAdmins,
         },
         {
           path: 'create',
@@ -70,7 +72,7 @@ export default {
           path: ':userid/edit',
           component: EditDistrictAdmin,
         },
-      ]
+      ],
     },
-  ]
+  ],
 }
