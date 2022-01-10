@@ -15,26 +15,33 @@
         <td>{{pledge.user_id}}</td>
       </tr>
     </table> <br>
+    <h2>Total: {{ this.total }}</h2>
+    <button
+    @click="() => this.$router.push('../pledges/create')">
+      Make Pledge
+    </button>
     <button @click="() => this.$router.push('../view')">Project Page</button>
   </div>
 </template>
 
 <script>
 
-import { getAllPledges } from '../../data-bank/pledge-data'
+import { getAllPledges } from '../../store/api-calls'
 
 export default {
   name: 'ViewPledges',
   data() {
     return {
-      pledges: []
+      pledges: Array,
+      total: 0
     }
   },
   async created() {
-    this.pledges = await getAllPledges()
+    this.pledges = await getAllPledges(this.$router.currentRoute.value.params.projectid)
+    this.pledges.forEach(pledge => {
+        this.total += pledge.pledge_amount
+      });
   },
-  methods: {
-  }
 }
 </script>
 

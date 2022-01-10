@@ -4,8 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import { isSiteAdminValid } from './api-calls';
 import { isUserValid } from './api-calls'
 
-import { fetchDistrictDataById } from './api-calls';
-import { fetchClubDataById } from './api-calls';
+import { fetchDistrictDataById, fetchClubDataById, fetchProjectDataById } from './api-calls';
 
 export default createStore({
   state: {
@@ -25,6 +24,7 @@ export default createStore({
 
     currentDistrictData: Object,
     currentClubData: Object,
+    currentProjectData: Object,
 
     //TODO trash data, remove later from the whole app
     currentDistrictId: Number,
@@ -97,6 +97,10 @@ export default createStore({
       state.currentClubData = clubData
     },
 
+    changeCurrentProjectData(state, projectData) {
+      state.currentProjectData = projectData
+    },
+
     /////////All thrash
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
@@ -162,6 +166,10 @@ export default createStore({
     async changeCurrentClubData({commit}, clubId) {
       let clubData = await fetchClubDataById(clubId)
       commit('changeCurrentClubData', clubData)
+    },
+    async changeCurrentProjectData({commit}, projectId) {
+      let projectData = await fetchProjectDataById(projectId)
+      commit('changeCurrentProjectData', projectData)
     },
 
     ////////All thrash

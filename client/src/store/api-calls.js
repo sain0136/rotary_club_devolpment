@@ -89,6 +89,7 @@ export async function getClubProjects(clubId) {
 }
 
 export async function getUserProjects(userId) {
+  
   const queryHelper = {
     user_id: userId
   }
@@ -103,4 +104,26 @@ export async function getUserProjects(userId) {
   const projects = await data.usersProjects
 
   return await projects
+}
+
+export async function fetchProjectDataById(projectId) {
+
+  const queryHelper = {
+    project_id: projectId
+  }
+
+  const res = await fetch('/api/pledge/project', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(queryHelper)
+  })
+  const data = await res.json()
+  const project = await data.project
+
+  return await project
+}
+
+export async function getAllPledges(projectId) {
+  const project = await fetchProjectDataById(projectId)
+  return await project.pledgesAssociated
 }

@@ -9,6 +9,10 @@
       @click="makePledge">
       Submit
     </button>
+    <button
+      @click="() => this.$router.push('./view')">
+      Cancel
+    </button>
   </div>
 </template>
 

@@ -1,15 +1,11 @@
 <template>
   <div>
-    <h1>{{ this.projectName }}</h1>
-    {{ this.projectDescription }}
+    <h1>{{$store.state.currentProjectData.project_name}}</h1>
+    {{$store.state.currentProjectData.project_theme}}
     <br>
     <button
     @click="() => this.$router.push('pledges/view')">
       View Pledges
-    </button>
-    <button
-    @click="() => this.$router.push('pledges/create')">
-      Make Pledge
     </button>
   </div>
 </template>
@@ -23,15 +19,9 @@ export default {
   name: 'ViewProject',
   data() {
     return {
-      projectName: '',
-      projectDescription: '',
     }
   },
   async created() {
-    const projectInfo = await getProjectData(this.$router.currentRoute.value.params.projectid)
-    
-    this.projectName = await projectInfo.project_name
-    this.projectDescription = await projectInfo.project_theme
   },
   methods: {
   }
