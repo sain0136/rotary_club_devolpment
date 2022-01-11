@@ -1,41 +1,47 @@
 <template>
   <div>
     <h1>Contact Info</h1>
-    <br>
+    <br />
     <table>
       <tr>
         <td id="type">Email</td>
-        <td>{{this.clubData.club_email}}</td>
+        <td>
+          {{ this.clubData.club_email }}
+        </td>
       </tr>
       <tr>
         <td id="type">Phone</td>
-        <td>{{this.clubData.club_phone}}</td>
+        <td>
+          {{ this.clubData.club_phone }}
+        </td>
       </tr>
       <tr>
         <td id="type">Address</td>
-        <td>{{this.clubData.club_address}}</td>
+        <td>
+          {{
+            this.clubData.club_address
+          }}
+        </td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
-
 import store from '../../store/index'
 
 export default {
   name: 'ClubContactUs',
   data() {
     return {
-      clubData: store.state.currentClubData
+      clubData:
+        store.state.currentClubData,
     }
   },
 }
-
 </script>
 
 <style scoped>
-
 table {
   margin: auto;
   font-size: 24px;
@@ -50,5 +56,4 @@ td {
 #type {
   font-weight: bold;
 }
-
 </style>

@@ -5,10 +5,10 @@ import ClubContactUs from '../views/club/ClubContactUs'
 import ClubHome from '../views/club/ClubHome'
 import ClubLogin from '../views/club/ClubLogin'
 
-import ClubUsers from '../views/club/loggedin/ClubUsers'
-import ViewClubUsers from '../views/club/loggedin/ViewClubUsers'
-import CreateClubUser from '../views/club/loggedin/CreateClubUser'
-import EditClubUser from '../views/club/loggedin/EditClubUser'
+import ClubUsers from '../views/club/users/_ClubUsers'
+import ViewClubUsers from '../views/club/users/ViewClubUsers'
+import CreateClubUser from '../views/club/users/CreateClubUser'
+import EditClubUser from '../views/club/users/EditClubUser'
 
 import project from './project'
 
@@ -22,28 +22,35 @@ export default {
     {
       path: 'about',
       component: ClubAbout,
-      name: 'ClubAbout'
+      name: 'ClubAbout',
     },
     {
       path: 'contact-us',
       component: ClubContactUs,
-      name: 'ClubContactUs'
+      name: 'ClubContactUs',
     },
     {
       path: 'home',
       component: ClubHome,
-      name: 'ClubHome'
+      name: 'ClubHome',
     },
     {
       path: 'login',
       component: ClubLogin,
       name: 'ClubLogin',
       beforeEnter: (to, from, next) => {
-        if(store.state.isClubAdminLoggedIn || 
-           store.state.isDistrictAdminLoggedIn ||
-           store.state.isSiteAdminLoggedIn) {
+        if (
+          store.state
+            .isClubAdminLoggedIn ||
+          store.state
+            .isDistrictAdminLoggedIn ||
+          store.state
+            .isSiteAdminLoggedIn
+        ) {
           next(false)
-          window.location.replace('./home')
+          window.location.replace(
+            './home',
+          )
         } else {
           next()
         }
@@ -54,8 +61,12 @@ export default {
       component: ClubUsers,
       name: 'ClubUsers',
       beforeEnter: (to, from, next) => {
-        if(store.state.isClubAdminLoggedIn || 
-           store.state.isSiteAdminLoggedIn) {
+        if (
+          store.state
+            .isClubAdminLoggedIn ||
+          store.state
+            .isSiteAdminLoggedIn
+        ) {
           next()
         } else {
           next(false)
@@ -66,20 +77,20 @@ export default {
         {
           path: 'view',
           component: ViewClubUsers,
-          name: 'ViewClubUsers'
+          name: 'ViewClubUsers',
         },
         {
           path: 'create',
           component: CreateClubUser,
-          name: 'CreateClubUser'
+          name: 'CreateClubUser',
         },
         {
           path: ':userid/edit',
           component: EditClubUser,
-          name: 'EditClubUser'
+          name: 'EditClubUser',
         },
-      ]
+      ],
     },
-    project
-  ]
+    project,
+  ],
 }

@@ -1,15 +1,15 @@
-import Project from '../views/club/Project'
-import ViewProject from '../views/club/ViewProject'
+import Project from '../views/club/projects/_Project'
+import ViewProjectPage from '../views/club/projects/ViewProjectPage'
 
-import Pledges from '../views/club/Pledges'
-import ViewPledges from '../views/club/ViewPledges'
-import CreatePledge from '../views/club/CreatePledge'
+import ClubProjects from '../views/club/projects/_ClubProjects'
+import ViewClubProjects from '../views/club/projects/ViewClubProjects'
+import ViewUserProjects from '../views/club/projects/ViewUserProjects'
+import EditProject from '../views/club/projects/EditProject'
+import CreateProject from '../views/club/projects/CreateProject'
 
-import ClubProjects from '../views/club/ClubProjects'
-import ViewClubProjects from '../views/club/ViewClubProjects'
-import ViewUserProjects from '../views/club/loggedin/ViewUserProjects'
-import EditProject from '../views/club/loggedin/EditProject'
-import CreateProject from '../views/club/loggedin/CreateProject'
+import Pledges from '../views/club/projects/pledges/_Pledges'
+import ViewPledges from '../views/club/projects/pledges/ViewPledges'
+import CreatePledge from '../views/club/projects/pledges/CreatePledge'
 
 export default {
   path: 'projects',
@@ -24,12 +24,12 @@ export default {
     {
       path: 'view-user-projects',
       component: ViewUserProjects,
-      name: 'ViewUserProjects'
+      name: 'ViewUserProjects',
     },
     {
       path: 'create',
       component: CreateProject,
-      name: 'CreateProject'
+      name: 'CreateProject',
     },
     {
       path: ':projectid',
@@ -38,13 +38,13 @@ export default {
       children: [
         {
           path: 'view',
-          component: ViewProject,
-          name: 'ViewProject'
-        },                    
+          component: ViewProjectPage,
+          name: 'ViewProjectPage',
+        },
         {
           path: 'edit',
           component: EditProject,
-          name: 'EditProject'
+          name: 'EditProject',
         },
         {
           path: 'pledges',
@@ -54,16 +54,16 @@ export default {
             {
               path: 'view',
               component: ViewPledges,
-              name: 'ViewPledges'
+              name: 'ViewPledges',
             },
             {
               path: 'create',
               component: CreatePledge,
-              name: 'CreatePledge'
+              name: 'CreatePledge',
             },
-          ]
-        }
-      ]
-    }
-  ]
+          ],
+        },
+      ],
+    },
+  ],
 }

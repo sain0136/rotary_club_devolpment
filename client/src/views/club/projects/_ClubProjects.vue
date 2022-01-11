@@ -3,17 +3,10 @@
 </template>
 
 <script>
-
 export default {
   name: 'ClubProjects',
-  components: {
-  }
+  components: {},
 }
-
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>
