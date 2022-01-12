@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import DistrictsTable from '../../../components/tables/DistrictsTable.vue'
+import DistrictsTable from '../../components/DistrictsTable.vue'
 
 export default {
   name: 'ViewDistricts',

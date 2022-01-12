@@ -1,18 +1,18 @@
-import Admin from '../views/admin/_Admin'
+import Admin from '../views/AppAdmin'
 
-import AdminHome from '../views/admin/AdminHome'
+import AdminHome from '../views/AdminHome'
 
-import Districts from '../views/admin/districts/_Districts'
-import ViewDistricts from '../views/admin/districts/ViewDistricts'
-import CreateDistrict from '../views/admin/districts/CreateDistrict'
-import EditDistrict from '../views/admin/districts/EditDistrict'
+import Districts from '../views/districts/AppDistricts'
+import ViewDistricts from '../views/districts/ViewDistricts'
+import CreateDistrict from '../views/districts/CreateDistrict'
+import EditDistrict from '../views/districts/EditDistrict'
 
-import DistrictAdmins from '../views/admin/district-admins/_DistrictAdmins'
-import ViewDistrictAdmins from '../views/admin/district-admins/ViewDistrictAdmins'
-import CreateDistrictAdmin from '../views/admin/district-admins/CreateDistrictAdmin'
-import EditDistrictAdmin from '../views/admin/district-admins/EditDistrictAdmin'
+import DistrictAdmins from '../views/district-admins/AppDistrictAdmins'
+import ViewDistrictAdmins from '../views/district-admins/ViewDistrictAdmins'
+import CreateDistrictAdmin from '../views/district-admins/CreateDistrictAdmin'
+import EditDistrictAdmin from '../views/district-admins/EditDistrictAdmin'
 
-import store from '../store/index'
+import store from '../../../store/index'
 
 export default {
   path: '/admin',

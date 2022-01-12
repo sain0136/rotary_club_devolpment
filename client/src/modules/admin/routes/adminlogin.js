@@ -1,4 +1,4 @@
-import AdminLogin from '../views/admin/AdminLogin'
+import AdminLogin from '../views/AdminLogin.vue'
 
 export default {
   path: '/adminlogin',

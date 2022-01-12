@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import adminlogin from './adminlogin'
-import admin from './admin'
+import adminlogin from '../modules/admin/routes/adminlogin'
+import admin from '../modules/admin/routes/admin'
 import district from './district'
 import club from './club'
 

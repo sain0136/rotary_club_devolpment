@@ -146,7 +146,7 @@
 
 <script>
 
-import store from '../../store/index'
+import store from '../../../store/index'
 
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
@@ -156,7 +156,7 @@ roles.set(1, 'Admin')
 roles.set(2, 'District Admin')
 
 export default {
-  name: 'NewAdminForm',
+  name: 'DistrictAdminForm',
   props: {
     isEditOrCreate: String
   },

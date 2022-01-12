@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import AdminLoginForm from '../../components/forms/AdminLoginForm.vue'
+import AdminLoginForm from '../components/AdminLoginForm.vue'
 
-import store from '../../store/index'
+import store from '../../../store/index'
 
 export default {
   name: 'AdminLogin',
