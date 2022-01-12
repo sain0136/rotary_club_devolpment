@@ -3,14 +3,14 @@ import Admin from '../views/AppAdmin'
 import AdminHome from '../views/AdminHome'
 
 import Districts from '../views/districts/AppDistricts'
-import ViewDistricts from '../views/districts/ViewDistricts'
-import CreateDistrict from '../views/districts/CreateDistrict'
-import EditDistrict from '../views/districts/EditDistrict'
+import DistrictsViews from '../views/districts/DistrictsView'
+import DistrictCreate from '../views/districts/DistrictCreate'
+import DistrictEdit from '../views/districts/DistrictEdit'
 
 import DistrictAdmins from '../views/district-admins/AppDistrictAdmins'
-import ViewDistrictAdmins from '../views/district-admins/ViewDistrictAdmins'
-import CreateDistrictAdmin from '../views/district-admins/CreateDistrictAdmin'
-import EditDistrictAdmin from '../views/district-admins/EditDistrictAdmin'
+import DistrictAdminsViews from '../views/district-admins/DistrictAdminsView'
+import DistrictAdminCreate from '../views/district-admins/DistrictAdminCreate'
+import DistrictAdminEdit from '../views/district-admins/DistrictAdminEdit'
 
 import store from '../../../store/index'
 
@@ -41,18 +41,18 @@ export default {
       children: [
         {
           path: 'view',
-          component: ViewDistricts,
-          name: 'ViewDistricts',
+          component: DistrictsViews,
+          name: 'DistrictsViews',
         },
         {
           path: 'create',
-          component: CreateDistrict,
+          component: DistrictCreate,
           name: 'NewDistrict',
         },
         {
           path: 'edit',
-          component: EditDistrict,
-          name: 'EditDistrict',
+          component: DistrictEdit,
+          name: 'DistrictEdit',
         },
       ],
     },
@@ -62,15 +62,15 @@ export default {
       children: [
         {
           path: 'view',
-          component: ViewDistrictAdmins,
+          component: DistrictAdminsViews,
         },
         {
           path: 'create',
-          component: CreateDistrictAdmin,
+          component: DistrictAdminCreate,
         },
         {
           path: ':userid/edit',
-          component: EditDistrictAdmin,
+          component: DistrictAdminEdit,
         },
       ],
     },

@@ -10,7 +10,7 @@ import AdminHeader from '../components/AdminHeader.vue'
 import store from '../../../store/index'
 
 export default {
-  name: 'Admin',
+  name: 'AppAdmin',
   components: {
     AdminHeader,
   },

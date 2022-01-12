@@ -115,13 +115,12 @@
 
 <script>
 
-import DistrictSocialLinks from '../components/DistrictSocialLinks.vue'
+import DistrictSocialLinks from './DistrictSocialLinks.vue'
 
-import store from '../../../store/index'
+import store from '../../store/index'
 
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
-
 
 export default {
   name: 'NewDistrictForm',
@@ -155,7 +154,6 @@ export default {
         email: { //This needs to be validated on the server too via a verification email
           required,
           email,
-          isUniqueEmail
         },
         meetingLocation: {
           required,

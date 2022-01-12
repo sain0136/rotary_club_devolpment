@@ -20,7 +20,7 @@
 import DistrictsTable from '../../components/DistrictsTable.vue'
 
 export default {
-  name: 'ViewDistricts',
+  name: 'DistrictsView',
   components: {
     DistrictsTable,
   },

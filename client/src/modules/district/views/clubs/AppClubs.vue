@@ -6,10 +6,9 @@
 
 <script>
 export default {
-  name: "AppDistricts"
+  name: 'AppClubs',
+  components: {},
 }
 </script>
 
-<style>
-
-</style>
+<style scoped></style>

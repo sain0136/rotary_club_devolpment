@@ -10,7 +10,7 @@
 import DistrictAdminForm from '../../components/DistrictAdminForm.vue'
 
 export default {
-  name: 'EditDistrictAdmin',
+  name: 'DistrictAdminEdit',
   components: {
     DistrictAdminForm,
   },

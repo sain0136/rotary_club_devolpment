@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'DistrictAdmins',
+  name: 'AppDistrictAdmins',
 }
 </script>
 

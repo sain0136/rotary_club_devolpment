@@ -21,7 +21,7 @@
 import DistrictAdminsTable from '../../components/DistrictAdminsTable.vue'
 
 export default {
-  name: 'ViewDistrictAdmins',
+  name: 'DistrictAdminsView',
   components: {
     DistrictAdminsTable,
   },
