@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import adminlogin from '../modules/admin/routes/adminlogin'
 import admin from '../modules/admin/routes/admin'
 import district from '../modules/district/routes/district'
-import club from './club'
+import club from '../modules/club/routes/club'
 
 const routes = [
   admin,

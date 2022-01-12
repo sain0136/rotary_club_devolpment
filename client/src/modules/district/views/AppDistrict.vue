@@ -1,28 +1,31 @@
 <template>
   <div>
-    <DistrictHeader/>
+    <DistrictHeader />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import DistrictHeader from "../components/DistrictHeader.vue";
+import DistrictHeader from '../components/DistrictHeader.vue'
 
 import store from '../../../store/index'
 
 export default {
-  name: "AppDistrict",
+  name: 'AppDistrict',
   components: {
     DistrictHeader,
   },
   data() {
-    return {
-    }
+    return {}
   },
   created() {
-    store.dispatch('changeCurrentDistrictData', this.$router.currentRoute.value.params.id)
-  }
-};
+    store.dispatch(
+      'changeCurrentDistrictData',
+      this.$router.currentRoute.value
+        .params.id,
+    )
+  },
+}
 </script>
 
 <style scoped>
