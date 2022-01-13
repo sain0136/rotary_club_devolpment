@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ProjectsTable from '../../components/ProjectsTable.vue'
+import ProjectsTable from '../../../../components/common/ProjectsTable.vue'
 
 export default {
   name: 'UserProjectsView',

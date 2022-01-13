@@ -46,10 +46,11 @@ export default {
     return {
       username: '',
       password: '',
-      roleType: '7',
+      roleType: '7', //default value
     }
   },
   methods: {
+
     async clubAdminLoginHandler() {
       console.log(this.roleType)
       await store.dispatch('validateAdminCredentials', {
@@ -59,6 +60,7 @@ export default {
       })
       this.redirect()
     },
+    
     redirect() {
       if(store.state.isClubAdminLoggedIn || store.state.isClubUserLoggedIn) {
         this.$router.push('./home');

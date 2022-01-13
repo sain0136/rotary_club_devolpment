@@ -43,6 +43,7 @@
 <script>
 
 import DonateButton from '../../../components/ui/DonateButton.vue'
+import store from '../../../store/index'
 
 export default {
   name: 'ClubHeader',
@@ -51,12 +52,11 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: Boolean,
       clubId: this.$router.currentRoute.value.params.id
     }
   },
   created() {
-    this.isLoggedIn = false
+    this.clubId = this.$router.currentRoute.value.params.id
   }
 }
 

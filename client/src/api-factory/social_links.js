@@ -1,13 +1,21 @@
 export default {
   async index(data) {
+    const isDistrict = data.isThisDistrict
     //POST method is used in place of the GET method here
     const res = await fetch('/api/allUrls', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
+
     const linkData = await res.json()
-    return await linkData.district.socialmedia
+    console.log(await linkData)
+    
+    if(isDistrict) {
+      return await linkData.district.socialmedia
+    } else {
+      return await linkData.club.socialMedia
+    }
   },
 
   async show(id) {

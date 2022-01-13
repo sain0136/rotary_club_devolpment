@@ -46,7 +46,8 @@
 
 <script>
 
-import { getClubData, getSocialLink } from '../../../data-bank/club-data'
+import social_links from '../../../api-factory/social_links'
+import store from '../../../store/index'
 
 export default {
   name: 'ClubFooter',
@@ -62,17 +63,43 @@ export default {
       facebookLink: null,
       twitterLink: null,
       instagramLink: null,
+
+      clubSocialQueryObject: {}
     }
   },
   async created() {
-    const clubData = await getClubData()
+    const clubData = store.state.currentClubData
     this.address = await clubData.club_address
     this.email = await clubData.club_email
     this.phone = await clubData.club_phone
 
-    this.facebookLink = await getSocialLink(1)
-    this.twitterLink = await getSocialLink(2)
-    this.instagramLink = await getSocialLink(3)
+    this.facebookLink = await this.getSocialLink(1)
+    this.twitterLink = await this.getSocialLink(2)
+    this.instagramLink = await this.getSocialLink(3)
+  },
+  methods: {
+
+    setQueryObject() {
+      this.clubSocialQueryObject = {
+        isThisDistrict: false,
+        object_id: this.$router.currentRoute.value.params.id
+      }
+    },
+    
+    async getSocialLink(socialType) {
+      const clubSocials = await social_links.index(this.clubSocialQueryObject)
+      let linkToReturn
+
+      if(clubSocials != undefined) {
+        clubSocials.forEach(socialLink => {
+        if(socialLink.url_type === socialType) {
+          linkToReturn = socialLink.url
+         }
+        })
+        return linkToReturn
+      }
+      return null
+    },
   }
 }
 

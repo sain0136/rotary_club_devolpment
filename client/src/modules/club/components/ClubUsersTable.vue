@@ -29,6 +29,9 @@
 
 import store from '../../../store/index'
 import { getAllClubMembers } from '../../../store/api-calls'
+
+import user from '../../../api-factory/user'
+import club_user from '../../../api-factory/club_user'
  
 export default {
   name: 'ClubUsersTable',
@@ -37,13 +40,14 @@ export default {
       users: Array
     }
   },
+  async created() {
+    this.users = await club_user.index(this.$router.currentRoute.value.params.id)
+  },
   methods: {
     async deleteUser(userId) {
       if(confirm(`Are you sure you want to delete user ${userId}?`)) {
-        const res = await fetch(`/api/user/${userId}`, {
-          method: 'DELETE'
-        })
-        this.users = await getAllClubMembers(this.$router.currentRoute.value.params.id)
+        await user.delete(userId)
+        this.users = await await club_user.index(this.$router.currentRoute.value.params.id)
       }
     },
     async goToEditUserPage(userId) {
@@ -51,9 +55,6 @@ export default {
       this.$router.push(`${userId}/edit`)
     }
   },
-  async created() {
-    this.users = await getAllClubMembers(this.$router.currentRoute.value.params.id)
-  }
 }
 
 </script>

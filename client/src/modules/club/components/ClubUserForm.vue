@@ -160,6 +160,8 @@ import store from '../../../store/index'
 
 import useValidate from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import user from '../../../api-factory/user'
+
 
 export default {
   name: 'ClubUserForm',
@@ -225,16 +227,16 @@ export default {
     }
   },
   async created() {
-
     //If the form is to be used for update, the data is pre-populated 
     //with the specific district's data coming from the API. If it's to be 
     //created, data is empty by default.
     if(this.isEditOrCreate == 'Edit') {
-      const res = await fetch(`/api/user/${this.$router.currentRoute.value.params.userid}`, 
-        {method: 'GET'}
-      )
-      const data = await res.json()
-      const userInfo = await data.userById
+      this.prePopulateFields()
+    }
+  },
+  methods: {
+    async prePopulateFields() {
+      const userInfo = await user.show(this.$router.currentRoute.value.params.userid)
 
       this.districtId = await userInfo.district_id
       this.membership_id = await userInfo.membership_id
@@ -250,9 +252,34 @@ export default {
       this.phone = await userInfo.phone
       this.email = await userInfo.email
       this.password = await userInfo.password
-    }
-  },
-  methods: {
+    },
+
+    getUserData() {
+      
+      if(this.roleType == '5') {
+        this.clubRole = 'Admin'
+      } else if (this.roleType == '7'){
+        this.clubRole = 'User'
+      }
+
+      return {
+        club_id: this.clubId,
+        membership_id: this.membershipId,
+        role_type: this.roleType,
+        club_role: this.clubRole,
+        firstname: this.firstName,
+        lastname: this.lastName,
+        address: this.address,
+        user_city: this.city,
+        user_postal: this.postal,
+        user_province: this.province,
+        user_country: this.country,
+        phone: this.phone,
+        email: this.email,
+        password: this.password,
+      }
+    },
+
     validateClubUser() {
 
       this.v$.$validate()
@@ -269,68 +296,24 @@ export default {
     },
 
     async createNewUser() {
-
-      if(this.roleType == '5') {
-        this.clubRole = 'Admin'
-      } else if (this.roleType == '7'){
-        this.clubRole = 'User'
-      }
-      
-      let userToCreate = {
-        club_id: this.clubId,
-        membership_id: this.membershipId,
-        role_type: this.roleType,
-        club_role: this.clubRole,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        address: this.address,
-        user_city: this.city,
-        user_postal: this.postal,
-        user_province: this.province,
-        user_country: this.country,
-        phone: this.phone,
-        email: this.email,
-        password: this.password,
-      }
-
-      const res = await fetch('/api/user', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userToCreate)})
-
-      console.log(await res.json())
-
-      this.$router.push('./view');
+      const userToCreate = this.getUserData()
+      await user.create(userToCreate)
+      this.redirect(fromCreate)
     },
 
     async updateExistingUser() {
-
-      console.log('updated!')
-
-      let clubUserToUpdate = {
-        club_id: this.clubId,
-        membership_id: Date.now(),
-        club_role: this.clubRole,
-        role_type: this.roleType,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        address: this.address,
-        user_city: this.city,
-        user_postal: this.postal,
-        user_province: this.province,
-        user_country: this.country,
-        phone: this.phone,
-        email: this.email,
-      }
-
-      const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clubUserToUpdate)
-      })
-
-      this.$router.push('../view')
+      const clubUserToUpdate = this.getUserData()
+      await club.user(store.state.currentUserIdToEdit, clubUserToUpdate)
+      this.redirect()
     },
+
+    redirect(fromCreate) {
+      if(fromCreate) {
+        this.$router.push('./view');
+      } else {
+        this.$router.push('../view')
+      }
+    }
   },
 }
 </script>

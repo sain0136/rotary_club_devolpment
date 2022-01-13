@@ -5,9 +5,12 @@
       placeholder="Search Projects"
       v-model="searchText">
     
-    <div class="row">
+    <div 
+      class="row"
+      v-if="!this.isProjectsEmpty">
       <div class="col-sm-6"
-        v-for="project in filteredProjects" :key="project.id">
+        v-for="project in filteredProjects" 
+        :key="project.id">
         <div class="card"
           @click="goToProjectPage(project.project_id)">
           <div class="card-body">
@@ -18,13 +21,16 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <br> <br> <h3>There is no projects to display!</h3>
+    </div>
   </div>
 </template>
 
 <script>
 
 import store from "../../store/index";
-import { getDistrictProjects, getClubProjects, getUserProjects } from '../../store/api-calls'
+import project from '../../api-factory/project'
 
 export default {
   name: "ProjectsTable",
@@ -35,6 +41,7 @@ export default {
     return {
       projects: [],
       searchText: '',
+      isProjectsEmpty: true, //by default should be true
     };
   },
   computed: {
@@ -47,27 +54,31 @@ export default {
       })
     }
   },
+  async created() {
+    await this.populateTable()
+  },
   methods: {
+    async populateTable() {
+      if(this.pageToDisplay == 'District') {
+        this.projects = await project.districtIndex(this.$router.currentRoute.value.params.id)
+      } 
+      else if(this.pageToDisplay == 'Club') {
+        this.projects = await project.clubIndex(this.$router.currentRoute.value.params.id)
+      } 
+      else {
+        this.projects = await project.userIndex(store.state.loggedInClubUserId)
+      }
+    },
+
     goToProjectPage(projectId) {
       store.dispatch('changeCurrentProject', projectId)
       this.$router.push(`./${projectId}/view`)
     },
+
     goToEditProjectPage(clubId) {
       store.dispatch('changeCurrentClub', clubId)
       this.$router.push('editclub')
     },
-  },
-  async created() {
-    if(this.pageToDisplay == 'District') {
-      this.projects = await getDistrictProjects(this.$router.currentRoute.value.params.id)
-    } 
-    else if(this.pageToDisplay == 'Club') {
-      this.projects = await getClubProjects(this.$router.currentRoute.value.params.id)
-    } 
-    else {
-      console.log(store.state.loggedInClubUserId + '\'s' + ' projects')
-      this.projects = await getUserProjects(store.state.loggedInClubUserId)
-    }
   },
 };
 </script>

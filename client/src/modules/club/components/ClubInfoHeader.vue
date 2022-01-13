@@ -34,8 +34,8 @@
 
 <script>
 
-import { getClubData, getSocialLink } from '../../../data-bank/club-data'
 import store from '../../../store/index'
+import social_links from '../../../api-factory/social_links'
 
 export default {
   name: 'ClubInfoHeader',
@@ -49,28 +49,45 @@ export default {
       facebookLink: null,
       twitterLink: null,
       instagramLink: null,
-    }
 
+      clubSocialQueryObject: {},
+    }
   },
   async created() {
-    const clubData = await getClubData()
+    const clubData = store.state.currentClubData
     this.email = await clubData.club_email
 
-    this.facebookLink = await getSocialLink(1)
-    this.twitterLink = await getSocialLink(2)
-    this.instagramLink = await getSocialLink(3)
+    this.facebookLink = await this.getSocialLink(1)
+    this.twitterLink = await this.getSocialLink(2)
+    this.instagramLink = await this.getSocialLink(3)
   },
   methods: {
+
+    setQueryObject() {
+      this.clubSocialQueryObject = {
+        isThisDistrict: false,
+        object_id: this.$router.currentRoute.value.params.id
+      }
+    },
+
+    async getSocialLink(socialType) {
+      const clubSocials = await social_links.index(this.clubSocialQueryObject)
+      let linkToReturn
+
+      if(clubSocials != undefined) {
+        clubSocials.forEach(socialLink => {
+        if(socialLink.url_type === socialType) {
+          linkToReturn = socialLink.url
+         }
+        })
+        return linkToReturn
+      }
+      return null
+    },
+
     logout() {
       store.dispatch("logout", 5)
       store.dispatch("logout", 7)
-
-      // if(store.state.isClubAdminLoggedIn) {
-      //   store.dispatch("logout", 5)
-      // } else {
-      //   store.dispatch("logout", 3)
-      // }
-      // this.$router.push('login')
     },
   }
 }
