@@ -9,7 +9,7 @@
         <td>{{ club.club_name }}</td>
         <td>
           <button
-            @click="goToClubPage(club.club_id)">
+            @click="() => this.$router.push(`/club/${club.club_id}/home`)">
             View
           </button>
           <button
@@ -19,7 +19,7 @@
           </button>
           <button
             v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
-            @click="goToEditClubPage(club.club_id)">
+            @click="() => this.$router.push(`${club.club_id}/edit`)">
             Edit
           </button>
         </td>
@@ -30,8 +30,8 @@
 
 <script>
 
-import store from "../../../store/index";
-import { fetchClubs } from '../../../data-bank/district-data'
+import store from "../../../store/index"
+import club from '../../../api-factory/club'
 
 export default {
   name: "DistrictClubsTable",
@@ -40,28 +40,22 @@ export default {
       clubs: Array,
     };
   },
+  async created() {
+    this.clubs = await this.getClubs()
+  },
   methods: {
-    goToClubPage(clubId) {
-      store.dispatch('changeCurrentClub', clubId)
-      this.$router.push(`/club/${clubId}`)
+    async getClubs() {
+      return await club.index(store.state.currentDistrictData.district_id)
     },
-    goToEditClubPage(clubId) {
-      store.dispatch('changeCurrentClub', clubId)
-      this.$router.push(`${clubId}/edit`)
-    },
+
     async deleteClub(clubId) {
       if(confirm(`Are you sure you want to delete club ${clubId}?`)) {
-        const res = await fetch(`/api/club/${clubId}`, {
-          method: 'DELETE'
-        })
-        this.clubs = await fetchClubs()
+        club.delete(clubId)
+        this.clubs = await this.getClubs()
       }
-    }
+    },
   },
-  async created() {
-    this.clubs = await fetchClubs();
-  },
-};
+}
 </script>
 
 <style scoped>

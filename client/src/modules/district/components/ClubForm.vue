@@ -130,6 +130,7 @@
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
+import club from '../../../api-factory/club'
 import store from '../../../store/index'
 
 export default {
@@ -190,11 +191,12 @@ export default {
   },
   async created() {
     if(this.isEditOrCreate == 'Edit') {
-      const res = await fetch(`/api/club/${this.$router.currentRoute.value.params.clubid}`, 
-        {method: 'GET'}
-      )
-      const data = await res.json()
-      const clubInfo = await data.clubsById
+      this.prePopulateFields()
+    }
+  },
+  methods: {
+    async prePopulateFields() {
+      const clubInfo = await club.show(this.$router.currentRoute.value.params.clubid)
 
       this.name = await clubInfo.club_name
       this.address = await clubInfo.club_address
@@ -207,79 +209,55 @@ export default {
       this.description = await clubInfo.club_description
       this.motherClub = await clubInfo.mother_club
       this.charterDate = await clubInfo.charter_date
-    }
-  },
-  methods: {
+    },
+
+    getClubData() {
+      return {
+        club_name: this.name,
+        club_address: this.address,
+        club_city: this.city,
+        club_postal: this.postal,
+        club_province: this.province,
+        club_country: this.country,
+        club_phone: this.phone,
+        club_description: this.description,
+        club_email: this.email,
+        charter_date: this.charterDate,
+        mother_club: this.motherClub,
+        district_id: store.state.currentDistrictId
+      }
+    },
+
     validateClub() {
       this.v$.$validate()
       
       if(!this.v$.$error) {
         if(this.isEditOrCreate == 'Create') {
-          this.addNewClub()
+          this.createNewClub()
         } else {
           this.updateExistingClub()
         }
       }
     },
-    async addNewClub() {
-      let clubToAdd = {
-        club_name: this.name,
-        club_address: this.address,
-        club_city: this.city,
-        club_postal: this.postal,
-        club_province: this.province,
-        club_country: this.country,
-        club_phone: this.phone,
-        club_description: this.description,
-        club_email: this.email,
-        charter_date: this.charterDate,
-        mother_club: this.motherClub,
-        district_id: store.state.currentDistrictId
-      }
-
-      console.log(clubToAdd)
-      
-       const res = await fetch('/api/club', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clubToAdd)
-      })
-
-      console.log(await res.json())
-
-      this.$router.push('./view')
+    
+    async createNewClub() {
+      const clubToCreate = this.getClubData()
+      club.create(clubToCreate)
+      this.redirect(true)
     },
+
     async updateExistingClub() {
-      let clubToAdd = {
-        club_name: this.name,
-        club_address: this.address,
-        club_city: this.city,
-        club_postal: this.postal,
-        club_province: this.province,
-        club_country: this.country,
-        club_phone: this.phone,
-        club_description: this.description,
-        club_email: this.email,
-        charter_date: this.charterDate,
-        mother_club: this.motherClub,
-        district_id: store.state.currentDistrictId
-      }
-
-      const res = await fetch(`/api/club/${store.state.currentClubId}`, { 
-        method: 'PATCH', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clubToAdd)
-      })
-
-      this.$router.push('../view');
+      const clubToUpdate = this.getClubData()
+      club.update(store.state.currentClubId, clubToUpdate)
+      this.redirect(false)
     },
 
-    async getCurrentDistrictData() {
-      const res = await fetch(`/api/district/${store.state.currentDistrictId}`, 
-        {method: 'GET'
-      })
-      const data = await res.json()
-      return data.districtById
+    redirect(fromCreate) {
+      if(fromCreate) {
+        this.$router.push('./view')
+      } else {
+        this.$router.push('../view')
+      }
     }
   }
 }
