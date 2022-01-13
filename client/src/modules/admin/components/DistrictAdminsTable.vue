@@ -29,42 +29,30 @@
 
 <script>
 
-import store from '../../../store/index'
+import district_admin from '../../../api-factory/district_admin'
 
 export default {
   name: 'DistrictAdminsTable',
   data() {
     return {
-      admins: this.fetchAdmins()
-    }
-  },
-  methods: {
-    async fetchAdmins() {
-      const res = await fetch('/api/user', { method: 'GET'})
-      const data = await res.json()
-
-      const allUsers = await data.allUsers
-      // const districtAdmins = await allUsers.filter(user => user.role_type == 1)
-
-      return data.allUsers
-    },
-    async deleteAdmin(userId) {
-      if(confirm(`Are you sure you want to delete admin ${userId}?`)) {
-        const res = await fetch(`/api/user/${userId}`, {
-          method: 'DELETE'
-        })
-        this.admins = await this.fetchAdmins()
-      }
-    },
-    async goToEditDistrictAdminPage(userId) {
-      store.dispatch('changeCurrentUserIdToEdit', userId)
-      this.$router.push(`${userId}/edit`)
+      admins: []
     }
   },
   async created() {
-    // console.log(await this.fetchClubs()) 
-    this.admins = await this.fetchAdmins()
-  }
+    this.admins = await district_admin.index()
+  },
+  methods: {
+    async deleteAdmin(userId) {
+      if(confirm(`Are you sure you want to delete admin ${userId}?`)) {
+        await district_admin.delete(userId)
+        this.admins = await district_admin.index()
+      }
+    },
+    async goToEditDistrictAdminPage(userId) {
+      this.$router.push(`${userId}/edit`)
+    }
+  },
+  
 }
 
 </script>

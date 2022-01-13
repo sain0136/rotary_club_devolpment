@@ -105,7 +105,7 @@
       </button>
       <button
         v-if="pageAccessed == 'Admin'"
-        @click="() => this.$router.push('./view')">
+        @click="() => this.$router.push('../view')">
         Cancel
       </button>
     </form>
@@ -118,6 +118,8 @@
 import DistrictSocialLinks from './DistrictSocialLinks.vue'
 
 import store from '../../store/index'
+import user from '../../api-factory/user'
+import district from '../../api-factory/district'
 
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
@@ -178,15 +180,22 @@ export default {
     },
 
   async created() {
-    //If the form is to be used for update, the data is pre-populated 
-    //with the specific district's data coming from the API. If it's to be 
-    //created, data is empty by default.
-
-    this.admins = await this.fetchAdmins()
-
+    this.admins = await user.index() //TODO change to admins from users
+    /**
+     * If the form is to be used for update, the data is pre-populated 
+     * with the specific district's data coming from the API. If it's to be 
+     * created, data is empty by default.
+     */
     if(this.isEditOrCreate == 'Edit') {
+      this.prePopulateFields()
+    }
+  },
 
-      const districtInfo = store.state.currentDistrictData
+  methods: {
+    async prePopulateFields() {
+      // const districtInfo = store.state.currentDistrictData
+      const districtIdToEdit = this.$router.currentRoute.value.params.id
+      const districtInfo = await district.show(districtIdToEdit)
 
       this.name = await districtInfo.district_name
       this.email = await districtInfo.district_email
@@ -195,80 +204,58 @@ export default {
       this.charterdate = await districtInfo.charter_date
       this.president = await districtInfo.district_president
       this.description = await districtInfo.district_description
-    }
-  },
+    },
 
-  methods: {
+    getDistrictData() {
+      return {
+        district_name: this.name,
+        district_email: this.email,
+        meeting_location: this.meetingLocation,
+        meeting_frequency: this.meetingFrequency,
+        charter_date: this.charterdate,
+        district_president: this.president,
+        district_description: this.description
+      }
+    },
+    
     validateDistrict() {
-
       this.v$.$validate()
-      
+      console.log(this.v$.$errors)
+
       if(!this.v$.$error) {
         if(this.isEditOrCreate == 'Create') {
-          this.addNewDistrict()
+          this.createDistrict()
         } else {
           this.updateExistingDistrict()
         }
       }
     },
 
-    async addNewDistrict() {
-
-      let districtToAdd = {
-        district_name: this.name,
-        district_email: this.email,
-        meeting_location: this.meetingLocation,
-        meeting_frequency: this.meetingFrequency,
-        charter_date: this.charterdate,
-        district_president: this.president,
-        district_description: this.description
-      }
-
-      const res = await fetch('/api/district', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtToAdd)
-      })
-
-      console.log(res)
-
+    async createDistrict() {
+      const districtToCreate = this.getDistrictData()
+      await district.create(districtToCreate)
       this.$router.push('./view');
     },
 
     async updateExistingDistrict() {
-      let districtToUpdate = {
-        district_name: this.name,
-        district_email: this.email,
-        meeting_location: this.meetingLocation,
-        meeting_frequency: this.meetingFrequency,
-        charter_date: this.charterdate,
-        district_president: this.president,
-        district_description: this.description
-      }
+      const districtIdToEdit = this.$router.currentRoute.value.params.id
+      const districtToUpdate = this.getDistrictData()
 
-      const res = await fetch(`/api/district/${this.$router.currentRoute.value.params.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtToUpdate)
-      })
+      await district.update(districtIdToEdit, districtToUpdate)
 
       //To dynamically update right after making the edit
       store.dispatch('changeCurrentDistrictData', this.$router.currentRoute.value.params.id)
-      this.redirectFromEdit()
+      this.redirect()
     },
 
-    redirectFromEdit() {
+    redirect() {
+      //if the edit is being made from the admin portal
       if(window.location.pathname == '/admin/districts/edit') {
         this.$router.push('./view')
+      //if it's from the district portal
       } else {
         this.$router.push('home')
       }
-    },
-
-    async fetchAdmins() {
-      const res = await fetch('/api/user/', {method: 'GET'})
-      const data = await res.json()
-      return await data.allUsers
     },
   },
 }

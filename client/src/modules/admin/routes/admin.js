@@ -50,9 +50,9 @@ export default {
           name: 'NewDistrict',
         },
         {
-          path: 'edit',
+          path: ':id/edit',
           component: DistrictEdit,
-          name: 'DistrictEdit',
+          // name: 'DistrictEdit',
         },
       ],
     },

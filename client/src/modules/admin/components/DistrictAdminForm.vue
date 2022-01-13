@@ -137,7 +137,13 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('../view')">
+        @click="() => {
+          if(this.isEditOrCreate == 'Create') {
+            this.redirect(true)
+          } else {
+            redirect(false)
+          }
+        }">
         Cancel
       </button>
     </form>
@@ -146,14 +152,12 @@
 
 <script>
 
-import store from '../../../store/index'
+import district from '../../../api-factory/district'
+import district_admin from '../../../api-factory/district_admin'
+import user from '../../../api-factory/user'
 
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
-
-const roles = new Map()
-roles.set(1, 'Admin')
-roles.set(2, 'District Admin')
 
 export default {
   name: 'DistrictAdminForm',
@@ -162,6 +166,17 @@ export default {
   },
   data() {
     return {
+      /**
+       * for the roles dropdown to show the text instead
+       * of the number that'll be sent to the server
+       */
+      roles: new Map(),
+      /**
+       * In case the form is opened to edit a user, populated on create,
+       * otherwise won't be populated
+       */
+      userIdToEdit: Number,
+
       //Validation variables
       v$: useValidate(),
 
@@ -169,6 +184,7 @@ export default {
       districtRole: 'District Admin', 
       roleType: 1,
 
+      //Others
       districtId: 0,
       membershipId: 0,
       firstName: '',
@@ -181,8 +197,12 @@ export default {
       phone: '',
       email: '',
       password: '',
-
-      districts: [],
+      
+      /**
+       * For the dropdown to choose which district 
+       * the admin will be assigned
+       */
+      districts: Array,
     }
   },
   validations() {
@@ -221,20 +241,29 @@ export default {
     }
   },
   async created() {
-
-    this.districts = await this.fetchDistricts()
-
-    //If the form is to be used for update, the data is pre-populated 
-    //with the specific district's data coming from the API. If it's to be 
-    //created, data is empty by default.
+    this.districts = await district.index()
+    this.setUserRoles()
+    /**
+     * If the form is to be used for update, the data is pre-populated 
+     * with the specific district's data coming from the API. If it's to be 
+     * created, data is empty by default.
+     */
     if(this.isEditOrCreate == 'Edit') {
-      
-      
-      const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, 
-        {method: 'GET'}
-      )
-      const data = await res.json()
-      const userInfo = await data.userById
+      this.prePopulateFields()
+    }
+  },
+  methods: {
+    setUserRoles() {
+      this.roles.set(1, 'Admin')
+      this.roles.set(2, 'District Admin')
+
+      this.roles.set('Admin', 1)
+      this.roles.set('District Admin', 2)
+    },
+
+    async prePopulateFields() {
+      const userIdToEdit = this.$router.currentRoute.value.params.userid
+      const userInfo = await user.show(userIdToEdit)
 
       this.districtId = await userInfo.district_id
       this.membership_id = await userInfo.membership_id
@@ -250,17 +279,34 @@ export default {
       this.phone = await userInfo.phone
       this.email = await userInfo.email
       this.password = await userInfo.password
-    }
-  },
-  methods: {
-    validateDistrictAdmin() {
+    },
 
+    getUserData() {
+        return {
+          district_id: this.districtId,
+          membership_id: Date.now(), //as a random value
+          role_type: this.roleType,
+          district_role: this.districtRole,
+          firstname: this.firstName,
+          lastname: this.lastName,
+          address: this.address,
+          user_city: this.city,
+          user_postal: this.postal,
+          user_province: this.province,
+          user_country: this.country,
+          phone: this.phone,
+          email: this.email,
+          password: this.password,
+        }
+    },
+
+    validateDistrictAdmin() {
       this.v$.$validate()
       console.log(this.v$.$errors)
       
       if(!this.v$.$error) {
         if(this.isEditOrCreate == 'Create') {
-          this.createNewAdmin()
+          this.createAdmin()
         } else {
           console.log('here')
           this.updateExistingAdmin()
@@ -268,70 +314,26 @@ export default {
       } 
     },
 
-    async createNewAdmin() {
-      
-      let userToCreate = {
-        district_id: this.districtId,
-        membership_id: Date.now(), //Temporarily as a random value
-        role_type: this.roleType,
-        district_role: this.districtRole,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        address: this.address,
-        user_city: this.city,
-        user_postal: this.postal,
-        user_province: this.province,
-        user_country: this.country,
-        phone: this.phone,
-        email: this.email,
-        password: this.password,
-      }
-
-      const res = await fetch('/api/user', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userToCreate)})
-
-      console.log(userToCreate)
-      console.log(await res.json())
-
-      this.$router.push('./view')
+    async createAdmin() {
+      const userToCreate = this.getUserData()
+      await district_admin.create(userToCreate)
+      this.redirect(true)
     },
 
     async updateExistingAdmin() {
-
-      console.log('updated!')
-
-      let districtAdminToUpdate = {
-        district_id: this.districtId,
-        membership_id: Date.now(),
-        district_role: this.districtRole,
-        role_type: this.roleType,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        address: this.address,
-        user_city: this.city,
-        user_postal: this.postal,
-        user_province: this.province,
-        user_country: this.country,
-        phone: this.phone,
-        email: this.email,
-      }
-
-      const res = await fetch(`/api/user/${store.state.currentUserIdToEdit}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtAdminToUpdate)
-      })
-
-      this.$router.push('../view')
+      const userToUpdate = this.getUserData()
+      await district_admin.update(id, userToUpdate)
+      this.redirect(false)
     },
 
-    async fetchDistricts() {
-      const res = await fetch('/api/district/', {method: 'GET'})
-      const data = await res.json()
-      return await data.districts 
-    }
+    redirect(fromCreate) {
+      if(fromCreate) {
+        this.$router.push('./view')
+      } else {
+        this.$router.push('../view')
+      }
+    },
+    
   },
 }
 </script>

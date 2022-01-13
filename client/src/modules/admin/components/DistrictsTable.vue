@@ -13,7 +13,7 @@
         <td id="name">{{district.district_name}}</td>
         <td>
           <button
-            @click="goToDistrictPage(district.district_id)">
+            @click="() => this.$router.push(`/district/${district.district_id}`)">
             View
           </button>
           <button
@@ -21,7 +21,7 @@
             Delete
           </button>
           <button
-            @click="goToEditDistrictPage(district.district_id)">
+            @click="() => this.$router.push(`./${district.district_id}/edit`)">
             Edit
           </button>
         </td>
@@ -32,7 +32,7 @@
 
 <script>
 
-import store from '../../../store/index'
+import district from '../../../api-factory/district'
 
 export default {
   name: 'DistrictsTable',
@@ -41,32 +41,17 @@ export default {
       districts: Array
     }
   },
+  async created() {
+     this.districts = await district.index()
+  },
   methods: {
-    async fetchDistricts() {
-      const res = await fetch('/api/district', { method: 'GET'})
-      const data = await res.json()
-      return data.districts
-    },
-    goToDistrictPage(districtId) {
-      store.dispatch('changeCurrentDistrict', districtId)
-      this.$router.push(`/district/${districtId}`)
-    },
-    goToEditDistrictPage(districtId) {
-      store.dispatch('changeCurrentDistrict', districtId)
-      this.$router.push('./edit')
-    },
     async deleteDistrict(districtId) {
       if(confirm(`Are you sure you want to delete district ${districtId}?`)) {
-        const res = await fetch(`/api/district/${districtId}`, {
-          method: 'DELETE'
-        })
-        this.districts = await this.fetchDistricts()
+        district.delete(districtId)
+        this.districts = await district.index()
       }
     }
   },
-  async created() {
-    this.districts = await this.fetchDistricts()
-  }
 }
 
 </script>

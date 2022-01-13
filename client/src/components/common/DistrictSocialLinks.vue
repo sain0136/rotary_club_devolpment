@@ -37,7 +37,7 @@
     </button>
     <button
       v-else
-      @click="addNewLink">
+      @click="createLink">
       Add
     </button>
     <button 
@@ -51,6 +51,7 @@
 <script>
 
 import store from '../../store/index'
+import social_links from '../../api-factory/social_links'
 
 export default {
   name: 'DistrictSocialLinks',
@@ -65,42 +66,35 @@ export default {
       linkTypesDict: new Map(),
 
       isEditOrCreateLink: '',
-
     }
   },
   async created() {
-    this.links = await this.getLinkInfo()
-
-    this.linkTypesDict.set('Facebook', 1)
-    this.linkTypesDict.set('Twitter', 2)
-    this.linkTypesDict.set('Instagram', 3)
-    this.linkTypesDict.set('Other', 4)
-
-    this.linkTypesDict.set(1, 'Facebook')
-    this.linkTypesDict.set(2, 'Twitter')
-    this.linkTypesDict.set(3, 'Instagram')
-    this.linkTypesDict.set(4, 'Other')
+    this.setLinkTypes()
+    this.links = await this.getLinks()
   },
   methods: {
-    async getLinkInfo() {
-      //POST method is used in place of the GET method here
+    
+    setLinkTypes() {
+      this.linkTypesDict.set('Facebook', 1)
+      this.linkTypesDict.set('Twitter', 2)
+      this.linkTypesDict.set('Instagram', 3)
+      this.linkTypesDict.set('Other', 4)
 
+      this.linkTypesDict.set(1, 'Facebook')
+      this.linkTypesDict.set(2, 'Twitter')
+      this.linkTypesDict.set(3, 'Instagram')
+      this.linkTypesDict.set(4, 'Other')
+    },
+
+    async getLinks() {
       const districtToQuery = {
         isThisDistrict: true,
         object_id: store.state.currentDistrictId
       }
-
-      const res = await fetch('/api/allUrls', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(districtToQuery)
-      })
-
-      const data = await res.json()
-      return await data.district.socialmedia
+      return social_links.index(districtToQuery)
     },
-    async addNewLink() {
-
+    
+    async createLink() {
       const urlToAdd = {
         isThisDistrict: true,
         object_id: store.state.currentDistrictId,
@@ -108,37 +102,30 @@ export default {
         url: this.linkToCreate
       }
 
-      const res = await fetch('/api/url', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(urlToAdd)
-      })
-
-      this.linkToCreate = ''
-      this.linkTypeToCreate = ''
-
-      this.links = await this.getLinkInfo()
+      social_links.create(urlToAdd)
+      this.clean()
     },
-    async deleteLink(urlID) {
-      const res = await fetch(`/api/url/${urlID}`, {method: 'DELETE'})
-      this.links = await this.getLinkInfo()
+    
+    async deleteLink(urlId) {
+      social_links.delete(urlId)
+      this.links = await this.getLinks()
     },
-    async editLink(urlID) {
+
+    async editLink(urlId) {
       this.isEditOrCreateLink = 'Edit'
-
-      const res = await fetch(`/api/url/${urlID}`, {method: 'GET'})
-      const data = await res.json()
-      const urlInfo = await data.urlById
+      const urlInfo = await social_links.show(urlId)
 
       this.linkToCreate = urlInfo.url
       this.linkTypeToCreate = this.linkTypesDict.get(urlInfo.url_type)
-      this.currentUrlIDToUpdate = urlID
+      this.currentUrlIDToUpdate = urlId
     },
+    
     cancelEdit() {
       this.isEditOrCreateLink='Create'
       this.linkToCreate = ''
       this.linkTypeToCreate = ''
     },
+
     async updateLink() {
       const urlToUpdate = {
         isThisDistrict: true,
@@ -147,16 +134,15 @@ export default {
         url: this.linkToCreate,
       }
 
-      const res = await fetch(`/api/url/${this.currentUrlIDToUpdate}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(urlToUpdate)
-      })
+      social_links.update(this.currentUrlIDToUpdate, urlToUpdate)
+      this.clean()
+    },
 
-      console.log(await res.json())
-
-      this.links = await this.getLinkInfo()
-    }
+    async clean() {
+      this.linkToCreate = ''
+      this.linkTypeToCreate = ''
+      this.links = await this.getLinks()
+    },
   }
 }
 </script>
