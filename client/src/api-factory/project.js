@@ -53,15 +53,20 @@ export default {
   },
 
   async show(id) {
-    const projects = await this.userIndex(store.state.loggedInClubUserId)
-    let projectToReturn
 
-    projects.forEach(project => {
-      if(project.project_id == id) {
-        projectToReturn = project
-      }
+    const queryHelper = {
+      project_id: id
+    }
+
+    const res = await fetch('/api/pledge/project', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(queryHelper)
     })
-    return projectToReturn
+
+    const data = await res.json()
+    return await data.project
+    
   },
 
   async create(data) {

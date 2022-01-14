@@ -20,7 +20,10 @@
 
     <br />
     <h2>Total: {{ this.total }}</h2>
+    <h2>Funding Goal: {{ this.projectFundingGoal }}</h2> <br>
+    <h1 v-if="isFundingEnough">Funding is done for this project!</h1>
     <button
+      v-else
       @click="
         () =>
           this.$router.push(
@@ -42,7 +45,9 @@
 </template>
 
 <script>
-import { getAllPledges } from '../../../../../store/api-calls'
+
+import store from '../../../../../store/index'
+import pledge from '../../../../../api-factory/pledge'
 
 export default {
   name: 'PledgesView',
@@ -50,16 +55,17 @@ export default {
     return {
       pledges: Array,
       total: 0,
+      projectFundingGoal: 0,
+      isFundingEnough: this.total >= this.projectFundingGoal
     }
   },
   async created() {
-    this.pledges = await getAllPledges(
-      this.$router.currentRoute.value
-        .params.projectid,
-    )
+    this.pledges = await pledge.index(this.$router.currentRoute.value.params.projectid)
     this.pledges.forEach(pledge => {
       this.total += pledge.pledge_amount
     })
+    this.projectFundingGoal = store.state.currentProjectData.funding_goal
+    this.isFundingEnough = this.total >= this.projectFundingGoal
   },
 }
 </script>

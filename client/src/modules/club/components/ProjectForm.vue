@@ -152,9 +152,15 @@
         Update
       </button>
       <button
-        @click="() => this.$router.push('./view')">
+        v-if="isEditOrCreate == 'Create'"
+        @click="() => this.redirect(true)">
         Cancel
-      </button>   
+      </button>
+      <button
+        v-else
+        @click="() => this.redirect(false)">
+        Cancel
+      </button>  
     </form>
   </div>
 </template>
@@ -271,6 +277,7 @@ export default {
     
     async prePopulateFields() {
       const projectData = await project.show(this.$router.currentRoute.value.params.projectid)
+      console.log(projectData)
     
       this.name = projectData.project_name
       this.theme = projectData.project_theme
@@ -322,20 +329,20 @@ export default {
     async createNewProject() {
       const projectToAdd = this.getProjectData()
       project.create(projectToAdd)
-      this.$router.push('./view');
+      this.redirect(true)
     },
 
     async updateExistingProject() {
       let projectToUpdate = this.getProjectData()
       project.update(this.$router.currentRoute.value.params.projectid, projectToUpdate)
-      this.$router.push('projects');
+      this.redirect(false)
     },
 
     redirect(fromCreate) {
       if(fromCreate) {
-        this.$router.push('./view')
+        this.$router.push('./view-all')
       } else {
-        this.$router.push('projects')
+        this.$router.push('../view-all')
       }
     },
 
