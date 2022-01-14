@@ -164,8 +164,7 @@
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
-import { getProjectData } from '../../../data-bank/project-data'
-import { getClubData } from '../../../data-bank/club-data'
+import project from '../../../api-factory/project'
 
 import store from '../../../store/index'
 
@@ -184,9 +183,13 @@ export default {
   },
   data() {
     return {
+      //to display at the title
       clubName: '',
 
+      //validation
       v$: useValidate(),
+
+      //project variables
       name: '',
       theme: '',
       area: '',
@@ -206,9 +209,9 @@ export default {
       question3: '',
       question4: '',
 
-      createdBy: 28, //>> TODO update with the creator's user ID 
+      createdBy: 28,
       roleType: 2, //>> TODO update with the creator's role type
-      rotaryYear: new Date().getFullYear() ,
+      rotaryYear: null,
 
       itemizedBudgetSubmitted: false,
       fundingSubmitted: false,
@@ -239,61 +242,46 @@ export default {
   },
   async created() {
 
-    const clubData = await getClubData()
-    this.clubName = await clubData.club_name
+    this.setVariables()
 
-    if(store.state.isClubAdminLoggedIn) {
-      this.roleType = 5
-    } else {
-      this.roleType = 7
-    }
-
-    this.createdBy = store.state.loggedInClubUserId
-
-    const projectData = await getProjectData(store.state.currentProjectId)
-    
     if(this.isEditOrCreate == 'Edit') {
+      this.prePopulateFields()
+    }
+  },
 
+  methods: {
+    /**
+     * for the necessary variables 
+     * that are not set by the user
+     */
+    setVariables() {
+
+      const clubData = store.state.currentClubData
+      this.clubName = clubData.club_name
+
+      this.createdBy = store.state.loggedInClubUserId
+      this.rotaryYear = new Date().getFullYear()
+
+      if(store.state.isClubAdminLoggedIn) {
+        this.roleType = 5
+      } else {
+        this.roleType = 7
+      }
+    },
+    
+    async prePopulateFields() {
+      const projectData = await project.show(this.$router.currentRoute.value.params.projectid)
+    
       this.name = projectData.project_name
       this.theme = projectData.project_theme
       this.grantType = projectData.grant_type
       this.fundingGoal = projectData.funding_goal
       this.currentFunds = projectData.current_funds
       this.region = projectData.region
-    }
-  },
-  methods: {
-    updateBudget(event) {
-      this.itemisedBudget = event.items
-      this.itemizedBudgetSubmitted = true
-    },
-    updateFunding(funding) {
-      this.currentFunds = funding
-      this.fundingSubmitted = true
-    },
-    formatDate(dateString) {
-      let date = new Date(dateString)
-      let day = date.getDate()
-      let month = date.getMonth()
-      let year = date.getFullYear()
-      return month + '/' + day + '/' + year
-    },
-    validateProject() {
-
-      this.v$.$validate()
-
-      if(!this.v$.$error) {
-        if(this.isEditOrCreate == 'Create') {
-          this.addNewProject()
-        } else {
-          this.updateExistingProject()
-        }
-      }
     },
 
-    async addNewProject() {
-
-      let projectToAdd = {
+    getProjectData() {
+      return  {
         project_name: this.name,
         project_theme: this.theme,
         area_focus: this.area,
@@ -316,49 +304,59 @@ export default {
         club_id: this.clubId,
         district_id: this.districtId,
       }
+    },
 
-      console.log(projectToAdd)
+    validateProject() {
 
-      try{
-        const res = await fetch('/api/project', { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(projectToAdd)
-        })
-        console.log(await res.json())
-      } catch(err) {
-        console.log(err)
+      this.v$.$validate()
+
+      if(!this.v$.$error) {
+        if(this.isEditOrCreate == 'Create') {
+          this.createNewProject()
+        } else {
+          this.updateExistingProject()
+        }
       }
-      
+    },
+
+    async createNewProject() {
+      const projectToAdd = this.getProjectData()
+      project.create(projectToAdd)
       this.$router.push('./view');
     },
 
     async updateExistingProject() {
-      let projectToUpdate = {
-        project_name: this.name,
-        project_theme: this.theme,
-        grant_type: this.grantType,
-        funding_goal: this.fundingGoal,
-        current_funds: this.currentFunds,
-        created_by: this.createdBy,
-        region: this.region,
-        rotary_year: this.rotaryYear,
-        role_type: this.roleType
-      }
-
-      try{
-        const res = await fetch(`/api/project/${store.state.currentProjectId}`, { 
-          method: 'PATCH', 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(projectToUpdate)
-        })
-        console.log(await res.json())
-      } catch(err) {
-        console.log(err)
-      }
-      
+      let projectToUpdate = this.getProjectData()
+      project.update(this.$router.currentRoute.value.params.projectid, projectToUpdate)
       this.$router.push('projects');
-    }
+    },
+
+    redirect(fromCreate) {
+      if(fromCreate) {
+        this.$router.push('./view')
+      } else {
+        this.$router.push('projects')
+      }
+    },
+
+    updateBudget(event) {
+      this.itemisedBudget = event.items
+      this.itemizedBudgetSubmitted = true
+    },
+    
+    updateFunding(funding) {
+      this.currentFunds = funding
+      this.fundingSubmitted = true
+    },
+
+    formatDate(dateString) {
+      let date = new Date(dateString)
+      let day = date.getDate()
+      let month = date.getMonth()
+      let year = date.getFullYear()
+      return month + '/' + day + '/' + year
+    },
+    
   },
 }
 </script>

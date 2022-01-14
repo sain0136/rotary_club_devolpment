@@ -1,3 +1,5 @@
+import store from '../store/index'
+
 export default {
   
   async districtIndex(id) {
@@ -47,7 +49,40 @@ export default {
     
     const data = await res.json()
     const projects = await data.usersProjects
-  
     return await projects
   },
+
+  async show(id) {
+    const projects = await this.userIndex(store.state.loggedInClubUserId)
+    let projectToReturn
+
+    projects.forEach(project => {
+      if(project.project_id == id) {
+        projectToReturn = project
+      }
+    })
+    return projectToReturn
+  },
+
+  async create(data) {
+
+    console.log(data)
+
+    const res = await fetch('/api/project', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+
+    console.log(await res.json())
+
+  },
+
+  async update(id, data) {
+    const res = await fetch(`/api/project/${id}`, { 
+      method: 'PATCH', 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+  }
 }

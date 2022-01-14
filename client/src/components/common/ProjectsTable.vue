@@ -7,7 +7,7 @@
     
     <div 
       class="row"
-      v-if="!this.isProjectsEmpty">
+      v-if="this.projects.length != 0">
       <div class="col-sm-6"
         v-for="project in filteredProjects" 
         :key="project.id">
@@ -41,7 +41,6 @@ export default {
     return {
       projects: [],
       searchText: '',
-      isProjectsEmpty: true, //by default should be true
     };
   },
   computed: {
