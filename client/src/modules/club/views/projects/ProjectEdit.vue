@@ -1,18 +1,18 @@
 <template>
   <div>
-    <ProjectForm
+    <ProjectFormSimplified
       isEditOrCreate="Edit"
     />
   </div>
 </template>
 
 <script>
-import ProjectForm from '../../components/ProjectForm.vue'
+import ProjectFormSimplified from '../../components/project-forms/simplified/ProjectFormSimplified.vue'
 
 export default {
   name: 'EditProject',
   components: {
-    ProjectForm,
+    ProjectFormSimplified,
   },
 }
 </script>

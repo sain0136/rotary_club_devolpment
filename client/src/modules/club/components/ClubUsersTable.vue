@@ -28,7 +28,6 @@
 <script>
 
 import store from '../../../store/index'
-import { getAllClubMembers } from '../../../store/api-calls'
 
 import user from '../../../api-factory/user'
 import club_user from '../../../api-factory/club_user'

@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
+import store from './store/index'
+
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import router from './router'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -17,8 +19,6 @@ import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-import store from './store/index'
-import district from './api-factory/district'
 
 library.add(faSearch);
 library.add(faEnvelope);
@@ -32,5 +32,4 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(store)
   .use(router)
-  .use(district)
   .mount('#app')

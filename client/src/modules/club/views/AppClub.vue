@@ -1,11 +1,11 @@
 <template>
   <div>
-    <ClubInfoHeader />
+    <!-- <ClubInfoHeader /> -->
     <ClubHeader />
     <router-view
       class="view"
     ></router-view>
-    <ClubFooter />
+    <!-- <ClubFooter /> -->
   </div>
 </template>
 

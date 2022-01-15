@@ -22,26 +22,34 @@
         Type IV
       </button>
     </div>
-    <ProjectForm
-      v-else
-      :projectType="this.projectType"
-      isEditOrCreate="Create"
-    />
+    <div v-else>
+      <ProjectFormSimplified
+        v-if="projectType == 1"
+        isEditOrCreate="Create"
+      />
+      <ProjectFormMatching
+        v-if="projectType == 2"
+      />
+    </div>
+
   </div>
 </template>
 
 <script>
-import ProjectForm from '../../components/ProjectForm.vue'
+
+import ProjectFormSimplified from '../../components/project-forms/simplified/ProjectFormSimplified.vue'
+import ProjectFormMatching from '../../components/project-forms/matching/ProjectFormMatching.vue'
 
 export default {
   name: 'ProjectCreate',
   components: {
-    ProjectForm,
+    ProjectFormSimplified,
+    ProjectFormMatching
   },
   data() {
     return {
-      projectType: Number,
       projectFormOpen: false,
+      projectType: Number
     }
   },
   methods: {
@@ -49,6 +57,16 @@ export default {
       this.projectType = typeId
       this.projectFormOpen = true
     },
+    openForm(typeId) {
+      switch (typeId) {
+        case 1: 
+          this.projectType == 1
+        break
+        case 2: 
+          this.projectType == 2
+        break
+      }
+    }
   },
 }
 </script>

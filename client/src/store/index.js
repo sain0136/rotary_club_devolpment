@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
-import { isSiteAdminValid } from './api-calls';
-import { isUserValid } from './api-calls'
+import { isSiteAdminValid } from './authentication-calls';
+import { isUserValid } from './authentication-calls'
 
-import { fetchDistrictDataById, fetchClubDataById, fetchProjectDataById } from './api-calls';
+import district from '../api-factory/district'
+import club from '../api-factory/club'
+import project from '../api-factory/project'
 
 export default createStore({
   state: {
@@ -160,15 +162,18 @@ export default createStore({
       commit('logout', roleIdToLogOut)
     },
     async changeCurrentDistrictData({commit}, districtId) {
-      let districtData = await fetchDistrictDataById(districtId)
+      // const districtData = await fetchDistrictDataById(districtId)
+      const districtData = await district.show(districtId)
       commit('changeCurrentDistrictData', districtData)
     },
     async changeCurrentClubData({commit}, clubId) {
-      let clubData = await fetchClubDataById(clubId)
+      // const clubData = await fetchClubDataById(clubId)
+      const clubData = await club.show(clubId)
       commit('changeCurrentClubData', clubData)
     },
     async changeCurrentProjectData({commit}, projectId) {
-      let projectData = await fetchProjectDataById(projectId)
+      // const projectData = await fetchProjectDataById(projectId)
+      const projectData = await project.show(projectId)
       commit('changeCurrentProjectData', projectData)
     },
 
