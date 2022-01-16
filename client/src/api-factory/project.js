@@ -4,7 +4,7 @@ export default {
   
   async districtIndex(id) {
     const queryHelper = {
-      district_Id: id
+      district_id: id
     }
 
     const res = await fetch('/api/project/districtProjects', {
