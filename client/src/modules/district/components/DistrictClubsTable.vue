@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async getClubs() {
-      return await club.index(store.state.currentDistrictData.district_id)
+      return await club.index(this.$router.currentRoute.value.params.id)
     },
 
     async deleteClub(clubId) {
