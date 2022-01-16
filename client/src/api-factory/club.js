@@ -24,6 +24,8 @@ export default {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
+
+    console.log(await res.json())
   },
 
   async update(id, data) {

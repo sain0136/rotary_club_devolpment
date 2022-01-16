@@ -152,6 +152,8 @@ export default {
       email: '',
       charterDate: '',
       motherClub: '',
+      
+      districtId: this.$router.currentRoute.value.params.id
     }
   },
   validations() {
@@ -224,15 +226,16 @@ export default {
         club_email: this.email,
         charter_date: this.charterDate,
         mother_club: this.motherClub,
-        district_id: store.state.currentDistrictId
+        district_id: this.districtId
       }
     },
 
     validateClub() {
       this.v$.$validate()
-      
+
       if(!this.v$.$error) {
         if(this.isEditOrCreate == 'Create') {
+          console.log('Validation create')
           this.createNewClub()
         } else {
           this.updateExistingClub()
