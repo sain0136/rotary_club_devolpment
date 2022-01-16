@@ -35,6 +35,8 @@
       v-model="totalFinancing"
       type="number">
   </div> <br> <br>
+  <button @click="validate()">Next</button>
+
 </div>
 </template>
 
@@ -61,6 +63,22 @@ export default {
     }
   },
   methods: {
+    validate() {
+      this.goToNextSection()
+    },
+
+    goToNextSection() {
+      this.$emit('goToNextSection', 
+        {
+          cashAmount: this.cashAmount,
+          ddfAmount: this.ddfAmount,
+          outsideFunding: this.outsideFunding,
+          totalFinancing: this.totalFinancing,
+          budgetItems: this.budgetItems,
+          totalBudget: this.totalBudget
+        })
+    },
+
     updateBudget(data) {
       console.log('Data: ', data)
       this.budgetItems = data.items

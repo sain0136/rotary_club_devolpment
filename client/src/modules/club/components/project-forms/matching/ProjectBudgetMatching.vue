@@ -260,7 +260,7 @@ td {
   margin: auto;
   text-align: center;
   border: 1px solid black;
-  width: 50%;
+  width: 100%;
 }
 
 .error {

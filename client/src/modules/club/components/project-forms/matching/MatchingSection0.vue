@@ -11,19 +11,31 @@
       <option value="2">ph club 2</option>
     </select>
   </div> <br>
+  <button @click="goToNextSection()">Next</button>
+  
 </div>
 </template>
 
 <script>
+
 export default {
   name: 'MatchingSection0',
   data() {
     return {
-      sponsorClubId: 0
+      sponsorClubId: Number
+    }
+  },
+  methods: {
+    goToNextSection() {
+      this.$emit('goToNextSection', 
+        {
+          sponsorClubId: parseInt(this.sponsorClubId)
+        })
     }
   }
-
 }
+
+
 </script>
 
 <style>
