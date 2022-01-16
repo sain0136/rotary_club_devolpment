@@ -124,7 +124,7 @@ export default class ProjectsController {
     return response.json({ projects })
   }
   public async showAllProjectsByDistrict({ request, response }: HttpContextContract) {
-    const districtId: number = request.input('district_Id')
+    const districtId: number = request.input('district_id')
     const allProjects: Project[] = await Project.query().where({ districtId: districtId })
     /* const projects: any[] = []
          for await (const user of allMembers) {

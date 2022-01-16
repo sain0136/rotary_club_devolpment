@@ -205,26 +205,35 @@ get user by json instead of attching to url
     CREATE A NEW PROJOECT 
     http://127.0.0.1:3333/project/
     POST
-{
-    
-        "project_name": "Tank Force",
-        "project_theme": "Helping Africa and Asia",
+    {
+        "project_name": "Apo Ilgun",
+        "project_theme": "sdkfj",
         "area_focus": "Peace_Conflict_Prevention",
         "grant_type": 2,
-        "estimated_completion":"1/21/2022",
-        "funding_goal": 10000,
-        "current_funds": 0,
-        "created_by": 6,
-        "region": "AFRICA",
-        "rotary_year": 2021,
-        "role_type":1,
-        "extra_descriptions":{},
-        "itemised_budget":[],
-        "club_id":1,
-        "district_id":1
-        
-    
-}
+        "estimated_completion": "2/12/2022",
+        "anticipated_funding": 90.00,
+        "funding_goal": 1313,
+        "current_funds": 31,
+        "created_by": 1,
+        "region": "slkdjf",
+        "rotary_year": 2022,
+        "role_type": 3,
+        "extra_descriptions": {
+            "Q1": "sdlkfj",
+            "Q2": "sdlfkj",
+            "Q3": "sdflkj",
+            "Q4": "sdfklj"
+        },
+        "itemised_budget": [
+            {
+                "id": 1641432282761,
+                "name": "ldskfj",
+                "cost": 234
+            }
+        ],
+        "club_id": 1,
+        "district_id": 1
+    }
 ----------------------------------------------------------------------------
 *****************************************************************************
 =============================================================================  
