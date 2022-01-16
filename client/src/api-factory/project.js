@@ -4,9 +4,9 @@ export default {
   
   async districtIndex(id) {
     const queryHelper = {
-      district_id: id
+      district_Id: id
     }
-  
+
     const res = await fetch('/api/project/districtProjects', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -14,7 +14,7 @@ export default {
     })
   
     const data = await res.json()
-    const allProjects = await data.projects
+    const allProjects = await data.allProjects
     
     return await allProjects
   },
