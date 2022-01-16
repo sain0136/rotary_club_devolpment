@@ -29,11 +29,15 @@ export default {
   },
 
   async update(id, data) {
+    console.log('id', id)
+    console.log('data', data)
+    
     const res = await fetch(`/api/club/${id}`, { 
       method: 'PATCH', 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
+    console.log(await res.json())
   },
 
   async delete(id) {

@@ -153,6 +153,7 @@ export default {
       charterDate: '',
       motherClub: '',
       
+      clubId: this.$router.currentRoute.value.params.clubid,
       districtId: this.$router.currentRoute.value.params.id
     }
   },
@@ -251,7 +252,7 @@ export default {
 
     async updateExistingClub() {
       const clubToUpdate = this.getClubData()
-      club.update(store.state.currentClubId, clubToUpdate)
+      club.update(this.clubId, clubToUpdate)
       this.redirect(false)
     },
 
