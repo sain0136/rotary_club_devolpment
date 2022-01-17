@@ -107,6 +107,9 @@
           v-model="motherClub"
           placeholder="Mother Club"> <br> <br>
       </div>
+      <SocialLinksSection
+        isDistrictOrClub = 'Club'
+        v-if="isEditOrCreate == 'Edit'"/>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateClub">
@@ -130,11 +133,16 @@
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
+import SocialLinksSection from '../../../components/common/SocialLinksSection.vue'
+
 import club from '../../../api-factory/club'
 import store from '../../../store/index'
 
 export default {
   name: 'ClubForm',
+  components: {
+    SocialLinksSection
+  },
   props: {
     isEditOrCreate: String
   },
@@ -252,7 +260,7 @@ export default {
 
     async updateExistingClub() {
       const clubToUpdate = this.getClubData()
-      club.update(this.clubId, clubToUpdate)
+      await club.update(this.clubId, clubToUpdate)
       this.redirect(false)
     },
 

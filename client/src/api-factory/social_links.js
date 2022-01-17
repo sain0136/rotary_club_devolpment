@@ -14,7 +14,7 @@ export default {
     if(isDistrict) {
       return await linkData.district.socialmedia
     } else {
-      return await linkData.club.socialMedia
+      return await linkData.club.socialmedia
     }
   },
 

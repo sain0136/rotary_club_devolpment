@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- <ClubInfoHeader /> -->
+    <ClubInfoHeader />
     <ClubHeader />
     <router-view
       class="view"
     ></router-view>
-    <!-- <ClubFooter /> -->
+    <ClubFooter />
   </div>
 </template>
 
@@ -23,13 +23,26 @@ export default {
     ClubHeader,
     ClubFooter,
   },
-  created() {
-    store.dispatch(
-      'changeCurrentClubData',
-      this.$router.currentRoute.value
-        .params.id,
-    )
+  data() {
+    return {
+      clubId: this.$router.currentRoute.value.params.id
+    }
   },
+  created() {
+    this.setClubData()
+  },
+  methods: {
+    setClubData() {
+      store.dispatch('changeCurrentClubData', this.clubId)
+
+      const clubSocialQueryObject = {
+        isThisDistrict: false,
+        object_id: this.clubId
+      }
+
+      store.dispatch('changeClubSocials', clubSocialQueryObject)
+    }
+  }
 }
 </script>
 

@@ -35,7 +35,6 @@
 <script>
 
 import store from '../../../store/index'
-import social_links from '../../../api-factory/social_links'
 
 export default {
   name: 'ClubInfoHeader',
@@ -50,10 +49,12 @@ export default {
       twitterLink: null,
       instagramLink: null,
 
-      clubSocialQueryObject: {},
+      clubSocials: [],
     }
   },
   async created() {
+    this.clubSocials = store.state.clubSocials 
+
     const clubData = store.state.currentClubData
     this.email = await clubData.club_email
 
@@ -63,19 +64,11 @@ export default {
   },
   methods: {
 
-    setQueryObject() {
-      this.clubSocialQueryObject = {
-        isThisDistrict: false,
-        object_id: this.$router.currentRoute.value.params.id
-      }
-    },
-
     async getSocialLink(socialType) {
-      const clubSocials = await social_links.index(this.clubSocialQueryObject)
       let linkToReturn
 
-      if(clubSocials != undefined) {
-        clubSocials.forEach(socialLink => {
+      if(this.clubSocials != undefined) {
+        this.clubSocials.forEach(socialLink => {
         if(socialLink.url_type === socialType) {
           linkToReturn = socialLink.url
          }

@@ -13,7 +13,7 @@
         <td id="name">{{district.district_name}}</td>
         <td>
           <button
-            @click="() => this.$router.push(`/district/${district.district_id}`)">
+            @click="() => this.$router.push(`/district/${district.district_id}/home`)">
             View
           </button>
           <button

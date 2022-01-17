@@ -7,6 +7,7 @@ import { isUserValid } from './authentication-calls'
 import district from '../api-factory/district'
 import club from '../api-factory/club'
 import project from '../api-factory/project'
+import social_links from '../api-factory/social_links'
 
 export default createStore({
   state: {
@@ -27,6 +28,8 @@ export default createStore({
     currentDistrictData: Object,
     currentClubData: Object,
     currentProjectData: Object,
+
+    clubSocials: [],
 
     //TODO trash data, remove later from the whole app
     currentDistrictId: Number,
@@ -103,6 +106,10 @@ export default createStore({
       state.currentProjectData = projectData
     },
 
+    changeClubSocials(state, clubSocialsArray) {
+      state.clubSocials = clubSocialsArray
+    },
+
     /////////All thrash
     changeCurrentDistrict(state, districtId) {
       state.currentDistrictId = districtId
@@ -175,6 +182,11 @@ export default createStore({
       // const projectData = await fetchProjectDataById(projectId)
       const projectData = await project.show(projectId)
       commit('changeCurrentProjectData', projectData)
+    },
+
+    async changeClubSocials({commit}, queryObject) {
+      const clubSocialsArray = await social_links.index(queryObject)
+      commit('changeClubSocials', clubSocialsArray)
     },
 
     ////////All thrash

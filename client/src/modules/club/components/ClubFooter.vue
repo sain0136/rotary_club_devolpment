@@ -46,7 +46,6 @@
 
 <script>
 
-import social_links from '../../../api-factory/social_links'
 import store from '../../../store/index'
 
 export default {
@@ -64,7 +63,7 @@ export default {
       twitterLink: null,
       instagramLink: null,
 
-      clubSocialQueryObject: {}
+      clubSocials: [],
     }
   },
   async created() {
@@ -73,25 +72,19 @@ export default {
     this.email = await clubData.club_email
     this.phone = await clubData.club_phone
 
+    this.clubSocials = store.state.clubSocials
+
     this.facebookLink = await this.getSocialLink(1)
     this.twitterLink = await this.getSocialLink(2)
     this.instagramLink = await this.getSocialLink(3)
   },
   methods: {
-
-    setQueryObject() {
-      this.clubSocialQueryObject = {
-        isThisDistrict: false,
-        object_id: this.$router.currentRoute.value.params.id
-      }
-    },
     
     async getSocialLink(socialType) {
-      const clubSocials = await social_links.index(this.clubSocialQueryObject)
       let linkToReturn
 
-      if(clubSocials != undefined) {
-        clubSocials.forEach(socialLink => {
+      if(this.clubSocials != undefined) {
+        this.clubSocials.forEach(socialLink => {
         if(socialLink.url_type === socialType) {
           linkToReturn = socialLink.url
          }

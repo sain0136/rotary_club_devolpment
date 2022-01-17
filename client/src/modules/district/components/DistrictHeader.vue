@@ -18,10 +18,13 @@
       </li>
       <li>
         <router-link class="link" :to="{name: 'DistrictContactUs', params: {id: this.districtId}}">Contact Us</router-link>
-        </li>
-      <li>
+      </li>
+      <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Edit District</router-link>
-        </li>
+      </li>
+      <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
+        <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Club Users</router-link>
+      </li>
       <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" :to="{name: 'DistrictLogin', params: {id: this.districtId}}">Login</router-link>
       </li>

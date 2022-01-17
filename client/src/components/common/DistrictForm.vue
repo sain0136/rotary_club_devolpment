@@ -23,6 +23,17 @@
       <div class="form-field">
         <span 
           class="district-error" 
+          id="district-president-error"
+          v-if="v$.president.$error">
+          Please enter a district president
+        </span> <br>
+        <input type="text"
+          v-model="president"
+          placeholder="President"> <br> <br>
+      </div>
+      <div class="form-field">
+        <span 
+          class="district-error" 
           id="district-email-error"
           v-if="v$.email.$error">
           Please enter a valid email address
@@ -67,32 +78,19 @@
       <div class="form-field">
         <span 
           class="district-error" 
-          id="district-president-error"
-          v-if="v$.president.$error">
-          Please choose a president for the district
-        </span> <br>
-        <select name="admins" v-model="president">
-          <option disabled selected>Admins</option>
-          <option 
-            v-for="admin in admins"
-            :key="admin.user_id"
-            value="{{admin.user_id}}"> 
-            {{admin.firstname}} 
-          </option>
-        </select> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="district-error" 
           id="district-description-error"
           v-if="v$.description.$error">
           Please enter a description between 100-1000 characters
         </span> <br>
-        <input type="text"
+        <textarea 
+          cols="30" 
+          rows="10"
           v-model="description"
-          placeholder="Description"> <br> <br>
+          placeholder="Description"></textarea><br> <br>
       </div>
-      <DistrictSocialLinks v-if="isEditOrCreate=='Edit'"/> <br>
+      <SocialLinksSection 
+        isDistrictOrClub = 'District'
+        v-if="isEditOrCreate=='Edit'"/> <br>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateDistrict">
@@ -104,8 +102,7 @@
         Update
       </button>
       <button
-        v-if="pageAccessed == 'Admin'"
-        @click="() => this.$router.push('../view')">
+        @click="() => redirect()">
         Cancel
       </button>
     </form>
@@ -115,7 +112,7 @@
 
 <script>
 
-import DistrictSocialLinks from './DistrictSocialLinks.vue'
+import SocialLinksSection from './SocialLinksSection.vue'
 
 import store from '../../store/index'
 import user from '../../api-factory/user'
@@ -127,7 +124,7 @@ import { required, maxLength, minLength, email } from '@vuelidate/validators'
 export default {
   name: 'NewDistrictForm',
   components: {
-    DistrictSocialLinks
+    SocialLinksSection
   },
   props: {
     isEditOrCreate: String,
@@ -137,14 +134,13 @@ export default {
     return {
         v$: useValidate(),
         name: '',
+        president: '',
         email: '',
         meetingLocation: '',
         meetingFrequency: '',
         charterdate: '',
-        president: '',
         description: '',
 
-        admins: []
     }
   },
     validations() {
@@ -152,6 +148,9 @@ export default {
         name: { 
           required,
           maxLength: maxLength(30), 
+        },
+        president: {
+          required
         },
         email: { //This needs to be validated on the server too via a verification email
           required,
@@ -168,9 +167,6 @@ export default {
         charterdate: {
           required,
         },
-        president: {
-          required
-        },
         description: {
           required,
           minLength: minLength(100),
@@ -180,7 +176,7 @@ export default {
     },
 
   async created() {
-    this.admins = await user.index() //TODO change to admins from users
+    // this.admins = await user.index() //TODO change to admins from users
     /**
      * If the form is to be used for update, the data is pre-populated 
      * with the specific district's data coming from the API. If it's to be 
@@ -198,27 +194,29 @@ export default {
       const districtInfo = await district.show(districtIdToEdit)
 
       this.name = await districtInfo.district_name
+      this.president = await districtInfo.district_president
       this.email = await districtInfo.district_email
       this.meetingLocation = await districtInfo.meeting_location
       this.meetingFrequency = await districtInfo.meeting_frequency
       this.charterdate = await districtInfo.charter_date
-      this.president = await districtInfo.district_president
       this.description = await districtInfo.district_description
     },
 
     getDistrictData() {
       return {
         district_name: this.name,
+        district_president: this.president,
         district_email: this.email,
         meeting_location: this.meetingLocation,
         meeting_frequency: this.meetingFrequency,
         charter_date: this.charterdate,
-        district_president: this.president,
         district_description: this.description
       }
     },
     
     validateDistrict() {
+      console.log('validating')
+
       this.v$.$validate()
       console.log(this.v$.$errors)
 
@@ -232,9 +230,10 @@ export default {
     },
 
     async createDistrict() {
+      console.log('creatin')
       const districtToCreate = this.getDistrictData()
       await district.create(districtToCreate)
-      this.$router.push('./view');
+      this.redirect()
     },
 
     async updateExistingDistrict() {
@@ -250,11 +249,15 @@ export default {
 
     redirect() {
       //if the edit is being made from the admin portal
-      if(window.location.pathname == '/admin/districts/edit') {
-        this.$router.push('./view')
+      if(this.pageAccessed == 'District') {
+        this.$router.push('./home')
       //if it's from the district portal
       } else {
-        this.$router.push('home')
+        if(this.isEditOrCreate == 'Create') {
+          this.$router.push('./view')
+        } else {
+          this.$router.push('../view')
+        }
       }
     },
   },

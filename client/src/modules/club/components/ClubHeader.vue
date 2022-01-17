@@ -27,7 +27,9 @@
         </div>
       </li>
       <li
-        v-if="$store.state.isClubAdminLoggedIn || $store.state.isSiteAdminLoggedIn">
+        v-if="$store.state.isDistrictAdminLoggedIn ||  
+              $store.state.isClubAdminLoggedIn || 
+              $store.state.isSiteAdminLoggedIn">
         <router-link class="link" :to="{name: 'ClubUsersView', params: {id: this.clubId}}">Users</router-link>
       </li>
       <li>

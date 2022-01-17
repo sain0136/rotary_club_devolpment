@@ -55,6 +55,9 @@ import social_links from '../../api-factory/social_links'
 
 export default {
   name: 'DistrictSocialLinks',
+  props: {
+    isDistrictOrClub: Boolean
+  },
   data() {
     return {
       links: [],
@@ -87,27 +90,46 @@ export default {
     },
 
     async getLinks() {
-      const districtToQuery = {
-        isThisDistrict: true,
-        object_id: store.state.currentDistrictId
+      if(this.isDistrictOrClub == 'District') {
+        const districtToQuery = {
+          isThisDistrict: true,
+          object_id: parseInt(this.$router.currentRoute.value.params.id)
+        }
+        return await social_links.index(districtToQuery)
+      } else {
+        const clubToQuery = {
+          isThisDistrict: false,
+          object_id: parseInt(this.$router.currentRoute.value.params.clubid)
+        }
+        return await social_links.index(clubToQuery)
       }
-      return social_links.index(districtToQuery)
     },
     
     async createLink() {
+
+      let isDistrict = false
+      let objectId
+
+      if(this.isDistrictOrClub == 'District') {
+        isDistrict = true
+        objectId = this.$router.currentRoute.value.params.id
+      } else {
+        objectId = this.$router.currentRoute.value.params.clubid
+      }
+
       const urlToAdd = {
-        isThisDistrict: true,
-        object_id: store.state.currentDistrictId,
+        isThisDistrict: isDistrict,
+        object_id: objectId,
         url_type: this.linkTypesDict.get(this.linkTypeToCreate),
         url: this.linkToCreate
       }
 
-      social_links.create(urlToAdd)
+      await social_links.create(urlToAdd)
       this.clean()
     },
     
     async deleteLink(urlId) {
-      social_links.delete(urlId)
+      await social_links.delete(urlId)
       this.links = await this.getLinks()
     },
 
@@ -120,12 +142,6 @@ export default {
       this.currentUrlIDToUpdate = urlId
     },
     
-    cancelEdit() {
-      this.isEditOrCreateLink='Create'
-      this.linkToCreate = ''
-      this.linkTypeToCreate = ''
-    },
-
     async updateLink() {
       const urlToUpdate = {
         isThisDistrict: true,
@@ -134,8 +150,14 @@ export default {
         url: this.linkToCreate,
       }
 
-      social_links.update(this.currentUrlIDToUpdate, urlToUpdate)
+      await social_links.update(this.currentUrlIDToUpdate, urlToUpdate)
       this.clean()
+    },
+
+    cancelEdit() {
+      this.isEditOrCreateLink='Create'
+      this.linkToCreate = ''
+      this.linkTypeToCreate = ''
     },
 
     async clean() {

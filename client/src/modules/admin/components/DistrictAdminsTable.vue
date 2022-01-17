@@ -44,7 +44,11 @@ export default {
   methods: {
     async deleteAdmin(userId) {
       if(confirm(`Are you sure you want to delete admin ${userId}?`)) {
-        await district_admin.delete(userId)
+        try {
+          await district_admin.delete(userId)
+        } catch(err) {
+          alert(err)
+        }
         this.admins = await district_admin.index()
       }
     },

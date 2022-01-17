@@ -17,6 +17,14 @@
             {{district.district_name}} 
           </option>
         </select> <br> <br>
+        <span 
+          class="admin-error" 
+          v-if="v$.membershipId.$error">
+          Please enter the membership id
+        </span> <br>
+        <input type="text"
+          placeholder="Membership ID"
+          v-model="membershipId"> <br> <br>
       </div>
       <div class="form-field">
         <span 
@@ -157,7 +165,7 @@ import district_admin from '../../../api-factory/district_admin'
 import user from '../../../api-factory/user'
 
 import useValidate from '@vuelidate/core'
-import { required, maxLength, minLength, email } from '@vuelidate/validators'
+import { required, maxLength, minLength, email, requiredIf } from '@vuelidate/validators'
 
 export default {
   name: 'DistrictAdminForm',
@@ -186,7 +194,7 @@ export default {
 
       //Others
       districtId: 0,
-      membershipId: 0,
+      membershipId: '',
       firstName: '',
       lastName: '',
       address: '',
@@ -208,6 +216,9 @@ export default {
   validations() {
     return {
       districtId: {
+        required
+      },
+      membershipId: {
         required
       },
       firstName: {
@@ -236,7 +247,9 @@ export default {
         email
       },
       password: {
-        required
+        required: requiredIf(function () {
+          return this.isEditOrCreate == 'Create'
+        })
       }
     }
   },
@@ -252,6 +265,7 @@ export default {
       this.prePopulateFields()
     }
   },
+  
   methods: {
     setUserRoles() {
       this.roles.set(1, 'Admin')
@@ -284,7 +298,7 @@ export default {
     getUserData() {
         return {
           district_id: this.districtId,
-          membership_id: Date.now(), //as a random value
+          membership_id: this.membershipId,
           role_type: this.roleType,
           district_role: this.districtRole,
           firstname: this.firstName,
@@ -321,6 +335,7 @@ export default {
     },
 
     async updateExistingAdmin() {
+      const id = this.$router.currentRoute.value.params.userid
       const userToUpdate = this.getUserData()
       await district_admin.update(id, userToUpdate)
       this.redirect(false)
