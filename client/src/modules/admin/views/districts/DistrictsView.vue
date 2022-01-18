@@ -1,18 +1,13 @@
 <template>
   <div>
-    <button
-      @click="
-        () => {
-          this.$router.push(
-            '/admin/districts/create',
-          )
-        }
-      "
-    >
-      Create District
-    </button>
     <br /><br />
-    <DistrictsTable />
+    <DistrictsTable /> <br> <br>
+    <button
+      name="create"
+      class="plus"
+      id="create-user"
+      @click="() => this.$router.push('/admin/districts/create')">
+    </button>
   </div>
 </template>
 

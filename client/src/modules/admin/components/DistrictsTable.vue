@@ -1,7 +1,8 @@
 <template>
   <div class="container">
+    <legend class="table-title">Districts</legend> <br> <br>
     <!-- Make a call to the API and generate these districts -->
-    <table>
+    <table v-if="districts.length != 0">
       <th>ID</th>
       <th>Name</th>
       <th>Action</th>
@@ -13,20 +14,29 @@
         <td id="name">{{district.district_name}}</td>
         <td>
           <button
+            class="crud-buttons"
             @click="() => this.$router.push(`/district/${district.district_id}/home`)">
-            View
+            <font-awesome-icon
+            class="social-icon" icon="external-link-alt"></font-awesome-icon>
           </button>
           <button
-            @click="deleteDistrict(district.district_id)">
-            Delete
-          </button>
-          <button
+            class="crud-buttons"
             @click="() => this.$router.push(`./${district.district_id}/edit`)">
-            Edit
+            <font-awesome-icon
+              class="social-icon" icon="edit"></font-awesome-icon>
+          </button>
+          <button
+            class="crud-buttons"
+            @click="deleteDistrict(district.district_id)">
+            <font-awesome-icon
+            class="social-icon" icon="trash-alt"></font-awesome-icon>
           </button>
         </td>
       </tr>
     </table>
+    <legend 
+      class="table-title"
+      v-else>No districts to display!</legend>
   </div>
 </template>
 

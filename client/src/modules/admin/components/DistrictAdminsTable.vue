@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <!-- Make a call to the API and generate these districts -->
-    <table>
+    <legend class="table-title">District Admins</legend> <br> <br> <br>
+    <table v-if="admins.length != 0">
       <th>ID</th>
       <th>District ID</th>
       <th>Admin Name</th>
@@ -14,16 +15,21 @@
         <td>{{admin.firstname + ' ' + admin.lastname}}</td>
         <td>
           <button
-            @click="deleteAdmin(admin.user_id)">
-            Delete
+            class="crud-buttons"
+            @click="goToEditDistrictAdminPage(admin.user_id)">
+            <font-awesome-icon
+              class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
-            @click="goToEditDistrictAdminPage(admin.user_id)">
-            Edit
+            class="crud-buttons"
+            @click="deleteAdmin(admin.user_id)">
+            <font-awesome-icon
+            class="social-icon" icon="trash-alt"></font-awesome-icon>
           </button>
         </td>
       </tr>
     </table>
+    <legend class="table-title" v-else>No district admin to display!</legend>
   </div>
 </template>
 
@@ -62,17 +68,8 @@ export default {
 </script>
 
 <style scoped>
-/* 
-table {
-  margin-left: auto;
-} */
 
-td {
-  width: 25%;
-}
 
-table {
-  margin: auto;
-}
+
 
 </style>

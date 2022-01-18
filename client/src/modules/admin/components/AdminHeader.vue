@@ -1,24 +1,29 @@
 <template>
   <nav>
     <ul>
-      <li class="nav-item">
+      <li>
         <img class="img-fluid" src="../assets/admin-logo.png" />
       </li>
-      <li class="nav-item">
+      <li>
+        <router-link class="link" to="/admin/home">
+          Home</router-link
+        >
+      </li>
+      <li>
         <router-link class="link" to="/admin/districts/view">
           Administer Districts</router-link
         >
       </li>
-      <li class="nav-item">
+      <li>
         <router-link class="link" to="/admin/district-admins/view"
           >Manage District Admins</router-link
         >
       </li>
-      <!--      <li>
-        <router-link class="link" to="/admin/viewclubs">View Clubs</router-link>
-      </li> -->
-      <li v-if="$store.state.isSiteAdminLoggedIn" class="nav-item">
-        <button class="link" @click="logout">Logout</button>
+      <li v-if="$store.state.isSiteAdminLoggedIn" class="nav-item" id=logout-area>
+        <button class="logout" @click="logout">
+          <font-awesome-icon
+            class="social-icon" icon="sign-in-alt"></font-awesome-icon>
+        </button>
       </li>
     </ul>
   </nav>
@@ -44,50 +49,38 @@ img {
 }
 
 nav {
-  background-color: white;
-  height: 8%;
+  background-color: #406882;
+  box-shadow: 0px 3px 5px 0 rgba(0,0,0,.9);
 }
 
-ul {
-  list-style-type: none;
-  margin-left: 200px;
-  padding: 0;
+.link {
+  color: #B1D0E0;
+  font-size: 20px;
+  font-weight: 400;
 }
 
-li {
-  display: inline;
-  margin-right: 40px;
-}
-/* @media only screen and (max-width: 320px) {
-  .link {
-    text-decoration: none;
-    color: whitesmoke;
-    font-family: "Montserrat";
-    font-size: 2em;
-    transition: color 0.5s;
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .link {
-    text-decoration: none;
-    color: whitesmoke;
-    font-family: cursive;
-    font-size: 3em;
-    transition: color 0.5s;
-  }
-} */
 .link:hover {
-  color: #ffb607;
+  color: #1A374D;
   transition: color 0.5s;
 }
 
-button {
-  background-color: rgb(1, 69, 100);
-  border-radius: 10px;
+.logout {
+  background-color: #406882;
+  border: none;
+  /* position: fixed;
+  top: 4.5%;
+  left: 80%; */
+  margin-left: 200px;
 }
 
-/* nav {
-  background-color: #212529;
-} */
+.social-icon {
+  color: #B1D0E0;
+  font-size: 22px;
+}
+
+.social-icon:hover {
+  opacity: 0.5;
+  transition: opacity 200ms;
+}
+
 </style>

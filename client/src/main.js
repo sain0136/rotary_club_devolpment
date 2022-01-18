@@ -16,6 +16,9 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -28,6 +31,9 @@ library.add(faPhone);
 library.add(faFacebook);
 library.add(faTwitter);
 library.add(faSignInAlt);
+library.add(faEdit);
+library.add(faTrashAlt);
+library.add(faExternalLinkAlt);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)

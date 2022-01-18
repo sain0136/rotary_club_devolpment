@@ -1,19 +1,13 @@
 <template>
   <div>
+    <br> <br>
+    <DistrictAdminsTable /> <br> <br>
     <button
+      name="create"
+      class="plus"
       id="create-user"
-      @click="
-        () =>
-          this.$router.push(
-            '/admin/district-admins/create',
-          )
-      "
-    >
-      Create Admin
+      @click="() => this.$router.push('/admin/district-admins/create')">
     </button>
-    <br />
-    <br />
-    <DistrictAdminsTable />
   </div>
 </template>
 
@@ -46,12 +40,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 .select-districts {
   text-align: center;
 }
 
 #create-user {
-  margin-left: 50%;
+  margin-left: 47%;
 }
 </style>
