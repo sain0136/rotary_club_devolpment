@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <form onsubmit="event.preventDefault();">
       <h2
         v-if="isEditOrCreate=='Create'">
@@ -10,46 +10,57 @@
         Edit District
       </h2> <br>
       <div class="form-field">
+        <!-- <label for="name">District Name</label> <br> -->
         <span 
           class="district-error" 
           id="district-name-error"
           v-if="v$.name.$error">
           Please enter a district name
-        </span> <br>
+          <br>
+        </span>
         <input type="text"
+          name="name"
           v-model="name"
-          placeholder="Name"> <br> <br>
+          placeholder="District Name"> <br> <br>
       </div>
       <div class="form-field">
+        <!-- <label for="president">District President</label> <br> -->
         <span 
           class="district-error" 
           id="district-president-error"
           v-if="v$.president.$error">
-          Please enter a district president
-        </span> <br>
-        <input type="text"
+          Please enter a district president 
+          <br>
+        </span>
+        <input 
+          name="president"
+          type="text"
           v-model="president"
           placeholder="President"> <br> <br>
       </div>
       <div class="form-field">
+        <!-- <label for="Email">Email</label> <br> -->
         <span 
           class="district-error" 
           id="district-email-error"
           v-if="v$.email.$error">
-          Please enter a valid email address
-        </span> <br>
+          Please enter a valid email address <br>
+        </span> 
         <input type="text"
+          name="email"
           v-model="email"
           placeholder="Email"> <br> <br>
       </div>
       <div class="form-field">
+        <!-- <label for="meeting-location"></label> -->
         <span 
           class="district-error" 
           id="district-meetinglocation-error"
           v-if="v$.meetingLocation.$error">
-          Please enter a valid meeting location
-        </span> <br>
+          Please enter a valid meeting location  <br>
+        </span>
         <input type="text"
+          name="meeting-location"
           v-model="meetingLocation"
           placeholder="Meeting Location"> <br> <br>  
       </div>
@@ -268,6 +279,30 @@ export default {
 
 form {
   text-align: center;
+  display: grid;
+}
+
+input {
+  background-color: #B1D0E0;
+  border: none;
+  border-bottom: 1px solid #00090e25;
+}
+
+label {
+  font-weight: bold;
+  
+}
+
+.container {
+  box-shadow: 0px 3px 20px 0 rgba(0,0,0,.8);
+  width: 70%; 
+  overflow: auto; 
+  height: 600px;
+  margin-bottom: 50px;
+}
+
+h2 {
+  font-size: 42px;
 }
 
 .district-error {

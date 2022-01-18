@@ -1,19 +1,16 @@
 <template>
   <div>
     <form>
-      <legend>Admin</legend> <br> <br>
+      <img src="../assets/admin-logo-2.png" alt="">
       <p v-if="$store.state.isSiteAdminRejected" id="error">Credentials not valid!</p>
-      <div v-if="$store.state.isSiteAdminLoggedIn && !$store.state.isSiteAdminRejected">
-        <p id="success">Logged In!</p>
-        <router-link id="admin-page" to="/admin/home">Admin Page</router-link> <br> <br> 
-      </div>
       <input type="text" name="username" placeholder="username"
         v-model="username"> <br> <br>
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
       <button @click="adminLoginHandler">
-      Login</button>
+        Login
+      </button>
   </div>
 </template>
 
@@ -44,33 +41,43 @@ export default {
 
 <style scoped>
 
+div {
+  border: 5px solid black;
+  background-color: rgba(255, 255, 255, 0.103);
+  width: 300px;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 50px;
+}
+
 form {
   text-align: center;
-  margin: auto;
-  width: 50%;
   margin-top: 10%;
   font-size: 18px;
 }
 
 legend {
+  color: #ffb607;
   font-weight: bolder;
 }
 
 input {
   border: none;
-  border-bottom: 1px solid rgba(255,0,0,0.5);;
+  border-bottom: 1px solid rgba(255,0,0,0.5);
+  background-color: black;
+  color: whitesmoke;
 }
 
 button {
   background-color: #ffb607;
+  font-weight: bold;
   opacity: 0.8;
   border: none;
   padding: 8px;
-  margin: 0;
-  position: absolute;
-  left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  margin-left: 50%;
 }
 
 button:hover {

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="admin-login">
+    <!-- <img src="../assets/admin-login-background.png" alt=""> -->
     <AdminLoginForm />
   </div>
 </template>
@@ -21,3 +22,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+.admin-login {
+  background-image: url("../assets/admin-login-background.png");
+  border: 1px solid black;
+  height: 100%;
+  padding-bottom: 400px;
+}
+
+
+</style>

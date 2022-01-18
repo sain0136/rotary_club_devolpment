@@ -1,8 +1,12 @@
 <template>
   <div class="admin-page">
     <AdminHeader />
-    <router-view></router-view>
-    <AdminFooter />
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component"/>
+      </transition>
+    </router-view>
+    <AdminFooter class="admin-footer"/>
 
   </div>
 </template>
@@ -29,6 +33,21 @@ export default {
 </script>
 
 <style>
+
+/* .fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+} */
+
+/* .fade-enter-from {
+  transform: translateX(100px);
+} */
+
+/* .fade-enter-active,
+.fade-leave-active {
+  transition: trans;
+  transition: opacity 0.5s ease-out;
+} */
 
 .admin-page {
   background-color: #B1D0E0;
@@ -81,6 +100,13 @@ td {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 
