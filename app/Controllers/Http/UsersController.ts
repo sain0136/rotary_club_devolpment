@@ -22,13 +22,44 @@ export default class UsersController {
   public async passwordVerfication({ request, response }: HttpContextContract) {
     const password: string = request.input('password')
     const id: number = request.input('user_id')
+    const districtOrClubId: number = request.input('id')
+    //send back boolen district matched ,
     const userById: User = await User.findOrFail(id)
-    let verified: Boolean = false
-    if (await Hash.verify(userById.password, password)) {
-      verified = true
+    let passwordVerified: Boolean = false
+    let accessGranted: Boolean = false
+    if (
+      (await Hash.verify(userById.password, password)) &&
+      userById.districtId == districtOrClubId
+    ) {
+      passwordVerified = true
+      accessGranted = true
+    } else if (
+      (await Hash.verify(userById.password, password)) &&
+      userById.clubId == districtOrClubId
+    ) {
+      passwordVerified = true
+      accessGranted = true
+    } else {
+      return response.unauthorized('Not authorizexxd')
     }
 
-    return response.json({ verified, Hash: userById.password, PlainText: password })
+    if (userById.clubId !== null && userById.clubId !== undefined) {
+      userById.role = await userById
+        .related('clubRole')
+        .pivotQuery()
+        .where({ user_id: userById.userId })
+    } else {
+      userById.role = await userById
+        .related('districtRole')
+        .pivotQuery()
+        .where({ user_id: userById.userId })
+    }
+    return response.json({
+      'This user belongs to the proper district or club ': accessGranted,
+      'PASSWORD_VERIFIED': passwordVerified,
+      'Hash': userById.password,
+      'PlainText': password,
+    })
   }
   public async jsonGetById({ request, response }: HttpContextContract) {
     const id: number = request.input('user_id')
@@ -62,8 +93,8 @@ export default class UsersController {
     const clubId: number = request.input('club_id')
     const districtId: number = request.input('district_id')
 
-    const districtRole: RoleType = request.input('district_role')
-    const clubRole: RoleType = request.input('club_role')
+    const districtRole: String = request.input('district_role')
+    const clubRole: String = request.input('club_role')
     const role: RoleType = request.input('role_type')
 
     const newUser: User = await User.create({
@@ -84,7 +115,7 @@ export default class UsersController {
 
     if (clubId !== null && clubId !== undefined) {
       const club: Club = await Club.findOrFail(clubId)
-      if (clubRole == null && clubRole == undefined) {
+      if (clubRole == null || clubRole == undefined) {
         await newUser.related('clubRole').attach({
           [club.clubId]: {
             club_role: RoleType[role],
@@ -181,15 +212,22 @@ export default class UsersController {
     const isThisDistrict: boolean = request.input('isThisDistrict')
     const old = await User.findOrFail(userId)
     if (isThisDistrict) {
-      const userToBeDeleted: District = await District.findOrFail(userId)
+      const userToBeDeleted: User = await User.findOrFail(userId)
+      const districtId: any = userToBeDeleted.districtId
       await userToBeDeleted.related('districtRole').detach()
       await userToBeDeleted.delete()
-      return response.json({ Deleted: 'old user below', old })
+      const allDistrictMembers: User[] = await User.query()
+        .select()
+        .where({ districtId: districtId })
+      return response.json({ DistrictMembers: allDistrictMembers, Deleted: 'old user below', old })
     } else {
       const userToBeDeleted: User = await User.findOrFail(userId)
+      const clubID: any = userToBeDeleted.clubId
       await userToBeDeleted.related('clubRole').detach()
       await userToBeDeleted.delete()
-      return response.json({ Deleted: 'old user below', old })
+      const allClubsMembers: User[] = await User.query().select().where({ clubID: clubID })
+
+      return response.json({ ClubMembers: allClubsMembers, Deleted: 'old user below', old })
     }
   }
 }

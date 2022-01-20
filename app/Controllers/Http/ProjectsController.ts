@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Club from 'App/Models/Club'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
 import AreaFocus from 'Contracts/Enums/AreaFocus'
@@ -10,8 +11,7 @@ export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
     let allProjects: Project[] = await Project.all()
     for await (const project of allProjects) {
-      const conver: Object = JSON.parse(project.extraDescriptions)
-      project.extraDescriptionsObject = conver
+      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
       project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
     }
     return response.json({ allProjects })
@@ -36,7 +36,8 @@ export default class ProjectsController {
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
     const clubId: number = request.input('club_id')
-    const districtId: number = request.input('district_id')
+    const club: Club[] = await Club.query().where({ club_id: clubId })
+    const districtId: number = club[0].districtId
 
     const newProject = await Project.create({
       projectName: projectName,

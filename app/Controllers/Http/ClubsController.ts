@@ -1,6 +1,9 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
 import User from 'App/Models/User'
+import DistrctRolesController from './DistrctRolesController'
+import DistrictsController from './DistrictsController'
+import DistrictsControllerInstance from './DistrictsController'
 
 export default class ClubsController {
   public async index({ response }: HttpContextContract) {
@@ -96,7 +99,9 @@ export default class ClubsController {
     const clubID: number = parseInt(params.id)
     const old: Club = await Club.findOrFail(clubID)
     const clubToBeDeleted: Club = await Club.findOrFail(clubID)
+    const districtId = old.districtId
     await clubToBeDeleted.delete()
-    return response.json({ Deleted: 'old club below', old })
+    const allClubsInDistrict: Club[] = await Club.query().where({ districtId: districtId })
+    return response.json({ allClubs: allClubsInDistrict, Deleted: 'old club below', old })
   }
 }
