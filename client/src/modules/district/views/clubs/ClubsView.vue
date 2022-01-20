@@ -1,20 +1,13 @@
 <template>
   <div>
+    <br><br>
+    <DistrictClubsTable/> <br><br>
     <button
-      v-if="
-        $store.state.isSiteAdminLoggedIn ||
-        $store.state.isDistrictAdminLoggedIn
-      "
-      @click="
-        () => {
-          this.$router.push('create')
-        }
-      "
-    >
-      Create Club
+      class="plus"
+      id="plus-districts"
+      v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
+      @click="() => {this.$router.push('create')}">
     </button>
-    <br /><br />
-    <DistrictClubsTable />
   </div>
 </template>
 
@@ -30,7 +23,14 @@ export default {
 </script>
 
 <style scoped>
+
 button {
   margin-left: 48%;
 }
+
+#plus-districts {
+  background-color: #27282d;
+  color: #fbefdf;
+}
+
 </style>

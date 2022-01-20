@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <legend class="table-title">Districts</legend> <br> <br>
-    <!-- Make a call to the API and generate these districts -->
     <table v-if="districts.length != 0">
       <th>ID</th>
       <th>Name</th>
@@ -68,12 +67,29 @@ export default {
 
 <style scoped>
 
+.table-title {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 5px;
+}
+
 table {
+  /* margin-left: 36%; */
   margin: auto;
+}
+
+th {
+  font-family: 'Montserrat', sans-serif;
+  padding: 3px;
 }
 
 td {
   width: 25%;
+  padding: 5px;
+}
+
+
+table, th, td {
+  /* border: 1px solid rgba(0, 0, 0, 0.151); */
 }
 
 </style>

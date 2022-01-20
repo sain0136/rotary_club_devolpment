@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <h1>All Projects</h1>
-    <br />
+<div>
+  <div class="district-page-head">
+    <h1 class="district-page-title">Projects</h1>
+  </div> <br> <br>
+  <div class="projects-container">
     <ProjectsTable
       pageToDisplay="District"
     />
   </div>
+</div>
 </template>
 
 <script>
@@ -22,5 +25,9 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+
+.projects-container {
+  margin-bottom: 50%;
 }
 </style>

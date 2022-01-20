@@ -9,18 +9,24 @@
         <td>{{ club.club_name }}</td>
         <td>
           <button
+            class="crud-buttons"
             @click="() => this.$router.push(`/club/${club.club_id}/home`)">
-            View
+            <font-awesome-icon
+            class="social-icon" icon="external-link-alt"></font-awesome-icon>
           </button>
           <button
-            v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
-            @click="deleteClub(club.club_id)">
-            Delete
-          </button>
-          <button
+            class="crud-buttons"
             v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
             @click="() => this.$router.push(`${club.club_id}/edit`)">
-            Edit
+            <font-awesome-icon
+              class="social-icon" icon="edit"></font-awesome-icon>
+          </button>
+          <button
+            class="crud-buttons"
+            v-if="$store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn"
+            @click="deleteClub(club.club_id)">
+            <font-awesome-icon
+            class="social-icon" icon="trash-alt"></font-awesome-icon>
           </button>
         </td>
       </tr>
@@ -59,11 +65,39 @@ export default {
 </script>
 
 <style scoped>
+
+/* table, th, td {
+  border: 1px solid #b2b2b2;
+} */
+
+table {
+  border: 1px solid #b2b2b259;
+}
+
+th {
+  border: 1px solid #b2b2b2c5;
+}
+
+td {
+  border: 1px solid #b2b2b294;
+  font-family: 'Lato', sans-serif;
+  padding: 5px;
+}
+
 table {
   margin: auto;
 }
 
+th {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+}
+
 td {
   width: 25%;
+}
+
+tr:nth-child(even) {
+  background-color: #b2b2b249;
 }
 </style>

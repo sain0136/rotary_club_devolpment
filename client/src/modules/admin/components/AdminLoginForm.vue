@@ -41,6 +41,10 @@ export default {
 
 <style scoped>
 
+img {
+  height: 100px;
+}
+
 div {
   border: 5px solid black;
   background-color: rgba(255, 255, 255, 0.103);

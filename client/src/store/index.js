@@ -28,7 +28,7 @@ export default createStore({
     currentDistrictData: Object,
     currentClubData: Object,
     currentProjectData: Object,
-
+    
     clubSocials: [],
 
     //TODO trash data, remove later from the whole app

@@ -1,14 +1,12 @@
 <template>
-  <div class="container">
-    <h3>About District</h3>
-    <br />
-    <div class="description-container">
-      {{
-        $store.state.currentDistrictData
-          .district_description
-      }}
-    </div>
+<div>
+  <div class="district-page-head">
+    <h1 class="district-page-title">About the District</h1>
+  </div> <br> <br>
+  <div class="description-container">
+    {{ $store.state.currentDistrictData.district_description }}
   </div>
+</div>
 </template>
 
 <script>
@@ -21,9 +19,16 @@ export default {
 </script>
 
 <style scoped>
-.container {
+
+.description-container {
   text-align: center;
-  width: 50%;
+  width: 60%;
   word-wrap: break-word;
+  margin: auto;
+  font-family: 'Lato' sans-serif;
+  font-size: 26px;
+  color: #27282d;
+  margin-bottom: -200px;
 }
+
 </style>

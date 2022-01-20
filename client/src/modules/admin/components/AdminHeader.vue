@@ -53,7 +53,21 @@ nav {
   box-shadow: 0px 3px 5px 0 rgba(0,0,0,.9);
 }
 
+ul {
+  list-style-type: none;
+  margin-left: 200px;
+  padding: 0;
+}
+
+li {
+  display: inline;
+  margin-right: 40px;
+}
+
 .link {
+  text-decoration: none;
+  font-family: "Montserrat";
+  transition: color 0.5s;
   color: #B1D0E0;
   font-size: 20px;
   font-weight: 400;

@@ -2,7 +2,8 @@
   <nav>
     <ul>
       <li>
-        <h1>District: {{ $store.state.currentDistrictData.district_name }}</h1>
+        <img src="../assets/rotary-logo.png" alt="District Logo">
+        <!-- <h1>{{ $store.state.currentDistrictData.district_name }}</h1> -->
       </li>
       <li>
           <router-link class="link" :to="{name: 'DistrictHome', params: {id: this.districtId}}">Home</router-link>
@@ -57,13 +58,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 img {
-  height: 100px;
+  height: 69px;
+  margin-top: 15px;
 }
 
 nav {
-  background-color: rgb(74, 233, 180);
+  background-color: #fbefdf;
   height: 8%;
 }
 
@@ -73,16 +75,16 @@ ul {
   padding: 0;
 }
 
-li {
+li, h1 {
   display: inline;
   margin-right: 40px;
 }
 
 .link {
   text-decoration: none;
-  color: black;
+  color: #27282d;
   font-family: "Montserrat";
-  font-size: 16px;
+  font-size: 18px;
   transition: color 0.5s;
 }
 

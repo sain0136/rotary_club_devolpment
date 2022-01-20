@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 /* .fade-enter-from,
 .fade-leave-to {
@@ -52,16 +52,6 @@ export default {
 .admin-page {
   background-color: #B1D0E0;
   /* padding-bottom: 50%; */
-}
-
-.crud-buttons {
-  background-color: #B1D0E0;
-  border: none;
-}
-
-.crud-buttons:hover {
-  transition: opacity 131ms;
-  opacity: 0.5;
 }
 
 .social-icon {

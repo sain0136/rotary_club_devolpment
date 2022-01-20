@@ -47,6 +47,15 @@ export default {
           box-shadow: 0 0 1px 15px rgba(183, 215, 232, 0.4), 0 0 1px 30px rgba(207, 224, 232, 0.1), 0 0 1px 45px rgba(36, 179, 44, 0.1);
 }
 
+.crud-buttons {
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
+}
 
+.crud-buttons:hover {
+  transition: opacity 131ms;
+  opacity: 0.5;
+}
 
 </style>
