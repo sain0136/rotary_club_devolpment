@@ -1,9 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
 import User from 'App/Models/User'
-import DistrctRolesController from './DistrctRolesController'
-import DistrictsController from './DistrictsController'
-import DistrictsControllerInstance from './DistrictsController'
 
 export default class ClubsController {
   public async index({ response }: HttpContextContract) {
