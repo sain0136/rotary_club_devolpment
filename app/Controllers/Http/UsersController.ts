@@ -23,22 +23,20 @@ export default class UsersController {
     const password: string = request.input('password')
     const id: number = request.input('user_id')
     const districtOrClubId: number = request.input('id')
-    //send back boolen district matched ,
+
     const userById: User = await User.findOrFail(id)
-    let passwordVerified: Boolean = false
-    let accessGranted: Boolean = false
+
+    let verifiedAndAccessGranted: Boolean = false
     if (
       (await Hash.verify(userById.password, password)) &&
       userById.districtId == districtOrClubId
     ) {
-      passwordVerified = true
-      accessGranted = true
+      verifiedAndAccessGranted = true
     } else if (
       (await Hash.verify(userById.password, password)) &&
       userById.clubId == districtOrClubId
     ) {
-      passwordVerified = true
-      accessGranted = true
+      verifiedAndAccessGranted = true
     } else {
       return response.unauthorized('Not authorizexxd')
     }
@@ -55,8 +53,8 @@ export default class UsersController {
         .where({ user_id: userById.userId })
     }
     return response.json({
-      'This user belongs to the proper district or club ': accessGranted,
-      'PASSWORD_VERIFIED': passwordVerified,
+      'This user belongs to the proper district or club and password was verified ':
+        verifiedAndAccessGranted,
       'Hash': userById.password,
       'PlainText': password,
     })
