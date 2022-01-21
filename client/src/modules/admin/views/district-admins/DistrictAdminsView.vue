@@ -1,6 +1,7 @@
 <template>
   <div>
     <br> <br>
+    <h1>DISTRICT ADMINS</h1> <br> <br>
     <DistrictAdminsTable /> <br> <br>
     <button
       name="create"
@@ -41,6 +42,12 @@ export default {
 </script>
 
 <style scoped>
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  text-align: center;
+}
 
 .select-districts {
   text-align: center;

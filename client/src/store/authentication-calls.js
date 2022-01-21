@@ -22,3 +22,13 @@ export async function isUserValid(id, password) {
   const data = await res.json()
   return await data.verified
 }
+
+export async function isValid(userData) {
+  const res = await fetch('/api/user/verify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  })
+  const data = await res.json()
+  return await data.Verified
+}

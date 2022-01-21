@@ -22,14 +22,16 @@ export default {
     DistrictFooter
   },
   data() {
-    return {}
+    return {
+      currentDistrictId: this.$router.currentRoute.value.params.id
+    }
   },
   created() {
-    store.dispatch(
-      'changeCurrentDistrictData',
-      this.$router.currentRoute.value
-        .params.id,
-    )
+    store.dispatch('changeCurrentDistrictData', 
+                    this.currentDistrictId)
+    if(store.state.loggedInDistrictId != this.currentDistrictId) {
+      store.dispatch('logout', 1)
+    }
   },
 }
 </script>
@@ -43,6 +45,7 @@ export default {
   text-align: center;
   background-color: #27282d;
   padding: 50px;
+  text-transform: uppercase;
 }
 
 .district-page-title {

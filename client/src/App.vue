@@ -58,4 +58,31 @@ export default {
   opacity: 0.5;
 }
 
+
+/**General table styling */
+table {
+  border: 1px solid #b2b2b259;
+  margin: auto;
+  box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.384);
+  overflow: auto;
+  height: 200px;
+}
+
+th {
+  border: 1px solid #b2b2b2c5;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+}
+
+td {
+  border: 1px solid #b2b2b294;
+  font-family: 'Lato', sans-serif;
+  padding: 5px;
+  width: 25%;
+}
+
+tr:nth-child(even) {
+  background-color: #b2b2b249;
+}
+
 </style>

@@ -1,13 +1,14 @@
 <template>
   <div>
     <br /><br />
+    <h1>ALL DISTRICTS</h1> <br> <br>
     <DistrictsTable /> <br> <br>
     <button
       name="create"
       class="plus"
       id="create-user"
       @click="() => this.$router.push('/admin/districts/create')">
-    </button>
+    </button> <br><br>
   </div>
 </template>
 
@@ -23,7 +24,15 @@ export default {
 </script>
 
 <style scoped>
-button {
-  margin-left: 50%;
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  text-align: center;
 }
+
+button {
+  margin-left: 47%;
+}
+
 </style>

@@ -66,38 +66,7 @@ export default {
 
 <style scoped>
 
-/* table, th, td {
-  border: 1px solid #b2b2b2;
-} */
-
-table {
-  border: 1px solid #b2b2b259;
-}
-
-th {
-  border: 1px solid #b2b2b2c5;
-}
-
-td {
+td, th {
   border: 1px solid #b2b2b294;
-  font-family: 'Lato', sans-serif;
-  padding: 5px;
-}
-
-table {
-  margin: auto;
-}
-
-th {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 22px;
-}
-
-td {
-  width: 25%;
-}
-
-tr:nth-child(even) {
-  background-color: #b2b2b249;
 }
 </style>

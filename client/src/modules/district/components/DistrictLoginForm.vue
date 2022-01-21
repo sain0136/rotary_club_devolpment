@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="login-container">
+    <br>
+    <img src="../assets/login-icon.png" alt="">
     <form>
-      <legend>District Login</legend> <br> <br>
       <p v-if="$store.state.isDistrictAdminRejected" id="error">Credentials not valid!</p>
       <div v-if="$store.state.isDistrictAdminLoggedIn && !$store.state.isDistrictAdminRejected">
         <p id="success">Logged In!</p>
@@ -10,7 +11,7 @@
       <input type="text" name="userId" placeholder="ID"
         v-model="userId"> <br> <br>
       <input type="password" placeholder="password"
-        v-model="password"> <br> <br> <br>
+        v-model="password"> <br> <br>
     </form>
       <button @click="districtAdminLoginHandler">
       Login</button>
@@ -31,11 +32,11 @@ export default {
   },
   methods: {
     async districtAdminLoginHandler() {
-      await store.dispatch('validateAdminCredentials', {
-        userId: this.userId,
-        password: this.password,
-        roleId: 1
-      })
+      await store.dispatch('validateDistrictAdmin', {
+          id: this.$router.currentRoute.value.params.id,
+          user_id: this.userId,
+          password: this.password, 
+        })
       this.redirect()
     },
     redirect() {
@@ -51,10 +52,23 @@ export default {
 
 <style scoped>
 
+img {
+  height: 50px;
+  margin-left: 40%;
+}
+
+.login-container {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.171);
+  width: 20%;
+  height: 350px;
+}
+
 form {
   text-align: center;
-  margin: auto;
-  width: 50%;
+  margin: auto; 
+  /* width: 50%; */
   margin-top: 10%;
   font-size: 18px;
 }
@@ -65,19 +79,21 @@ legend {
 
 input {
   border: none;
-  border-bottom: 1px solid rgba(255,0,0,0.5);;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255,0,0,0.5);
 }
 
 button {
   background-color: #ffb607;
-  opacity: 0.8;
+  color: whitesmoke;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
   border: none;
-  padding: 8px;
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  width: 30%;
+  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
+  border-radius: 5%;
+  padding: 12px;
+  margin-left: 35%;
 }
 
 button:hover {
@@ -87,19 +103,6 @@ button:hover {
 #error {
   color: red;
   font-weight: bolder;
-}
-
-#success {
-  color: green;
-  font-weight: bolder;
-}
-
-#admin-page {
-  text-decoration: none;
-}
-
-#admin-page:hover {
-  color: #ffb607;
 }
 
 </style>

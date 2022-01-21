@@ -3,6 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 
 import { isSiteAdminValid } from './authentication-calls';
 import { isUserValid } from './authentication-calls'
+import { isValid } from './authentication-calls'
 
 import district from '../api-factory/district'
 import club from '../api-factory/club'
@@ -23,6 +24,7 @@ export default createStore({
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
     
+    loggedInDistrictId: Number,
     loggedInClubUserId: Number,
 
     currentDistrictData: Object,
@@ -30,25 +32,26 @@ export default createStore({
     currentProjectData: Object,
     
     clubSocials: [],
-
-    //TODO trash data, remove later from the whole app
-    currentDistrictId: Number,
-    currentClubId: Number,
-    currentProjectId: Number,
-    currentUserIdToEdit: Number,
   },
   mutations: {
-    adminLogin(state, roleId) {
+    adminLogin(state, loginData) {
+
+      const roleId = loginData.roleId
+
       switch(roleId) {
+        //Site Admin
         case 0: 
           state.isSiteAdminLoggedIn = true
           state.isSiteAdminRejected = false
           window.location.replace('/admin/home')
         break
+        //District Admin
         case 1:
           state.isDistrictAdminLoggedIn = true
           state.isDistrictAdminRejected = false
+          state.loggedInDistrictId = loginData.districtId
         break
+        //Club Admin
         case 5:
           state.isClubAdminLoggedIn = true
           state.isClubAdminRejected = false
@@ -81,16 +84,17 @@ export default createStore({
     logout(state, roleIdToLogOut) {
       switch(roleIdToLogOut) {
         case 0: 
-        state.isSiteAdminLoggedIn = false
+          state.isSiteAdminLoggedIn = false
         break
         case 1: 
-        state.isDistrictAdminLoggedIn = false
+          state.isDistrictAdminLoggedIn = false
+          state.loggedInDistrictId = Number
         break
         case 5:
-        state.isClubAdminLoggedIn = false
+          state.isClubAdminLoggedIn = false
         break
         case 7:
-        state.isClubUserLoggedIn = false
+          state.isClubUserLoggedIn = false
       }
     },
 
@@ -109,22 +113,6 @@ export default createStore({
     changeClubSocials(state, clubSocialsArray) {
       state.clubSocials = clubSocialsArray
     },
-
-    /////////All thrash
-    changeCurrentDistrict(state, districtId) {
-      state.currentDistrictId = districtId
-      console.log(state.currentDistrictId)
-    },
-    changeCurrentClub(state, clubId) {
-      state.currentClubId = clubId
-    },
-    changeCurrentProject(state, projectId) {
-      state.currentProjectId = projectId
-    },
-    changeCurrentUserIdToEdit(state, userId) {
-      state.currentUserIdToEdit = userId
-    },
-    ///////////////////
   
   },
   actions: {
@@ -166,8 +154,22 @@ export default createStore({
       }
     },
 
-    
+    async validateDistrictAdmin({commit}, data) {
 
+      const loginData = {
+        districtId: data.id,
+        roleId: 1
+      }
+
+      if(await isValid(data)) {
+        commit('adminLogin', loginData)
+        console.log('valid')
+      } else {
+        commit('adminReject', 1)
+      }
+    },
+
+  
     logout({commit}, roleIdToLogOut) {
       commit('logout', roleIdToLogOut)
     },
@@ -192,20 +194,6 @@ export default createStore({
       commit('changeClubSocials', clubSocialsArray)
     },
 
-    ////////All thrash
-    changeCurrentDistrict({commit}, districtId) {
-      commit('changeCurrentDistrict', districtId)
-    },
-    changeCurrentClub({commit}, clubId) {
-      commit('changeCurrentClub', clubId)
-    },  
-    changeCurrentProject({commit}, projectId) {
-      commit('changeCurrentProject', projectId)
-    },
-    changeCurrentUserIdToEdit({commit}, userId) {
-      commit('changeCurrentUserIdToEdit', userId)
-    },
-    ////////////////
   },
   getters: {
 

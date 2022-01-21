@@ -26,9 +26,6 @@
       <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Club Users</router-link>
       </li>
-      <li v-if="!($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
-        <router-link class="link" :to="{name: 'DistrictLogin', params: {id: this.districtId}}">Login</router-link>
-      </li>
       <li v-if="$store.state.isDistrictAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
       </li>

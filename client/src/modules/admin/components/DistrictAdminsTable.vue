@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <!-- Make a call to the API and generate these districts -->
-    <legend class="table-title">District Admins</legend> <br> <br> <br>
+  <div class="admin-container">
     <table v-if="admins.length != 0">
       <th>ID</th>
       <th>District ID</th>
@@ -69,7 +67,12 @@ export default {
 
 <style scoped>
 
+tr:nth-child(even) {
+  background-color: #40688227;
+}
 
-
+th, td {
+  border: 1px solid #4068823b;
+}
 
 </style>

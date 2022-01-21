@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <legend class="table-title">Districts</legend> <br> <br>
+  <div class="admin-container">
     <table v-if="districts.length != 0">
       <th>ID</th>
       <th>Name</th>
@@ -67,29 +66,12 @@ export default {
 
 <style scoped>
 
-.table-title {
-  font-family: 'Montserrat', sans-serif;
-  margin-top: 5px;
+tr:nth-child(even) {
+  background-color: #40688227;
 }
 
-table {
-  /* margin-left: 36%; */
-  margin: auto;
-}
-
-th {
-  font-family: 'Montserrat', sans-serif;
-  padding: 3px;
-}
-
-td {
-  width: 25%;
-  padding: 5px;
-}
-
-
-table, th, td {
-  /* border: 1px solid rgba(0, 0, 0, 0.151); */
+th, td {
+  border: 1px solid #4068823b;
 }
 
 </style>

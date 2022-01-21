@@ -57,6 +57,7 @@ export default {
   text-align: center;
   background-color: #232323;
   padding: 50px;
+  text-transform: uppercase;
 }
 
 .club-page-title {

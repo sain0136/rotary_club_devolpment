@@ -38,15 +38,20 @@
         <div class="col-sm-4"
           v-for="project in filteredProjects" 
           :key="project.id">
-          <div class="card"
-            @click="goToProjectPage(project.project_id)">
+          <div class="card">
             <img
+              @click="goToProjectPage(project.project_id)"
               class="project-image"
               src="../../assets/project-placeholder.png" alt="">
             <div class="card-body">
               <h5 class="card-title">{{ project.project_name }}</h5>
               <p class="card-text">{{ project.project_theme }}</p>
-              <a :href="`./edit`" class="btn btn-primary">Edit</a>
+              <a 
+                v-if="$store.state.isClubAdminLoggedIn || 
+                      $store.state.isDistrictAdminLoggedIn ||
+                      $store.state.isSiteAdminLoggedIn"
+                :href="`./edit`" 
+                class="btn btn-primary">Edit</a>
             </div>
           </div>
         </div>
@@ -83,6 +88,8 @@ export default {
       return this.projects.filter(project => {
         const projectName = project.project_name.toString().toLowerCase()
         const searchTerm = this.searchText.toLowerCase()
+
+        const projectRegion = project.region.toString()
 
         return projectName.includes(searchTerm)
       })
@@ -174,13 +181,13 @@ input {
 
 .card {
   font-size: 16px;
-  cursor: pointer;
   margin-top: 10px;
   background-color: transparent;
 }
 
-.card:hover {
+img:hover {
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .project-image {
