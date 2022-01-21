@@ -12,12 +12,16 @@
         <td>{{user.fullName}}</td>
         <td>
           <button
-            @click="deleteUser(user.user_id)">
-            Delete
+            class="crud-buttons"
+            @click="goToEditUserPage(user.user_id)">
+            <font-awesome-icon
+              class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
-            @click="goToEditUserPage(user.user_id)">
-            Edit
+            class="crud-buttons"
+            @click="deleteUser(user.user_id)">
+            <font-awesome-icon
+              class="social-icon" icon="trash-alt"></font-awesome-icon>
           </button>
         </td>
       </tr>
@@ -60,13 +64,35 @@ export default {
 
 <style scoped>
 
+table {
+  border: 1px solid #b2b2b259;
+}
+
+th {
+  border: 1px solid #b2b2b2c5;
+}
+
 td {
-  width: 25%;
+  border: 1px solid #b2b2b294;
+  font-family: 'Lato', sans-serif;
+  padding: 5px;
 }
 
 table {
   margin: auto;
-  font-size: 16px
+}
+
+th {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+}
+
+td {
+  width: 25%;
+}
+
+tr:nth-child(even) {
+  background-color: #b2b2b249;
 }
 
 </style>

@@ -8,7 +8,9 @@
         placeholder="Search by keywords.."
         v-model="searchText"> <br> <br>
       <label for="status">Status</label>
-      <select name="status">
+      <select 
+        name="status"
+        v-model="status">
         <option value="">Funding</option>
         <option value="">Pending</option>
       </select> <br> <br>
@@ -70,6 +72,10 @@ export default {
     return {
       projects: [],
       searchText: '',
+      status: '',
+      region: '',
+      year: Number,
+      projectType: ''
     };
   },
   computed: {
@@ -113,6 +119,10 @@ export default {
 
 <style scoped>
 
+.container {
+  margin-bottom: -500px;
+}
+
 h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
@@ -137,14 +147,14 @@ option, select, input {
 
 .filters-container {
   float: left;
-  /* border: 1px solid black; */
   width: 30%;
   background-color: #b2b2b260;
 }
 
 .projects-container {
-  float: right;
-  width: 60%;
+  /* float: right; */
+  padding-left: 100px;
+  width: 70%;
   height: 600px;
   overflow: auto;
 }

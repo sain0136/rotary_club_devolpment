@@ -46,10 +46,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .view {
-  text-align: center;
+  /* text-align: center;  */
   margin-top: auto;
-  font-size: 36px;
+  /* font-size: 36px; */
+}
+
+.club-page-head {
+  text-align: center;
+  background-color: #232323;
+  padding: 50px;
+}
+
+.club-page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: whitesmoke;
 }
 </style>

@@ -9,4 +9,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style>
+
+.projects-container {
+  margin-bottom: 50%;
+  text-align: center;
+}
+
+</style>

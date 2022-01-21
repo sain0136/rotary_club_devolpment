@@ -3,41 +3,19 @@
     <div class="district-page-head">
       <h1 class="district-page-title">Connect with us!</h1>
     </div> <br> <br>
-    <br />
-    <div class="send-message-container">
-      <br>
-      <h2>Send Message</h2> <br>
-      <input type="text" placeholder="Your Name">
-      <input type="text" placeholder="Your Email">
-      <br> <br>
-      <textarea  
-        cols="30"
-        rows="10"
-        placeholder="Your Message">
-      </textarea>
-    </div>
-    <div class="contact-info-container">
-      <br>
-      <h2>Contact Info</h2> <br>
-      <div class="info">  
-        Address: <br>
-        {{
-          $store.state.currentDistrictData.meeting_location
-        }}
-        <br/> <br>
-        Email: <br>
-        {{
-          $store.state.currentDistrictData.district_email
-        }}
-        <br/> <br>
-      </div>
-    </div> <br><br><br>
+    <ContactUs isDistrictOrClub="District"/>
   </div> 
 </template>
 
 <script>
+
+import ContactUs from '../../../components/common/ContactUs.vue'
+
 export default {
   name: 'DistrictContactUs',
+  components: {
+    ContactUs,
+  },
   data() {
     return {}
   },
@@ -45,8 +23,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 
 .send-message-container {
   float: left;

@@ -1,13 +1,14 @@
 <template>
   <div>
-    <h1>
-      Club
-      {{
-        $store.state.currentClubData
-          .club_name
-      }}
-      Home
-    </h1>
+    <div class="club-page-head">
+      <h1 class="club-page-title">
+        Welcome to Club 
+        {{
+          $store.state.currentClubData.club_name
+        }} !
+      </h1>
+    </div>
+    <img src="../assets/club-logo.png" alt="">
   </div>
 </template>
 
@@ -21,3 +22,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+img {
+  height: 200px;
+  margin-bottom: -250px;
+  margin-left: 33%;
+}
+
+</style>

@@ -1,10 +1,16 @@
 <template>
   <div>
-    <h1>Your Projects</h1>
+    <div class="club-page-head">
+      <h1 class="club-page-title">
+        Your Projects
+      </h1>
+    </div> <br> <br>
     <br />
-    <ProjectsTable
-      pageToDisplay="User"
-    />
+    <div class="projects-container">
+      <ProjectsTable
+        pageToDisplay="User"
+      />
+    </div>
   </div>
 </template>
 

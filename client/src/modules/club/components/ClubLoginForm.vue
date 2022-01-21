@@ -6,23 +6,8 @@
         v-if="$store.state.isClubAdminRejected || $store.state.isClubUserRejected"
         id="error">
         Credentials not valid!
+        <br>
       </p>
-      <div class="form-field">
-        <label for="Admin">Admin</label>
-        <input 
-          type="radio" 
-          name="Admin" 
-          value="5"
-          v-model="roleType">
-        <br><br>
-        <label for="User">User</label>
-        <input 
-          type="radio" 
-          name="User" 
-          value="7"
-          v-model="roleType">          
-        <br> <br>
-      </div>
       <div v-if="$store.state.isClubAdminLoggedIn && !$store.state.isClubAdminRejected">
         <p id="success">Logged In!</p>
       </div>
@@ -46,7 +31,6 @@ export default {
     return {
       username: '',
       password: '',
-      roleType: '7', //default value
     }
   },
   methods: {

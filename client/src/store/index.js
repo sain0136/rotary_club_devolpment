@@ -165,6 +165,9 @@ export default createStore({
           }
       }
     },
+
+    
+
     logout({commit}, roleIdToLogOut) {
       commit('logout', roleIdToLogOut)
     },

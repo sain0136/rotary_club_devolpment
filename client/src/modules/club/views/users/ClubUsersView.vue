@@ -1,14 +1,17 @@
 <template>
   <div>
+    <div class="club-page-head">
+      <h1 class="club-page-title">
+        Club Users
+      </h1>
+    </div> <br> <br>
+    <ClubUsersTable/> <br>
     <button
-        v-if="$store.state.isSiteAdminLoggedIn || $store.state.isClubAdminLoggedIn"
-        @click="() => {
-          this.$router.push('create')
-        }">
-        Create User
-      </button>
-      <br><br>
-    <ClubUsersTable/>
+      class="plus"
+      id="plus-clubs"
+      v-if="$store.state.isSiteAdminLoggedIn || $store.state.isClubAdminLoggedIn"
+      @click="() => this.$router.push('create')">
+    </button>
   </div>
 </template>
 
@@ -28,8 +31,12 @@ export default {
 <style scoped>
 
 button {
-  font-size: 14px;
-  margin-left: auto;
+  margin-left: 48%;
+}
+
+#plus-clubs {
+  background-color: #ffb607;
+  color: white;
 }
 
 </style>

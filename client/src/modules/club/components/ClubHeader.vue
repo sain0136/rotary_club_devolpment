@@ -91,7 +91,7 @@ li {
   text-decoration: none;
   color: black;
   font-family: 'Montserrat';
-  font-size: 16px;
+  font-size: 18px;
   transition: color 0.5s;
 }
 
