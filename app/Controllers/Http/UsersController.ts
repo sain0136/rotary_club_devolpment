@@ -38,7 +38,7 @@ export default class UsersController {
     ) {
       verifiedAndAccessGranted = true
     } else {
-      return response.unauthorized('Not authorizexxd')
+      return response.json({ Verified: verifiedAndAccessGranted })
     }
 
     if (userById.clubId !== null && userById.clubId !== undefined) {
@@ -53,10 +53,9 @@ export default class UsersController {
         .where({ user_id: userById.userId })
     }
     return response.json({
-      'This user belongs to the proper district or club and password was verified ':
-        verifiedAndAccessGranted,
-      'Hash': userById.password,
-      'PlainText': password,
+      Verified: verifiedAndAccessGranted,
+      Hash: userById.password,
+      PlainText: password,
     })
   }
   public async jsonGetById({ request, response }: HttpContextContract) {
