@@ -1,9 +1,9 @@
 export default {
 
   async index() {
-    const res = await fetch('/api/user', { method: 'GET'})
+    const res = await fetch('/api/districtAdmins', { method: 'GET'})
     const data = await res.json()
-    return data.allUsers
+    return data.allAdmins
   },
 
   async show() {

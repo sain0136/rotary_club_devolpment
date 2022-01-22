@@ -335,6 +335,7 @@ export default {
     },
 
     async updateExistingAdmin() {
+      console.log('ok')
       const id = this.$router.currentRoute.value.params.userid
       const userToUpdate = this.getUserData()
       await district_admin.update(id, userToUpdate)

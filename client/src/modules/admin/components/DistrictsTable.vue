@@ -55,7 +55,7 @@ export default {
   methods: {
     async deleteDistrict(districtId) {
       if(confirm(`Are you sure you want to delete district ${districtId}?`)) {
-        district.delete(districtId)
+        await district.delete(districtId)
         this.districts = await district.index()
       }
     }

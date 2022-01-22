@@ -54,7 +54,7 @@ import store from '../../store/index'
 import social_links from '../../api-factory/social_links'
 
 export default {
-  name: 'DistrictSocialLinks',
+  name: 'SocialLinksSection',
   props: {
     isDistrictOrClub: Boolean
   },
@@ -151,7 +151,29 @@ export default {
       }
 
       await social_links.update(this.currentUrlIDToUpdate, urlToUpdate)
+      await this.updateLinksInState()
+      
       this.clean()
+      this.isEditOrCreateLink='Create'
+    },
+
+    async updateLinksInState() {
+      const objectId = this.$router.currentRoute.value.params.id
+
+      if(this.isDistrictOrClub == 'District') {
+        const queryObject = {
+          isThisDistrict: true,
+          object_id: objectId
+        }
+        console.log(queryObject)
+        store.dispatch('changeDistrictSocials', queryObject)
+      } else {
+        const queryObject = {
+          isThisDistrict: false,
+          object_id: objectId
+        }
+        store.dispatch('changeClubSocials', queryObject)
+      }
     },
 
     cancelEdit() {

@@ -26,14 +26,25 @@ export default {
       currentDistrictId: this.$router.currentRoute.value.params.id
     }
   },
-  created() {
-    store.dispatch('changeCurrentDistrictData', 
-                    this.currentDistrictId)
+  async created() {
+    await this.setDistrictData()
     //To prevent user to be logged in to multiple districts
     if(store.state.loggedInDistrictId != this.currentDistrictId) {
       store.dispatch('logout', 1)
     }
   },
+  methods: {
+    async setDistrictData() {
+      await store.dispatch('changeCurrentDistrictData', this.currentDistrictId)
+
+      const districtSocialQueryObject = {
+        isThisDistrict: true,
+        object_id: this.currentDistrictId
+      }
+
+      store.dispatch('changeDistrictSocials', districtSocialQueryObject)
+    }
+  }
 }
 </script>
 

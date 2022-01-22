@@ -9,7 +9,6 @@ export default {
     })
 
     const linkData = await res.json()
-    console.log(await linkData)
     
     if(isDistrict) {
       return await linkData.district.socialmedia

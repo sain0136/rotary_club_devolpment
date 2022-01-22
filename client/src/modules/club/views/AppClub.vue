@@ -53,9 +53,7 @@ export default {
 
 <style>
 .view {
-  /* text-align: center;  */
   margin-top: auto;
-  /* font-size: 36px; */
 }
 
 .club-page-head {

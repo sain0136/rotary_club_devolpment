@@ -34,6 +34,7 @@ export default createStore({
     currentProjectData: Object,
     currentClubUserData: Object,
     
+    districtSocials: [],
     clubSocials: [],
   },
   mutations: {
@@ -127,6 +128,10 @@ export default createStore({
       state.currentProjectData = projectData
     },
 
+    changeDistrictSocials(state, districtSocialsArray) {
+      state.districtSocials = districtSocialsArray
+    },
+
     changeClubSocials(state, clubSocialsArray) {
       state.clubSocials = clubSocialsArray
     },
@@ -191,6 +196,10 @@ export default createStore({
     async changeCurrentProjectData({commit}, projectId) {
       const projectData = await project.show(projectId)
       commit('changeCurrentProjectData', projectData)
+    },
+    async changeDistrictSocials({commit}, queryObject) {
+      const districtSocialsArray = await social_links.index(queryObject)
+      commit('changeDistrictSocials', districtSocialsArray)
     },
     async changeClubSocials({commit}, queryObject) {
       const clubSocialsArray = await social_links.index(queryObject)

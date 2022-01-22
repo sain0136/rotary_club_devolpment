@@ -159,9 +159,10 @@
 import store from '../../../store/index'
 
 import useValidate from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
-import user from '../../../api-factory/user'
+import { required, email, requiredIf } from '@vuelidate/validators'
 
+import user from '../../../api-factory/user'
+import club from '../../../api-factory/club'
 
 export default {
   name: 'ClubUserForm',
@@ -222,7 +223,9 @@ export default {
         email
       },
       password: {
-        required
+        required: requiredIf(function () {
+          return this.isEditOrCreate == 'Create'
+        })
       }
     }
   },
@@ -303,7 +306,7 @@ export default {
 
     async updateExistingUser() {
       const clubUserToUpdate = this.getUserData()
-      await club.user(store.state.currentUserIdToEdit, clubUserToUpdate)
+      await user.update(this.$router.currentRoute.value.params.userid, clubUserToUpdate)
       this.redirect(false)
     },
 

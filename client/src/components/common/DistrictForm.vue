@@ -187,8 +187,7 @@ export default {
     },
 
   async created() {
-    // this.admins = await user.index() //TODO change to admins from users
-    /**
+     /**
      * If the form is to be used for update, the data is pre-populated 
      * with the specific district's data coming from the API. If it's to be 
      * created, data is empty by default.

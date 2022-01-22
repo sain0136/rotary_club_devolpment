@@ -43,45 +43,45 @@ export default {
   },
   data() {
     return {
-      email: 'district@distro.com',
+      email: '',
 
-      facebookLink: 'facebook.com',
-      twitterLink: 'twitter.com',
-      instagramLink: 'instagram.com',
+      facebookLink: '',
+      twitterLink: '',
+      instagramLink: '',
 
-      clubSocials: [],
+      districtSocials: [],
     }
   },
   async created() {
-    // this.clubSocials = store.state.clubSocials 
+    this.districtSocials = store.state.districtSocials 
 
-    // const clubData = store.state.currentClubData
-    // this.email = await clubData.club_email
+    const districtData = store.state.currentDistrictData
+    this.email = await districtData.district_email
 
-    // this.facebookLink = await this.getSocialLink(1)
-    // this.twitterLink = await this.getSocialLink(2)
-    // this.instagramLink = await this.getSocialLink(3)
+    this.facebookLink = await this.getSocialLink(1)
+    this.twitterLink = await this.getSocialLink(2)
+    this.instagramLink = await this.getSocialLink(3)
   },
   methods: {
 
-    // async getSocialLink(socialType) {
-    //   let linkToReturn
+    async getSocialLink(socialType) {
+      let linkToReturn
 
-    //   if(this.clubSocials != undefined) {
-    //     this.clubSocials.forEach(socialLink => {
-    //     if(socialLink.url_type === socialType) {
-    //       linkToReturn = socialLink.url
-    //      }
-    //     })
-    //     return linkToReturn
-    //   }
-    //   return null
-    // },
-
-    logout() {
-      store.dispatch("logout", 5)
-      store.dispatch("logout", 7)
+      if(this.districtSocials != undefined) {
+        this.districtSocials.forEach(socialLink => {
+        if(socialLink.url_type === socialType) {
+          linkToReturn = socialLink.url
+         }
+        })
+        return linkToReturn
+      }
+      return null
     },
+
+    // logout() {
+    //   store.dispatch("logout", 5)
+    //   store.dispatch("logout", 7)
+    // },
   }
 }
 

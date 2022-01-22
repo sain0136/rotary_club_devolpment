@@ -56,7 +56,7 @@ export default {
 
     async deleteClub(clubId) {
       if(confirm(`Are you sure you want to delete club ${clubId}?`)) {
-        club.delete(clubId)
+        await club.delete(clubId)
         this.clubs = await this.getClubs()
       }
     },

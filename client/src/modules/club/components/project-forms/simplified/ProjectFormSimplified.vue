@@ -276,7 +276,6 @@ export default {
     
     async prePopulateFields() {
       const projectData = await project.show(this.$router.currentRoute.value.params.projectid)
-      console.log(projectData)
     
       this.name = projectData.project_name
       this.theme = projectData.project_theme
@@ -327,6 +326,7 @@ export default {
 
     async createNewProject() {
       const projectToAdd = this.getProjectData()
+      console.log('data: ', projectToAdd)
       project.create(projectToAdd)
       this.redirect(true)
     },
@@ -357,10 +357,11 @@ export default {
 
     formatDate(dateString) {
       let date = new Date(dateString)
-      let day = date.getDate()
-      let month = date.getMonth()
+      let day = parseInt(date.getDate()) 
+      let month = parseInt(date.getMonth()) 
       let year = date.getFullYear()
-      return month + '/' + day + '/' + year
+      // return month + '/' + day + '/' + year
+      return '05/07/2022' //temporarily
     },
     
   },

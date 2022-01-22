@@ -136,7 +136,6 @@ import { required, maxLength, minLength, email } from '@vuelidate/validators'
 import SocialLinksSection from '../../../components/common/SocialLinksSection.vue'
 
 import club from '../../../api-factory/club'
-import store from '../../../store/index'
 
 export default {
   name: 'ClubForm',
@@ -254,7 +253,7 @@ export default {
     
     async createNewClub() {
       const clubToCreate = this.getClubData()
-      club.create(clubToCreate)
+      await club.create(clubToCreate)
       this.redirect(true)
     },
 

@@ -2,6 +2,7 @@
   <div>
     <DistrictForm
       isEditOrCreate="Edit"
+      pageAccessed="District"
     />
   </div>
 </template>
