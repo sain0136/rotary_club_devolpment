@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="club-page-head">
+      <h1 class="club-page-title">
+        SIGN IN
+      </h1>
+    </div> <br> <br>
     <ClubLoginForm />
   </div>
 </template>

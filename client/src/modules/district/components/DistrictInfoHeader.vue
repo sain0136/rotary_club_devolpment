@@ -21,7 +21,7 @@
         v-if="!($store.state.isDistrictAdminLoggedIn || $store.state.isSiteAdminLoggedIn)"
         :to="`/district/${this.$router.currentRoute.value.params.id}/login`">
         <font-awesome-icon 
-          v-if="!($store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn)"
+          v-if="!($store.state.isDistrictAdminLoggedIn)"
           class="social-icon" icon="sign-in-alt"></font-awesome-icon>
         <p
           @click="logout"

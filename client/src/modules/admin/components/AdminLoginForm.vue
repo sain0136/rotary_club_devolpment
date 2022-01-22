@@ -28,10 +28,9 @@ export default {
   },
   methods: {
     adminLoginHandler() {
-      store.dispatch('validateAdminCredentials', {
+      store.dispatch('validateSiteAdmin', {
         userId: this.username,
         password: this.password,
-        roleId: 0
       })
     }
   }

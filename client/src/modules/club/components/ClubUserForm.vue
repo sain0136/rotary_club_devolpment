@@ -298,13 +298,13 @@ export default {
     async createNewUser() {
       const userToCreate = this.getUserData()
       await user.create(userToCreate)
-      this.redirect(fromCreate)
+      this.redirect(true)
     },
 
     async updateExistingUser() {
       const clubUserToUpdate = this.getUserData()
       await club.user(store.state.currentUserIdToEdit, clubUserToUpdate)
-      this.redirect()
+      this.redirect(false)
     },
 
     redirect(fromCreate) {

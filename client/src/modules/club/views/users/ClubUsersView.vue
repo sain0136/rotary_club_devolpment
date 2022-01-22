@@ -9,7 +9,9 @@
     <button
       class="plus"
       id="plus-clubs"
-      v-if="$store.state.isSiteAdminLoggedIn || $store.state.isClubAdminLoggedIn"
+      v-if="$store.state.isSiteAdminLoggedIn || 
+            $store.state.isClubAdminLoggedIn ||
+            $store.state.isDistrictAdminLoggedIn"
       @click="() => this.$router.push('create')">
     </button>
   </div>

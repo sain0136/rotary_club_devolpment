@@ -23,14 +23,9 @@
       <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Edit District</router-link>
       </li>
-      <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
-        <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Club Users</router-link>
-      </li>
       <li v-if="$store.state.isDistrictAdminLoggedIn">
         <button class="link" @click="logout">Logout</button>
       </li>
-
-      <li class="search-button"><font-awesome-icon icon="search" /></li>
     </ul>
   </nav>
 </template>
@@ -92,5 +87,10 @@ li, h1 {
 
 #logout:hover {
   cursor: pointer;
+}
+
+button {
+  background-color: transparent;
+  border: none;
 }
 </style>

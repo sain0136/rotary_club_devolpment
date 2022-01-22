@@ -62,15 +62,14 @@ export default {
       name: 'AppClubUsers',
       beforeEnter: (to, from, next) => {
         if (
-          store.state
-            .isClubAdminLoggedIn ||
-          store.state
-            .isSiteAdminLoggedIn
+          store.state.isClubAdminLoggedIn ||
+          store.state.isDistrictAdminLoggedIn ||
+          store.state.isSiteAdminLoggedIn
         ) {
           next()
         } else {
           next(false)
-          // window.location.replace(`/club/${store.state.currentClubData.club_id}/login`)
+          window.location.replace('../login')
         }
       },
       children: [

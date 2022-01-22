@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="login-container">
+    <br>
+    <img src="../assets/login-icon.png" alt="">
     <form>
-      <legend>Club Login</legend> <br> <br>
       <p 
         v-if="$store.state.isClubAdminRejected || $store.state.isClubUserRejected"
         id="error">
@@ -11,8 +12,8 @@
       <div v-if="$store.state.isClubAdminLoggedIn && !$store.state.isClubAdminRejected">
         <p id="success">Logged In!</p>
       </div>
-      <input type="text" name="username" placeholder="username"
-        v-model="username"> <br> <br>
+      <input type="text" name="id" placeholder="ID"
+        v-model="userId"> <br> <br>
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
@@ -29,18 +30,17 @@ export default {
   name: 'ClubLogin',
   data() {
     return {
-      username: '',
+      userId: '',
       password: '',
     }
   },
   methods: {
 
     async clubAdminLoginHandler() {
-      console.log(this.roleType)
-      await store.dispatch('validateAdminCredentials', {
-        userId: this.username,
+      await store.dispatch('validateClubUser', {
+        id: parseInt(this.$router.currentRoute.value.params.id),
+        user_id: parseInt(this.userId),
         password: this.password,
-        roleId: parseInt(this.roleType)
       })
       this.redirect()
     },
@@ -55,15 +55,27 @@ export default {
 
 </script>
 
+
 <style scoped>
+
+img {
+  height: 50px;
+  margin-left: 40%;
+}
+
+.login-container {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.171);
+  width: 20%;
+  height: 350px;
+}
 
 form {
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  border: none;
-  width: 20%;
+  margin: auto; 
+  /* width: 50%; */
+  margin-top: 10%;
   font-size: 18px;
 }
 
@@ -73,19 +85,32 @@ legend {
 
 input {
   border: none;
-  border-bottom: 1px solid rgba(255,0,0,0.5);;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255,0,0,0.5);
 }
 
 button {
   background-color: #ffb607;
-  font-size: 18px;
-  opacity: 0.8;
+  color: whitesmoke;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
   border: none;
-  padding: 8px;
+  width: 30%;
+  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
+  border-radius: 5%;
+  padding: 12px;
+  margin-left: 35%;
 }
 
 button:hover {
   opacity: 0.5;
 }
 
+#error {
+  color: red;
+  font-weight: bolder;
+}
+
 </style>
+
+

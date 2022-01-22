@@ -25,19 +25,24 @@ export default {
   },
   data() {
     return {
-      clubId: this.$router.currentRoute.value.params.id
+      currentClubId: this.$router.currentRoute.value.params.id
     }
   },
-  created() {
-    this.setClubData()
+  async created() {
+    await this.setClubData()
+    // console.log('current: ', this.currentClubId == store.state.loggedInClubId)
+    if(store.state.loggedInClubId != this.currentClubId) {
+      store.dispatch('logout', 5)
+      store.dispatch('logout', 7)
+    }
   },
   methods: {
-    setClubData() {
-      store.dispatch('changeCurrentClubData', this.clubId)
+    async setClubData() {
+      await store.dispatch('changeCurrentClubData', this.currentClubId)
 
       const clubSocialQueryObject = {
         isThisDistrict: false,
-        object_id: this.clubId
+        object_id: this.currentClubId
       }
 
       store.dispatch('changeClubSocials', clubSocialQueryObject)

@@ -29,6 +29,7 @@ export default {
   created() {
     store.dispatch('changeCurrentDistrictData', 
                     this.currentDistrictId)
+    //To prevent user to be logged in to multiple districts
     if(store.state.loggedInDistrictId != this.currentDistrictId) {
       store.dispatch('logout', 1)
     }
