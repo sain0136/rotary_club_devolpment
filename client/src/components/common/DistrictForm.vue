@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+
+
     <form onsubmit="event.preventDefault();">
       <h2
         v-if="isEditOrCreate=='Create'">
@@ -276,8 +278,9 @@ export default {
 
 <style scoped>
 
+
 form {
-  text-align: center;
+  width: 100%;
   display: grid;
 }
 
