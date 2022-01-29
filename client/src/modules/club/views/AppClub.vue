@@ -68,4 +68,27 @@ export default {
   font-weight: 700;
   color: whitesmoke;
 }
+
+.positive-button {
+  background-color: #ffb607;
+  color: whitesmoke;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  border: none;
+  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
+  border-radius: 5%;
+  padding: 12px;
+}
+
+.cancel-button {
+  background-color: #232323;
+  color: whitesmoke;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  border: none;
+  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
+  border-radius: 5%;
+  padding: 12px;
+}
+
 </style>

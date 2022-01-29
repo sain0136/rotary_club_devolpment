@@ -17,8 +17,11 @@
       <input type="password" placeholder="password"
         v-model="password"> <br> <br> <br>
     </form>
-      <button @click="clubAdminLoginHandler">
-      Login</button>
+      <button
+        class="positive-button"  
+        @click="clubAdminLoginHandler">
+        Login
+      </button>
   </div>
 </template>
 
@@ -87,19 +90,6 @@ input {
   border: none;
   background-color: transparent;
   border-bottom: 1px solid rgba(255,0,0,0.5);
-}
-
-button {
-  background-color: #ffb607;
-  color: whitesmoke;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bolder;
-  border: none;
-  width: 30%;
-  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
-  border-radius: 5%;
-  padding: 12px;
-  margin-left: 35%;
 }
 
 button:hover {

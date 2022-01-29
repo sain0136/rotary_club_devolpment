@@ -11,6 +11,8 @@ import AppPledges from '../views/projects/pledges/AppPledges'
 import PledgesView from '../views/projects/pledges/PledgesView'
 import PledgeCreate from '../views/projects/pledges/PledgeCreate'
 
+import store from '../../../store/index'
+
 export default {
   path: 'projects',
   component: AppClubProjects,
@@ -50,6 +52,18 @@ export default {
           path: 'pledges',
           component: AppPledges,
           name: 'AppPledges',
+          beforeEnter: (to, from, next) => {
+            if (
+              store.state.isClubAdminLoggedIn ||
+              store.state.isDistrictAdminLoggedIn ||
+              store.state.isSiteAdminLoggedIn
+            ) {
+              next()
+            } else {
+              next(false)
+              window.location.replace('../view')
+            }
+          },
           children: [
             {
               path: 'view',

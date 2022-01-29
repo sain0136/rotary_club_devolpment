@@ -1,7 +1,13 @@
 <template>
   <div>
-    <h1>Make Pledge</h1>
-    <br/>
+    <div class="club-page-head">
+      <h1 class="club-page-title">
+        Make Pledge
+      </h1>
+    </div>
+    <br><br><br>
+    <img src="../../../assets/pledge-image.png" alt="">
+    <br><br>
     <span 
       class="error"
       v-if="v$.pledgeAmount.$error">
@@ -11,13 +17,17 @@
       type="number"
       placeholder="Enter the amount"
       v-model="pledgeAmount"/>
-    <br/>
-    <button @click="validatePledge">
+    <br>
+    <br>
+    <button
+      class="positive-button" 
+      @click="validatePledge">
       Submit
     </button>
+    <br><br>
     <button
-      @click=" () => this.$router.push('./view') "
-    >
+      class="cancel-button"
+      @click="() => this.$router.push('./view')">
       Cancel
     </button>
   </div>
@@ -29,6 +39,8 @@ import store from '../../../../../store/index'
 import pledge from '../../../../../api-factory/pledge'
 import useValidate from '@vuelidate/core'
 import { required, maxLength} from '@vuelidate/validators'
+
+import img from '../../../assets/pledge-image.png'
 
 export default {
   name: 'PledgeCreate',
@@ -64,7 +76,7 @@ export default {
         user_id: store.state.loggedInClubUserId,
       }
 
-      pledge.create(pledgeToAdd)
+      await pledge.create(pledgeToAdd)
       this.$router.push('view')
     },
   },
@@ -73,13 +85,27 @@ export default {
 
 <style scoped>
 
-input, button {
+div {
+  text-align: center;
+}
+
+img {
+  height: 200px;
+}
+
+input {
   font-size: 20px;
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 .error {
   font-size: 14px;
   color: red;
+}
+
+.positive-button, .negative-button {
+  width: 8%;
 }
 
 </style>

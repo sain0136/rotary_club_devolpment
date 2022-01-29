@@ -14,12 +14,14 @@
         <td>
           <button
             class="crud-buttons"
+            id="edit"
             @click="goToEditDistrictAdminPage(admin.user_id)">
             <font-awesome-icon
               class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
             class="crud-buttons"
+            id="delete"
             @click="deleteAdmin(admin.user_id)">
             <font-awesome-icon
             class="social-icon" icon="trash-alt"></font-awesome-icon>
