@@ -177,7 +177,7 @@ export default class ProjectsController {
     const projectAdmins: any[] = await project
       .related('projectRole')
       .pivotQuery()
-      .where({ projectId: projectId })
+      .where({ project_id: projectId })
     return response.json({ projectPermited: projectAdmins })
   }
 
