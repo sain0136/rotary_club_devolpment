@@ -102,7 +102,6 @@ export default class ProjectsController {
         usersProjects.push(element)
       })
     }
-
     return response.json({ usersProjects })
   }
   public async showAllProjectsByClub({ request, response }: HttpContextContract) {
@@ -171,6 +170,15 @@ export default class ProjectsController {
         ' whose role is: ' +
         (await roleTitle(roleType)),
     })
+  }
+  public async showAllAdminsForProject({ request, response }: HttpContextContract) {
+    const projectId: number = request.input('project_id')
+    let project: Project = await Project.findOrFail(projectId)
+    const projectAdmins: any[] = await project
+      .related('projectRole')
+      .pivotQuery()
+      .where({ projectId: projectId })
+    return response.json({ projectPermited: projectAdmins })
   }
 
   public async update({ params, request, response }: HttpContextContract) {
