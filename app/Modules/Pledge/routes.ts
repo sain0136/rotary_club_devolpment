@@ -5,3 +5,5 @@ Route.resource('/pledge/', 'PledgesController')
 Route.post('/pledge/user/', 'PledgesController.showPledgesByProjectIdByUserId')
 
 Route.post('/pledge/project/', 'PledgesController.showOneProjectWithPledges')
+
+Route.post('/pledge/userPledges/', 'PledgesController.showAllPledgesByUser')

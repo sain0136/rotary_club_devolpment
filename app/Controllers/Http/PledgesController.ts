@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
 
@@ -70,6 +71,13 @@ export default class PledgesController {
     const userId: number = request.input('user_id')
     const project: Project = await Project.findOrFail(projectId)
     const pledge: object[] = await project.related('pledges').pivotQuery().where({ userId: userId })
+    return response.json({ Yourpledges: pledge })
+  }
+
+  public async showAllPledgesByUser({ request, response }: HttpContextContract) {
+    const userId: number = request.input('user_id')
+    const user: User = await User.findOrFail(userId)
+    const pledge: object[] = await Database.query().from('pledges').where({ user_id: user.userId })
     return response.json({ Yourpledges: pledge })
   }
 

@@ -160,6 +160,7 @@ export default class UsersController {
   public async show({ params, response }: HttpContextContract) {
     const userId: number = parseInt(params.id)
     const userById: User = await User.findOrFail(userId)
+
     return response.json({ userById })
   }
 
