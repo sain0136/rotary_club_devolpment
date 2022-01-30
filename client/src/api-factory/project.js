@@ -52,6 +52,9 @@ export default {
     return await projects
   },
 
+  /**
+   * This call is used as the "get project by id" route
+   */
   async show(id) {
 
     const queryHelper = {

@@ -23,6 +23,11 @@
               :to="{name: 'UserProjectsView', params: {id: this.clubId}}">
               Your Projects
             </router-link>
+            <router-link 
+              v-if="$store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn"
+              :to="{name: 'UserPledgesView', params: {id: this.clubId}}">
+              Your Pledges
+            </router-link>
           </div>
         </div>
       </li>

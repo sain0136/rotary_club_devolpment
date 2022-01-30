@@ -2,25 +2,26 @@
   <div>
     <div class="club-page-head">
       <h1 class="club-page-title">
-        Pledges on 
-        {{ 
-          $store.state.currentProjectData.project_name
-        }}
+        Pledges made by you (
+          {{ 
+            $store.state.currentClubUserData.user_id
+          }}
+        )
       </h1>
     </div>
     <br> <br>
-    <PledgesTable/>
+    <UserPledgesTable/>
   </div>
 </template>
 
 <script>
 
-import PledgesTable from '../../../components/PledgesTable.vue'
+import UserPledgesTable from '../../../components/UserPledgesTable.vue'
 
 export default {
   name: 'PledgesView',
   components: {
-    PledgesTable
+    UserPledgesTable
   },
 }
 </script>

@@ -4,11 +4,12 @@ import ProjectPageView from '../views/projects/ProjectPageView'
 import AppClubProjects from '../views/projects/AppClubProjects'
 import ClubProjectsView from '../views/projects/ClubProjectsView'
 import UserProjectsView from '../views/projects/UserProjectsView'
+import UserPledgesView from '../views/projects/pledges/UserPledgesView'
 import ProjectEdit from '../views/projects/ProjectEdit'
 import ProjectCreate from '../views/projects/ProjectCreate'
 
 import AppPledges from '../views/projects/pledges/AppPledges'
-import PledgesView from '../views/projects/pledges/PledgesView'
+import ProjectPledgesView from '../views/projects/pledges/ProjectPledgesView'
 import PledgeCreate from '../views/projects/pledges/PledgeCreate'
 
 import store from '../../../store/index'
@@ -27,6 +28,11 @@ export default {
       path: 'view-user-projects',
       component: UserProjectsView,
       name: 'UserProjectsView',
+    },
+    {
+      path: 'view-user-pledges',
+      component: UserPledgesView,
+      name: 'UserPledgesView'
     },
     {
       path: 'create',
@@ -67,8 +73,8 @@ export default {
           children: [
             {
               path: 'view',
-              component: PledgesView,
-              name: 'PledgesView',
+              component: ProjectPledgesView,
+              name: 'ProjectPledgesView',
             },
             {
               path: 'create',

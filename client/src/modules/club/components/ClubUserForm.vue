@@ -161,7 +161,7 @@ import store from '../../../store/index'
 import useValidate from '@vuelidate/core'
 import { required, email, requiredIf } from '@vuelidate/validators'
 
-import user from '../../../api-factory/user'
+import club_user from '../../../api-factory/club_user'
 import club from '../../../api-factory/club'
 
 export default {
@@ -239,12 +239,10 @@ export default {
   },
   methods: {
     async prePopulateFields() {
-      const userInfo = await user.show(this.$router.currentRoute.value.params.userid)
+      const userInfo = await club_user.show(this.$router.currentRoute.value.params.userid)
 
-      this.districtId = await userInfo.district_id
-      this.membership_id = await userInfo.membership_id
-      this.districtRole = await userInfo.district_role
-      this.roleType = await userInfo.role_type
+      this.membershipId = await userInfo.membership_id
+      this.roleType = await userInfo.role[0].role_type.toString()
       this.firstName = await userInfo.firstname
       this.lastName = await userInfo.lastname
       this.address = await userInfo.address
