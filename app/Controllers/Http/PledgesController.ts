@@ -77,7 +77,7 @@ export default class PledgesController {
   public async showAllPledgesByUser({ request, response }: HttpContextContract) {
     const userId: number = request.input('user_id')
     const user: User = await User.findOrFail(userId)
-    const pledge: object[] = await Database.query().from('pledges').where({ user_id: user.userId })
+    const pledge: object[] = await Database.query().from('pledge').where({ user_id: user.userId })
     return response.json({ Yourpledges: pledge })
   }
 
@@ -85,7 +85,7 @@ export default class PledgesController {
     const projectId: number = request.input('project_id')
     const userId: number = params.id
     const project: Project = await Project.findOrFail(projectId)
-    const pledge: object[] = await project.related('pledge').pivotQuery().where({ userId: userId })
+    const pledge: object[] = await project.related('pledges').pivotQuery().where({ userId: userId })
     return response.json({ Yourpledges: pledge })
   }
 
