@@ -89,7 +89,10 @@ export default class ProjectsController {
   public async show({ params, response }: HttpContextContract) {
     const projectId: number = parseInt(params.id)
     const ProjectById: Project = await Project.findOrFail(projectId)
-    return response.json({ ProjectById })
+    const projectAdmins: any[] = await ProjectById.related('projectRole')
+      .pivotQuery()
+      .where({ project_id: projectId })
+    return response.json({ ProjectById, projectPermited: projectAdmins })
   }
 
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {

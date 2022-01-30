@@ -85,7 +85,7 @@ export default class PledgesController {
     const projectId: number = request.input('project_id')
     const userId: number = params.id
     const project: Project = await Project.findOrFail(projectId)
-    const pledge: object[] = await project.related('pledges').pivotQuery().where({ userId: userId })
+    const pledge: object[] = await project.related('pledge').pivotQuery().where({ userId: userId })
     return response.json({ Yourpledges: pledge })
   }
 
