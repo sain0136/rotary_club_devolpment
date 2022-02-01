@@ -40,6 +40,11 @@
       <li>
         <router-link class="link" :to="{name: 'ClubContactUs', params: {id: this.clubId}}">Contact Us</router-link>
       </li>
+      <li>
+        <SignInAndOutButton 
+          class="link"
+          pageAccessed="Club"/>
+      </li>
       <li> 
         <DonateButton/> 
       </li>
@@ -50,12 +55,15 @@
 <script>
 
 import DonateButton from '../../../components/ui/DonateButton.vue'
+import SignInAndOutButton from '../../../components/common/SignInAndOutButton.vue'
+
 import store from '../../../store/index'
 
 export default {
   name: 'ClubHeader',
   components: {
-    DonateButton
+    DonateButton,
+    SignInAndOutButton
   },
   data() {
     return {

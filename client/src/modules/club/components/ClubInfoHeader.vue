@@ -17,17 +17,6 @@
           class="social-icon" 
           :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
       </a>
-      <router-link 
-        v-if="!($store.state.isDistrictAdminLoggedIn || $store.state.isSiteAdminLoggedIn)"
-        :to="`/club/${this.$router.currentRoute.value.params.id}/login`">
-        <font-awesome-icon 
-          v-if="!($store.state.isClubAdminLoggedIn || $store.state.isClubUserLoggedIn)"
-          class="social-icon" icon="sign-in-alt"></font-awesome-icon>
-        <p
-          @click="logout"
-          v-else 
-          id="login-text">Logout</p>
-      </router-link>
     </div>
   </header>
 </template>
@@ -39,7 +28,6 @@ import store from '../../../store/index'
 export default {
   name: 'ClubInfoHeader',
   components: {
-
   },
   data() {
     return {

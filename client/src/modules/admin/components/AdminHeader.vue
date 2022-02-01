@@ -19,21 +19,26 @@
           >Manage District Admins</router-link
         >
       </li>
-      <li v-if="$store.state.isSiteAdminLoggedIn" class="nav-item" id=logout-area>
-        <button class="logout" @click="logout">
-          <font-awesome-icon
-            class="social-icon" icon="sign-in-alt"></font-awesome-icon>
-        </button>
+      <li>
+        <SignInAndOutButton 
+          class="link" 
+          pageAccessed="Admin"/>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+
+import SignInAndOutButton from '../../../components/common/SignInAndOutButton.vue'
+
 import store from "../../../store/index";
 
 export default {
   name: "AdminHeader",
+  components: {
+    SignInAndOutButton
+  },
   methods: {
     logout() {
       store.dispatch("logout", 0);

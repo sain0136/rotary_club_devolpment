@@ -99,6 +99,14 @@ export default createStore({
       state.isClubUserRejected = true
     },
 
+    signout(state) {
+      state.isSiteAdminLoggedIn = false
+      state.isDistrictAdminLoggedIn = false
+      state.loggedInDistrictId = Number
+      state.isClubAdminLoggedIn = false
+      state.isClubUserLoggedIn = false
+    },
+
     logout(state, roleIdToLogOut) {
       switch(roleIdToLogOut) {
         case 0: 
@@ -205,6 +213,10 @@ export default createStore({
       const clubSocialsArray = await social_links.index(queryObject)
       commit('changeClubSocials', clubSocialsArray)
     },
+
+    signOut({commit}) {
+      commit('signout')
+    }
 
   },
   getters: {

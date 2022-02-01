@@ -279,6 +279,7 @@ export default {
 form {
   text-align: center;
   font-size: 16px;
+  margin-bottom: 2000px;
 }
 
 .error {

@@ -67,32 +67,8 @@ export default {
     }
   },
   async created() {
-    // const clubData = store.state.currentClubData
-    // this.address = await clubData.club_address
-    // this.email = await clubData.club_email
-    // this.phone = await clubData.club_phone
-
-    // this.clubSocials = store.state.clubSocials
-
-    // this.facebookLink = await this.getSocialLink(1)
-    // this.twitterLink = await this.getSocialLink(2)
-    // this.instagramLink = await this.getSocialLink(3)
   },
   methods: {
-    
-    // async getSocialLink(socialType) {
-    //   let linkToReturn
-
-    //   if(this.clubSocials != undefined) {
-    //     this.clubSocials.forEach(socialLink => {
-    //     if(socialLink.url_type === socialType) {
-    //       linkToReturn = socialLink.url
-    //      }
-    //     })
-    //     return linkToReturn
-    //   }
-    //   return null
-    // },
   }
 }
 
@@ -101,9 +77,9 @@ export default {
 <style scoped>
 
 body{
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 footer {

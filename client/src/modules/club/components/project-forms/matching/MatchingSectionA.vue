@@ -76,7 +76,7 @@
         placeholder="Community"
         v-model="community">
     </div> <br>
-    <div class="formfield">
+    <div class="form-field">
       <h4>Area of Focus</h4> <br>
       <span
         v-if="v$.area.$error" 

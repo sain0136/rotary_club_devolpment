@@ -23,18 +23,26 @@
       <li v-if="($store.state.isSiteAdminLoggedIn || $store.state.isDistrictAdminLoggedIn)">
         <router-link class="link" :to="{name: 'DistrictEdit', params: {id: this.districtId}}">Edit District</router-link>
       </li>
-      <li v-if="$store.state.isDistrictAdminLoggedIn">
-        <button class="link" @click="logout">Logout</button>
+      <li>
+        <SignInAndOutButton 
+          class="link"
+          pageAccessed="District"/>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import store from "../../../store/index";
+
+import SignInAndOutButton from '../../../components/common/SignInAndOutButton.vue'
+
+import store from "../../../store/index"
 
 export default {
   name: "DistrictHeader",
+  components: {
+    SignInAndOutButton
+  },
   data() {
     return {
       districtName: null,

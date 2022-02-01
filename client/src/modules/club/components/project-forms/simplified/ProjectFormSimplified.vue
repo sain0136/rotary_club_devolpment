@@ -34,10 +34,24 @@
       </div>
       <!-- TODO area of focus will be a dropdown menu -->
       <div class="form-field">
-        <input type="text"
-          v-model="area"
-          placeholder="Area of Focus"> <br> <br>
-      </div>
+        <h4>Area of Focus</h4> <br>
+        <span
+          v-if="v$.area.$error" 
+          class="error">
+          Error
+        </span>
+        <select
+          v-model="area" 
+          name="area" >
+          <option value=""></option>
+          <option value="1">Peace and Conflict prevention/resolution</option>
+          <option value="2">Disease Prevention and Treatment</option> 
+          <option value="3">Water and Sanitation</option> 
+          <option value="4">Maternal and Child Health</option> 
+          <option value="5">Basic Education and Literacy</option> 
+          <option value="6">Economic and Community Development</option> 
+        </select>
+      </div> <br>
       <div class="form-field">
         <span 
           class="project-error" 
@@ -231,6 +245,9 @@ export default {
       theme: {
         required,
         maxLength: maxLength(50),
+      },
+      area: {
+        required
       },
       grantType: {
         required,
