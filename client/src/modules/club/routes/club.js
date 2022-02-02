@@ -9,6 +9,7 @@ import ClubUsers from '../views/users/AppClubUsers'
 import ClubUsersView from '../views/users/ClubUsersView'
 import CreateClubUser from '../views/users/ClubUserCreate'
 import ClubUserEdit from '../views/users/ClubUserEdit'
+import ClubUserProfile from '../views/users/ClubUserProfile'
 
 import project from './project'
 
@@ -86,8 +87,13 @@ export default {
         {
           path: ':userid/edit',
           component: ClubUserEdit,
-          name: 'EditClubUser',
+          name: 'ClubUserEdit',
         },
+        {
+          path: ':userid/profile',
+          component: ClubUserProfile,
+          name: 'ClubUserProfile'
+        }
       ],
     },
     project,

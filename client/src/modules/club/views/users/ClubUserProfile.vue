@@ -1,7 +1,7 @@
 <template>
   <div>
     <ClubUserForm 
-      pageAccessed='Admin'
+      pageAccessed='Profile'
       isEditOrCreate='Edit'/>
   </div>
 </template>
@@ -11,7 +11,7 @@
 import ClubUserForm from '../../components/ClubUserForm.vue'
 
 export default {
-  name: 'ClubUserEdit',
+  name: 'ClubUserProfile',
   components: {
     ClubUserForm
   }

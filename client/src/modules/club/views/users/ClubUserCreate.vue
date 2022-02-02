@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ClubUserForm isEditOrCreate='Create'/>
+    <ClubUserForm 
+      pageAccessed='Admin'
+      isEditOrCreate='Create'/>
   </div>
 </template>
 

@@ -17,6 +17,11 @@
           class="social-icon" 
           :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
       </a>
+      <router-link 
+        class="social-icon"
+        :to="{name: 'ClubUserProfile', params: {userid: $store.state.loggedInClubUserId}}">
+        Welcome {{$store.state.currentClubUserData.firstname}}!
+      </router-link>
     </div>
   </header>
 </template>
@@ -112,18 +117,13 @@ p {
   margin-right: 15px;
   opacity: 0.5;
   transition: opacity 300ms;
+  text-decoration: none;
 }
 
 .social-icon:hover {
   opacity: 1;
   cursor: pointer;
   transition: opacity 300ms;
-}
-
-#login-text {
-  display: inline;
-  text-decoration: yellow;
-  opacity: 0.5;
 }
 
 </style>

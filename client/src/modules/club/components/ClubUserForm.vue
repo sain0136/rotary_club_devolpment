@@ -1,7 +1,9 @@
 <template>
   <div>
     <form onsubmit="event.preventDefault();">
-      <div class="form-field">
+      <div 
+        v-if="pageAccessed=='Admin'"
+        class="form-field">
         <span 
           class="user-error" 
           id="user-roletype-error"
@@ -177,6 +179,7 @@ import user from '../../../api-factory/user'
 export default {
   name: 'ClubUserForm',
   props: {
+    pageAccessed: String,
     isEditOrCreate: String
   },
   data() {
@@ -250,6 +253,8 @@ export default {
   methods: {
     async prePopulateFields() {
       const userInfo = await club_user.show(this.$router.currentRoute.value.params.userid)
+
+      console.log(userInfo)
 
       this.membershipId = await userInfo.membership_id
       this.roleType = await userInfo.role[0].role_type.toString()

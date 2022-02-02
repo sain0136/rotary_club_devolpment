@@ -30,7 +30,7 @@ export default {
   },
   async created() {
     await this.setClubData()
-    // console.log('current: ', this.currentClubId == store.state.loggedInClubId)
+    console.log(store.state.currentClubUserData.firstname)
     if(store.state.loggedInClubId != this.currentClubId) {
       store.dispatch('logout', 5)
       store.dispatch('logout', 7)
