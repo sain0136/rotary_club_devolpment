@@ -1,15 +1,7 @@
 <template>
 <div class="section">
   <div class="form-field">
-    <label for="sponsor-club">Choose the sponsor club</label> <br>
-    <select 
-      v-model="sponsorClubId"
-      name="sponsor-club" 
-      id="sponsor-club">
-      <option value=""></option>
-      <option value="1">ph club 1</option>
-      <option value="2">ph club 2</option>
-    </select>
+    <input type="text">
   </div> <br>
   <button @click="goToNextSection()">Next</button>
   
@@ -22,14 +14,14 @@ export default {
   name: 'MatchingSection0',
   data() {
     return {
-      sponsorClubId: Number
+      sponsorClubId: ''
     }
   },
   methods: {
     goToNextSection() {
       this.$emit('goToNextSection', 
         {
-          sponsorClubId: parseInt(this.sponsorClubId)
+          sponsorClubId: this.sponsorClubId
         })
     }
   }

@@ -107,23 +107,6 @@ export default createStore({
       state.isClubUserLoggedIn = false
     },
 
-    logout(state, roleIdToLogOut) {
-      switch(roleIdToLogOut) {
-        case 0: 
-          state.isSiteAdminLoggedIn = false
-        break
-        case 1: 
-          state.isDistrictAdminLoggedIn = false
-          state.loggedInDistrictId = Number
-        break
-        case 5:
-          state.isClubAdminLoggedIn = false
-        break
-        case 7:
-          state.isClubUserLoggedIn = false
-      }
-    },
-
     changeCurrentDistrictData(state, districtData) {
       state.currentDistrictData = districtData
     },
@@ -187,10 +170,6 @@ export default createStore({
       } else {
         commit('clubUserReject', data.user_id)
       }
-    },
-  
-    logout({commit}, roleIdToLogOut) {
-      commit('logout', roleIdToLogOut)
     },
 
     async changeCurrentDistrictData({commit}, districtId) {

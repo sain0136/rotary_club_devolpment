@@ -15,13 +15,25 @@
             value="5"
             v-model="roleType">
           <br><br>
-          <label for="Admin">User</label>
+          <label for="User">User</label>
           <input 
             type="radio" 
             name="User" 
             value="7"
             v-model="roleType">          
          <br> <br>
+         <label for="Titled User">Titled User</label>
+          <input 
+            type="radio" 
+            name="Titled User" 
+            value="6"
+            v-model="roleType">          
+         <br> <br>
+         <input 
+          v-if="roleType=='6'"
+          type="text"
+          placeholder="Title"
+          v-model="clubRole"> <br> <br>
       </div>
       <div class="form-field">
         <input type="text"
@@ -156,13 +168,11 @@
 
 <script>
 
-import store from '../../../store/index'
-
 import useValidate from '@vuelidate/core'
 import { required, email, requiredIf } from '@vuelidate/validators'
 
 import club_user from '../../../api-factory/club_user'
-import club from '../../../api-factory/club'
+import user from '../../../api-factory/user'
 
 export default {
   name: 'ClubUserForm',
@@ -243,6 +253,7 @@ export default {
 
       this.membershipId = await userInfo.membership_id
       this.roleType = await userInfo.role[0].role_type.toString()
+      this.title = await userInfo.club_role
       this.firstName = await userInfo.firstname
       this.lastName = await userInfo.lastname
       this.address = await userInfo.address

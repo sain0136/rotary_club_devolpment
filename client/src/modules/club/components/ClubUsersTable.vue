@@ -4,12 +4,14 @@
     <table>
       <th>ID</th>
       <th>Name</th>
+      <th>Role</th>
       <th>Action</th>
       <tr 
         v-for="user in users"
         :key="user.user_id">
         <td>{{user.user_id}}</td>
         <td>{{user.fullName}}</td>
+        <td>Role</td>
         <td>
           <button
             class="crud-buttons"
@@ -31,8 +33,6 @@
 
 <script>
 
-import store from '../../../store/index'
-
 import user from '../../../api-factory/user'
 import club_user from '../../../api-factory/club_user'
  
@@ -45,6 +45,7 @@ export default {
   },
   async created() {
     this.users = await club_user.index(this.$router.currentRoute.value.params.id)
+    console.log(await this.users)
   },
   methods: {
     async deleteUser(userId) {
