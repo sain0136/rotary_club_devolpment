@@ -11,6 +11,10 @@ export default class ClubsController {
   public async getAllClubMembers({ request, response }: HttpContextContract) {
     const clubID: number = request.input('club_id')
     const allMembers: User[] = await User.query().where({ clubId: clubID })
+    for await (const user of allMembers) {
+      user.role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
+    }
+
     return response.json({ allMembers })
   }
 
