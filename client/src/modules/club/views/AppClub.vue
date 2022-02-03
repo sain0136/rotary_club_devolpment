@@ -46,6 +46,8 @@ export default {
       }
 
       store.dispatch('changeClubSocials', clubSocialQueryObject)
+
+      store.dispatch('changeCurrentClubUsers', this.currentClubId)
     }
   }
 }

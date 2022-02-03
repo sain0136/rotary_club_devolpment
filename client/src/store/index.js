@@ -30,8 +30,12 @@ export default createStore({
     loggedInClubUserId: Number,
 
     currentDistrictData: Object,
+
     currentClubData: Object,
+    currentClubUsers: Object,
+
     currentProjectData: Object,
+
     currentClubUserData: Object,
     
     districtSocials: [],
@@ -115,6 +119,10 @@ export default createStore({
       state.currentClubData = clubData
     },
 
+    changeCurrentClubUsers(state, clubUsers) {
+      state.currentClubUsers = clubUsers
+    },
+
     changeCurrentProjectData(state, projectData) {
       state.currentProjectData = projectData
     },
@@ -179,6 +187,10 @@ export default createStore({
     async changeCurrentClubData({commit}, clubId) {
       const clubData = await club.show(clubId)
       commit('changeCurrentClubData', clubData)
+    },
+    async changeCurrentClubUsers({commit}, clubId) {
+      const clubUsers = await club_user.index(clubId)
+      commit('changeCurrentClubUsers', clubUsers)
     },
     async changeCurrentProjectData({commit}, projectId) {
       const projectData = await project.show(projectId)

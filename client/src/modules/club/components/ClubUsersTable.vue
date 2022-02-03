@@ -11,7 +11,7 @@
         :key="user.user_id">
         <td>{{user.user_id}}</td>
         <td>{{user.fullName}}</td>
-        <td>Role</td>
+        <td>{{returnRole(user)}}</td>
         <td>
           <button
             class="crud-buttons"
@@ -33,8 +33,9 @@
 
 <script>
 
+import store from '../../../store/index'
+
 import user from '../../../api-factory/user'
-import club_user from '../../../api-factory/club_user'
  
 export default {
   name: 'ClubUsersTable',
@@ -44,18 +45,25 @@ export default {
     }
   },
   async created() {
-    this.users = await club_user.index(this.$router.currentRoute.value.params.id)
-    console.log(await this.users)
+    this.users = store.state.currentClubUsers
   },
   methods: {
     async deleteUser(userId) {
       if(confirm(`Are you sure you want to delete user ${userId}?`)) {
         await user.delete(userId)
-        this.users = await await club_user.index(this.$router.currentRoute.value.params.id)
+        store.dispatch('changeCurrentClubUsers', this.$router.currentRoute.value.params.id)
+        this.users = store.state.currentClubUsers
       }
     },
     async goToEditUserPage(userId) {
       this.$router.push(`${userId}/edit`)
+    },
+    returnRole(user) {
+      if(user.role.length != 0) {
+        return user.role[0].club_role
+      } else {
+        return 'Unknown'
+      }
     }
   },
 }

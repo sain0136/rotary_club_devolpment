@@ -9,18 +9,39 @@
       {{
         $store.state.currentClubData
           .club_description
-      }}
+      }} <br> <br>
+      <div class="club-page-head">
+        <h1 class="club-page-title">
+          Our Staff
+        </h1>
+      </div> <br>
+      <p 
+        v-for="user in users"
+        :key="user.user_id">{{ user.fullName }}</p>
     </div>
   </div>
 </template>
 
 <script>
 
+import store from '../../../store/index'
+
 export default {
   name: 'ClubAbout',
   data() {
-    return {}
+    return {
+      users: []
+    }
   },
+  created() {
+    const users = store.state.currentClubUsers
+    let filteredUsers = users.filter(user => {
+      user.role.length != 0
+    }) //TODO fix the filter
+    console.log(filteredUsers)
+    this.users = users
+
+  }
 }
 </script>
 
