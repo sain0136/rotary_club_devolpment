@@ -44,7 +44,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: 'bgwz0156sspovhk22599.cleaver.rocks',
+  origin: '1cfwqscprblxgqxl3527.cleaver.rocks',
 
   /*
   |--------------------------------------------------------------------------
