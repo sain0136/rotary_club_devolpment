@@ -77,7 +77,7 @@ export const http: ServerConfig = {
   | headers.
   |
   */
-  trustProxy: proxyAddr.compile('false'),
+  trustProxy: proxyAddr.compile(true),
 
   /*
   |--------------------------------------------------------------------------
