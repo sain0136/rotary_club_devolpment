@@ -2,7 +2,8 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        target: 'https://bgwz0156sspovhk22599.cleaver.rocks',
+        target:
+          'https://127.0.0.1:9222',
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: { '^/api': '/' },
