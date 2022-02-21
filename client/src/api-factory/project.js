@@ -7,7 +7,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/project/districtProjects',
+      'http://74.208.135.85/project/districtProjects',
       {
         method: 'POST',
         headers: {
@@ -33,7 +33,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/project/clubProjects',
+      'http://74.208.135.85/project/clubProjects',
       {
         method: 'POST',
         headers: {
@@ -58,7 +58,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/project/usersProjects',
+      'http://74.208.135.85/project/usersProjects',
       {
         method: 'POST',
         headers: {
@@ -86,7 +86,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/pledge/project',
+      'http://74.208.135.85/pledge/project',
       {
         method: 'POST',
         headers: {
@@ -107,7 +107,7 @@ export default {
     console.log(data)
 
     const res = await fetch(
-      '74.208.135.85/project',
+      'http://74.208.135.85/project',
       {
         method: 'POST',
         headers: {
@@ -123,7 +123,7 @@ export default {
 
   async update(id, data) {
     const res = await fetch(
-      `74.208.135.85/project/${id}`,
+      `http://74.208.135.85/project/${id}`,
       {
         method: 'PATCH',
         headers: {

@@ -1,7 +1,7 @@
 export default {
   async index() {
     const res = await fetch(
-      '74.208.135.85/user/',
+      'http://74.208.135.85/user/',
       { method: 'GET' },
     )
     const data = await res.json()
@@ -10,7 +10,7 @@ export default {
 
   async show(id) {
     const res = await fetch(
-      `74.208.135.85/user/${id}`,
+      `http://74.208.135.85/user/${id}`,
       {
         method: 'GET',
       },
@@ -21,7 +21,7 @@ export default {
 
   async create(data) {
     const res = await fetch(
-      '74.208.135.85/user',
+      'http://74.208.135.85/user',
       {
         method: 'POST',
         headers: {
@@ -35,7 +35,7 @@ export default {
 
   async update(id, data) {
     const res = await fetch(
-      `74.208.135.85/user/${id}`,
+      `http://74.208.135.85/user/${id}`,
       {
         method: 'PATCH',
         headers: {
@@ -49,7 +49,7 @@ export default {
 
   async delete(id) {
     const res = await fetch(
-      `74.208.135.85/user/${id}`,
+      `http://74.208.135.85/user/${id}`,
       {
         method: 'DELETE',
       },

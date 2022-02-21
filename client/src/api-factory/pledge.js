@@ -9,7 +9,7 @@ export default {
 
   async create(data) {
     const res = await fetch(
-      '74.208.135.85/pledge',
+      'http://74.208.135.85/pledge',
       {
         method: 'POST',
         headers: {

@@ -5,7 +5,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/clubmembers',
+      'http://74.208.135.85/clubmembers',
       {
         method: 'POST',
         headers: {
@@ -28,7 +28,7 @@ export default {
     }
 
     const res = await fetch(
-      '74.208.135.85/user/json',
+      'http://74.208.135.85/user/json',
       {
         method: 'POST',
         headers: {

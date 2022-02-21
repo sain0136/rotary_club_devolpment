@@ -1,7 +1,7 @@
 export default {
   async index() {
     const res = await fetch(
-      '74.208.135.85/district',
+      'http://74.208.135.85/district',
       { method: 'GET' },
     )
     const data = await res.json()
@@ -10,7 +10,7 @@ export default {
 
   async show(id) {
     const res = await fetch(
-      `74.208.135.85/district/${id}`,
+      `http://74.208.135.85/district/${id}`,
       {
         method: 'GET',
       },
@@ -21,7 +21,7 @@ export default {
 
   async delete(id) {
     const res = await fetch(
-      `74.208.135.85/district/${id}`,
+      `http://74.208.135.85/district/${id}`,
       {
         method: 'DELETE',
       },
@@ -30,7 +30,7 @@ export default {
 
   async create(data) {
     const res = await fetch(
-      '74.208.135.85/district',
+      'http://74.208.135.85/district',
       {
         method: 'POST',
         headers: {
@@ -44,7 +44,7 @@ export default {
 
   async update(id, data) {
     const res = await fetch(
-      `74.208.135.85/district/${id}`,
+      `http://74.208.135.85/district/${id}`,
       {
         method: 'PATCH',
         headers: {
@@ -58,7 +58,7 @@ export default {
 
   async getDistricts() {
     const res = await fetch(
-      '74.208.135.85/district',
+      'http://74.208.135.85/district',
       { method: 'GET' },
     )
     const data = await res.json()

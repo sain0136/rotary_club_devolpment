@@ -4,7 +4,7 @@ export default {
       data.isThisDistrict
     //POST method is used in place of the GET method here
     const res = await fetch(
-      '74.208.135.85/allUrls',
+      'http://74.208.135.85/allUrls',
       {
         method: 'POST',
         headers: {
@@ -28,7 +28,7 @@ export default {
 
   async show(id) {
     const res = await fetch(
-      `74.208.135.85/url/${id}`,
+      `http://74.208.135.85/url/${id}`,
       {
         method: 'GET',
       },
@@ -39,7 +39,7 @@ export default {
 
   async create(data) {
     const res = await fetch(
-      '74.208.135.85/url',
+      'http://74.208.135.85/url',
       {
         method: 'POST',
         headers: {
@@ -53,7 +53,7 @@ export default {
 
   async update(id, data) {
     const res = await fetch(
-      `74.208.135.85/url/${id}`,
+      `http://74.208.135.85/url/${id}`,
       {
         method: 'PATCH',
         headers: {
@@ -67,7 +67,7 @@ export default {
 
   async delete(id) {
     const res = await fetch(
-      `74.208.135.85/url/${id}`,
+      `http://74.208.135.85/url/${id}`,
       {
         method: 'DELETE',
       },

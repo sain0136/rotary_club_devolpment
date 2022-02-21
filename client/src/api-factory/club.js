@@ -1,7 +1,7 @@
 export default {
   async index(id) {
     const res = await fetch(
-      '74.208.135.85/club',
+      'http://74.208.135.85/club',
       {
         method: 'GET',
       },
@@ -15,7 +15,7 @@ export default {
 
   async show(id) {
     const res = await fetch(
-      `74.208.135.85/club/${id}`,
+      `http://74.208.135.85/club/${id}`,
       { method: 'GET' },
     )
     const data = await res.json()
@@ -24,7 +24,7 @@ export default {
 
   async create(data) {
     const res = await fetch(
-      '74.208.135.85/club',
+      'http://74.208.135.85/club',
       {
         method: 'POST',
         headers: {
@@ -43,7 +43,7 @@ export default {
     console.log('data', data)
 
     const res = await fetch(
-      `74.208.135.85/club/${id}`,
+      `http://74.208.135.85/club/${id}`,
       {
         method: 'PATCH',
         headers: {
@@ -58,7 +58,7 @@ export default {
 
   async delete(id) {
     const res = await fetch(
-      `74.208.135.85/club/${id}`,
+      `http://74.208.135.85/club/${id}`,
       {
         method: 'DELETE',
       },
