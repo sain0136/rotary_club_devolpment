@@ -1,18 +1,23 @@
 import project from './project'
 
 export default {
-
   async index(id) {
-    const projectById = await project.show(id)
+    const projectById =
+      await project.show(id)
     return await projectById.pledgesAssociated
   },
 
   async create(data) {
-    const res = await fetch('/api/pledge', {
+    const res = await fetch(
+      '74.208.135.85/pledge',
+      {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
         body: JSON.stringify(data),
-    })
-  }
-  
+      },
+    )
+  },
 }
