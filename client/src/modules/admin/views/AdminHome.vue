@@ -20,7 +20,7 @@ export default {
 <style scoped>
 
 .sections {
-  height: 500px;
+  height: 650px;
 }
 
 img {
