@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import DistrictsTable from '../../components/DistrictsTable.vue'
+import DistrictsTable from '../../../../components/common/DistrictsTable.vue'
 
 export default {
   name: 'DistrictsView',

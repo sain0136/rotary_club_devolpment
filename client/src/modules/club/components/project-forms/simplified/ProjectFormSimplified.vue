@@ -373,12 +373,8 @@ export default {
     },
 
     formatDate(dateString) {
-      let date = new Date(dateString)
-      let day = parseInt(date.getDate()) 
-      let month = parseInt(date.getMonth()) 
-      let year = date.getFullYear()
-      // return month + '/' + day + '/' + year
-      return '05/07/2022' //temporarily
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US')
     },
     
   },

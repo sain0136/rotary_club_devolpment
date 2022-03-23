@@ -174,7 +174,7 @@ export default {
         {
           name: this.name,
           theme: this.theme,
-          completionDate: this.completionDate,
+          completionDate: this.formatDate(this.completionDate),
           region: this.region,
           country: this.country,
           city: this.city,
@@ -183,7 +183,11 @@ export default {
           objectives: this.objectives,
           implementationPlan: this.implementationPlan
         })
-    }
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US')
+    },
   }
 
 }
