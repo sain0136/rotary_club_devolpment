@@ -1,23 +1,32 @@
 <template>
+  <header-top>
+  <div class="nav2">
+  	<div class="top-left">
+  		<span class="icon fa fa-envelope"></span>info@cornwallrotary.com
+  	</div>
+  	<div class="top-right">
+        <SignInAndOutButton 
+          class="link" 
+          pageAccessed="Admin"/>
+	</div>	
+  </div>
+  </header-top>
   <nav>
     <ul>
       <li>
-        <img class="img-fluid" src="../assets/admin-logo.png" />
+        <img class="img-fluid" src="../assets/club-logo.png" />
       </li>
       <li>
         <router-link class="link" to="/admin/home">
-          Home</router-link
-        >
+          Home</router-link>
       </li>
       <li>
         <router-link class="link" to="/admin/districts/view">
-          Administer Districts</router-link
-        >
+          Administer Districts</router-link>
       </li>
       <li>
         <router-link class="link" to="/admin/district-admins/view"
-          >Manage District Admins</router-link
-        >
+          >Manage District Admins</router-link>
       </li>
       <li>
         <SignInAndOutButton 
@@ -52,12 +61,26 @@ export default {
 img {
   height: 100px;
 }
-
 nav {
-  background-color: #406882;
-  box-shadow: 0px 3px 5px 0 rgba(0,0,0,.9);
+    background-color: #ffffff;
+  	box-shadow: 0px 2px 4px 0 rgba(0,0,0,.2);
 }
-
+header-top .nav2 {    
+	position: relative;
+  	margin-left: auto;
+  	margin-right: auto;
+	height: 40px;
+	padding: 10px 100px;
+    background-color: #ffb607;
+}
+.nav2 .top-left {
+    position: relative;
+    float: left;
+}
+.nav2 .top-right {
+    position: relative;
+    float: right;
+	}
 ul {
   list-style-type: none;
   margin-left: 200px;

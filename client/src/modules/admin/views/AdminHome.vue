@@ -1,6 +1,6 @@
 <template>
   <div class="sections" id="admin-home">
-    <h2>Welcome to the admin portal!</h2> <br>
+    <h2>Welcome to the admin portal!<br /> This is the admin portal.</h2> <br>
     <img src="../assets/admin-logo-2.png">
     <p>
       From this page; you can create, edit, and delete districts and district admins. <br>

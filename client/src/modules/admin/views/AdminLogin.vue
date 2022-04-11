@@ -1,8 +1,10 @@
 <template>
+<div class="page-wrapper">
   <div class="admin-login">
     <!-- <img src="../assets/admin-login-background.png" alt=""> -->
     <AdminLoginForm />
   </div>
+ </div>
 </template>
 
 <script>
@@ -24,12 +26,21 @@ export default {
 </script>
 
 <style scoped>
+.page-wrapper{
+	position:fixed;
+	top:0px;
+	left:0px;
+	padding:0px 15px;
+	margin:0 auto;
+	width: 100%;
+	height:100%;
+	background-color:#AEAEAE;
+}
 
 .admin-login {
-  background-image: url("../assets/admin-login-background.png");
-  border: 1px solid black;
-  height: 100%;
-  padding-bottom: 400px;
+  position:relative;
+	display:block;
+	width:100%;
 }
 
 

@@ -50,7 +50,7 @@ export default {
 } */
 
 .admin-page {
-  background-color: #B1D0E0;
+  background-color: #ffffff;
   /* padding-bottom: 50%; */
 }
 
