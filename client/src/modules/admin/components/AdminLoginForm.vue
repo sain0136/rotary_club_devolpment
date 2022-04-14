@@ -1,21 +1,43 @@
 <template>
   <div>
     <form>
-      <img src="../assets/admin-logo-2.png" alt="">
-      <p v-if="$store.state.isSiteAdminRejected" id="error">Credentials not valid!</p>
-      <input type="text" name="username" placeholder="username"
-        v-model="username"> <br> <br>
-      <input type="password" placeholder="password"
-        v-model="password"> <br> <br> <br>
+      <img
+        src="../assets/admin-logo-2.png"
+        alt=""
+      />
+      <p
+        v-if="
+          $store.state
+            .isSiteAdminRejected
+        "
+        id="error"
+      >
+        Credentials are not valid!
+      </p>
+      <input
+        type="text"
+        name="username"
+        placeholder="username"
+        v-model="username"
+      />
+      <br />
+      <br />
+      <input
+        type="password"
+        placeholder="password"
+        v-model="password"
+      />
+      <br />
+      <br />
+      <br />
     </form>
-      <button @click="adminLoginHandler">
-        Login
-      </button>
+    <button @click="adminLoginHandler">
+      Login
+    </button>
   </div>
 </template>
 
 <script>
-
 import store from '../../../store/index'
 
 export default {
@@ -23,30 +45,45 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
     }
   },
   methods: {
     adminLoginHandler() {
-      store.dispatch('validateSiteAdmin', {
-        userId: this.username,
-        password: this.password,
-      })
-    }
-  }
+      
+      store.dispatch(
+        'validateSiteAdmin',
+        {
+          userId: this.username,
+          password: this.password,
+        },
+      )
+      var x = document.getElementById("error");
+       x.style.display = "none";
+      function sleep(ms) {
+       return new Promise(resolve => setTimeout(resolve, ms));
 }
+sleep(500).then(() => { x.style.display = "block";});
+          //
 
+    },
+  },
+}
 </script>
 
 <style scoped>
-
 img {
   height: 100px;
 }
 
 div {
   border: 5px solid black;
-  background-color: rgba(255, 255, 255, 0.103);
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.103
+  );
   width: 300px;
   margin-top: 10%;
   margin-left: auto;
@@ -67,7 +104,8 @@ legend {
 
 input {
   border: none;
-  border-bottom: 1px solid rgba(255,0,0,0.5);
+  border-bottom: 1px solid
+    rgba(255, 0, 0, 0.5);
   background-color: black;
   color: whitesmoke;
 }
@@ -104,5 +142,4 @@ button:hover {
 #admin-page:hover {
   color: #ffb607;
 }
-
 </style>

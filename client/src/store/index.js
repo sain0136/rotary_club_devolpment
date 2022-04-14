@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
-import createPersistedState from "vuex-persistedstate";
+import createPersistedState from 'vuex-persistedstate'
 
-import { isSiteAdminValid } from './authentication-calls';
+import { isSiteAdminValid } from './authentication-calls'
 import { isValid } from './authentication-calls'
 
 import district from '../api-factory/district'
@@ -23,7 +23,7 @@ export default createStore({
 
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
-    
+
     loggedInDistrictId: Number,
     loggedInClubId: Number,
 
@@ -37,63 +37,83 @@ export default createStore({
     currentProjectData: Object,
 
     currentClubUserData: Object,
-    
+
     districtSocials: [],
     clubSocials: [],
   },
   mutations: {
     adminLogin(state, loginData) {
-
       const roleId = loginData.roleId
 
-      switch(roleId) {
+      switch (roleId) {
         //Site Admin
-        case 0: 
+        case 0:
           state.isSiteAdminLoggedIn = true
           state.isSiteAdminRejected = false
-          window.location.replace('/admin/home')
-        break
+          window.location.replace(
+            '/admin/home',
+          )
+          break
         //District Admin
         case 1:
           state.isDistrictAdminLoggedIn = true
           state.isDistrictAdminRejected = false
-          state.loggedInDistrictId = loginData.districtId
-        break
+          state.loggedInDistrictId =
+            loginData.districtId
+          break
         //Club Admin
         case 5:
           state.isClubAdminLoggedIn = true
           state.isClubAdminRejected = false
-        break
+          break
       }
     },
     adminReject(state, roleId) {
-      switch(roleId) {
+      switch (roleId) {
         case 0:
           state.isSiteAdminRejected = true
-        break
-        case 1: 
-        state.isDistrictAdminRejected = true
-        break
-        case 5: 
-        state.isClubAdminRejected = true
-        break
+          break
+        case 1:
+          state.isDistrictAdminRejected = true
+          break
+        case 5:
+          state.isClubAdminRejected = true
+          break
+          case 10:
+          state.isSiteAdminRejected = false
+          break
       }
     },
 
-    async clubUserLogin(state, loginData) {
-
+    async clubUserLogin(
+      state,
+      loginData,
+    ) {
       state.isClubUserLoggedIn = true
       state.isClubUserRejected = false
 
-      console.log('login data: ', loginData)
+      console.log(
+        'login data: ',
+        loginData,
+      )
 
-      state.loggedInClubUserId = loginData.user_id
-      state.currentClubUserData = await club_user.show(loginData.user_id)
-      state.loggedInClubId = loginData.club_id
+      state.loggedInClubUserId =
+        loginData.user_id
+      state.currentClubUserData = await club_user.show(
+        loginData.user_id,
+      )
+      state.loggedInClubId =
+        loginData.club_id
 
-      console.log('here you resting:', state.loggedInClubId)
+      console.log(
+        'here you resting:',
+        state.loggedInClubId,
+      )
 
-      if(state.currentClubUserData.role[0].role_type == 5) {
+      if (
+        state.currentClubUserData
+          .role[0].role_type == 5
+      ) {
         state.isClubAdminLoggedIn = true
         state.isClubAdminRejected = false
       }
@@ -111,54 +131,84 @@ export default createStore({
       state.isClubUserLoggedIn = false
     },
 
-    changeCurrentDistrictData(state, districtData) {
+    changeCurrentDistrictData(
+      state,
+      districtData,
+    ) {
       state.currentDistrictData = districtData
     },
 
-    changeCurrentClubData(state, clubData) {
+    changeCurrentClubData(
+      state,
+      clubData,
+    ) {
       state.currentClubData = clubData
     },
 
-    changeCurrentClubUsers(state, clubUsers) {
+    changeCurrentClubUsers(
+      state,
+      clubUsers,
+    ) {
       state.currentClubUsers = clubUsers
     },
 
-    changeCurrentProjectData(state, projectData) {
+    changeCurrentProjectData(
+      state,
+      projectData,
+    ) {
       state.currentProjectData = projectData
     },
 
-    changeDistrictSocials(state, districtSocialsArray) {
+    changeDistrictSocials(
+      state,
+      districtSocialsArray,
+    ) {
       state.districtSocials = districtSocialsArray
     },
 
-    changeClubSocials(state, clubSocialsArray) {
+    changeClubSocials(
+      state,
+      clubSocialsArray,
+    ) {
       state.clubSocials = clubSocialsArray
     },
-  
   },
   actions: {
-
-    async validateSiteAdmin({commit}, data) {
-
+    async validateSiteReload(
+      { commit },
+      data,
+    ){
+      commit('adminReject',10)
+    },
+    async validateSiteAdmin(
+      { commit },
+      data,
+    ) {
       const loginData = {
-        roleId: 0
+        roleId: 0,
       }
-
-      if(await isSiteAdminValid(data.userId, data.password)) {
+      if (
+        await isSiteAdminValid(
+          data.userId,
+          data.password,
+        )
+      ) {
         commit('adminLogin', loginData)
-      } else {
+      } else  {
         commit('adminReject', 0)
-      }
+      } 
     },
 
-    async validateDistrictAdmin({commit}, data) {
-
+    async validateDistrictAdmin(
+      { commit },
+      data,
+    ) {
       const loginData = {
         districtId: data.id,
-        roleId: 1
+        roleId: 1,
       }
 
-      if(await isValid(data)) {
+      if (await isValid(data)) {
         commit('adminLogin', loginData)
         console.log('valid')
       } else {
@@ -166,57 +216,108 @@ export default createStore({
       }
     },
 
-    async validateClubUser({commit}, data) {
-
+    async validateClubUser(
+      { commit },
+      data,
+    ) {
       const loginData = {
         user_id: data.user_id,
-        club_id: data.id
+        club_id: data.id,
       }
 
-      if(await isValid(data)) {
-        commit('clubUserLogin', loginData)
+      if (await isValid(data)) {
+        commit(
+          'clubUserLogin',
+          loginData,
+        )
       } else {
-        commit('clubUserReject', data.user_id)
+        commit(
+          'clubUserReject',
+          data.user_id,
+        )
       }
     },
 
-    async changeCurrentDistrictData({commit}, districtId) {
-      const districtData = await district.show(districtId)
-      commit('changeCurrentDistrictData', districtData)
+    async changeCurrentDistrictData(
+      { commit },
+      districtId,
+    ) {
+      const districtData = await district.show(
+        districtId,
+      )
+      commit(
+        'changeCurrentDistrictData',
+        districtData,
+      )
     },
-    async changeCurrentClubData({commit}, clubId) {
-      const clubData = await club.show(clubId)
-      commit('changeCurrentClubData', clubData)
+    async changeCurrentClubData(
+      { commit },
+      clubId,
+    ) {
+      const clubData = await club.show(
+        clubId,
+      )
+      commit(
+        'changeCurrentClubData',
+        clubData,
+      )
     },
-    async changeCurrentClubUsers({commit}, clubId) {
-      const clubUsers = await club_user.index(clubId)
-      commit('changeCurrentClubUsers', clubUsers)
+    async changeCurrentClubUsers(
+      { commit },
+      clubId,
+    ) {
+      const clubUsers = await club_user.index(
+        clubId,
+      )
+      commit(
+        'changeCurrentClubUsers',
+        clubUsers,
+      )
     },
-    async changeCurrentProjectData({commit}, projectId) {
-      const projectData = await project.show(projectId)
-      commit('changeCurrentProjectData', projectData)
+    async changeCurrentProjectData(
+      { commit },
+      projectId,
+    ) {
+      const projectData = await project.show(
+        projectId,
+      )
+      commit(
+        'changeCurrentProjectData',
+        projectData,
+      )
     },
-    async changeDistrictSocials({commit}, queryObject) {
-      const districtSocialsArray = await social_links.index(queryObject)
-      commit('changeDistrictSocials', districtSocialsArray)
+    async changeDistrictSocials(
+      { commit },
+      queryObject,
+    ) {
+      const districtSocialsArray = await social_links.index(
+        queryObject,
+      )
+      commit(
+        'changeDistrictSocials',
+        districtSocialsArray,
+      )
     },
-    async changeClubSocials({commit}, queryObject) {
-      const clubSocialsArray = await social_links.index(queryObject)
-      commit('changeClubSocials', clubSocialsArray)
+    async changeClubSocials(
+      { commit },
+      queryObject,
+    ) {
+      const clubSocialsArray = await social_links.index(
+        queryObject,
+      )
+      commit(
+        'changeClubSocials',
+        clubSocialsArray,
+      )
     },
 
-    signOut({commit}) {
+    signOut({ commit }) {
       commit('signout')
-    }
-
+    },
   },
-  getters: {
-
-  },
-  modules: {
-
-  },
-  plugins: [createPersistedState()]
+  getters: {},
+  modules: {},
+  plugins: [createPersistedState()],
 })
 
 // States can be accessed directly
