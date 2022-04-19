@@ -1,29 +1,33 @@
 <template>
   <div class="container">
-
-
     <form onsubmit="event.preventDefault();">
+      <div class='fieldset'>
       <h2
         v-if="isEditOrCreate=='Create'">
-        Create District
+        Create a new District
       </h2>
+      
       <h2
         v-else>
-        Edit District
-      </h2> <br>
+        Edit this District
+      </h2>
+      </div>
+       <br>
       <div class="form-field">
-        <!-- <label for="name">District Name</label> <br> -->
         <span 
           class="district-error" 
           id="district-name-error"
           v-if="v$.name.$error">
-          Please enter a district name
+          Please enter a name for the district
           <br>
         </span>
         <input type="text"
           name="name"
           v-model="name"
-          placeholder="District Name"> <br> <br>
+          placeholder="District Name"
+          aria-label="District Name"
+          >
+          <br> <br>
       </div>
       <div class="form-field">
         <!-- <label for="president">District President</label> <br> -->
@@ -38,7 +42,9 @@
           name="president"
           type="text"
           v-model="president"
-          placeholder="President"> <br> <br>
+          placeholder="President"
+          aria-label="Presidents Name"
+          > <br> <br>
       </div>
       <div class="form-field">
         <!-- <label for="Email">Email</label> <br> -->
@@ -51,7 +57,9 @@
         <input type="text"
           name="email"
           v-model="email"
-          placeholder="Email"> <br> <br>
+          placeholder="Email"
+          aria-label="Email"
+          > <br> <br>
       </div>
       <div class="form-field">
         <!-- <label for="meeting-location"></label> -->
@@ -59,11 +67,12 @@
           class="district-error" 
           id="district-meetinglocation-error"
           v-if="v$.meetingLocation.$error">
-          Please enter a valid meeting location  <br>
+          Please enter a meeting location  <br>
         </span>
         <input type="text"
           name="meeting-location"
           v-model="meetingLocation"
+          aria-label="Meeting Location"
           placeholder="Meeting Location"> <br> <br>  
       </div>
       <div class="form-field">
@@ -71,11 +80,13 @@
           class="district-error" 
           id="district-meetingfrequency-error"
           v-if="v$.meetingFrequency.$error">
-          Please enter a valid meeting frequency
+          Please enter a meeting frequency. Ex:Weekly, Bi-Weekly
         </span> <br>
         <input type="text"
           v-model="meetingFrequency"
-          placeholder="Meeting Frequency"> <br> <br>
+          placeholder="Meeting Frequency"
+          aria-label="Meeting Frequency"
+          > <br> <br>
       </div>
       <div class="form-field">
         <span 
@@ -86,7 +97,9 @@
         </span> <br>
         <input type="date"
           v-model="charterdate"
-          placeholder="Charter Date"> <br> <br>
+          placeholder="Charter Date"
+          aria-label="Meeting Frequency"
+          > <br> <br>
       </div>
       <div class="form-field">
         <span 
@@ -96,14 +109,15 @@
           Please enter a description between 100-1000 characters
         </span> <br>
         <textarea 
-          cols="30" 
+          cols="90" 
           rows="10"
           v-model="description"
-          placeholder="Description"></textarea><br> <br>
+          placeholder="District Description"
+          aria-label="District Description"
+          >
+          </textarea><br> <br>
       </div>
-      <SocialLinksSection 
-        isDistrictOrClub = 'District'
-        v-if="isEditOrCreate=='Edit'"/> <br>
+       <br>
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateDistrict">
@@ -115,9 +129,14 @@
         Update
       </button>
       <button
+        id="cancel"
         @click="() => redirect()">
         Cancel
       </button>
+      <SocialLinksSection 
+        id="Socia-Section"
+        isDistrictOrClub = 'District'
+        v-if="isEditOrCreate=='Edit'"/>
     </form>
 
   </div>
@@ -242,7 +261,7 @@ export default {
     },
 
     async createDistrict() {
-      console.log('creatin')
+      console.log('creating new district')
       const districtToCreate = this.getDistrictData()
       await district.create(districtToCreate)
       this.redirect()
@@ -277,17 +296,55 @@ export default {
 </script>
 
 <style scoped>
+button{
+  box-sizing: border-box;
+  width: 50%;
+  background-color: gold;
+  left: 25%;
+  position: relative;
+    color: white;
+  border: 1px solid #3498db;
+  border-radius: 3px;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 1%;
+  cursor: pointer;
+  
+}
+#Socia-Section{
+  width: 100%;
+}
+#cancel{
+  margin-bottom: 2%;
 
-
+}
 form {
   width: 100%;
   display: grid;
+  background-color: black;
+  color: azure;
 }
 
 input {
-  background-color: #B1D0E0;
+  background-color: #f3f3f3;
   border: none;
   border-bottom: 1px solid #00090e25;
+  padding: 15px 20px;
+  border-radius: 1px;
+  margin:5px auto;
+  background-color:#f7f7f7;
+  border: 1px solid silver;
+}
+textarea{
+  background-color: #f3f3f3;
+  border: none;
+  border-bottom: 1px solid #00090e25;
+  padding: 15px 20px;
+  border-radius: 1px;
+  margin:5px auto;
+  background-color:#f7f7f7;
+  border: 1px solid silver;
+
 }
 
 label {
@@ -295,12 +352,20 @@ label {
   
 }
 
+.fieldset{
+ background-color:gold;
+ padding-bottom: 5%;
+ padding-top: 5%;
+}
 .container {
   box-shadow: 0px 3px 20px 0 rgba(0,0,0,.8);
-  width: 70%; 
+  width: 50%; 
   overflow: auto; 
-  height: 600px;
-  margin-bottom: 50px;
+  height: 60vh;
+  margin-top: 5%;
+  text-align: center;
+  background-color: black;
+  padding: 0%;
 }
 
 h2 {

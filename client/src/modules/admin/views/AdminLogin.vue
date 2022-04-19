@@ -17,7 +17,7 @@ export default {
   },
   created() {
     if (store.state.isSiteAdminLoggedIn) {
-      this.$router.push('/admin/home')
+      this.$router.push({name:'AdminHome'})
     }
   },
 }

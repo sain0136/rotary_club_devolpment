@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <div class="main">
     <br /><br />
     <h1>ALL DISTRICTS</h1> <br> <br>
-    <DistrictsTable /> <br> <br>
+    <DistrictsTable /> <br> <br> 
+    <Span><H1>Create a new District:</H1>
+    </Span>
+    <br> <br>
     <button
       name="create"
       class="plus"
       id="create-user"
       @click="() => this.$router.push('/admin/districts/create')">
-    </button> <br><br>
+    </button> 
+   <br><br>
   </div>
 </template>
 
@@ -35,4 +39,7 @@ button {
   margin-left: 47%;
 }
 
+.main{
+  height: 100%;
+}
 </style>

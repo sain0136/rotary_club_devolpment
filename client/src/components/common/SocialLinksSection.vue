@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <legend>Social Links</legend> <br> <br>
+  <div class="social-container">
+    <div class='fieldset'>
+    <h2>Social Media Links</h2> <br> <br>
+    </div>
     <table>
-      <th>Type</th>
-      <th>Link</th>
-      <th>Action</th>
+      <th>Social Media-Site</th>
+      <th>URL</th>
+      <th>Modify</th>
       <tr
         v-for="link in links"
         :key="link.url_id">
@@ -22,15 +24,16 @@
     <legend v-else>Add a Link</legend>
     <select
       v-model="linkTypeToCreate">
-      <option value="Facebook">Facebook</option>
-      <option value="Instagram">Instagram</option>
-      <option value="Twitter">Twitter</option>
+      <option value="Facebook">Facebook.com</option>
+      <option value="Instagram">Instagram.com</option>
+      <option value="Twitter">Twitter.com</option>
       <option value="Other">Other</option>
     </select> <br> <br>
     <input 
       type="text"
       v-model="linkToCreate"> <br> <br>
-    <button
+    <button 
+        class="up-cancel"
       v-if="isEditOrCreateLink=='Edit'"
       @click="updateLink">
       Update
@@ -41,6 +44,7 @@
       Add
     </button>
     <button 
+      class="up-cancel"
       v-if="isEditOrCreateLink=='Edit'"
       @click="cancelEdit">
       Cancel
@@ -192,9 +196,33 @@ export default {
 </script>
 
 <style scoped>
+.up-cancel{
+    width: 25%;
 
+}
+button{
+  box-sizing: border-box;
+  width: 50%;
+  background-color: gold;
+  color: white;
+  border: 1px solid #3498db;
+  border-radius: 3px;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 1%;
+  cursor: pointer;
+  
+}
+.fieldset{
+ background-color:gold;
+ padding-bottom: 1%;
+ padding-top: 5%;
+ width: 100%;
+ 
+}
 table {
   margin: auto;
+  width: 100%;
 }
 
 td {
@@ -207,5 +235,6 @@ div {
   border: 1px solid black;
   width: 50%;
 }
+
 </style>
 

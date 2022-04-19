@@ -26,6 +26,7 @@ nav {
   box-shadow: 0px 3px 5px 0 rgba(0,0,0,.9);
   height: 100px;
   padding: 5px;
+  margin-top: auto;
 }
 
 p {

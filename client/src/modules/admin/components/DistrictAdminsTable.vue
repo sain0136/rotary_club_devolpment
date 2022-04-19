@@ -13,6 +13,7 @@
         <td>{{admin.firstname + ' ' + admin.lastname}}</td>
         <td>
           <button
+            title="Edit Admin"
             class="crud-buttons"
             id="edit"
             @click="goToEditDistrictAdminPage(admin.user_id)">
@@ -20,6 +21,7 @@
               class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
+            title="Delete Admin"
             class="crud-buttons"
             id="delete"
             @click="deleteAdmin(admin.user_id)">

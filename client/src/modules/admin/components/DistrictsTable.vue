@@ -12,18 +12,21 @@
         <td id="name">{{district.district_name}}</td>
         <td>
           <button
+            title="View District"
             class="crud-buttons"
             @click="() => this.$router.push(`/district/${district.district_id}/home`)">
             <font-awesome-icon
             class="social-icon" icon="external-link-alt"></font-awesome-icon>
           </button>
           <button
+            title="Edit District"
             class="crud-buttons"
             @click="() => this.$router.push(`./${district.district_id}/edit`)">
             <font-awesome-icon
               class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
+            title="Delete District"
             class="crud-buttons"
             @click="deleteDistrict(district.district_id)">
             <font-awesome-icon

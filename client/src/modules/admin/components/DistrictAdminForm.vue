@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="admin-container">
     <form onsubmit="event.preventDefault();">
-      <div class="form-field">
+      <div class="form-field-top">
+        <span><h2>Assign New Admin to a district</h2></span>
         <span 
           class="admin-error" 
           id="admin-district-error"
@@ -17,6 +18,9 @@
             {{district.district_name}} 
           </option>
         </select> <br> <br>
+      </div>
+        <div class="grid-container">
+        <div class="form-field">
         <span 
           class="admin-error" 
           v-if="v$.membershipId.$error">
@@ -82,13 +86,16 @@
           v-model="postal"> <br> <br>
       </div>
       <div class="form-field">
-        <span 
+        <span style="position: relative;bottom: 2em;"
           class="admin-error" 
           id="admin-province-error"
           v-if="v$.province.$error">
           Please enter the province
         </span> <br>
-        <select name="roles" v-model="province">
+        <span style="position: relative;
+    left: 8em;
+    bottom: 1.5em;"> Province</span>
+        <select id="select-province" name="roles" v-model="province">
           <option disabled>Province</option>
           <option value="Ontario">Ontario</option>
           <!-- Rest of 'em will to be added later -->
@@ -134,6 +141,7 @@
           placeholder="Password"
           v-model="password"> <br> <br>  
       </div>
+      <br>  </div> 
       <button 
         v-if="isEditOrCreate=='Create'"
         @click="validateDistrictAdmin">
@@ -144,7 +152,8 @@
         @click="validateDistrictAdmin">
         Update
       </button>
-      <button
+     
+      <button id="cancel"
         @click="() => {
           if(this.isEditOrCreate == 'Create') {
             this.redirect(true)
@@ -355,7 +364,25 @@ export default {
 </script>
 
 <style scoped>
+.form-field-top{
+ background-color:gold;
+ padding-bottom: 1%;
+ padding-top: 1%;
+}
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: auto auto ;
+  padding: 1%;
+  gap: .8em;
+}
+.admin-container{
+  
+  background-color: black;
+  color: aliceblue;
+      padding-bottom: 1em;
 
+
+}
 form {
   text-align: center;
 }
@@ -365,5 +392,54 @@ form {
   font-size: 12px;
   padding: 0%;
 }
+input {
+  background-color: #f3f3f3;
+  border: none;
+  border-bottom: 1px solid #00090e25;
+  padding: .1em .1em;
+  border-radius: 1px;
+  margin:5px auto;
+  background-color:#f7f7f7;
+  border: 1px solid silver;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+select{
+    background-color: #f3f3f3;
+  border: none;
+  border-bottom: 1px solid #00090e25;
+  padding: .1em .1em;
+  border-radius: 1px;
+  margin:5px auto;
+  background-color:#f7f7f7;
+  border: 1px solid silver;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.3rem;
+ font-weight: bold;
+}
+#select-province{
+    position: relative;
+    right: 3.3em;
+    bottom: 1em;
+}
+button{
+  box-sizing: border-box;
+  width: 25%;
+  background-color: gold;
+  position: relative;
+  left: 38%;
+  color: white;
+  border: 1px solid #3498db;
+  border-radius: 3px;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 1%;
+  cursor: pointer;
+  display: block;
+}
+#cancel{
+  margin-bottom: 2%;
 
+}
 </style>

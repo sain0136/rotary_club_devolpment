@@ -3,6 +3,9 @@
     <br> <br>
     <h1>DISTRICT ADMINS</h1> <br> <br>
     <DistrictAdminsTable /> <br> <br>
+    <span><h2>Create a new District Administrator:</h2>
+    </span>
+    <br> <br>
     <button
       name="create"
       class="plus"
@@ -48,7 +51,11 @@ h1 {
   font-weight: bolder;
   text-align: center;
 }
-
+h2{
+   font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  text-align: center;
+}
 .select-districts {
   text-align: center;
 }

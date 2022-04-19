@@ -3,6 +3,7 @@
     v-if="isAnybodyLoggedIn"
     @click="redirect(true)">
     Sign Out
+    <span>Hi your are signed in as the Website{{pageAccessed}}</span>
   </button>
   <button 
     v-else
@@ -63,6 +64,10 @@ button {
 button:hover {
   color: #ffb607;
   transition: color 0.5s;
+}
+span {
+  font-size: .8rem;
+  display: block;
 }
 
 </style>

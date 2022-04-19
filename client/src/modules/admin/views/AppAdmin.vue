@@ -1,11 +1,11 @@
 <template>
   <div class="admin-page">
     <AdminHeader />
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
+    <router-view />
+  <!--   v-slot="{ Component }"  <transition name="fade">
         <component :is="Component"/>
-      </transition>
-    </router-view>
+      </transition> -->
+    
     <AdminFooter class="admin-footer"/>
 
   </div>
@@ -51,6 +51,9 @@ export default {
 
 .admin-page {
   background-color: #B1D0E0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   /* padding-bottom: 50%; */
 }
 

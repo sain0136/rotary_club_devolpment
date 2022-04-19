@@ -70,8 +70,11 @@ table {
 
 th {
   border: 1px solid #b2b2b2c5;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-size: 22px;
+    font-weight: bold;
+
+  
 }
 
 td {
@@ -81,8 +84,19 @@ td {
   width: 25%;
 }
 
+h2{
+  font-family: 'Lato', sans-serif;
+    
+
+}
 tr:nth-child(even) {
   background-color: #b2b2b249;
+}
+option{
+  font-family: 'Lato', sans-serif;
+    font-size: 1.3rem;
+ font-weight: bold;
+
 }
 
 </style>
