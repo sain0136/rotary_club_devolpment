@@ -1,18 +1,26 @@
 <template>
+  <header-top>
+  <div class="nav2">
+  	<div class="top-left">
+  		<span class="icon fa fa-envelope"></span>info@cornwallrotary.com
+  	</div>
+
+  </div>
+  </header-top>
   <nav>
     <ul>
       <li>
-        <img class="img-fluid" src="../assets/admin-logo.png" />
+        <img class="img-fluid" src="../assets/club-logo.png" />
       </li>
       <li>
         <router-link class="link" to="/admin/home">
-          Home</router-link
-        >
+          Home</router-link>
+        
       </li>
       <li>
         <router-link class="link" to="/admin/districts/view">
-          Administer Districts</router-link
-        >
+          Administer Districts</router-link>
+        
       </li>
       <li>
         <router-link class="link" to="/admin/district-admins/view"
@@ -54,9 +62,27 @@ img {
 }
 
 nav {
-  background-color: #406882;
-  box-shadow: 0px 3px 5px 0 rgba(0,0,0,.9);
+    background-color: #ffffff;
+  	box-shadow: 0px 2px 4px 0 rgba(0,0,0,.2);
 }
+
+header-top .nav2 {    
+	position: relative;
+  	margin-left: auto;
+  	margin-right: auto;
+	height: 40px;
+	padding: 10px 100px;
+    background-color: #ffb607;
+}
+.nav2 .top-left {
+    position: relative;
+    float: left;
+}
+.nav2 .top-right {
+    position: relative;
+    float: right;
+	}
+
 
 ul {
   list-style-type: none;
@@ -73,13 +99,13 @@ li {
   text-decoration: none;
   font-family: "Montserrat";
   transition: color 0.5s;
-  color: #B1D0E0;
+  color: #020d13;
   font-size: 20px;
   font-weight: 400;
 }
 
 .link:hover {
-  color: #1A374D;
+  color: #b0bbc4;
   transition: color 0.5s;
 }
 

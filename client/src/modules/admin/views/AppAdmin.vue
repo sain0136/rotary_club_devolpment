@@ -50,7 +50,7 @@ export default {
 } */
 
 .admin-page {
-  background-color: #B1D0E0;
+    background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

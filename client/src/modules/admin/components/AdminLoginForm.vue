@@ -2,7 +2,7 @@
   <div>
     <form>
       <img
-        src="../assets/admin-logo-2.png"
+        src="../assets/logo-rotary.png" class="logo-img"
         alt=""
       />
       <p
@@ -73,27 +73,26 @@ sleep(500).then(() => { x.style.display = "block";});
 
 <style scoped>
 img {
-  height: 100px;
+  height:auto;
 }
 
 div {
-  border: 5px solid black;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.103
-  );
-  width: 300px;
+  background-color: #ffffff;
+  width: 350px;
   margin-top: 10%;
   margin-left: auto;
   margin-right: auto;
-  padding: 50px;
+  border-radius: 15px;
+  border: 2px solid #ffb607;
+  width: 400px;
+  height: 400px;
+  padding: 35px 100px 15px 100px;
+  align: center;
 }
 
 form {
   text-align: center;
-  margin-top: 10%;
+  
   font-size: 18px;
 }
 
@@ -102,27 +101,23 @@ legend {
   font-weight: bolder;
 }
 
-input {
-  border: none;
-  border-bottom: 1px solid
-    rgba(255, 0, 0, 0.5);
-  background-color: black;
-  color: whitesmoke;
-}
 
-button {
-  background-color: #ffb607;
-  font-weight: bold;
-  opacity: 0.8;
-  border: none;
-  padding: 8px;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  margin-left: 50%;
-}
+button{
+	position: relative;
+    padding: 5px 75px;
+    line-height: 24px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+	margin: auto;
+    background-color: #ffb607;
+    border: 2px solid #ffb607;
+    text-transform: uppercase;
+	}
 
 button:hover {
-  opacity: 0.5;
+	color:#ffb607;
+	background:none;
 }
 
 #error {

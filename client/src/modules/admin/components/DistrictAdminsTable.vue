@@ -1,10 +1,10 @@
 <template>
   <div class="admin-container">
     <table v-if="admins.length != 0">
-      <th>ID</th>
+      <th>Admin ID</th>
       <th>District ID</th>
       <th>Admin Name</th>
-      <th>Action</th>
+      <th>Actions</th>
       <tr 
         v-for="admin in admins"
         :key="admin.user_id">

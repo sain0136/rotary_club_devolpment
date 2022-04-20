@@ -1,9 +1,9 @@
 <template>
   <div class="admin-container">
     <table v-if="districts.length != 0">
-      <th>ID</th>
+      <th>District ID</th>
       <th>Name</th>
-      <th>Action</th>
+      <th>Actions</th>
       <tr
         id="district-info"
         v-for="district in districts"
