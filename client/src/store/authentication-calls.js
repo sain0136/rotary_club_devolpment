@@ -1,5 +1,5 @@
 export async function isSiteAdminValid(id, password) {
-  if(id == 'admin' && password == 'pasword1234') {
+  if(id == 'admin' && password == 'password1234') {
     return true
   } else {
     return false
