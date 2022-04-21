@@ -12,7 +12,7 @@ export default class DistrictsController {
   public async paginationIndex({ request, response }: HttpContextContract) {
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
-    const districts: District[] = await District.query().select('*').paginate(currentPage, limit)
+    const districts: any[] = await District.query().select('*').paginate(currentPage, limit)
     return response.json({ districts })
   }
 
