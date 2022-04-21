@@ -1,5 +1,4 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 import Club from 'App/Models/Club'
 import District from 'App/Models/District'
 import User from 'App/Models/User'
