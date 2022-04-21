@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Club from 'App/Models/Club'
 import District from 'App/Models/District'
 import User from 'App/Models/User'
@@ -9,6 +10,13 @@ export default class DistrictsController {
     return response.json({ districts })
   }
 
+  public async paginationIndex({ request, response }: HttpContextContract) {
+    const currentPage: number = request.input('current_page')
+    const limit: number = request.input('limit')
+    const districts: District[] = await District.query().select('*').paginate(currentPage, limit)
+    return response.json({ districts })
+  }
+
   public async create({}: HttpContextContract) {}
 
   public async allClubsInDistrict({ request, response }: HttpContextContract) {
@@ -16,6 +24,7 @@ export default class DistrictsController {
     const allClubsForDistrict: Club[] = await Club.query().where({ district_id: districtID })
     return response.json({ allClubs: allClubsForDistrict })
   }
+
   public async getDistictAdmins({ response }: HttpContextContract) {
     const allAdmins: User[] = await User.query().where('district_id', '>', 0)
     for await (const user of allAdmins) {
