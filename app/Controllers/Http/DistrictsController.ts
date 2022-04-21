@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import Club from 'App/Models/Club'
 import District from 'App/Models/District'
 import User from 'App/Models/User'
@@ -12,7 +13,9 @@ export default class DistrictsController {
   public async paginationIndex({ request, response }: HttpContextContract) {
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
-    const districts: any[] = await District.query().select('*').paginate(currentPage, limit)
+    const districts: ModelPaginatorContract<District> = await District.query()
+      .select('*')
+      .paginate(currentPage, limit)
     return response.json({ districts })
   }
 
