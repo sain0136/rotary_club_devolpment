@@ -14,19 +14,22 @@
       >
         Credentials are not valid!
       </p>
-      <input
+      <span>Username:    <input
         type="text"
         name="username"
         placeholder="username"
         v-model="username"
-      />
+        
+      /></span>
+  
       <br />
       <br />
-      <input
+      <span> Password:    <input
         type="password"
         placeholder="password"
         v-model="password"
-      />
+      /></span>
+    
       <br />
       <br />
       <br />
@@ -74,6 +77,7 @@ sleep(500).then(() => { x.style.display = "block";});
 <style scoped>
 img {
   height:auto;
+  margin-bottom: 0.1em;
 }
 
 div {
@@ -84,14 +88,14 @@ div {
   margin-right: auto;
   border-radius: 15px;
   border: 2px solid #ffb607;
-  width: 400px;
-  height: 400px;
+  width: 420px;
+  height: 420px;
   padding: 35px 100px 15px 100px;
   align: center;
 }
 
 form {
-  text-align: center;
+  text-align: left;
   
   font-size: 18px;
 }
@@ -109,7 +113,7 @@ button{
     color: #ffffff;
     font-size: 14px;
     font-weight: 500;
-	margin: auto;
+	  margin: auto;
     background-color: #ffb607;
     border: 2px solid #ffb607;
     text-transform: uppercase;
@@ -136,5 +140,9 @@ button:hover {
 
 #admin-page:hover {
   color: #ffb607;
+}
+span{
+    font-size: larger;
+
 }
 </style>

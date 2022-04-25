@@ -203,7 +203,7 @@ export default {
 button{
   box-sizing: border-box;
   width: 50%;
-  background-color: gold;
+  background-color: #ffb607;
   color: white;
   border: 1px solid #3498db;
   border-radius: 3px;
@@ -214,7 +214,7 @@ button{
   
 }
 .fieldset{
- background-color:gold;
+ background-color:#ffb607;
  padding-bottom: 1%;
  padding-top: 5%;
  width: 100%;

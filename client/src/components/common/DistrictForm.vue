@@ -1,149 +1,207 @@
 <template>
   <div class="container">
-    <form onsubmit="event.preventDefault();">
-      <div class='fieldset'>
-      <h2
-        v-if="isEditOrCreate=='Create'">
-        Create a new District
-      </h2>
-      
-      <h2
-        v-else>
-        Edit this District
-      </h2>
+    <form
+      onsubmit="event.preventDefault();"
+    >
+      <div class="fieldset">
+        <h2
+          v-if="
+            isEditOrCreate == 'Create'
+          "
+        >
+          Create a new District
+        </h2>
+        <h2 v-else>
+          Edit this District
+        </h2>
       </div>
-       <br>
+      <br />
       <div class="form-field">
-        <span 
-          class="district-error" 
+        <span>Name:</span>
+        <span
+          class="district-error"
           id="district-name-error"
-          v-if="v$.name.$error">
-          Please enter a name for the district
-          <br>
+          v-if="v$.name.$error"
+        >
+          Please enter a name for the
+          district
+          <br />
         </span>
-        <input type="text"
+        <input
+          type="text"
           name="name"
           v-model="name"
           placeholder="District Name"
           aria-label="District Name"
-          >
-          <br> <br>
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
         <!-- <label for="president">District President</label> <br> -->
-        <span 
-          class="district-error" 
+        <span>President:</span>
+
+        <span
+          class="district-error"
           id="district-president-error"
-          v-if="v$.president.$error">
-          Please enter a district president 
-          <br>
+          v-if="v$.president.$error"
+        >
+          Please enter a district
+          president
+          <br />
         </span>
-        <input 
+
+        <input
           name="president"
           type="text"
           v-model="president"
           placeholder="President"
           aria-label="Presidents Name"
-          > <br> <br>
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
         <!-- <label for="Email">Email</label> <br> -->
-        <span 
-          class="district-error" 
+        <span>Email:</span>
+        <span
+          class="district-error"
           id="district-email-error"
-          v-if="v$.email.$error">
-          Please enter a valid email address <br>
-        </span> 
-        <input type="text"
+          v-if="v$.email.$error"
+        >
+          Please enter a valid email
+          address <br />
+        </span>
+        <input
+          type="text"
           name="email"
           v-model="email"
           placeholder="Email"
           aria-label="Email"
-          > <br> <br>
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
         <!-- <label for="meeting-location"></label> -->
-        <span 
-          class="district-error" 
+        <span>Meeting Location:</span>
+        <span
+          class="district-error"
           id="district-meetinglocation-error"
-          v-if="v$.meetingLocation.$error">
-          Please enter a meeting location  <br>
+          v-if="
+            v$.meetingLocation.$error
+          "
+        >
+          Please enter a meeting
+          location <br />
         </span>
-        <input type="text"
+        <input
+          type="text"
           name="meeting-location"
           v-model="meetingLocation"
           aria-label="Meeting Location"
-          placeholder="Meeting Location"> <br> <br>  
+          placeholder="Meeting Location"
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
-        <span 
-          class="district-error" 
+        <span>Meeting Frequency:</span>
+        <span
+          class="district-error"
           id="district-meetingfrequency-error"
-          v-if="v$.meetingFrequency.$error">
-          Please enter a meeting frequency. Ex:Weekly, Bi-Weekly
-        </span> <br>
-        <input type="text"
+          v-if="
+            v$.meetingFrequency.$error
+          "
+        >
+          Please enter a meeting
+          frequency. Ex:Weekly,
+          Bi-Weekly
+        </span>
+        <br />
+        <input
+          type="text"
           v-model="meetingFrequency"
           placeholder="Meeting Frequency"
           aria-label="Meeting Frequency"
-          > <br> <br>
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
-        <span 
-          class="district-error" 
+        <span>Charter Date:</span>
+        <span
+          class="district-error"
           id="district-charterdate-error"
-          v-if="v$.charterdate.$error">
+          v-if="v$.charterdate.$error"
+        >
           Please enter a charter date
-        </span> <br>
-        <input type="date"
+        </span>
+        <br />
+        <input
+          type="date"
           v-model="charterdate"
           placeholder="Charter Date"
           aria-label="Meeting Frequency"
-          > <br> <br>
+        />
+        <br />
+        <br />
       </div>
       <div class="form-field">
-        <span 
-          class="district-error" 
+        <span>
+          District Description: <p>(100-1000 words)</p></span
+        >
+        <span
+          class="district-error"
           id="district-description-error"
-          v-if="v$.description.$error">
-          Please enter a description between 100-1000 characters
-        </span> <br>
-        <textarea 
-          cols="90" 
+          v-if="v$.description.$error"
+        >
+          Please enter a description
+          between 100-1000 characters
+        </span>
+        <br />
+        <textarea
+          cols="90"
           rows="10"
           v-model="description"
           placeholder="District Description"
           aria-label="District Description"
-          >
-          </textarea><br> <br>
+        >
+        </textarea
+        ><br />
+        <br />
       </div>
-       <br>
-      <button 
-        v-if="isEditOrCreate=='Create'"
-        @click="validateDistrict">
+      <br />
+      <button
+        v-if="
+          isEditOrCreate == 'Create'
+        "
+        @click="validateDistrict"
+      >
         Submit
       </button>
-      <button 
+      <button
         v-else
-        @click="validateDistrict">
+        @click="validateDistrict"
+      >
         Update
       </button>
       <button
         id="cancel"
-        @click="() => redirect()">
+        @click="() => redirect()"
+      >
         Cancel
       </button>
-      <SocialLinksSection 
+      <SocialLinksSection
         id="Socia-Section"
-        isDistrictOrClub = 'District'
-        v-if="isEditOrCreate=='Edit'"/>
+        isDistrictOrClub="District"
+        v-if="isEditOrCreate == 'Edit'"
+      />
     </form>
-
   </div>
 </template>
 
 <script>
-
 import SocialLinksSection from './SocialLinksSection.vue'
 
 import store from '../../store/index'
@@ -151,69 +209,74 @@ import user from '../../api-factory/user'
 import district from '../../api-factory/district'
 
 import useValidate from '@vuelidate/core'
-import { required, maxLength, minLength, email } from '@vuelidate/validators'
+import {
+  required,
+  maxLength,
+  minLength,
+  email,
+} from '@vuelidate/validators'
 
 export default {
   name: 'NewDistrictForm',
   components: {
-    SocialLinksSection
+    SocialLinksSection,
   },
   props: {
     isEditOrCreate: String,
-    pageAccessed: String
+    pageAccessed: String,
   },
   data() {
     return {
-        v$: useValidate(),
-        name: '',
-        president: '',
-        email: '',
-        meetingLocation: '',
-        meetingFrequency: '',
-        charterdate: '',
-        description: '',
-
+      v$: useValidate(),
+      name: '',
+      president: '',
+      email: '',
+      meetingLocation: '',
+      meetingFrequency: '',
+      charterdate: '',
+      description: '',
     }
   },
-    validations() {
-      return {
-        name: { 
-          required,
-          maxLength: maxLength(30), 
-        },
-        president: {
-          required
-        },
-        email: { //This needs to be validated on the server too via a verification email
-          required,
-          email,
-        },
-        meetingLocation: {
-          required,
-          maxLength: maxLength(50)
-        },
-        meetingFrequency: {
-          required,
-          maxLength: maxLength(255)
-        },
-        charterdate: {
-          required,
-        },
-        description: {
-          required,
-          minLength: minLength(100),
-          maxLength: maxLength(1000),
-        },
-      }
-    },
+  validations() {
+    return {
+      name: {
+        required,
+        maxLength: maxLength(30),
+      },
+      president: {
+        required,
+      },
+      email: {
+        //This needs to be validated on the server too via a verification email
+        required,
+        email,
+      },
+      meetingLocation: {
+        required,
+        maxLength: maxLength(50),
+      },
+      meetingFrequency: {
+        required,
+        maxLength: maxLength(255),
+      },
+      charterdate: {
+        required,
+      },
+      description: {
+        required,
+        minLength: minLength(100),
+        maxLength: maxLength(1000),
+      },
+    }
+  },
 
   async created() {
-     /**
-     * If the form is to be used for update, the data is pre-populated 
-     * with the specific district's data coming from the API. If it's to be 
+    /**
+     * If the form is to be used for update, the data is pre-populated
+     * with the specific district's data coming from the API. If it's to be
      * created, data is empty by default.
      */
-    if(this.isEditOrCreate == 'Edit') {
+    if (this.isEditOrCreate == 'Edit') {
       this.prePopulateFields()
     }
   },
@@ -221,8 +284,12 @@ export default {
   methods: {
     async prePopulateFields() {
       // const districtInfo = store.state.currentDistrictData
-      const districtIdToEdit = this.$router.currentRoute.value.params.id
-      const districtInfo = await district.show(districtIdToEdit)
+      const districtIdToEdit = this
+        .$router.currentRoute.value
+        .params.id
+      const districtInfo = await district.show(
+        districtIdToEdit,
+      )
 
       this.name = await districtInfo.district_name
       this.president = await districtInfo.district_president
@@ -236,23 +303,30 @@ export default {
     getDistrictData() {
       return {
         district_name: this.name,
-        district_president: this.president,
+        district_president: this
+          .president,
         district_email: this.email,
-        meeting_location: this.meetingLocation,
-        meeting_frequency: this.meetingFrequency,
+        meeting_location: this
+          .meetingLocation,
+        meeting_frequency: this
+          .meetingFrequency,
         charter_date: this.charterdate,
-        district_description: this.description
+        district_description: this
+          .description,
       }
     },
-    
+
     validateDistrict() {
       console.log('validating')
 
       this.v$.$validate()
       console.log(this.v$.$errors)
 
-      if(!this.v$.$error) {
-        if(this.isEditOrCreate == 'Create') {
+      if (!this.v$.$error) {
+        if (
+          this.isEditOrCreate ==
+          'Create'
+        ) {
           this.createDistrict()
         } else {
           this.updateExistingDistrict()
@@ -261,30 +335,48 @@ export default {
     },
 
     async createDistrict() {
-      console.log('creating new district')
+      console.log(
+        'creating new district',
+      )
       const districtToCreate = this.getDistrictData()
-      await district.create(districtToCreate)
+      await district.create(
+        districtToCreate,
+      )
       this.redirect()
     },
 
     async updateExistingDistrict() {
-      const districtIdToEdit = this.$router.currentRoute.value.params.id
+      const districtIdToEdit = this
+        .$router.currentRoute.value
+        .params.id
       const districtToUpdate = this.getDistrictData()
 
-      await district.update(districtIdToEdit, districtToUpdate)
+      await district.update(
+        districtIdToEdit,
+        districtToUpdate,
+      )
 
       //To dynamically update right after making the edit
-      store.dispatch('changeCurrentDistrictData', this.$router.currentRoute.value.params.id)
+      store.dispatch(
+        'changeCurrentDistrictData',
+        this.$router.currentRoute.value
+          .params.id,
+      )
       this.redirect()
     },
 
     redirect() {
       //if the edit is being made from the admin portal
-      if(this.pageAccessed == 'District') {
+      if (
+        this.pageAccessed == 'District'
+      ) {
         this.$router.push('./home')
-      //if it's from the district portal
+        //if it's from the district portal
       } else {
-        if(this.isEditOrCreate == 'Create') {
+        if (
+          this.isEditOrCreate ==
+          'Create'
+        ) {
           this.$router.push('./view')
         } else {
           this.$router.push('../view')
@@ -296,27 +388,28 @@ export default {
 </script>
 
 <style scoped>
-button{
+span {
+  display: block;
+}
+button {
   box-sizing: border-box;
   width: 50%;
-  background-color: gold;
+  background-color: #ffb607;
   left: 25%;
   position: relative;
-    color: white;
+  color: white;
   border: 1px solid #3498db;
   border-radius: 3px;
   font-size: 1.5em;
   font-weight: bold;
   margin-top: 1%;
   cursor: pointer;
-  
 }
-#Socia-Section{
+#Socia-Section {
   width: 100%;
 }
-#cancel{
+#cancel {
   margin-bottom: 2%;
-
 }
 form {
   width: 100%;
@@ -331,36 +424,35 @@ input {
   border-bottom: 1px solid #00090e25;
   padding: 15px 20px;
   border-radius: 1px;
-  margin:5px auto;
-  background-color:#f7f7f7;
+  margin: 5px auto;
+  background-color: #f7f7f7;
   border: 1px solid silver;
 }
-textarea{
+textarea {
   background-color: #f3f3f3;
   border: none;
   border-bottom: 1px solid #00090e25;
   padding: 15px 20px;
   border-radius: 1px;
-  margin:5px auto;
-  background-color:#f7f7f7;
+  margin: 5px auto;
+  background-color: #f7f7f7;
   border: 1px solid silver;
-
 }
 
 label {
   font-weight: bold;
-  
 }
 
-.fieldset{
- background-color:gold;
- padding-bottom: 5%;
- padding-top: 5%;
+.fieldset {
+  background-color: #ffb607;
+  padding-bottom: 5%;
+  padding-top: 5%;
 }
 .container {
-  box-shadow: 0px 3px 20px 0 rgba(0,0,0,.8);
-  width: 50%; 
-  overflow: auto; 
+  box-shadow: 0px 3px 20px 0
+    rgba(0, 0, 0, 0.8);
+  width: 50%;
+  overflow: auto;
   height: 60vh;
   margin-top: 5%;
   text-align: center;
@@ -377,5 +469,4 @@ h2 {
   font-size: 12px;
   padding: 0%;
 }
-
 </style>
