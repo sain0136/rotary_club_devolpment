@@ -31,8 +31,8 @@
         </td>
       </tr>
     </table>
-    <legend class="table-title" v-else>No district admin to display!</legend>
-  </div>
+<!--     <legend class="table-title" v-else>No district admin to display!</legend>
+ -->  </div>
 </template>
 
 <script>

@@ -42,11 +42,26 @@ export default {
     )
   },
 
+  async indexPagination(data) {
+    const res = await fetch(
+      'http://74.208.135.85/districtClubs/paginate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },body: JSON.stringify(data),
+      },
+    )
+    const page = await res.json()
+    return page
+  },
+  
   async update(id, data) {
     const res = await fetch(
       `http://74.208.135.85/district/${id}`,
       {
-        method: 'PATCH',
+        method: 'Put',
         headers: {
           'Content-Type':
             'application/json',

@@ -125,7 +125,7 @@ export default {
     const res = await fetch(
       `http://74.208.135.85/project/${id}`,
       {
-        method: 'PATCH',
+        method: 'Put',
         headers: {
           'Content-Type':
             'application/json',

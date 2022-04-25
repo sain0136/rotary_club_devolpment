@@ -1,166 +1,300 @@
 <template>
   <div class="admin-container">
-    <form onsubmit="event.preventDefault();">
+    <form
+      onsubmit="event.preventDefault();"
+    >
       <div class="form-field-top">
-        <span><h2>Assign New Admin to a district</h2></span>
-        <span 
-          class="admin-error" 
+        <span
+          ><h2>
+            Assign the new Admin to a
+            district
+          </h2></span
+        >
+        <br />
+        <span><h3>District:</h3> </span>
+        <span
+          class="admin-error"
           id="admin-district-error"
-          v-if="v$.districtId.$error">
-          Please select a district to assign the admin 
-        </span> <br>
-        <select name="districts" v-model="districtId">
-          <option disabled selected>Districts</option>
-          <option 
+          v-if="v$.districtId.$error"
+        >
+          Please select a district to
+          assign the admin
+        </span>
+
+        <select
+          name="districts"
+          v-model="districtId"
+        >
+          <option disabled selected
+            >Districts</option
+          >
+          <option
             v-for="district in districts"
             :key="district.district_id"
-            :value="district.district_id"> 
-            {{district.district_name}} 
+            :value="
+              district.district_id
+            "
+          >
+            {{ district.district_name }}
           </option>
-        </select> <br> <br>
+        </select>
+        <br />
+        <br />
       </div>
-        <div class="grid-container">
+      <div class="grid-container">
         <div class="form-field">
-        <span 
-          class="admin-error" 
-          v-if="v$.membershipId.$error">
-          Please enter the membership id
-        </span> <br>
-        <input type="text"
-          placeholder="Membership ID"
-          v-model="membershipId"> <br> <br>
+          <span>Membership Id:</span>
+          <span
+            class="admin-error"
+            v-if="
+              v$.membershipId.$error
+            "
+          >
+            Please enter the membership
+            id
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="Membership ID"
+            v-model="membershipId"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>First Name:</span>
+
+          <span
+            class="admin-error"
+            id="admin-firstname-error"
+            v-if="v$.firstName.$error"
+          >
+            Please enter the first name
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="First Name"
+            v-model="firstName"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>Last Name:</span>
+
+          <span
+            class="admin-error"
+            id="admin-lastname-error"
+            v-if="v$.lastName.$error"
+          >
+            Please enter the last name
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="Last Name"
+            v-model="lastName"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>Address:</span>
+
+          <span
+            class="admin-error"
+            id="admin-address-error"
+            v-if="v$.address.$error"
+          >
+            Please enter the address
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="Address"
+            v-model="address"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>City:</span>
+
+          <span
+            class="admin-error"
+            id="admin-city-error"
+            v-if="v$.city.$error"
+          >
+            Please enter the city
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="City"
+            v-model="city"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>Postal Code:</span>
+
+          <span
+            class="admin-error"
+            id="admin-postal-error"
+            v-if="v$.postal.$error"
+          >
+            Please enter the postal code
+          </span>
+          <br />
+          <input
+            type="text"
+            placeholder="Postal Code"
+            v-model="postal"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span
+            style="
+              position: relative;
+              bottom: 1.5em;
+            "
+          >
+            Province</span
+          >
+          <span
+            class="admin-error"
+            id="admin-province-error"
+            v-if="v$.province.$error"
+          >
+            Please enter the province
+          </span>
+          <br />
+
+          <select
+            id="select-province"
+            name="roles"
+            v-model="province"
+          >
+            <option disabled
+              >Province</option
+            >
+            <option value="Ontario"
+              >Ontario</option
+            >
+            <!-- Rest of 'em will to be added later -->
+          </select>
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <input
+            type="text"
+            placeholder="Canada"
+            readonly
+            v-model="country"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>Phone:</span>
+          <span
+            class="admin-error"
+            id="admin-phone-error"
+            v-if="v$.phone.$error"
+          >
+            Please enter the phone
+            number
+          </span>
+          <br />
+          <input
+            type="tel"
+            placeholder="Phone"
+            v-model="phone"
+          />
+          <br />
+          <br />
+        </div>
+        <div class="form-field">
+          <span>Email:</span>
+          <span
+            class="admin-error"
+            id="admin-email-error"
+            v-if="v$.phone.$error"
+          >
+            Please enter a valid email
+            address
+          </span>
+          <br />
+          <input
+            type="email"
+            placeholder="Email"
+            v-model="email"
+          />
+          <br />
+          <br />
+        </div>
+        <div
+          class="form-field"
+          v-if="
+            isEditOrCreate == 'Create'
+          "
+        >
+        <span>Password:</span>
+          <span
+            class="admin-error"
+            id="admin-password-error"
+            v-if="v$.password.$error"
+          >
+            Please enter a valid
+            password
+          </span>
+          <br />
+          <input
+            type="password"
+            placeholder="Password"
+            v-model="password"
+          />
+          <br />
+          <br />
+        </div>
+        <br />
       </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-firstname-error"
-          v-if="v$.firstName.$error">
-          Please enter the first name
-        </span> <br>
-        <input type="text"
-          placeholder="First Name"
-          v-model="firstName"> <br> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-lastname-error"
-          v-if="v$.lastName.$error">
-          Please enter the last name
-        </span> <br>
-        <input type="text"
-          placeholder="Last Name"
-          v-model="lastName"> <br> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-address-error"
-          v-if="v$.address.$error">
-          Please enter the address
-        </span> <br>
-        <input type="text"
-          placeholder="Address"
-          v-model="address"> <br> <br> 
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-city-error"
-          v-if="v$.city.$error">
-          Please enter the city
-        </span> <br>
-        <input type="text"
-          placeholder="City"
-          v-model="city"> <br> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-postal-error"
-          v-if="v$.postal.$error">
-          Please enter the postal code
-        </span> <br>
-        <input type="text"
-          placeholder="Postal Code"
-          v-model="postal"> <br> <br>
-      </div>
-      <div class="form-field">
-        <span style="position: relative;bottom: 2em;"
-          class="admin-error" 
-          id="admin-province-error"
-          v-if="v$.province.$error">
-          Please enter the province
-        </span> <br>
-        <span style="position: relative;
-    left: 8em;
-    bottom: 1.5em;"> Province</span>
-        <select id="select-province" name="roles" v-model="province">
-          <option disabled>Province</option>
-          <option value="Ontario">Ontario</option>
-          <!-- Rest of 'em will to be added later -->
-        </select> <br> <br>
-      </div>
-      <div class="form-field">
-        <input type="text"
-          placeholder="Canada"
-          readonly
-          v-model="country"> <br> <br>
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-phone-error"
-          v-if="v$.phone.$error">
-          Please enter the phone number
-        </span> <br>
-        <input type="tel"
-          placeholder="Phone"
-          v-model="phone"> <br> <br>      
-      </div>
-      <div class="form-field">
-        <span 
-          class="admin-error" 
-          id="admin-email-error"
-          v-if="v$.phone.$error">
-          Please enter a valid email address
-        </span> <br>
-        <input type="email"
-          placeholder="Email"
-          v-model="email"> <br> <br>
-      </div>
-      <div class="form-field"
-        v-if="isEditOrCreate=='Create'">
-        <span 
-          class="admin-error" 
-          id="admin-password-error"
-          v-if="v$.password.$error">
-          Please enter a valid password
-        </span> <br>
-        <input type="password"
-          placeholder="Password"
-          v-model="password"> <br> <br>  
-      </div>
-      <br>  </div> 
-      <button 
-        v-if="isEditOrCreate=='Create'"
-        @click="validateDistrictAdmin">
+      <button
+        v-if="
+          isEditOrCreate == 'Create'
+        "
+        @click="validateDistrictAdmin"
+      >
         Submit
       </button>
-      <button 
+      <button
         v-else
-        @click="validateDistrictAdmin">
+        @click="validateDistrictAdmin"
+      >
         Update
       </button>
-     
-      <button id="cancel"
-        @click="() => {
-          if(this.isEditOrCreate == 'Create') {
-            this.redirect(true)
-          } else {
-            redirect(false)
+
+      <button
+        id="cancel"
+        @click="
+          () => {
+            if (
+              this.isEditOrCreate ==
+              'Create'
+            ) {
+              this.redirect(true)
+            } else {
+              redirect(false)
+            }
           }
-        }">
+        "
+      >
         Cancel
       </button>
     </form>
@@ -168,18 +302,23 @@
 </template>
 
 <script>
-
 import district from '../../../api-factory/district'
 import district_admin from '../../../api-factory/district_admin'
 import user from '../../../api-factory/user'
 
 import useValidate from '@vuelidate/core'
-import { required, maxLength, minLength, email, requiredIf } from '@vuelidate/validators'
+import {
+  required,
+  maxLength,
+  minLength,
+  email,
+  requiredIf,
+} from '@vuelidate/validators'
 
 export default {
   name: 'DistrictAdminForm',
   props: {
-    isEditOrCreate: String
+    isEditOrCreate: String,
   },
   data() {
     return {
@@ -198,7 +337,7 @@ export default {
       v$: useValidate(),
 
       //Const values
-      districtRole: 'District Admin', 
+      districtRole: 'District Admin',
       roleType: 1,
 
       //Others
@@ -214,9 +353,9 @@ export default {
       phone: '',
       email: '',
       password: '',
-      
+
       /**
-       * For the dropdown to choose which district 
+       * For the dropdown to choose which district
        * the admin will be assigned
        */
       districts: Array,
@@ -225,71 +364,86 @@ export default {
   validations() {
     return {
       districtId: {
-        required
+        required,
       },
       membershipId: {
-        required
+        required,
       },
       firstName: {
-        required
+        required,
       },
       lastName: {
-        required
+        required,
       },
       address: {
-        required
+        required,
       },
       city: {
-        required
+        required,
       },
       postal: {
-        required
+        required,
       },
       province: {
-        required
+        required,
       },
       phone: {
-        required
+        required,
       },
       email: {
         required,
-        email
+        email,
       },
       password: {
-        required: requiredIf(function () {
-          return this.isEditOrCreate == 'Create'
-        })
-      }
+        required: requiredIf(
+          function () {
+            return (
+              this.isEditOrCreate ==
+              'Create'
+            )
+          },
+        ),
+      },
     }
   },
   async created() {
     this.districts = await district.index()
     this.setUserRoles()
     /**
-     * If the form is to be used for update, the data is pre-populated 
-     * with the specific district's data coming from the API. If it's to be 
+     * If the form is to be used for update, the data is pre-populated
+     * with the specific district's data coming from the API. If it's to be
      * created, data is empty by default.
      */
-    if(this.isEditOrCreate == 'Edit') {
+    if (this.isEditOrCreate == 'Edit') {
       this.prePopulateFields()
     }
   },
-  
+
   methods: {
     setUserRoles() {
       this.roles.set(1, 'Admin')
-      this.roles.set(2, 'District Admin')
+      this.roles.set(
+        2,
+        'District Admin',
+      )
 
       this.roles.set('Admin', 1)
-      this.roles.set('District Admin', 2)
+      this.roles.set(
+        'District Admin',
+        2,
+      )
     },
 
     async prePopulateFields() {
-      const userIdToEdit = this.$router.currentRoute.value.params.userid
-      const userInfo = await user.show(userIdToEdit)
+      const userIdToEdit = this.$router
+        .currentRoute.value.params
+        .userid
+      const userInfo = await user.show(
+        userIdToEdit,
+      )
 
       this.districtId = await userInfo.district_id
-      this.membership_id = await userInfo.membership_id
+      this.membershipId = await userInfo.membership_id
       this.districtRole = await userInfo.district_role
       this.roleType = await userInfo.role_type
       this.firstName = await userInfo.firstname
@@ -305,83 +459,91 @@ export default {
     },
 
     getUserData() {
-        return {
-          district_id: this.districtId,
-          membership_id: this.membershipId,
-          role_type: this.roleType,
-          district_role: this.districtRole,
-          firstname: this.firstName,
-          lastname: this.lastName,
-          address: this.address,
-          user_city: this.city,
-          user_postal: this.postal,
-          user_province: this.province,
-          user_country: this.country,
-          phone: this.phone,
-          email: this.email,
-          password: this.password,
-        }
+      return {
+        district_id: this.districtId,
+        membership_id: this
+          .membershipId,
+        role_type: this.roleType,
+        district_role: this
+          .districtRole,
+        firstname: this.firstName,
+        lastname: this.lastName,
+        address: this.address,
+        user_city: this.city,
+        user_postal: this.postal,
+        user_province: this.province,
+        user_country: this.country,
+        phone: this.phone,
+        email: this.email,
+        password: this.password,
+      }
     },
 
     validateDistrictAdmin() {
       this.v$.$validate()
       console.log(this.v$.$errors)
-      
-      if(!this.v$.$error) {
-        if(this.isEditOrCreate == 'Create') {
+
+      if (!this.v$.$error) {
+        if (
+          this.isEditOrCreate ==
+          'Create'
+        ) {
           this.createAdmin()
         } else {
           console.log('here')
           this.updateExistingAdmin()
         }
-      } 
+      }
     },
 
     async createAdmin() {
       const userToCreate = this.getUserData()
-      await district_admin.create(userToCreate)
+      await district_admin.create(
+        userToCreate,
+      )
       this.redirect(true)
     },
 
     async updateExistingAdmin() {
       console.log('ok')
-      const id = this.$router.currentRoute.value.params.userid
+      const id = this.$router
+        .currentRoute.value.params
+        .userid
       const userToUpdate = this.getUserData()
-      await district_admin.update(id, userToUpdate)
+      await district_admin.update(
+        id,
+        userToUpdate,
+      )
       this.redirect(false)
     },
 
     redirect(fromCreate) {
-      if(fromCreate) {
+      if (fromCreate) {
         this.$router.push('./view')
       } else {
         this.$router.push('../view')
       }
     },
-    
   },
 }
 </script>
 
 <style scoped>
-.form-field-top{
- background-color:gold;
- padding-bottom: 1%;
- padding-top: 1%;
+.form-field-top {
+  background-color: #ffb607;
+  padding-bottom: 1%;
+  padding-top: 1%;
 }
 .grid-container {
   display: inline-grid;
-  grid-template-columns: auto auto ;
+  grid-template-columns: auto auto;
   padding: 1%;
-  gap: .8em;
+  gap: 0.8em;
 }
-.admin-container{
-  
+.admin-container {
   background-color: black;
   color: aliceblue;
-      padding-bottom: 1em;
-
-
+  padding-bottom: 1em;
 }
 form {
   text-align: center;
@@ -396,37 +558,38 @@ input {
   background-color: #f3f3f3;
   border: none;
   border-bottom: 1px solid #00090e25;
-  padding: .1em .1em;
+  padding: 0.1em 0.1em;
   border-radius: 1px;
-  margin:5px auto;
-  background-color:#f7f7f7;
+  margin: 5px auto;
+  background-color: #f7f7f7;
   border: 1px solid silver;
   font-family: 'Lato', sans-serif;
   font-size: 1.3rem;
   font-weight: bold;
 }
-select{
-    background-color: #f3f3f3;
+select {
+  left: 2%;
+  background-color: #f3f3f3;
   border: none;
   border-bottom: 1px solid #00090e25;
-  padding: .1em .1em;
+  padding: 0.1em 0.1em;
   border-radius: 1px;
-  margin:5px auto;
-  background-color:#f7f7f7;
+  margin: 5px auto;
+  background-color: #f7f7f7;
   border: 1px solid silver;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.3rem;
- font-weight: bold;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
-#select-province{
-    position: relative;
-    right: 3.3em;
-    bottom: 1em;
+#select-province {
+  position: relative;
+  right: 3.3em;
+  bottom: 1em;
 }
-button{
+button {
   box-sizing: border-box;
   width: 25%;
-  background-color: gold;
+  background-color: #ffb607;
   position: relative;
   left: 38%;
   color: white;
@@ -438,8 +601,7 @@ button{
   cursor: pointer;
   display: block;
 }
-#cancel{
+#cancel {
   margin-bottom: 2%;
-
 }
 </style>

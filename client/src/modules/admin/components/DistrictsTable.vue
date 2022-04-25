@@ -35,9 +35,9 @@
         </td>
       </tr>
     </table>
-    <legend 
+<!--     <legend 
       class="table-title"
-      v-else>No districts to display!</legend>
+      v-else>No districts to display!</legend> -->
   </div>
 </template>
 
