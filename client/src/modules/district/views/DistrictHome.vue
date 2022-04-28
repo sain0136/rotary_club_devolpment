@@ -1,5 +1,6 @@
 <template>
-  <div>
+
+  <div class="content">
     <div class="district-page-head">
       <h1 class="district-page-title">
         Welcome to District 
@@ -12,9 +13,9 @@
         <br> Site Admin!
       </h2> -->
     </div>
-    <br /><br />
-    <img src="../assets/rotary-logo.png" alt="">
   </div>
+
+  
 </template>
 
 <script>
@@ -24,7 +25,10 @@ export default {
 </script>
 
 <style scoped>
+.content{
 
+height:100% ;
+}
 h1, h2 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;

@@ -28,7 +28,7 @@
           <button
             title="Delete District"
             class="crud-buttons"
-            @click="deleteDistrict(district.district_id)">
+            @click="deleteDistrict(district.district_id,district.district_name)">
             <font-awesome-icon
             class="social-icon" icon="trash-alt"></font-awesome-icon>
           </button>
@@ -56,8 +56,8 @@ export default {
      this.districts = await district.index()
   },
   methods: {
-    async deleteDistrict(districtId) {
-      if(confirm(`Are you sure you want to delete district ${districtId}?`)) {
+    async deleteDistrict(districtId,districtName) {
+      if(confirm(`Are you sure you want to delete district ${districtId} : ${districtName}?`)) {
         await district.delete(districtId)
         this.districts = await district.index()
       }

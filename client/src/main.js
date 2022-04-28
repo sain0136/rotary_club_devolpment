@@ -19,10 +19,12 @@ import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCoffee)
 
 library.add(faSearch);
 library.add(faEnvelope);

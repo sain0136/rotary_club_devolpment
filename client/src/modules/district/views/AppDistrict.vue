@@ -1,10 +1,13 @@
 <template>
-  <div class="district-background">
+<body>
+   <div class="district-background">
     <DistrictInfoHeader/>
     <DistrictHeader />
     <router-view></router-view>
     <DistrictFooter/>
-  </div>
+  </div> 
+</body>
+
 </template>
 
 <script>
@@ -50,7 +53,8 @@ export default {
 
 <style>
 .district-background {
-  background-color: #fbefdf;
+  background-color: #ffffff;
+  height: 100%;
 }
 
 .district-page-head {

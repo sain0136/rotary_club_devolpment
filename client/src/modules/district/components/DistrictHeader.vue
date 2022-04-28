@@ -32,7 +32,7 @@
   </nav>
 </template>
 
-<script>
+<script>    
 
 import SignInAndOutButton from '../../../components/common/SignInAndOutButton.vue'
 
@@ -65,7 +65,7 @@ img {
 }
 
 nav {
-  background-color: #fbefdf;
+  background-color: #ffffff;
   height: 8%;
 }
 
