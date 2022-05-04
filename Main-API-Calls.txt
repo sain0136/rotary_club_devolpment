@@ -171,20 +171,7 @@ get user by json instead of attching to url
 	    create new club 
         http://127.0.0.1:3333/club/ 
          Post
-{ 
-    "club_name": "Cornwall Rotary",
-    "club_address": "1281 blvd",
-    "club_city": "cornwall",
-    "club_postal": "K^H 4V2",
-    "club_province": "Ontario",
-    "club_country": "Canada",
-    "club_phone": "613-902-7832",
-    "club_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n",
-    "club_email": "rotaryCornwall@gmail.com",
-    "charter_date": "09/07/1945",
-    "mother_club": "India club",
-    "district_id": 1
-}
+
 	 all the other methods delete and get all the same if you want to find by one id you do for example user/1 
 ----------------------------------------------------------------------------
 *****************************************************************************
@@ -205,7 +192,7 @@ get user by json instead of attching to url
     CREATE A NEW PROJOECT 
     http://127.0.0.1:3333/project/
     POST
-    {
+{
         "project_name": "Apo Ilgun",
         "project_theme": "sdkfj",
         "area_focus": "Peace_Conflict_Prevention",
@@ -233,7 +220,7 @@ get user by json instead of attching to url
         ],
         "club_id": 1,
         "district_id": 1
-    }
+}
 ----------------------------------------------------------------------------
 *****************************************************************************
 =============================================================================  

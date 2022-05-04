@@ -6,6 +6,7 @@ import AreaFocus from 'Contracts/Enums/AreaFocus'
 import GrantType from 'Contracts/Enums/GrantType'
 import ProjectRoleType from 'Contracts/Enums/ProjectRoleType'
 import { DateTime } from 'luxon'
+import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
@@ -15,6 +16,17 @@ export default class ProjectsController {
       project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
     }
     return response.json({ allProjects })
+  }
+
+  public async paginationIndex({ request, response }: HttpContextContract) {
+    const districtId: number = request.input('district_id')
+    const currentPage: number = request.input('current_page')
+    const limit: number = request.input('limit')
+    const projects: ModelPaginatorContract<Project> = await Project.query()
+      .select('*')
+      .where({ districtId: districtId })
+      .paginate(currentPage, limit)
+    return response.json({ projects })
   }
 
   public async create({}: HttpContextContract) {}
