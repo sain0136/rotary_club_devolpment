@@ -4,6 +4,8 @@ import GrantType from 'Contracts/Enums/GrantType'
 import User from './User'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 import AreaFocus from 'Contracts/Enums/AreaFocus'
+import ProjectStatus from 'Contracts/Enums/ProjectStatus'
+import Region from 'Contracts/Enums/Region'
 
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
@@ -16,6 +18,13 @@ export default class Project extends BaseModel {
 
   @computed()
   public itemisedBudgetArray: object
+
+  @computed()
+  public attachedLetters: object
+
+  @computed()
+  public projectFunding: object
+
 
   @column({ isPrimary: true })
   public projectId: number
@@ -33,6 +42,9 @@ export default class Project extends BaseModel {
   public grantType: GrantType
 
   @column.date()
+  public startDate: DateTime
+
+  @column.date()
   public estimatedCompletion: DateTime
 
   @column()
@@ -48,19 +60,40 @@ export default class Project extends BaseModel {
   public createdBy: number
 
   @column()
-  public region: string
+  public region: Region
+
+ @column()
+  public rotaryYear: number
 
   @column()
-  public rotaryYear: number
+  public projectStatus: ProjectStatus
+
+
+  @column()
+  public country: string
+
 
   @column()
   public currency: string
 
+  @column()
+  public imageLink: string
+
+  @column({ serializeAs: null })
+  public attached_letters: string
+
   @column({ serializeAs: null })
   public extraDescriptions: string
 
-  @column({ serializeAs: null })
+    @column({ serializeAs: null })
   public itemisedBudget: string
+
+  @column({ serializeAs: null })
+  public project_funding: string
+
+  @column({ serializeAs: null })
+  public hostclub_information: string
+
 
   @column()
   public clubId: number

@@ -7,6 +7,7 @@ import GrantType from 'Contracts/Enums/GrantType'
 import ProjectRoleType from 'Contracts/Enums/ProjectRoleType'
 import { DateTime } from 'luxon'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
+import Region from 'Contracts/Enums/Region'
 
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
@@ -41,7 +42,7 @@ export default class ProjectsController {
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
     const createdByUserId: number = request.input('created_by')
-    const region: string = request.input('region')
+    const region: Region = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
     const roleType: ProjectRoleType = request.input('role_type')
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
@@ -206,7 +207,7 @@ export default class ProjectsController {
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
     const createdByUserId: number = request.input('created_by')
-    const region: string = request.input('region')
+    const region: Region = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))

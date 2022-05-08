@@ -6,7 +6,7 @@ export default class User extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('user_id').primary().unsigned()
-      table.string('membership_id', 50).unique().notNullable()
+      table.string('membership_id', 50).nullable()
       table.string('firstname', 50).notNullable()
       table.string('lastname', 50).notNullable()
       table.string('address', 255).nullable()
@@ -15,7 +15,7 @@ export default class User extends BaseSchema {
       table.string('user_province', 255).nullable()
       table.string('user_country', 255).nullable()
       table.string('phone', 180).nullable()
-      table.string('email', 50).notNullable()
+      table.string('email', 50).notNullable().unique()
       table.string('password', 255).notNullable()
       table
         .integer('club_id', 50)
