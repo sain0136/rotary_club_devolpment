@@ -56,6 +56,7 @@ export default class UsersController {
       Verified: verifiedAndAccessGranted,
       Hash: userById.password,
       PlainText: password,
+      user_id:id
     })
   }
   public async jsonGetById({ request, response }: HttpContextContract) {
