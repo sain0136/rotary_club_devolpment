@@ -111,6 +111,7 @@ export default class PopulateSeeder extends BaseSeeder {
         })
         await Project.create({
           projectName:'Restoration of African Water',
+          grantType:1,
           country:'Ghana',
           areaFocus:3,
           districtId:1,
