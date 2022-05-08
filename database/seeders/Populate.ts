@@ -2,7 +2,6 @@ import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import User from 'App/Models/User'
 import District from 'App/Models/District'
 import Club from 'App/Models/Club'
-import Url from 'App/Models/Url'
 import Project from 'App/Models/Project'
 import RoleType from 'Contracts/Enums/RoleType'
 
