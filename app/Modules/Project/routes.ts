@@ -6,3 +6,4 @@ Route.post('/project/usersProjects/', 'ProjectsController.showAllProjectsByUser'
 Route.post('/project/clubProjects/', 'ProjectsController.showAllProjectsByClub')
 Route.post('/project/districtProjects/', 'ProjectsController.showAllProjectsByDistrict')
 Route.post('/project/projectAdmins/', 'ProjectsController.showAllAdminsForProject')
+Route.post('/project/paginate', 'ProjectsController.paginationIndex')
