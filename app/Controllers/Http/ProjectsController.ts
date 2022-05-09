@@ -261,4 +261,14 @@ export default class ProjectsController {
     await projectToBeDeleted.delete()
     return response.json({ Deleted: 'old project below', oldProject })
   }
+
+  public async deleteProjectByProjectId({ request, response }: HttpContextContract) {
+    const projectId: number = request.input('project_id')
+    const oldProject: Project = await Project.findOrFail(projectId)
+    const projectToBeDeleted: Project = await Project.findOrFail(projectId)
+    await projectToBeDeleted.related('projectRole').detach()
+    await projectToBeDeleted.related('pledges').detach()
+    await projectToBeDeleted.delete()
+    return response.json({ Deleted: 'old project below', oldProject })
+  }
 }
