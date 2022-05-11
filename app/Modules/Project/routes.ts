@@ -8,3 +8,4 @@ Route.post('/project/districtProjects/', 'ProjectsController.showAllProjectsByDi
 Route.post('/project/projectAdmins/', 'ProjectsController.showAllAdminsForProject')
 Route.post('/project/paginate', 'ProjectsController.paginationIndex')
 Route.post('/project/delete', 'ProjectsController.deleteProjectByProjectId')
+Route.post('/project/showProjectByIdPost', 'ProjectsController.showProjectByIdPost')

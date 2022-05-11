@@ -178,6 +178,11 @@ export default class ProjectsController {
       .where({ project_id: projectId })
     return response.json({ ProjectById, projectPermited: projectAdmins })
   }
+  public async showProjectByIdPost({ request, response }: HttpContextContract) {
+    const projectId: number = request.input('project_id')
+    const ProjectById: Project = await Project.findOrFail(projectId)
+    return response.json({ ProjectById })
+  }
 
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {
     const userId: number = request.input('user_id')
