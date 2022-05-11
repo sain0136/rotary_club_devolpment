@@ -37,6 +37,7 @@ export default class ProjectsController {
     const projectTheme: string = request.input('project_theme')
     const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
+    const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
@@ -44,61 +45,134 @@ export default class ProjectsController {
     const createdByUserId: number = request.input('created_by')
     const region: Region = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
-    const roleType: ProjectRoleType = request.input('role_type')
+    const projectStatus: number = request.input('project_status')
+    const country: string = request.input('country')
+    //const imageLink: number = request.input('image_link')
+
+
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
-    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
+/*     const attachedLetters: any = JSON.stringify(request.input('attached_letters'))
+    const projectFunding: any = JSON.stringify(request.input('project_funding'))
+    const hostclubInformation: any = JSON.stringify(request.input('hostclub_information'))
+     */
+    const roleType: ProjectRoleType = request.input('role_type')
+
     const clubId: number = request.input('club_id')
-    const club: Club[] = await Club.query().where({ club_id: clubId })
-    const districtId: number = club[0].districtId
+    let districtId: number = request.input('district_id')
 
-    const newProject = await Project.create({
-      projectName: projectName,
-      projectTheme: projectTheme,
-      grantType: grantType,
-      areaFocus: areaFocus,
-      estimatedCompletion: convertedEstimatedCompletion,
-      fundingGoal: fundingGoal,
-      currentFunds: currentFunds,
-      anticipatedFunding: anticipatedFunding,
-      createdBy: createdByUserId,
-      region: region,
-      rotaryYear: rotaryYear,
-      extraDescriptions: extraDescriptions,
-      itemisedBudget: itemisedBudget,
-      clubId: clubId,
-      districtId: districtId,
-    })
-    const user: User = await User.findOrFail(createdByUserId)
-    await newProject.related('projectRole').attach({
-      [user.userId]: {
-        role: roleType,
-      },
-    })
-    const roleTitle = async (roleType: number) => {
-      return ProjectRoleType[roleType]
-    }
+    const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
+    
+    if (grantType == 1) {
+      if (districtId == null || districtId == undefined) {
+           const club: Club[] = await Club.query().where({ club_id: clubId })
+           districtId= club[0].districtId
+      }
+   
+      const newProject = await Project.create({
+        projectName: projectName,
+        projectTheme: projectTheme,
+        grantType: grantType,
+        areaFocus: areaFocus,
+        estimatedCompletion: convertedEstimatedCompletion,
+        fundingGoal: fundingGoal,
+        currentFunds: currentFunds,
+        createdBy: createdByUserId,
+        region: region,
+        rotaryYear: rotaryYear,
+        clubId: clubId,
+        districtId: districtId,
+        projectStatus:projectStatus
+      })
+      const user: User = await User.findOrFail(createdByUserId)
+      await newProject.related('projectRole').attach({
+        [user.userId]: {
+          role: roleType,
+        },
+      })
+      const roleTitle = async (roleType: number) => {
+        return ProjectRoleType[roleType]
+      }
+  
+      const grantTitle = async (grantType: number) => {
+        return GrantType[grantType]
+      }
+      newProject.grantString =await grantTitle(grantType)
+      return response.json({
+        created: 'new project',
+        newProject,
+        details:
+          'Created by ' +
+          user.firstname +
+          ' ' +
+          user.lastname +
+          ' whose role is: ' +
+          (await roleTitle(roleType)) +
+          ' --->This project grant type is ' +
+          (newProject.grantString),
+      })
+    } 
+    else if(grantType == 2) {
+      if (districtId == null || districtId == undefined) {
+        const club: Club[] = await Club.query().where({ club_id: clubId })
+        districtId= club[0].districtId
+      }
 
-    const grantTitle = async (grantType: number) => {
-      return GrantType[grantType]
+      const newProject = await Project.create({
+        projectName: projectName,
+        projectTheme: projectTheme,
+        grantType: grantType,
+        areaFocus: areaFocus,
+        startDate:convertedStartDate,
+        estimatedCompletion: convertedEstimatedCompletion,
+        fundingGoal: fundingGoal,
+        currentFunds: currentFunds,
+        anticipatedFunding: anticipatedFunding,
+        createdBy: createdByUserId,
+        region: region,
+        country:country,
+        rotaryYear: rotaryYear,
+        extraDescriptions: extraDescriptions,
+        itemisedBudget: itemisedBudget,
+        clubId: clubId,
+        districtId: districtId,
+      })
+      const user: User = await User.findOrFail(createdByUserId)
+      await newProject.related('projectRole').attach({
+        [user.userId]: {
+          role: roleType,
+        },
+      })
+      const roleTitle = async (roleType: number) => {
+        return ProjectRoleType[roleType]
+      }
+  
+      const grantTitle = async (grantType: number) => {
+        return GrantType[grantType]
+      }
+   
+
+      newProject.grantString =await grantTitle(grantType)
+      return response.json({
+        project_type:newProject.grantString ,
+        newProject,
+        details:
+          'Created by ' +
+          user.firstname +
+          ' ' +
+          user.lastname +
+          ' whose role is: ' +
+          (await roleTitle(roleType)) +
+          ' --->This project grant type is ' +
+          (newProject.grantString),
+      })
     }
-    newProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
-    newProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
-    return response.json({
-      created: 'new project',
-      newProject,
-      details:
-        'Created by ' +
-        user.firstname +
-        ' ' +
-        user.lastname +
-        ' whose role is: ' +
-        (await roleTitle(roleType)) +
-        ' --->This project grant type is ' +
-        (await grantTitle(grantType)),
-    })
+    else{
+      return response.json('no')
+    }
   }
-
+  
   public async show({ params, response }: HttpContextContract) {
     const projectId: number = parseInt(params.id)
     const ProjectById: Project = await Project.findOrFail(projectId)

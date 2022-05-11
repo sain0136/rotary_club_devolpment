@@ -9,6 +9,8 @@ import Region from 'Contracts/Enums/Region'
 
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
+  @computed()
+  public grantString: String
 
   @computed()
   public pledgesAssociated: object

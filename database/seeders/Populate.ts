@@ -120,9 +120,23 @@ export default class PopulateSeeder extends BaseSeeder {
           fundingGoal:5000,
           currentFunds:0,
           projectStatus:1,
-          extraDescriptions:JSON.stringify({
-            districtProjectDescription:'This is an advanced life saveing project to save african water. God blessed',
-          })
+         
+          projectTheme:'This is an advanced life saveing project to save african water. God blessed',
+
+        })
+        await Project.create({
+          projectName:'Cornwall Ontario Park',
+          grantType:1,
+          country:'Canada',
+          areaFocus:2,
+          districtId:1,
+          createdBy:1,
+          region:1,
+          rotaryYear:2022,
+          fundingGoal:2000,
+          currentFunds:0,
+          projectStatus:1,
+          projectTheme:'Fixing up Cornwall appearence with the best park'
         })
   }
 }

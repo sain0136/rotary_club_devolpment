@@ -7,7 +7,7 @@ export default class Project extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('project_id').primary().unsigned()
       table.string('project_name', 50).notNullable().unique()
-      table.string('project_theme', 50).nullable()
+      table.string('project_theme', 200).nullable()
       table.string('area_focus', 50).notNullable()
       table.string('grant_type', 50).notNullable()
       table.date('start_date').nullable()
@@ -18,7 +18,7 @@ export default class Project extends BaseSchema {
       table.integer('created_by', 50).notNullable()
       table.string('region', 50).notNullable()
       table.integer('rotary_year', 50).notNullable()
-      table.string('project_status', 50).notNullable()
+      table.integer('project_status', 50).notNullable()
       table.string('country', 50).notNullable()
       table.string('currency', 50).notNullable().defaultTo('USD')
       table.string('image_link', 50).nullable()
