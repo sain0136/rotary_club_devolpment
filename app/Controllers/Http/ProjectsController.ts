@@ -38,7 +38,7 @@ export default class ProjectsController {
     const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
-    //const estimatedCompletion: string = request.input('estimated_completion')
+    const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
@@ -60,7 +60,7 @@ export default class ProjectsController {
     const clubId: number = request.input('club_id')
     let districtId: number = request.input('district_id')
 
-    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat('2/14/2023', 'D')
+    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
 
     if (grantType == 1) {
       if (districtId == null || districtId == undefined) {
