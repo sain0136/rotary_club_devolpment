@@ -38,7 +38,7 @@ export default class ProjectsController {
     const areaFocus: AreaFocus = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
-    const estimatedCompletion: string = request.input('estimated_completion')
+    //const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
@@ -49,10 +49,9 @@ export default class ProjectsController {
     const country: string = request.input('country')
     //const imageLink: number = request.input('image_link')
 
-
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
-/*     const attachedLetters: any = JSON.stringify(request.input('attached_letters'))
+    /*     const attachedLetters: any = JSON.stringify(request.input('attached_letters'))
     const projectFunding: any = JSON.stringify(request.input('project_funding'))
     const hostclubInformation: any = JSON.stringify(request.input('hostclub_information'))
      */
@@ -61,15 +60,14 @@ export default class ProjectsController {
     const clubId: number = request.input('club_id')
     let districtId: number = request.input('district_id')
 
-    const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
-    
+    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat('2/14/2023', 'D')
+
     if (grantType == 1) {
       if (districtId == null || districtId == undefined) {
-           const club: Club[] = await Club.query().where({ club_id: clubId })
-           districtId= club[0].districtId
+        const club: Club[] = await Club.query().where({ club_id: clubId })
+        districtId = club[0].districtId
       }
-   
+
       const newProject = await Project.create({
         projectName: projectName,
         projectTheme: projectTheme,
@@ -82,8 +80,9 @@ export default class ProjectsController {
         region: region,
         rotaryYear: rotaryYear,
         clubId: clubId,
+        country: country,
         districtId: districtId,
-        projectStatus:projectStatus
+        projectStatus: projectStatus,
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({
@@ -94,13 +93,13 @@ export default class ProjectsController {
       const roleTitle = async (roleType: number) => {
         return ProjectRoleType[roleType]
       }
-  
+
       const grantTitle = async (grantType: number) => {
         return GrantType[grantType]
       }
-      newProject.grantString =await grantTitle(grantType)
+      newProject.grantString = await grantTitle(grantType)
       return response.json({
-        created: 'new project',
+        created: 'a new project',
         newProject,
         details:
           'Created by ' +
@@ -110,13 +109,13 @@ export default class ProjectsController {
           ' whose role is: ' +
           (await roleTitle(roleType)) +
           ' --->This project grant type is ' +
-          (newProject.grantString),
+          newProject.grantString,
       })
-    } 
-    else if(grantType == 2) {
+    } else if (grantType == 2) {
+      const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
       if (districtId == null || districtId == undefined) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
-        districtId= club[0].districtId
+        districtId = club[0].districtId
       }
 
       const newProject = await Project.create({
@@ -124,14 +123,14 @@ export default class ProjectsController {
         projectTheme: projectTheme,
         grantType: grantType,
         areaFocus: areaFocus,
-        startDate:convertedStartDate,
+        startDate: convertedStartDate,
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
         anticipatedFunding: anticipatedFunding,
         createdBy: createdByUserId,
         region: region,
-        country:country,
+        country: country,
         rotaryYear: rotaryYear,
         extraDescriptions: extraDescriptions,
         itemisedBudget: itemisedBudget,
@@ -147,15 +146,14 @@ export default class ProjectsController {
       const roleTitle = async (roleType: number) => {
         return ProjectRoleType[roleType]
       }
-  
+
       const grantTitle = async (grantType: number) => {
         return GrantType[grantType]
       }
-   
 
-      newProject.grantString =await grantTitle(grantType)
+      newProject.grantString = await grantTitle(grantType)
       return response.json({
-        project_type:newProject.grantString ,
+        project_type: newProject.grantString,
         newProject,
         details:
           'Created by ' +
@@ -165,14 +163,13 @@ export default class ProjectsController {
           ' whose role is: ' +
           (await roleTitle(roleType)) +
           ' --->This project grant type is ' +
-          (newProject.grantString),
+          newProject.grantString,
       })
-    }
-    else{
+    } else {
       return response.json('no')
     }
   }
-  
+
   public async show({ params, response }: HttpContextContract) {
     const projectId: number = parseInt(params.id)
     const ProjectById: Project = await Project.findOrFail(projectId)
