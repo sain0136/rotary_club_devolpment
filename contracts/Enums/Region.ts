@@ -1,14 +1,13 @@
 enum Region {
-    AFRICA = 1,
-    CENTRAL_AMERICA = 2,
-    NORTH_AMERICA = 3,
-    SOUTH_AMERICA = 4,
-    ASIA = 5,
-    SOUTH_EAST_ASIA = 6,
-    EASTERN_EUROPE = 7,
-    WESTERN_EUROPE = 8,
-    MIDDLE_EAST = 9,
-  }
-  
-  export default Region
-  
+  'Africa' = 1,
+  'Central America' = 2,
+  'North America' = 3,
+  'South America' = 4,
+  'Asia' = 5,
+  'South East Asia' = 6,
+  'Eastern Europe' = 7,
+  'Western Europe' = 8,
+  'Middle East' = 9,
+}
+
+export default Region

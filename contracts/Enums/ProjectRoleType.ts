@@ -1,7 +1,7 @@
 enum ProjectRoleType {
-  ORIGINAL_ADMIN = 1,
-  ADMIN = 2,
-  POINT_OF_CONTACT = 3,
+  'Creator Admin' = 1,
+  'Admin' = 2,
+  'Point of Contact' = 3,
 }
 
 export default ProjectRoleType

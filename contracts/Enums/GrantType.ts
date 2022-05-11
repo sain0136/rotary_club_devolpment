@@ -1,8 +1,8 @@
 enum GrantType {
   'Club/District Project' = 1,
-  DISTRICT_SIMPLE = 2,
-  DISTRICT_MATCHING = 3,
-  GLOBAL_GRANT = 4,
+  'District Simple' = 2,
+  'District Matching' = 3,
+  'Global Project' = 4,
 }
 
 export default GrantType

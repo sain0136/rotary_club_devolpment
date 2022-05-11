@@ -1,11 +1,11 @@
 enum RoleType {
-  DISTRICT_ADMIN = 1,
-  DISTRICT_GRANTS_CHAIR = 2,
-  DISTRICT_FOUNDATIONS_CHAIR = 3,
-  DISTRICT_INTERNATIONAL_CHAIR = 4,
-  CLUB_ADMIN = 5,
-  TITLED_MEMBER = 6,
-  STANDARD_MEMBER = 7,
+  'District Admin' = 1,
+  'District Grants Chair' = 2,
+  'District Foundations Chair' = 3,
+  'District International Chair' = 4,
+  'Club Admin' = 5,
+  'Titled Member' = 6,
+  'Standard Member' = 7,
 }
 
 export default RoleType

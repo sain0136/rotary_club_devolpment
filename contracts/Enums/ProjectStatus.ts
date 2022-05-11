@@ -1,10 +1,9 @@
 enum ProjectStatus {
-    LOOKING_FOR_FUNDING= 1,
-    FULLY_FUNDED = 2,
-    PENDING_APPROVAL = 3,
-    APPROVED = 4,
-    COMPLETED= 5
-  }
-  
-  export default ProjectStatus
-  
+  'Looking for funding' = 1,
+  'Fully funded' = 2,
+  'Pending approval' = 3,
+  'Approved' = 4,
+  'Completed' = 5,
+}
+
+export default ProjectStatus
