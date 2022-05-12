@@ -4,10 +4,11 @@ import District from 'App/Models/District'
 import Club from 'App/Models/Club'
 import Project from 'App/Models/Project'
 import RoleType from 'Contracts/Enums/RoleType'
-import { DateTime } from 'luxon'
 import AreaFocus from 'Contracts/Enums/AreaFocus'
 import Region from 'Contracts/Enums/Region'
 import ProjectStatus from 'Contracts/Enums/ProjectStatus'
+import { DateTime } from 'luxon'
+
 
 export default class PopulateSeeder extends BaseSeeder {
   public async run() {

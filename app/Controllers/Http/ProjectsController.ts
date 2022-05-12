@@ -36,7 +36,7 @@ export default class ProjectsController {
   public async store({ request, response }: HttpContextContract) {
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
-    const areaFocus: AreaFocus = request.input('area_focus')
+    const areaFocus: string = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
@@ -44,9 +44,9 @@ export default class ProjectsController {
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
     const createdByUserId: number = request.input('created_by')
-    const region: Region = request.input('region')
+    const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
-    const projectStatus: ProjectStatus = request.input('project_status')
+    const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
     //const imageLink: number = request.input('image_link')
 
@@ -276,13 +276,13 @@ export default class ProjectsController {
 
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
-    const areaFocus: AreaFocus = request.input('area_focus')
+    const areaFocus: string = request.input('area_focus')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
-    const region: Region = request.input('region')
+    const region: string = request.input('region')
     const country: string = request.input('country')
 
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
@@ -299,12 +299,13 @@ export default class ProjectsController {
           projectName: projectName,
           projectTheme: projectTheme,
           grantType: GrantType[grantType],
-          areaFocus: AreaFocus[areaFocus],
+          areaFocus: areaFocus,
           estimatedCompletion: convertedEstimatedCompletion,
           fundingGoal: fundingGoal,
           currentFunds: currentFunds,
           anticipatedFunding: anticipatedFunding,
-          region: Region[region],
+          region: region,
+          country:country
         })
         .save()
 
@@ -321,13 +322,13 @@ export default class ProjectsController {
           projectName: projectName,
           projectTheme: projectTheme,
           grantType: GrantType[grantType],
-          areaFocus: AreaFocus[areaFocus],
+          areaFocus: areaFocus,
           startDate: convertedStartDate,
           estimatedCompletion: convertedEstimatedCompletion,
           fundingGoal: fundingGoal,
           currentFunds: currentFunds,
           anticipatedFunding: anticipatedFunding,
-          region: Region[region],
+          region: region,
           country: country,
           extraDescriptions: extraDescriptions,
           itemisedBudget: itemisedBudget,
