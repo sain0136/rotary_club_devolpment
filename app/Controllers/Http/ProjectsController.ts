@@ -268,7 +268,10 @@ export default class ProjectsController {
     return response.json({ projectPermited: projectAdmins })
   }
 
-  public async update({ request, response }: HttpContextContract) {
+  public async update({  }: HttpContextContract) {
+   
+  }
+  public async updateById({request,response}:HttpContextContract){
     const projectId: number = request.input('project_id')
 
     const grantType: GrantType = request.input('grant_type')
@@ -355,6 +358,7 @@ export default class ProjectsController {
   } else {
     return response.json('fdfd')
   }
+
   }
 
   public async destroy({ params, response }: HttpContextContract) {

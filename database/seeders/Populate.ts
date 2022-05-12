@@ -5,6 +5,9 @@ import Club from 'App/Models/Club'
 import Project from 'App/Models/Project'
 import RoleType from 'Contracts/Enums/RoleType'
 import { DateTime } from 'luxon'
+import AreaFocus from 'Contracts/Enums/AreaFocus'
+import Region from 'Contracts/Enums/Region'
+import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 
 export default class PopulateSeeder extends BaseSeeder {
   public async run() {
@@ -113,14 +116,14 @@ export default class PopulateSeeder extends BaseSeeder {
       projectName: 'Restoration of African Water',
       grantType: 1,
       country: 'Ghana',
-      areaFocus: 3,
+      areaFocus: AreaFocus[3],
       districtId: 1,
       createdBy: 1,
-      region: 1,
+      region: Region[1],
       rotaryYear: 2022,
       fundingGoal: 5000,
       currentFunds: 0,
-      projectStatus: 1,
+      projectStatus: ProjectStatus[1],
       estimatedCompletion: DateTime.fromFormat('2/14/2032', 'D'),
       projectTheme: 'This is an advanced life saveing project to save african water. God blessed',
     })
@@ -134,14 +137,14 @@ export default class PopulateSeeder extends BaseSeeder {
       projectName: 'Cornwall Ontario Park',
       grantType: 1,
       country: 'Canada',
-      areaFocus: 2,
+      areaFocus: AreaFocus[3],
       districtId: 1,
       createdBy: 1,
-      region: 1,
+      region: Region[1],
       rotaryYear: 2022,
       fundingGoal: 2000,
       currentFunds: 0,
-      projectStatus: 1,
+      projectStatus: ProjectStatus[1],
       projectTheme: 'Fixing up Cornwall appearence with the best park',
       estimatedCompletion: DateTime.fromFormat('5/14/2022', 'D'),
     })

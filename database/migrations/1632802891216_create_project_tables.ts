@@ -18,7 +18,7 @@ export default class Project extends BaseSchema {
       table.integer('created_by', 50).notNullable()
       table.string('region', 50).notNullable()
       table.integer('rotary_year', 50).notNullable()
-      table.integer('project_status', 50).notNullable()
+      table.string('project_status', 50).notNullable()
       table.string('country', 50).notNullable()
       table.string('currency', 50).notNullable().defaultTo('USD')
       table.string('image_link', 50).nullable()
