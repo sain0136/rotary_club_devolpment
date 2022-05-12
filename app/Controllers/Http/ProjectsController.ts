@@ -8,6 +8,7 @@ import ProjectRoleType from 'Contracts/Enums/ProjectRoleType'
 import { DateTime } from 'luxon'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import Region from 'Contracts/Enums/Region'
+import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
@@ -45,7 +46,7 @@ export default class ProjectsController {
     const createdByUserId: number = request.input('created_by')
     const region: Region = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
-    const projectStatus: number = request.input('project_status')
+    const projectStatus: ProjectStatus = request.input('project_status')
     const country: string = request.input('country')
     //const imageLink: number = request.input('image_link')
 
@@ -68,21 +69,21 @@ export default class ProjectsController {
         districtId = club[0].districtId
       }
 
-      const newProject = await Project.create({
+      let newProject = await Project.create({
         projectName: projectName,
         projectTheme: projectTheme,
-        grantType: grantType,
-        areaFocus: areaFocus,
+        grantType: GrantType[grantType],
+        areaFocus: AreaFocus[areaFocus],
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
         createdBy: createdByUserId,
-        region: region,
+        region: Region[region],
         rotaryYear: rotaryYear,
         clubId: clubId,
         country: country,
         districtId: districtId,
-        projectStatus: projectStatus,
+        projectStatus: ProjectStatus[projectStatus],
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({
@@ -90,14 +91,11 @@ export default class ProjectsController {
           role: roleType,
         },
       })
-      const roleTitle = async (roleType: number) => {
-        return ProjectRoleType[roleType]
-      }
 
-      const grantTitle = async (grantType: number) => {
-        return GrantType[grantType]
-      }
-      newProject.grantString = await grantTitle(grantType)
+      const roleTitle =  ProjectRoleType[roleType]
+      
+      newProject['projectRoleTitle'] =roleTitle
+     
       return response.json({
         created: 'a new project',
         newProject,
@@ -107,9 +105,9 @@ export default class ProjectsController {
           ' ' +
           user.lastname +
           ' whose role is: ' +
-          (await roleTitle(roleType)) +
+           roleTitle +
           ' --->This project grant type is ' +
-          newProject.grantString,
+          newProject.grantType,
       })
     } else if (grantType == 2) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
@@ -121,21 +119,22 @@ export default class ProjectsController {
       const newProject = await Project.create({
         projectName: projectName,
         projectTheme: projectTheme,
-        grantType: grantType,
-        areaFocus: areaFocus,
+        grantType: GrantType[grantType],
+        areaFocus: AreaFocus[areaFocus],
         startDate: convertedStartDate,
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
         anticipatedFunding: anticipatedFunding,
         createdBy: createdByUserId,
-        region: region,
+        region: Region[region],
         country: country,
         rotaryYear: rotaryYear,
         extraDescriptions: extraDescriptions,
         itemisedBudget: itemisedBudget,
         clubId: clubId,
         districtId: districtId,
+        projectStatus: ProjectStatus[projectStatus],
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({
@@ -143,17 +142,10 @@ export default class ProjectsController {
           role: roleType,
         },
       })
-      const roleTitle = async (roleType: number) => {
-        return ProjectRoleType[roleType]
-      }
+      const roleTitle =  ProjectRoleType[roleType]
+      newProject['projectRoleTitle'] =roleTitle
 
-      const grantTitle = async (grantType: number) => {
-        return GrantType[grantType]
-      }
-
-      newProject.grantString = await grantTitle(grantType)
       return response.json({
-        project_type: newProject.grantString,
         newProject,
         details:
           'Created by ' +
@@ -161,9 +153,9 @@ export default class ProjectsController {
           ' ' +
           user.lastname +
           ' whose role is: ' +
-          (await roleTitle(roleType)) +
+          roleTitle +
           ' --->This project grant type is ' +
-          newProject.grantString,
+          newProject.grantType,
       })
     } else {
       return response.json('no')
@@ -181,7 +173,10 @@ export default class ProjectsController {
   public async showProjectByIdPost({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
     const ProjectById: Project = await Project.findOrFail(projectId)
-    return response.json({ ProjectById })
+    const projectAdmins: any[] = await ProjectById.related('projectRole')
+      .pivotQuery()
+      .where({ project_id: projectId })
+    return response.json({ ProjectById, projectPermited: projectAdmins })
   }
 
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {
@@ -273,59 +268,93 @@ export default class ProjectsController {
     return response.json({ projectPermited: projectAdmins })
   }
 
-  public async update({ params, request, response }: HttpContextContract) {
+  public async update({ request, response }: HttpContextContract) {
+    const projectId: number = request.input('project_id')
+
+    const grantType: GrantType = request.input('grant_type')
+
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
     const areaFocus: AreaFocus = request.input('area_focus')
-    const grantType: GrantType = request.input('grant_type')
+    const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
-    const createdByUserId: number = request.input('created_by')
     const region: Region = request.input('region')
-    const rotaryYear: number = request.input('rotary_year')
+    const country: string = request.input('country')
+    
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
-    var convertedEstimatedCompletion: any
-    if (estimatedCompletion != null && estimatedCompletion != undefined) {
-      convertedEstimatedCompletion = DateTime.fromFormat(estimatedCompletion, 'D')
-    } else {
-      convertedEstimatedCompletion = undefined
-    }
+  
+    
+   
 
-    const clubId: number = request.input('club_id')
-    const oldPoject: Project = await Project.findOrFail(params.id)
+    const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
 
-    const projectToBeUpdated: Project = await Project.findOrFail(params.id)
+    const oldProject: Project = await Project.findOrFail(projectId)
 
-    const updatedProject: Project = await projectToBeUpdated
+    const projectToBeUpdated: Project = await Project.findOrFail(projectId)
+    if (grantType == 1) {
+   
+
+    let updatedProject: Project = await projectToBeUpdated
       .merge({
         projectName: projectName,
         projectTheme: projectTheme,
-        grantType: grantType,
-        areaFocus: areaFocus,
+        grantType: GrantType[grantType],
+        areaFocus: AreaFocus[areaFocus],
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
         anticipatedFunding: anticipatedFunding,
-        createdBy: createdByUserId,
-        region: region,
-        rotaryYear: rotaryYear,
-        extraDescriptions: extraDescriptions,
-        itemisedBudget: itemisedBudget,
-        clubId: clubId,
+        region: Region[region],
       })
       .save()
-    oldPoject.extraDescriptionsObject = JSON.parse(oldPoject.extraDescriptions)
-    oldPoject.itemisedBudgetArray = JSON.parse(oldPoject.itemisedBudget)
+      
+    oldProject.extraDescriptionsObject = JSON.parse(oldProject.extraDescriptions)
+    oldProject.itemisedBudgetArray = JSON.parse(oldProject.itemisedBudget)
     updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
     updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
     return response.json({
       updatedProject,
       Hello: 'old file below',
-      oldPoject,
+      oldPoject: oldProject,
     })
+  }else if (grantType == 2) {
+    const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+   
+
+    let updatedProject: Project = await projectToBeUpdated
+    .merge({
+        projectName: projectName,
+        projectTheme: projectTheme,
+        grantType: GrantType[grantType],
+        areaFocus: AreaFocus[areaFocus],
+        startDate: convertedStartDate,
+        estimatedCompletion: convertedEstimatedCompletion,
+        fundingGoal: fundingGoal,
+        currentFunds: currentFunds,
+        anticipatedFunding: anticipatedFunding,
+        region: Region[region],
+        country: country,
+        extraDescriptions: extraDescriptions,
+        itemisedBudget: itemisedBudget,
+      })
+      .save()
+      oldProject.extraDescriptionsObject = JSON.parse(oldProject.extraDescriptions)
+      oldProject.itemisedBudgetArray = JSON.parse(oldProject.itemisedBudget)
+      updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+      updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
+      return response.json({
+        updatedProject,
+        Hello: 'old file below',
+        oldPoject: oldProject,
+      })
+    
+  } else {
+    return response.json('fdfd')
+  }
   }
 
   public async destroy({ params, response }: HttpContextContract) {

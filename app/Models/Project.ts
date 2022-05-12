@@ -1,11 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, computed, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import GrantType from 'Contracts/Enums/GrantType'
 import User from './User'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
-import AreaFocus from 'Contracts/Enums/AreaFocus'
-import ProjectStatus from 'Contracts/Enums/ProjectStatus'
-import Region from 'Contracts/Enums/Region'
+
 
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
@@ -38,10 +35,10 @@ export default class Project extends BaseModel {
   public projectTheme: string
 
   @column()
-  public areaFocus: AreaFocus
+  public areaFocus: any
 
   @column()
-  public grantType: GrantType
+  public grantType: any
 
   @column.date()
   public startDate: DateTime
@@ -62,13 +59,13 @@ export default class Project extends BaseModel {
   public createdBy: number
 
   @column()
-  public region: Region
+  public region: any
 
  @column()
   public rotaryYear: number
 
   @column()
-  public projectStatus: ProjectStatus
+  public projectStatus: any
 
 
   @column()
