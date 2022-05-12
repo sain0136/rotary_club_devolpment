@@ -2,12 +2,10 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Club from 'App/Models/Club'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
-import AreaFocus from 'Contracts/Enums/AreaFocus'
 import GrantType from 'Contracts/Enums/GrantType'
 import ProjectRoleType from 'Contracts/Enums/ProjectRoleType'
 import { DateTime } from 'luxon'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
-import Region from 'Contracts/Enums/Region'
 import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 
 export default class ProjectsController {
