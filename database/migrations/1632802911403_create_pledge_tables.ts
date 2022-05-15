@@ -7,6 +7,10 @@ export default class Pledge extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('pledge_id').primary().unsigned()
       table.integer('pledge_amount', 50).notNullable()
+      table.string('firstname', 50).nullable()
+      table.string('lastname', 50).nullable()
+      table.string('phone', 180).nullable()
+      table.string('email', 50).nullable()
       table.integer('user_id', 50).notNullable().unsigned().references('user_id').inTable('user')
       table
         .integer('project_id', 50)

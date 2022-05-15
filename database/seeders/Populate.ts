@@ -9,7 +9,6 @@ import Region from 'Contracts/Enums/Region'
 import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 import { DateTime } from 'luxon'
 
-
 export default class PopulateSeeder extends BaseSeeder {
   public async run() {
     await District.createMany([
@@ -72,6 +71,27 @@ export default class PopulateSeeder extends BaseSeeder {
         districtId: 1,
       },
     ])
+    const guest: User = await User.create({
+      membershipId: '',
+      firstname: 'John',
+      lastname: 'Doe',
+      address: '234 bluders ave',
+      userCity: 'cornwall',
+      userPostal: 'K4V 2VC',
+      userProvince: 'Ontario',
+      userCountry: 'Canada',
+      phone: '',
+      email: '',
+      password: '123456',
+      districtId: 1,
+    })
+    let role: RoleType = 8
+    await guest.related('districtRole').attach({
+      [1]: {
+        district_role: RoleType[role],
+        role_type: role,
+      },
+    })
     const newUser: User = await User.create({
       membershipId: '123513',
       firstname: 'John',
@@ -86,13 +106,14 @@ export default class PopulateSeeder extends BaseSeeder {
       password: '123456',
       districtId: 1,
     })
-    const role: RoleType = 5
+    role = 5
     await newUser.related('districtRole').attach({
       [1]: {
         district_role: RoleType[role],
         role_type: role,
       },
     })
+
     const clubUser: User = await User.create({
       membershipId: '12323513',
       firstname: 'Sandy',

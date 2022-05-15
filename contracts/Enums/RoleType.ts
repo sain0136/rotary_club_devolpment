@@ -6,6 +6,7 @@ enum RoleType {
   'Club Admin' = 5,
   'Titled Member' = 6,
   'Standard Member' = 7,
+  'Guest' = 8,
 }
 
 export default RoleType
