@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
-import Pledge from 'Database/migrations/1632802911403_create_pledge_tables'
+
 
 export default class PledgesController {
   public async index({ response }: HttpContextContract) {
