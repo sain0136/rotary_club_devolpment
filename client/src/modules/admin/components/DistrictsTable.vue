@@ -21,11 +21,17 @@
           <button
             title="Edit District"
             class="crud-buttons"
-            @click="() => this.$router.push(`./${district.district_id}/edit`)">
+            @click="() => {
+              if(myProfileBoolean){
+                this.$router.push({name: 'DistrictEditForm'})
+              }else{
+                this.$router.push(`./${district.district_id}/edit`)}
+              }">
             <font-awesome-icon
               class="social-icon" icon="edit"></font-awesome-icon>
           </button>
           <button
+            v-if="myProfileBoolean == !true"
             title="Delete District"
             class="crud-buttons"
             @click="deleteDistrict(district.district_id,district.district_name)">
@@ -44,16 +50,30 @@
 <script>
 
 import district from '../../../api-factory/district'
+import store from '../../../store/index'
 
 export default {
   name: 'DistrictsTable',
+  props: {
+    myProfile: Boolean,
+  }
+  ,
   data() {
     return {
-      districts: Array
+      districts: [],
+      myProfileBoolean:false
     }
   },
   async created() {
-     this.districts = await district.index()
+    if (this.myProfile ==  true) {
+      console.log('Hi bro')
+      this.districts.push(store.state.currentDistrictData) 
+      this.myProfileBoolean = true
+    } else {
+
+        this.districts = await district.index()
+    }
+   
   },
   methods: {
     async deleteDistrict(districtId,districtName) {

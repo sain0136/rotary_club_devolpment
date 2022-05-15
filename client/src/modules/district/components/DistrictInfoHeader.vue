@@ -5,14 +5,14 @@
         class="envelope"
         icon="envelope"
       ></font-awesome-icon>
-      <p>{{ email }}</p>
+      <p>{{ this.email }}</p>
     </div>
     <div class="social">
       <ul class="social-icon-one">
-        <li>
+        <li id="flink">
           <a
             title="facebook"
-            :href="facebookLink"
+              @click="linkRedirct(1)"
             v-if="facebookLink != null"
           >
             <i
@@ -20,10 +20,11 @@
             ></i>
           </a>
         </li>
-        <li>
+        <li id="tlink"
+        v-if="twitterLink != null">
           <a
             title="twitter"
-            :href="twitterLink"
+            @click="linkRedirct(2)"
           >
             <i
               class="bi bi-twitter"
@@ -50,13 +51,7 @@
               class="bi bi-box-arrow-in-right"
             ></i>
 
-            <p
-              @click="logout"
-              v-else
-              id="login-text"
-            >
-              Logout
-            </p>
+          
           </router-link>
         </li>
       </ul>
@@ -66,9 +61,10 @@
 
 <script>
 import store from '../../../store/index'
+import {watchEffect} from 'vue'
 
 export default {
-  name: 'ClubInfoHeader',
+  name: 'DistrictInfoHeader',
   components: {},
   data() {
     return {
@@ -77,28 +73,55 @@ export default {
       facebookLink: '',
       twitterLink: '',
       instagramLink: '',
-
       districtSocials: [],
     }
   },
   async created() {
-    this.districtSocials =
-      store.state.districtSocials
+    watchEffect(()=>{
+  console.log(store.state.currentDistrictData)
+  console.log(store.state.currentDistrictData.district_email)
+    console.log(store.state.districtSocials)
+const districtData =
+        store.state.currentDistrictData
+const districtSocials  =
+        store.state.districtSocials      
+      
+   this.email =
+        districtData.district_email 
+        
+          try {
+          
+        const flink = districtSocials.find(({url_type})=> url_type === 1)
+        const tlink = districtSocials.find(({url_type})=> url_type === 2)
+        
+                 if(typeof  flink === 'undefined' ){
+              document.getElementById("flink").style.display = "none";
 
-    const districtData =
-      store.state.currentDistrictData
-    this.email = await districtData.district_email
+          } else {
+                    document.getElementById("flink").style.display = "inline-block";
 
-    this.facebookLink = await this.getSocialLink(
-      1,
-    )
-    this.twitterLink = await this.getSocialLink(
-      2,
-    )
-    this.instagramLink = await this.getSocialLink(
-      3,
-    )
-  },
+            this.facebookLink = flink.url
+          }
+          
+          if( typeof tlink === 'undefined' ) {
+          console.log('lol')
+             document.getElementById("tlink").style.display = "none";
+             console.log('lol 2')
+          }
+          else{    
+        this.twitterLink =tlink.url
+        document.getElementById("tlink").style.display = "inline-block";
+        }
+        
+        } catch (error) {
+          console.log(error)
+ 
+        } 
+        
+      
+        })
+  }
+  ,
   methods: {
     async getSocialLink(socialType) {
       let linkToReturn
@@ -122,12 +145,21 @@ export default {
       }
       return null
     },
+      linkRedirct(type){
+        const flink =this.facebookLink
+          if (type == 1) {
+            this.$router.push({name:'externalFacebook' })
+          } else {
+            
+            this.$router.push({name:'externalTwitter'})
+          }
 
-    // logout() {
-    //   store.dispatch("logout", 5)
-    //   store.dispatch("logout", 7)
-    // },
+      }
+    
   },
+  computed: {
+    
+  }
 }
 </script>
 

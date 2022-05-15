@@ -224,6 +224,7 @@ export default {
   props: {
     isEditOrCreate: String,
     pageAccessed: String,
+    districtEdit: Boolean
   },
   data() {
     return {
@@ -370,7 +371,7 @@ export default {
       if (
         this.pageAccessed == 'District'
       ) {
-        this.$router.push('./home')
+        this.$router.push({name: 'DistrictEdit2'})
         //if it's from the district portal
       } else {
         if (

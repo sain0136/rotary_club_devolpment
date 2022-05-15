@@ -19,5 +19,8 @@ export default {
         body: JSON.stringify(data),
       },
     )
+     data = await res.json()
+    return data
   },
+
 }

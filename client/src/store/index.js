@@ -24,10 +24,11 @@ export default createStore({
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
 
-    loggedInDistrictId: Number,
+    loggedInDistrictId: 0,
     loggedInClubId: Number,
 
     loggedInClubUserId: Number,
+    loggedInDistrictUserId: Number,
 
     currentDistrictData: Object,
 
@@ -60,6 +61,10 @@ export default createStore({
           state.isDistrictAdminRejected = false
           state.loggedInDistrictId =
             loginData.districtId
+            state.loggedInDistrictUserId =
+            loginData.adminId
+          
+            
           break
         //Club Admin
         case 5:
@@ -118,6 +123,19 @@ export default createStore({
         state.isClubAdminRejected = false
       }
     },
+    async districtUserLogin(
+      state,
+      loginData,
+    ) {
+      state.isDistrictAdminLoggedIn = true
+      state.isClubAdminRejected = false
+
+      console.log(
+        'login data: ',
+        loginData,
+      )
+    },
+
 
     clubUserReject(state, userId) {
       state.isClubUserRejected = true
@@ -206,9 +224,11 @@ export default createStore({
       const loginData = {
         districtId: data.id,
         roleId: 1,
+        adminId:0
       }
-
-      if (await isValid(data)) {
+      const response =await isValid(data)
+      if (response.Verified) {
+        loginData.adminId = response.user_id
         commit('adminLogin', loginData)
         console.log('valid')
       } else {
@@ -286,6 +306,15 @@ export default createStore({
         projectData,
       )
     },
+    async unsetCurrentProjectData(
+      { commit },
+    ) {
+      commit(
+        'changeCurrentProjectData',
+        {},
+      )
+    },
+    
     async changeDistrictSocials(
       { commit },
       queryObject,
@@ -315,7 +344,12 @@ export default createStore({
       commit('signout')
     },
   },
-  getters: {},
+  getters: {
+getLogged(state){
+  return state.loggedInDistrictId
+}
+
+  },
   modules: {},
   plugins: [createPersistedState()],
 })

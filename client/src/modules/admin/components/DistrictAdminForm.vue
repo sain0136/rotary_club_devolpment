@@ -3,7 +3,7 @@
     <form
       onsubmit="event.preventDefault();"
     >
-      <div class="form-field-top">
+      <div class="form-field-top" v-if="!districtAdminVieWandEdit =='t'">
         <span
           ><h2>
             Assign the new Admin to a
@@ -305,6 +305,7 @@
 import district from '../../../api-factory/district'
 import district_admin from '../../../api-factory/district_admin'
 import user from '../../../api-factory/user'
+import store from '../../../store/index'
 
 import useValidate from '@vuelidate/core'
 import {
@@ -319,6 +320,8 @@ export default {
   name: 'DistrictAdminForm',
   props: {
     isEditOrCreate: String,
+    districtAdminVieWandEdit:String,
+    district_idDistrictView:Number
   },
   data() {
     return {
@@ -414,8 +417,13 @@ export default {
      * with the specific district's data coming from the API. If it's to be
      * created, data is empty by default.
      */
-    if (this.isEditOrCreate == 'Edit') {
-      this.prePopulateFields()
+    if (this.isEditOrCreate == 'Edit' && this.districtAdminVieWandEdit == 't' ) {
+      console.log('vcbcvb' )
+      console.log(store.state.loggedInDistrictUserId)
+      this.prePopulateFields(store.state.loggedInDistrictUserId)
+    }
+    else if (this.isEditOrCreate == 'Edit') {
+      this.prePopulateFields('siteAdminProtal')
     }
   },
 
@@ -434,10 +442,21 @@ export default {
       )
     },
 
-    async prePopulateFields() {
-      const userIdToEdit = this.$router
+    async prePopulateFields(district_idDistrictView) {
+      console.log(district_idDistrictView)
+      let userIdToEdit = 'null'
+      if (district_idDistrictView == 'siteAdminProtal') {
+          userIdToEdit = this.$router
         .currentRoute.value.params
         .userid
+              console.log(userIdToEdit)
+
+      } else {
+         userIdToEdit =district_idDistrictView
+               console.log(userIdToEdit)
+
+      }
+      
       const userInfo = await user.show(
         userIdToEdit,
       )
@@ -506,9 +525,15 @@ export default {
 
     async updateExistingAdmin() {
       console.log('ok')
-      const id = this.$router
+      let id = ''
+       if (this.isEditOrCreate == 'Edit' && this.districtAdminVieWandEdit == 't' ) {
+         id =store.state.loggedInDistrictUserId 
+       }else{ 
+         id= this.$router
         .currentRoute.value.params
         .userid
+        }
+    
       const userToUpdate = this.getUserData()
       await district_admin.update(
         id,
@@ -518,8 +543,10 @@ export default {
     },
 
     redirect(fromCreate) {
-      if (fromCreate) {
-        this.$router.push('./view')
+      if (this.districtAdminVieWandEdit == 't' && !fromCreate) {
+       this.$router.push({name:'DistrictHome'})
+      }else if (fromCreate) {
+         this.$router.push('./view')
       } else {
         this.$router.push('../view')
       }

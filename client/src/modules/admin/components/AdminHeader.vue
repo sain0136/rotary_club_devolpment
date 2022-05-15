@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
 img {
-  height: 100px;
+  height: 200px;
 }
 
 nav {

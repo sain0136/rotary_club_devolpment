@@ -1,8 +1,9 @@
 <template>
 <body>
    <div class="district-background">
-    <DistrictInfoHeader/>
-    <DistrictHeader />
+     <header> <DistrictInfoHeader/>
+    <DistrictHeader /></header>
+   
     <router-view></router-view>
     <DistrictFooter/>
   </div> 
@@ -29,14 +30,50 @@ export default {
       currentDistrictId: this.$router.currentRoute.value.params.id
     }
   },
-  async created() {
-    await this.setDistrictData()
+    beforeRouteUpdate(to, from) {
+     this.setDistrictData()
     //To prevent user to be logged in to multiple districts
     if(store.state.loggedInDistrictId != this.currentDistrictId) {
-      store.dispatch('logout', 1)
+      store.dispatch('signOut', 1)
     }
   },
+  
+    beforeRouteEnter(to, from, next) {
+      next(comp => {
+       
+                
+
+         store.dispatch('changeCurrentDistrictData', parseInt(to.params.id)) 
+          const districtSocialQueryObject = {
+        isThisDistrict: true,
+        object_id: to.params.id
+      }
+
+      store.dispatch('changeDistrictSocials', districtSocialQueryObject)
+          console.log(parseInt(to.params.id))
+            console.log(store.state.loggedInDistrictId)
+              console.log(store.state.currentDistrictData)
+         if(to.params.id != store.state.loggedInDistrictId) {
+      store.dispatch('signOut', 1)}
+      })
+          console.log(to.params.id)
+         console.log(store.state.loggedInDistrictId())
+    //To prevent user to be logged in to multiple districts
+   
+    
+  },
+  async created(){
+    console.log('hi')
+      await this.timeOut(500)
+
+  },
   methods: {
+        async timeOut(ms) {
+      setTimeout(() => {
+        console.log(store.state.loggedInDistrictId)
+              console.log(store.state.currentDistrictData)
+      }, ms)
+    },
     async setDistrictData() {
       await store.dispatch('changeCurrentDistrictData', this.currentDistrictId)
 

@@ -27,6 +27,28 @@ export default {
     return await allProjects
   },
 
+  async indexPagination(id,limit,current) {
+    const queryHelper = {
+      district_id: id,
+      limit:limit,
+      current_page:current 
+      
+    }
+    const res = await fetch(
+      'http://74.208.135.85/project/paginate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },body: JSON.stringify(queryHelper),
+      },
+    )
+    const page = await res.json()
+    return page
+  },
+  
+
   async clubIndex(id) {
     const queryHelper = {
       club_id: id,
@@ -86,7 +108,7 @@ export default {
     }
 
     const res = await fetch(
-      'http://74.208.135.85/pledge/project',
+      'http://74.208.135.85/project/showProjectByIdPost',
       {
         method: 'POST',
         headers: {
@@ -100,10 +122,12 @@ export default {
     )
 
     const data = await res.json()
-    return await data.project
+    return await data.ProjectById
   },
 
   async create(data) {
+    console.log('api call happening:')
+
     console.log(data)
 
     const res = await fetch(
@@ -117,15 +141,15 @@ export default {
         body: JSON.stringify(data),
       },
     )
-
     console.log(await res.json())
   },
 
   async update(id, data) {
+    data['project_id']=id
     const res = await fetch(
-      `http://74.208.135.85/project/${id}`,
+     'http://74.208.135.85/project/updateById',
       {
-        method: 'Put',
+        method: 'POST',
         headers: {
           'Content-Type':
             'application/json',
@@ -134,4 +158,25 @@ export default {
       },
     )
   },
+  async deleteById( id) {
+
+    const queryHelper = {
+      project_id: id,
+    }
+
+
+    const res = await fetch(
+      `http://74.208.135.85/project/delete`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
+        body: JSON.stringify(queryHelper),
+      },
+    )
+    const data = await res.json()
+    return await data
+  }
 }

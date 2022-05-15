@@ -20,7 +20,7 @@ export async function isUserValid(id, password) {
   })
 
   const data = await res.json()
-  return await data.verified
+  return await data.Verified
 }
 
 export async function isValid(userData) {
@@ -34,5 +34,5 @@ export async function isValid(userData) {
   })
   const data = await res.json()
   console.log(await data)
-  return await data.Verified
+  return await data
 }
