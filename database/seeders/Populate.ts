@@ -8,6 +8,7 @@ import AreaFocus from 'Contracts/Enums/AreaFocus'
 import Region from 'Contracts/Enums/Region'
 import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 import { DateTime } from 'luxon'
+import GrantType from 'Contracts/Enums/GrantType'
 
 export default class PopulateSeeder extends BaseSeeder {
   public async run() {
@@ -19,6 +20,8 @@ export default class PopulateSeeder extends BaseSeeder {
         meetingFrequency: 'Bi-Weekly',
         charterDate: '1/10/2021',
         districtPresident: 'John Stewert',
+        meetingCity:'Cornwall',
+        districtPhone:'613-989-9000',
         districtDescription:
           "These are better (and almost always) handled at the database level instead of the application level. It's the job of the DBMS to enforce this kind of referential integrity assuming you define your schema correctly so that entities are correctly linked together, via foreign keys.",
       },
@@ -29,6 +32,8 @@ export default class PopulateSeeder extends BaseSeeder {
         meetingFrequency: 'Monthly',
         charterDate: '4/10/2021',
         districtPresident: 'Daivd Polista',
+        meetingCity:'Ottawa',
+        districtPhone:'613-233-5633',
         districtDescription:
           "Every seeder file must extend the BaseSeeder class and implement the run method.The following example uses a Lucid model to create multiple users. However, you can also use the Database query builder directly. In other words, seeders don't care what you write inside the run method.",
       },
@@ -39,6 +44,8 @@ export default class PopulateSeeder extends BaseSeeder {
         meetingFrequency: 'Daily',
         charterDate: '4/10/2009',
         districtPresident: 'Sebastien Saintrose',
+        meetingCity:'Toronto',
+        districtPhone:'613-343-1123',
         districtDescription:
           "Every seeder file must extend the BaseSeeder class and implement the run method.The following example uses a Lucid model to create multiple users. However, you can also use the Database query builder directly. In other words, seeders don't care what you write inside the run method.",
       },
@@ -136,11 +143,11 @@ export default class PopulateSeeder extends BaseSeeder {
     })
     const newProj: Project = await Project.create({
       projectName: 'Restoration of African Water',
-      grantType: 1,
+      grantType: GrantType[1],
       country: 'Ghana',
       areaFocus: AreaFocus[3],
       districtId: 1,
-      createdBy: 1,
+      createdBy: 2,
       region: Region[1],
       rotaryYear: 2022,
       fundingGoal: 5000,
@@ -157,11 +164,11 @@ export default class PopulateSeeder extends BaseSeeder {
     })
     const secPro: Project = await Project.create({
       projectName: 'Cornwall Ontario Park',
-      grantType: 1,
+      grantType: GrantType[1],
       country: 'Canada',
       areaFocus: AreaFocus[3],
       districtId: 1,
-      createdBy: 1,
+      createdBy: 2,
       region: Region[1],
       rotaryYear: 2022,
       fundingGoal: 2000,
