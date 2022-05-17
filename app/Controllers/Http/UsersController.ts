@@ -21,42 +21,44 @@ export default class UsersController {
 
   public async passwordVerfication({ request, response }: HttpContextContract) {
     const password: string = request.input('password')
-    const id: number = request.input('user_id')
+    const email: number = request.input('email')
     const districtOrClubId: number = request.input('id')
 
-    const userById: User = await User.findOrFail(id)
-
+    let userByEmail: User[] = await User.query().select().where({email:email})
+    let user :User = userByEmail[0]
+    
     let verifiedAndAccessGranted: Boolean = false
     if (
-      (await Hash.verify(userById.password, password)) &&
-      userById.districtId == districtOrClubId
+      (await Hash.verify(user.password, password)) &&
+      user.districtId == districtOrClubId
     ) {
       verifiedAndAccessGranted = true
     } else if (
-      (await Hash.verify(userById.password, password)) &&
-      userById.clubId == districtOrClubId
+      (await Hash.verify(user.password, password)) &&
+      user.clubId == districtOrClubId
     ) {
       verifiedAndAccessGranted = true
     } else {
       return response.json({ Verified: verifiedAndAccessGranted })
     }
 
-    if (userById.clubId !== null && userById.clubId !== undefined) {
-      userById.role = await userById
+    if (user.clubId !== null && user.clubId !== undefined) {
+      user.role = await user
         .related('clubRole')
         .pivotQuery()
-        .where({ user_id: userById.userId })
+        .where({ user_id: user.userId })
     } else {
-      userById.role = await userById
+      user.role = await user
         .related('districtRole')
         .pivotQuery()
-        .where({ user_id: userById.userId })
+        .where({ user_id: user.userId })
     }
     return response.json({
       Verified: verifiedAndAccessGranted,
-      Hash: userById.password,
+      Hash: user.password,
       PlainText: password,
-      user_id:id
+      email:email,
+      user_id:user.userId
     })
   }
   public async jsonGetById({ request, response }: HttpContextContract) {

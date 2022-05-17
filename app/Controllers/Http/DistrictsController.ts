@@ -38,6 +38,8 @@ export default class DistrictsController {
   public async store({ request, response }: HttpContextContract) {
     const name: string = request.input('district_name')
     const email: string = request.input('district_email')
+    const meetingCity: string = request.input('meeting_city')
+    const districtPhone: string = request.input('district_phone')
     const location: string = request.input('meeting_location')
     const meeting: string = request.input('meeting_frequency')
     const charterdate: string = request.input('charter_date')
@@ -52,6 +54,8 @@ export default class DistrictsController {
       charterDate: charterdate,
       districtPresident: president,
       districtDescription: description,
+      districtPhone:districtPhone,
+      meetingCity:meetingCity
     })
     return response.json({ newDistrict })
   }
@@ -75,7 +79,8 @@ export default class DistrictsController {
     const charterdate: string = request.input('charter_date')
     const president: string = request.input('district_president')
     const description: string = request.input('district_description')
-
+    const meetingCity: string = request.input('meeting_city')
+    const districtPhone: string = request.input('district_phone')
     const updated: District = await districtToBeUpdated
       .merge({
         districtName: name,
@@ -85,6 +90,8 @@ export default class DistrictsController {
         charterDate: charterdate,
         districtPresident: president,
         districtDescription: description,
+        districtPhone:districtPhone,
+        meetingCity:meetingCity
       })
       .save()
     return response.json({ updated, Hello: 'old file below', old })

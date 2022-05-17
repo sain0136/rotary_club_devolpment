@@ -33,6 +33,13 @@ export default class District extends BaseModel {
 
   @column()
   public meetingFrequency?: string
+  
+  @column()
+  public meetingCity?: string
+  
+  @column()
+  public districtPhone?: string
+
 
   @column()
   public charterDate?: string
