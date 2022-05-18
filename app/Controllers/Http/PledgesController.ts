@@ -97,7 +97,12 @@ export default class PledgesController {
   public async showAllPledgesByUser({ request, response }: HttpContextContract) {
     const userId: number = request.input('user_id')
     const user: User = await User.findOrFail(userId)
-    const pledge: object[] = await Database.query().from('pledge').where({ user_id: user.userId })
+    const pledge: any[] = await Database.query().from('pledge').where({ user_id: user.userId })
+    for await (const pled of pledge) {
+      let projectId:Number = pled.project_id
+      let project:Project = await Project.findOrFail(projectId)
+      pled['project_name'] = project.projectName;
+    }
     return response.json({ Yourpledges: pledge })
   }
 
