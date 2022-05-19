@@ -26,7 +26,7 @@ import 'App/Modules/Club/routes'
 import 'App/Modules/Url/routes'
 import 'App/Modules/Project/routes'
 import 'App/Modules/Pledge/routes'
-
+import 'App/Modules/Mail/routes'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
