@@ -2,11 +2,12 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Mail from '@ioc:Adonis/Addons/Mail'
 
 export default class MailController {
-  public async contactUsFormMail({ request }: HttpContextContract) {
+  public async contactUsFormMail({ request,response }: HttpContextContract) {
     const senderEmail: string = request.input('sender_email')
     const senderName: string = request.input('sender_name')
     const body: string = request.input('body')
-    await Mail.send((message) => {
+    try {
+      await Mail.send((message) => {
       message
         .from('jssr26@gmail.com')
         .to('jssr26@gmail.com')
@@ -19,5 +20,9 @@ export default class MailController {
             body
         )
     })
+    } catch (error) {
+      return response.json({error:'your email failed'})
+    }
+    
   }
 }
