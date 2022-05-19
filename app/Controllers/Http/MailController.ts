@@ -12,9 +12,9 @@ export default class MailController {
           .from('jssr26@gmail.com')
           .to('jssr26@gmail.com')
           .replyTo(senderEmail)
-          .subject('Rotary Enquiry from:' + senderName)
+          .subject('Rotary Enquiry from Guest: ' + senderName)
           .html(
-            'Click link to reply or just click reply to reply to the actual sender: ' +
+            'Click link to reply or just click reply to reply to the actual sender: \n' +
               senderEmail +
               '. ' +
               body
