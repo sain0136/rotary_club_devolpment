@@ -23,6 +23,7 @@
     "youch-terminal": "^1.1.1"
   },
   "dependencies": {
+    "@adonisjs/bodyparser": "^8.1.4",
     "@adonisjs/core": "^5.3.4",
     "@adonisjs/lucid": "^16.1.0",
     "@adonisjs/mail": "^8.1.2",
