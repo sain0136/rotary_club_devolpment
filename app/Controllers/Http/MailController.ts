@@ -20,6 +20,7 @@ export default class MailController {
               body
           )
       })
+      return response.json({ error: 'your email was sent' })
     } catch (error) {
       return response.json({ error: 'your email failed' + error })
     }
