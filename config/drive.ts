@@ -53,7 +53,7 @@ const driveConfig: DriveConfig = {
       | files.
       |
       */
-      root: Application.tmpPath('/home/images'),
+      root: Application.makePath('userImages'),
 
       /*
       |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ const driveConfig: DriveConfig = {
       | you are not registering routes with this prefix.
       |
       */
-      basePath: '/images',
+      basePath: '/userImages',
     },
 
     /*

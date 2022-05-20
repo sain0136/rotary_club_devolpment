@@ -34,17 +34,22 @@ export default class ProjectsController {
 
   public async imageUpload({ request, response }: HttpContextContract) {
     const projectImage = request.file('project_image')
+    const name: string = request.input('name')
+
     if (!projectImage) {
       return response.json({ error: 'error' })
     }
 
-    await projectImage.moveToDisk('./home/images')
+    await projectImage.moveToDisk('local')
     const fileName = projectImage.fileName
+    const theUrl = await Drive.getUrl(String('local/' + fileName))
 
-    return response.json({ name: fileName })
+    return response.json({
+      name: fileName,
+      url: 'http://127.0.0.1:3333' + theUrl,
+      postname: name,
+    })
   }
-
-
 
   public async store({ request, response }: HttpContextContract) {
     const projectName: string = request.input('project_name')
