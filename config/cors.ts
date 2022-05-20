@@ -44,7 +44,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin:'true',
+  origin:'http://127.0.0.1:9222',
 
   /*
   |--------------------------------------------------------------------------
