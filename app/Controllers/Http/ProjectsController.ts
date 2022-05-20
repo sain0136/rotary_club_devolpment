@@ -66,9 +66,14 @@ export default class ProjectsController {
     const rotaryYear: number = request.input('rotary_year')
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
-    //const imageLink: number = request.input('image_link')
-    const projectImage = request.file('project_image')
-
+    let imageLink: string = ''
+    let projectImage = request.file('project_image')
+    if (projectImage) {
+      await projectImage.moveToDisk('local')
+      const fileName = projectImage.fileName
+      const theUrl = await Drive.getUrl(String('local/' + fileName))
+      imageLink = 'http://74.208.135.85' + theUrl
+    }
     
 
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
@@ -105,6 +110,7 @@ export default class ProjectsController {
         country: country,
         districtId: districtId,
         projectStatus: ProjectStatus[projectStatus],
+        imageLink:imageLink
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({
