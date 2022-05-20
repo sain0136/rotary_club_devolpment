@@ -34,7 +34,7 @@ export default class ProjectsController {
 
   public async imageUpload({ request, response }: HttpContextContract) {
     const projectImage = request.file('project_image')
-    let name: any = JSON.parse(request.input('name')) 
+    let name: any = JSON.parse(request.input('name'))
     if (!projectImage) {
       return response.json({ error: 'error' })
     }
@@ -46,13 +46,11 @@ export default class ProjectsController {
     return response.json({
       name: fileName,
       url: 'http://74.208.135.85' + theUrl,
-      postname:   name.name
-      ,
+      postname: name.name,
     })
   }
 
   public async store({ request, response }: HttpContextContract) {
-
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
     const areaFocus: string = request.input('area_focus')
@@ -67,15 +65,15 @@ export default class ProjectsController {
     const rotaryYear: number = request.input('rotary_year')
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
+
+    let projectImage = request.file('image_link')
     let imageLink: string = ''
-    let projectImage = request.file('project_image')
     if (projectImage) {
       await projectImage.moveToDisk('local')
       const fileName = projectImage.fileName
       const theUrl = await Drive.getUrl(String('local/' + fileName))
-      imageLink = 'http://127.0.0.1:3333' + theUrl
+      imageLink = 'http://74.208.135.85' + theUrl
     }
-    
 
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
@@ -111,7 +109,7 @@ export default class ProjectsController {
         country: country,
         districtId: districtId,
         projectStatus: ProjectStatus[projectStatus],
-        imageLink:imageLink
+        imageLink: imageLink,
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({
