@@ -66,7 +66,7 @@ export default class ProjectsController {
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
 
-    let projectImage = request.file('image_link')
+    let projectImage = request.file('image')
     let imageLink: string = ''
     if (projectImage) {
       await projectImage.moveToDisk('local')
