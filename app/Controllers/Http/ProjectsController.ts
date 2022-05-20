@@ -34,8 +34,7 @@ export default class ProjectsController {
 
   public async imageUpload({ request, response }: HttpContextContract) {
     const projectImage = request.file('project_image')
-    const name: string = request.input('name')
-
+    let name: any = JSON.parse(request.input('name')) 
     if (!projectImage) {
       return response.json({ error: 'error' })
     }
@@ -47,11 +46,13 @@ export default class ProjectsController {
     return response.json({
       name: fileName,
       url: 'http://74.208.135.85' + theUrl,
-      postname: name,
+      postname:   name.name
+      ,
     })
   }
 
   public async store({ request, response }: HttpContextContract) {
+
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
     const areaFocus: string = request.input('area_focus')
@@ -72,7 +73,7 @@ export default class ProjectsController {
       await projectImage.moveToDisk('local')
       const fileName = projectImage.fileName
       const theUrl = await Drive.getUrl(String('local/' + fileName))
-      imageLink = 'http://74.208.135.85' + theUrl
+      imageLink = 'http://127.0.0.1:3333' + theUrl
     }
     
 

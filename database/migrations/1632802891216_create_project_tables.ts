@@ -21,7 +21,7 @@ export default class Project extends BaseSchema {
       table.string('project_status', 50).notNullable()
       table.string('country', 50).notNullable()
       table.string('currency', 50).notNullable().defaultTo('USD')
-      table.string('image_link', 50).nullable()
+      table.string('image_link', 250).nullable()
       table.jsonb('attached_letters').nullable()
       table.jsonb('extra_descriptions').nullable()
       table.jsonb('itemised_budget').nullable()
