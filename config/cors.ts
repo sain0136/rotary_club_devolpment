@@ -56,7 +56,7 @@ const corsConfig: CorsConfig = {
   |
   | Following is the list of default methods. Feel free to add more.
   */
-  methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE','OPTIONS'],
 
   /*
   |--------------------------------------------------------------------------
@@ -104,6 +104,10 @@ const corsConfig: CorsConfig = {
     'expires',
     'last-modified',
     'pragma',
+    'Content-Encoding',
+    'Accept',
+    'Content-Length',
+    'Origin'
   ],
 
   /*
