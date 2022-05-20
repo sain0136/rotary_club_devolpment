@@ -46,7 +46,7 @@ export default class ProjectsController {
 
     return response.json({
       name: fileName,
-      url: 'http://127.0.0.1:3333' + theUrl,
+      url: 'http://74.208.135.85' + theUrl,
       postname: name,
     })
   }
@@ -67,14 +67,9 @@ export default class ProjectsController {
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
     //const imageLink: number = request.input('image_link')
-
     const projectImage = request.file('project_image')
-    if (!projectImage) {
-      return response.json({ error: 'error' })
-    }
 
-    await projectImage.moveToDisk('./home/images')
-    const fileName = projectImage.fileName
+    
 
     const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
     const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
