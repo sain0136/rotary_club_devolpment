@@ -3,8 +3,8 @@
     <h2>Welcome to the admin portal!<br /> This is the admin portal.</h2> <br>
     <img src="../assets/admin-logo-2.png">
     <p>
-      From this page; you can create, edit, and delete districts and district admins. <br>
-      You can also assign admins to the districts once they are created.
+      From this page you can create, edit, and delete districts. <br>
+      You can additionally assign admins to the districts once they are created.
     </p>
     
   </div>
