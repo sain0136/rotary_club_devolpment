@@ -13,7 +13,7 @@ export async function isUserValid(id, password) {
     password: password
   }
 
-  const res = await fetch('/api/user/verify', {
+  const res = await fetch('http://74.208.135.85/user/verify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userToVerify),
@@ -27,7 +27,7 @@ export async function isValid(userData) {
 
   console.log(userData)
 
-  const res = await fetch('/api/user/verify', {
+  const res = await fetch('http://74.208.135.85/user/verify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
