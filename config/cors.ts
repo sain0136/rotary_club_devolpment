@@ -107,7 +107,8 @@ const corsConfig: CorsConfig = {
     'Content-Encoding',
     'Accept',
     'Content-Length',
-    'Origin'
+    'Origin',
+    'Authorization'
   ],
 
   /*
