@@ -56,7 +56,7 @@
 import store from '../../../store/index'
 
 export default {
-  name: 'DistrictLogin',
+  name: 'DistrictLoginForm',
   data() {
     return {
       email: '',
