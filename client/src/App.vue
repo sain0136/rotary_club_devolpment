@@ -18,8 +18,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Lobster+Two:400,400i,700,700i|Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
 html, body {
     max-width: 100%;
-    overflow-x: hidden;
-    height: 100%;
+/*     overflow-x:calc(100%);
+ */    height: 100%;
 }
 * {
     margin: 0px;

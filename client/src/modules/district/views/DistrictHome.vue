@@ -4,6 +4,7 @@
     class="carousel slide carousel-fade"
     data-bs-ride="carousel"
   >
+    <!--carousel Title-->
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img
@@ -32,8 +33,8 @@
         />
         <div class="overlay-2">
           <h1 class="display-6">
-            Welcome To the Rotary Club
-            of Cornwall's
+            Welcome To the Rotary
+            {{ district.district_name }}
           </h1>
           <h2>
             Rotary District Grants
@@ -70,6 +71,7 @@
         >
       </button>
     </div>
+    <!--Services-->
     <div class="services-section">
       <div class="auto-container">
         <!--Services Title-->
@@ -128,12 +130,26 @@
               </div>
               <h3>
                 <a
-                  href="causes-grid.html"
-                  >Make Donation</a
+                  @click="
+                    () =>
+                      this.$router.push(
+                        {
+                          name:
+                            'DistrictProjects',
+                          params: {
+                            projectIdProp: parseInt(
+                              projectId,
+                            ),
+                          },
+                        },
+                      )
+                  "
+                  >Pledge Today</a
                 >
               </h3>
               <div class="title">
-                Help us by Make Donation
+                Help us by Making a
+                Pledge
               </div>
               <div class="text">
                 Lorem ipsum dolor sit
@@ -168,12 +184,25 @@
               </div>
               <h3>
                 <a
-                  href="causes-grid.html"
-                  >Fundrising</a
+                  @click="
+                    () =>
+                      this.$router.push(
+                        {
+                          name:
+                            'DistrictProjects',
+                          params: {
+                            projectIdProp: parseInt(
+                              projectId,
+                            ),
+                          },
+                        },
+                      )
+                  "
+                  >Fundraising</a
                 >
               </h3>
               <div class="title">
-                Collect Fund All Over
+                Collect Funds All Over
                 the World
               </div>
               <div class="text">
@@ -206,158 +235,220 @@
               </div>
               <h3>
                 <a
-                  href="causes-grid.html"
+                  @click="
+                    () =>
+                      this.$router.push(
+                        {
+                          name:
+                            'DistrictContactUs',
+                          params: {
+                            projectIdProp: parseInt(
+                              projectId,
+                            ),
+                          },
+                        },
+                      )
+                  "
                   >Volunteer</a
                 >
               </h3>
               <div class="title">
-                Becoma aVolunteer
+                Becoma a Volunteer
               </div>
               <div class="text">
-                Lorem ipsum dolor sit
-                amet, consectetur
-                adipiscing elit.
+                Contact us to learn how
+                you can help make the
+                world a better place.
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="call-to-action-section" >
-    	<div class="auto-container">
-        	<h2>Rotary unites more than a million people</h2>
-            <div class="text">Together, we see a world where people unite and take action to create lasting change – across the globe, in our communities, and in ourselves.</div>
-            <a href="contact.html" class="theme-btn btn-style-three">Join Us Today!</a>
+    <div class="call-to-action-section">
+      <div class="auto-container">
+        <h2>
+          Rotary unites more than a
+          million people
+        </h2>
+        <div class="text">
+          Together, we see a world where
+          people unite and take action
+          to create lasting change –
+          across the globe, in our
+          communities, and in ourselves.
         </div>
+        <a
+          @click="
+            () =>
+              this.$router.push({
+                name:
+                  'DistrictContactUs',
+                params: {
+                  projectIdProp: parseInt(
+                    projectId,
+                  ),
+                },
+              })
+          "
+          class="theme-btn btn-style-three"
+          >Join Us Today!</a
+        >
+      </div>
     </div>
     <div class="project-section">
-    	<div class="auto-container">
-        	
-            <div class="sec-title ">
-            	<div class="pull-left">
-                	<h2>Our Projects</h2>
-                    <div class="text">Rotary is dedicated to six areas of focus to build international relationships, improve lives, and create a better world to support our peace efforts and end polio forever.</div>
-                </div>
-                <div class="pull-right">
-                	<a href="projects.html" class="theme-btn btn-style-five">all projects</a>
-                </div>
+      <div class="auto-container">
+        <div class="sec-title">
+          <div class="pull-left">
+            <h2>Our Projects</h2>
+            <div class="text">
+              Rotary is dedicated to six
+              areas of focus to build
+              international
+              relationships, improve
+              lives, and create a better
+              world to support our peace
+              efforts and end polio
+              forever.
             </div>
-            
-       
+          </div>
+          <div class="pull-right">
+            <a
+              @click="
+                () =>
+                  this.$router.push({
+                    name:
+                      'DistrictProjects',
+                    params: {
+                      projectIdProp: parseInt(
+                        projectId,
+                      ),
+                    },
+                  })
+              "
+              class="theme-btn btn-style-five"
+              >all projects</a
+            >
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import store from '../../../store/index'
+
 export default {
   name: 'DistrictHome',
-  data(){
-    return{
-      
+  data() {
+    return {
+      district: {},
     }
-
-  }
+  },
+  created() {
+    this.district =
+      store.state.currentDistrictData
+  },
 }
 </script>
 
 <style scoped>
-.sec-title{
+.sec-title {
   display: block;
 }
 .btn-style-five {
-    position: relative;
-    padding: 10px 25px;
-    line-height: 24px;
-    color: #292929;
-    font-size: 14px;
-    background: none;
-    letter-spacing: 1px;
-    font-weight: 500;
-    text-transform: uppercase;
-    border: 2px solid #dddddd;
-    font-family: 'Montserrat', sans-serif;
-        display: inline-block;
-
+  position: relative;
+  padding: 10px 25px;
+  line-height: 24px;
+  color: #292929;
+  font-size: 14px;
+  background: none;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 2px solid #dddddd;
+  font-family: 'Montserrat', sans-serif;
+  display: inline-block;
 }
 .project-section .btn-style-five {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 .sec-title .text {
-    position: relative;
-    font-size: 18px;
-    font-weight: 400;
-    color: rgba(0,0,0,0.70);
+  position: relative;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.7);
 }
 .sec-title h2 {
-    font-size: 42px;
-    color: #111111;
-    font-weight: 700;
-    line-height: 1.2em;
-    padding-bottom: 10px;
-    display: inline-block;
-    text-transform: capitalize;
-    font-family: 'Montserrat', sans-serif;
+  font-size: 42px;
+  color: #111111;
+  font-weight: 700;
+  line-height: 1.2em;
+  padding-bottom: 10px;
+  display: inline-block;
+  text-transform: capitalize;
+  font-family: 'Montserrat', sans-serif;
 }
 .pull-right {
 }
 .pull-left {
-    float: left!important;
+  float: left !important;
 }
 .sec-title {
-    position: relative;
-    margin-bottom: 50px;
+  position: relative;
+  margin-bottom: 50px;
 }
 .auto-container {
-    position: static;
-    max-width: 1200px;
-    padding: 0px 15px;
-    margin: 0 auto;
+  position: static;
+  max-width: 1200px;
+  padding: 0px 15px;
+  margin: 0 auto;
 }
 .project-section {
-    position: relative;
-    padding: 100px 0px 90px;
+  position: relative;
+  padding: 100px 0px 90px;
 }
 .btn-style-three {
-    position: relative;
-    padding: 10px 30px;
-    line-height: 24px;
-    color: #ffffff;
-    font-size: 14px;
-    background: none;
-    letter-spacing: 1px;
-    font-weight: 700;
-    text-transform: uppercase;
-    border: 2px solid #ffffff;
-    font-family: 'Montserrat', sans-serif;
+  position: relative;
+  padding: 10px 30px;
+  line-height: 24px;
+  color: #ffffff;
+  font-size: 14px;
+  background: none;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid #ffffff;
+  font-family: 'Montserrat', sans-serif;
 }
 .call-to-action-section .text {
-    position: relative;
-    color: #ffffff;
-    font-size: 22px;
-    margin-bottom: 30px;
+  position: relative;
+  color: #ffffff;
+  font-size: 22px;
+  margin-bottom: 30px;
 }
 .call-to-action-section h2 {
-    position: relative;
-    color: #ffffff;
-    font-size: 54px;
-    font-weight: 700;
-    line-height: 1.4em;
-    margin-bottom: 10px;
+  position: relative;
+  color: #ffffff;
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1.4em;
+  margin-bottom: 10px;
 }
 .auto-container {
-    position: static;
-    max-width: 1200px;
-    padding: 0px 15px;
-    margin: 0 auto;
+  position: static;
+  max-width: 1200px;
+  padding: 0px 15px;
+  margin: 0 auto;
 }
 .call-to-action-section {
   background-image: url('../assets/image-3.jpg');
-      position: relative;
-    text-align: center;
-    background-size: cover;
-    padding: 100px 0px 100px;
-    background-position: center center;
+  position: relative;
+  text-align: center;
+  background-size: cover;
+  padding: 100px 0px 100px;
+  background-position: center center;
 }
 .clearfix {
   display: flex;

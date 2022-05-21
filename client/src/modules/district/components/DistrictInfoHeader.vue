@@ -13,7 +13,6 @@
           <a
             title="facebook"
               @click="linkRedirct(1)"
-            v-if="facebookLink != null"
           >
             <i
               class="bi bi-facebook"
@@ -21,7 +20,7 @@
           </a>
         </li>
         <li id="tlink"
-        v-if="twitterLink != null">
+        >
           <a
             title="twitter"
             @click="linkRedirct(2)"
@@ -123,30 +122,8 @@ const districtSocials  =
   }
   ,
   methods: {
-    async getSocialLink(socialType) {
-      let linkToReturn
-
-      if (
-        this.districtSocials !=
-        undefined
-      ) {
-        this.districtSocials.forEach(
-          socialLink => {
-            if (
-              socialLink.url_type ===
-              socialType
-            ) {
-              linkToReturn =
-                socialLink.url
-            }
-          },
-        )
-        return linkToReturn
-      }
-      return null
-    },
+  
       linkRedirct(type){
-        const flink =this.facebookLink
           if (type == 1) {
             this.$router.push({name:'externalFacebook' })
           } else {

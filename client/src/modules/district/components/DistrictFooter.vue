@@ -35,12 +35,13 @@
           class="social-icons"
           style="margin-bottom: 14px;"
         >
-          <li>
+          <!--  because ids are global and getElementById will
+           return the first element in the DOM with that id.
+           It doesn't know anything about youe Vue component boundaries.I.E flinink footer -->
+          <li ref="flink_footer">
             <a
-              :href="facebookLink"
-              v-if="
-                facebookLink != null
-              "
+              title="facebook"
+              @click="linkRedirct(1)"
             >
               <i
                 class="bi bi-facebook"
@@ -52,8 +53,11 @@
             </a>
           </li>
           &nbsp;&nbsp;
-          <li>
-            <a :href="twitterLink">
+          <li ref="tlink_footer">
+            <a
+              title="twitter"
+              @click="linkRedirct(2)"
+            >
               <i
                 class="bi bi-twitter"
                 style="
@@ -76,7 +80,7 @@
                   "
                 ></i
               ></span>
-              info@cornwallrotary.com
+              {{ email }}
             </li>
           </ul>
         </div>
@@ -94,8 +98,7 @@
                 "
               ></i>
               <span>
-                PO Box 411, Cornwall ON
-                K6H 5T1</span
+                {{ address }}</span
               >
             </li>
             <li>
@@ -106,7 +109,7 @@
                   color: #ffb607;
                 "
               ></i>
-              <span>  613-555-5555</span>
+              <span> {{ phone }}</span>
             </li>
           </ul>
         </div>
@@ -117,27 +120,86 @@
 
 <script>
 import store from '../../../store/index'
+import { watchEffect } from 'vue'
 
 export default {
-  name: 'ClubFooter',
+  name: 'DistrictFooter',
   components: {},
   data() {
     return {
       districtId: this.$router
         .currentRoute.value.params.id,
-      districtAddress: 'something',
-      districtEmail: 'abc@def.com',
-      districtPhone: '3169',
+      address: '',
+      email: '',
+      phone: '',
 
-      facebookLink: 'face',
-      twitterLink: 'twit',
+      facebookLink: '',
+      twitterLink: '',
       instagramLink: null,
-
-      clubSocials: [],
+      districtSocials: [],
     }
   },
-  async created() {},
-  methods: {},
+  async created() {
+    watchEffect(() => {
+      const districtData =
+        store.state.currentDistrictData
+      this.address = `Meeting Location: ${districtData.meeting_location}`
+      this.email =
+        districtData.district_email
+      const districtSocials =
+        store.state.districtSocials
+      this.phone =
+        districtData.district_phone
+      try {
+        const flink = districtSocials.find(
+          ({ url_type }) =>
+            url_type === 1,
+        )
+        const tlink = districtSocials.find(
+          ({ url_type }) =>
+            url_type === 2,
+        )
+        if (
+          typeof flink === 'undefined'
+        ) {
+          this.$refs.flink_footer.style.display =
+            'none'
+        } else {
+          this.$refs.flink_footer.style.display =
+            'inline-block'
+
+          this.facebookLink = flink.url
+        }
+        if (
+          typeof tlink === 'undefined'
+        ) {
+          console.log('true')
+          // Proper way to access elements in vue components https://stackoverflow.com/a/60681661
+          this.$refs.tlink_footer.style.display =
+            'none'
+        } else {
+          this.twitterLink = tlink.url
+          this.$refs.tlink_footer.style.display =
+            'inline-block'
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  },
+  methods: {
+    linkRedirct(type) {
+      if (type == 1) {
+        this.$router.push({
+          name: 'externalFacebook',
+        })
+      } else {
+        this.$router.push({
+          name: 'externalTwitter',
+        })
+      }
+    },
+  },
 }
 </script>
 
@@ -150,7 +212,7 @@ export default {
   padding: 70px 0px 0px;
   background-color: #232323;
   border-top: 1px solid #2e2e2e;
-  margin: auto;
+  margin-top: auto;
   flex-shrink: 0;
 }
 .auto-container {

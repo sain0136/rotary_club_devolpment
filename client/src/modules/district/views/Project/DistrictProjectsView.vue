@@ -145,6 +145,7 @@ export default {
 <style scoped>
 .cont {
   min-height: 60%;
+  margin-bottom: 3em;
 }
 h1 {
   text-align: center;

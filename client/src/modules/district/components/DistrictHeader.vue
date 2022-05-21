@@ -179,6 +179,22 @@
                   >My District Projects</router-link
                 >
                   </li>
+                   <li>
+                  <router-link
+                   class="
+                        dropdown-item
+                      "
+                  :to="{
+                    name: 'DistrictProjectPledgesView',
+                    params: {
+                      id: this
+                        .districtId,
+                        isThisMyPledges:'yes'
+                    },
+                  }"
+                  >My Pledges</router-link
+                >
+                  </li>
                 </ul>
               </div>
               <li v-if="!loggin">

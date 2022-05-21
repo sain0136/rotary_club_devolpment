@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="containers">
     <DistrictForm
       isEditOrCreate="Edit"
       pageAccessed="District"
@@ -19,5 +19,10 @@ export default {
 </script>
 
 <style scoped>
-
+.containers{
+      position: static;
+    max-width: 1200px;
+    padding: 0px 15px;
+    margin: 0 auto;
+}
 </style>

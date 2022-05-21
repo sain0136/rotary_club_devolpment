@@ -13,6 +13,6 @@ export default {
 
 <style scoped>
 .container{
-    height: 60%;
+  
 }
 </style>

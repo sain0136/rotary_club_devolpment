@@ -24,13 +24,18 @@ import DistrictProjectsView from '../../district/views/Project/DistrictProjectsV
 import DistrictProjectCreate from '../../district/views/Project/DistrictProjectCreate.vue'
 import DistrictProjectEdit from '../../district/views/Project/DistrictProjectEdit.vue'
 import ProjectCardDetails from '../../../components/common/Project/ProjectCardDetails.vue'
-
+import DistrictProjectPledgesView from '../../district/views/DistrictProjectPledgesView.vue'
 import DistrictEditForm from '../../district/components/DistrictEditForm.vue'
 import DistrictEditHome from '../../district/views/DistrictEditHome.vue'
 export default {
   path: '/district/:id',
   component: AppDistrict,
   name: 'AppDistrict',
+  beforeEnter: (to, from, next) => {
+    window.scrollTo(0, 0);
+    next()
+
+  },
   children: [
     {
       path: 'home',
@@ -198,6 +203,14 @@ export default {
               path: 'edit',
               component: DistrictProjectEdit,
               name: 'DistrictProjectEdit',
+              props: true
+
+            },
+            {
+              //create page, pass up props to form,
+              path: 'pledges',
+              component: DistrictProjectPledgesView,
+              name: 'DistrictProjectPledgesView',
               props: true
 
             },

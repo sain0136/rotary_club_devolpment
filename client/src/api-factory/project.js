@@ -1,5 +1,5 @@
 import store from '../store/index'
-
+import axios from 'axios'
 export default {
   async districtIndex(id) {
     const queryHelper = {
@@ -126,22 +126,58 @@ export default {
   },
 
   async create(data) {
-    console.log('api call happening:')
 
+
+    let fd = new FormData();
+    fd.append('project_image',data.image )
+    fd.append('project_name',data.project_name )
+    fd.append('project_theme',data.project_theme )
+    fd.append('area_focus',data.area_focus )
+    fd.append('estimated_completion',data.estimated_completion )
+    fd.append('funding_goal',data.funding_goal )
+    fd.append('current_funds',data.current_funds )
+    fd.append('created_by',data.created_by )
+    fd.append('region',data.region )
+    fd.append('rotary_year',data.rotary_year )
+    fd.append('project_status',data.project_status )
+    fd.append('country',data.country )
+    fd.append('district_id',data.district_id )
+    fd.append('role_type',data.role_type )
+    fd.append('image',data.image )
+    fd.append('grant_type',data.grant_type )
+
+    axios
+    .post("http://74.208.135.85/project", fd, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Request-Method": "POST"
+
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+   /*  console.log('api call happening:')
+    let image = data.image
+    console.log(image)
+    delete data.image
     console.log(data)
-
+    let body = data
+    body['image'] =image
     const res = await fetch(
       'http://74.208.135.85/project',
       {
         method: 'POST',
-        headers: {
-          'Content-Type':
-            'application/json',
-        },
-        body: JSON.stringify(data),
+     
+        body: fd
       },
     )
-    console.log(await res.json())
+    console.log(await res.json())  */
+
   },
 
   async update(id, data) {

@@ -91,7 +91,26 @@
           type="date"
         />
       </div>
-
+      <!--                     -->
+      <div class="form-inputs">
+        <input
+          accept="image/*"
+          type="file"
+          class="col-md-4 control-label"
+          @change="
+            handleFileChange(
+              $event.target.files,
+            )
+          "
+        />
+        <label>{{ Image }}</label>
+        <span
+          id="titleHelpInline"
+          class="form-text"
+        >
+          Upload an img
+        </span>
+      </div>
       <!--                     -->
 
       <!--                     -->
@@ -100,10 +119,10 @@
       >
         <ul class="clearfix">
           <button
+           @submit.prevent=""
             v-if="
               editOrCreateProp == 'edit'
             "
-            type="submit"
             @click="
               () => updateProject()
             "
@@ -111,8 +130,9 @@
             Update
           </button>
           <button
+           @submit.prevent=""
             v-else
-            type="submit"
+
             @click="
               () => createProject()
             "
@@ -120,7 +140,7 @@
             Submit
           </button>
           <button
-            type="submit"
+           @submit.prevent=""
             @click="() => redirect()"
           >
             Cancel
@@ -164,7 +184,7 @@ export default {
         rotary_year: 2022,
         image_link: '',
         project_status: 1,
-
+        image: null,
         district_id: 0,
 
         role_type: 1,
@@ -461,7 +481,16 @@ export default {
     }
   },
   methods: {
-    validateDistrict() {},
+    handleFileChange(event) {
+      // handle file changes
+      let file  = event[0]
+      const fileReader = new FileReader()
+      console.log(event[0])
+      this.project.image =event[0]
+    
+
+    },
+
     async prePopulateFields() {
       const projectToEdit = await ProjectApi.show(
         this.projectIdProp,
@@ -482,16 +511,13 @@ export default {
         projectToEdit.funding_goal
       this.project.current_funds =
         projectToEdit.current_funds
-    
+
       this.project.region =
         projectToEdit.region
-     
+
       this.project.image_link =
         projectToEdit.image_link
-     
-  
     },
-    convertDate(dateConvert) {},
     async updateProject() {
       console.log(
         'updating new project',
@@ -516,6 +542,8 @@ export default {
       this.redirect()
     },
     async createProject() {
+
+
       console.log(
         'creating new project',
       )

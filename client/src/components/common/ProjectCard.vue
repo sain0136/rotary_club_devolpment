@@ -5,21 +5,33 @@
   >
     <div class="inner-box">
       <div class="image">
-        <a  @click="
-                () =>
-                  this.$router.push({
-                    name:
-                      'ProjectCardDetails',
-                    params: {
-                      projectIdProp: parseInt(projectId),
-                  
-                    },
-                  })
-              "
-          ><img
-            src="../../assets/causes-1.jpg"
+        <a
+          @click="
+            () =>
+              this.$router.push({
+                name:
+                  'ProjectCardDetails',
+                params: {
+                  projectIdProp: parseInt(
+                    projectId,
+                  ),
+                },
+              })
+          "
+        >
+          <img
+            v-if="
+              project.image_link == null
+            "
+            src="../../assets/causes-2.jpg"
             alt=""
-        /></a>
+          />
+          <img
+            v-else
+            :src="project.image_link"
+            alt=""
+          />
+        </a>
       </div>
       <div class="lower-box">
         <div class="content">
@@ -29,17 +41,18 @@
           >
             <h3>
               <a
-                 @click="
-                () =>
-                  this.$router.push({
-                    name:
-                      'ProjectCardDetails',
-                    params: {
-                      projectIdProp: parseInt(projectId),
-                  
-                    },
-                  })
-              "
+                @click="
+                  () =>
+                    this.$router.push({
+                      name:
+                        'ProjectCardDetails',
+                      params: {
+                        projectIdProp: parseInt(
+                          projectId,
+                        ),
+                      },
+                    })
+                "
                 >{{
                   project.project_name
                 }}
@@ -112,14 +125,14 @@ export default {
     return {
       percentage: 0,
       truncatedDesc: '',
-      projectId:0
+      projectId: 0,
     }
   },
   props: {
     project: Object,
   },
   async created() {
-    this.projectId=this.project.project_id
+    this.projectId = this.project.project_id
     this.truncatedDesc = this.project.project_theme.slice(
       0,
       30,

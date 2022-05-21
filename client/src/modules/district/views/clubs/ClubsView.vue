@@ -31,6 +31,8 @@ button {
 #plus-districts {
   background-color: #27282d;
   color: #fbefdf;
+    margin-top: 3em;
+  margin-bottom: 3.5em;
 }
 
 </style>

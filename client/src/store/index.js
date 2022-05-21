@@ -11,7 +11,9 @@ import social_links from '../api-factory/social_links'
 import club_user from '../api-factory/club_user'
 
 export default createStore({
+
   state: {
+    //Global States 
     isSiteAdminLoggedIn: false,
     isSiteAdminRejected: false,
 
@@ -23,29 +25,27 @@ export default createStore({
 
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
-
+    // track current district or club logged in 
     loggedInDistrictId: 0,
     loggedInClubId: Number,
-
+    // important for tracking who is currrently logged in 
     loggedInClubUserId: Number,
     loggedInDistrictUserId: Number,
-
+    //data obect for logged in user 
     currentDistrictData: Object,
-
     currentClubData: Object,
-    currentClubUsers: Object,
-
+    //the project focused on for CRUD 
     currentProjectData: Object,
-
+    //deleteable? -poss
+    currentClubUsers: Object,
     currentClubUserData: Object,
-
+    // district or club social links
     districtSocials: [],
     clubSocials: [],
   },
   mutations: {
     adminLogin(state, loginData) {
       const roleId = loginData.roleId
-
       switch (roleId) {
         //Site Admin
         case 0:
@@ -61,10 +61,8 @@ export default createStore({
           state.isDistrictAdminRejected = false
           state.loggedInDistrictId =
             loginData.districtId
-            state.loggedInDistrictUserId =
+          state.loggedInDistrictUserId =
             loginData.adminId
-          
-            
           break
         //Club Admin
         case 5:
@@ -84,12 +82,12 @@ export default createStore({
         case 5:
           state.isClubAdminRejected = true
           break
-          case 10:
+        case 10:
           state.isSiteAdminRejected = false
           break
       }
     },
-
+    //mutation for clubuser logging in 
     async clubUserLogin(
       state,
       loginData,
@@ -101,7 +99,6 @@ export default createStore({
         'login data: ',
         loginData,
       )
-
       state.loggedInClubUserId =
         loginData.user_id
       state.currentClubUserData = await club_user.show(
@@ -123,6 +120,7 @@ export default createStore({
         state.isClubAdminRejected = false
       }
     },
+    //district user logging in the will be an admin or titled admin i.e d chair 
     async districtUserLogin(
       state,
       loginData,
@@ -135,26 +133,29 @@ export default createStore({
         loginData,
       )
     },
-
-
-    clubUserReject(state, userId) {
+    // rejection
+    clubUserReject(state) {
       state.isClubUserRejected = true
     },
-
+    //signout
     signout(state) {
       state.isSiteAdminLoggedIn = false
       state.isDistrictAdminLoggedIn = false
       state.loggedInDistrictId = Number
       state.isClubAdminLoggedIn = false
       state.isClubUserLoggedIn = false
+      state.currentClubUserData = {}
+      state.loggedInDistrictUserId = 0
+      state.loggedInClubUserId = 0
     },
-
+    //set district data
     changeCurrentDistrictData(
       state,
       districtData,
     ) {
       state.currentDistrictData = districtData
     },
+    //set district data
 
     changeCurrentClubData(
       state,
@@ -162,27 +163,28 @@ export default createStore({
     ) {
       state.currentClubData = clubData
     },
-
+    //deleteAble
     changeCurrentClubUsers(
       state,
       clubUsers,
     ) {
       state.currentClubUsers = clubUsers
     },
-
+    //change current project
     changeCurrentProjectData(
       state,
       projectData,
     ) {
       state.currentProjectData = projectData
     },
-
+    //changge socials 
     changeDistrictSocials(
       state,
       districtSocialsArray,
     ) {
       state.districtSocials = districtSocialsArray
     },
+    //changge socials 
 
     changeClubSocials(
       state,
@@ -195,9 +197,10 @@ export default createStore({
     async validateSiteReload(
       { commit },
       data,
-    ){
-      commit('adminReject',10)
+    ) {
+      commit('adminReject', 10)
     },
+    //sitr admin 
     async validateSiteAdmin(
       { commit },
       data,
@@ -212,10 +215,11 @@ export default createStore({
         )
       ) {
         commit('adminLogin', loginData)
-      } else  {
+      } else {
         commit('adminReject', 0)
-      } 
+      }
     },
+    //District admin 
 
     async validateDistrictAdmin(
       { commit },
@@ -224,9 +228,9 @@ export default createStore({
       const loginData = {
         districtId: data.id,
         roleId: 1,
-        adminId:0
+        adminId: 0
       }
-      const response =await isValid(data)
+      const response = await isValid(data)
       if (response.Verified) {
         loginData.adminId = response.user_id
         commit('adminLogin', loginData)
@@ -235,6 +239,7 @@ export default createStore({
         commit('adminReject', 1)
       }
     },
+    //club user 
 
     async validateClubUser(
       { commit },
@@ -257,7 +262,7 @@ export default createStore({
         )
       }
     },
-
+    //change actions
     async changeCurrentDistrictData(
       { commit },
       districtId,
@@ -270,6 +275,8 @@ export default createStore({
         districtData,
       )
     },
+    //change actions
+
     async changeCurrentClubData(
       { commit },
       clubId,
@@ -282,6 +289,8 @@ export default createStore({
         clubData,
       )
     },
+    //change actions deleteable?
+
     async changeCurrentClubUsers(
       { commit },
       clubId,
@@ -294,6 +303,8 @@ export default createStore({
         clubUsers,
       )
     },
+    //change actions
+
     async changeCurrentProjectData(
       { commit },
       projectId,
@@ -306,6 +317,8 @@ export default createStore({
         projectData,
       )
     },
+    //change actions
+
     async unsetCurrentProjectData(
       { commit },
     ) {
@@ -314,7 +327,8 @@ export default createStore({
         {},
       )
     },
-    
+    //change actions
+
     async changeDistrictSocials(
       { commit },
       queryObject,
@@ -327,6 +341,8 @@ export default createStore({
         districtSocialsArray,
       )
     },
+    //change actions
+
     async changeClubSocials(
       { commit },
       queryObject,
@@ -345,9 +361,9 @@ export default createStore({
     },
   },
   getters: {
-getLogged(state){
-  return state.loggedInDistrictId
-}
+    getLogged(state) {
+      return state.loggedInDistrictId
+    }
 
   },
   modules: {},

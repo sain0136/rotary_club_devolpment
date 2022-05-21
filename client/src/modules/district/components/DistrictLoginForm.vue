@@ -26,14 +26,16 @@
         <p id="success">Logged In!</p>
         <!-- <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br>  -->
       </div>
+      <Label for="email">Email Address:</Label>
       <input
         type="text"
         name="userId"
         placeholder="ID"
-        v-model="userId"
+        v-model="email"
       />
       <br />
       <br />
+      <label for="password">Password:</label>
       <input
         type="password"
         placeholder="password"
@@ -57,7 +59,7 @@ export default {
   name: 'DistrictLogin',
   data() {
     return {
-      userId: '',
+      email: '',
       password: '',
     }
   },
@@ -68,7 +70,7 @@ export default {
         {
           id: this.$router.currentRoute
             .value.params.id,
-          user_id: this.userId,
+          email: this.email,
           password: this.password,
         },
       )
@@ -126,9 +128,8 @@ form {
   text-align: center;
   margin: auto;
   /* width: 50%; */
-  margin-top: 10%;
 
-  font-size: 18px;
+  font-size: 1em;
 }
 
 legend {
@@ -140,6 +141,8 @@ input {
   background-color: transparent;
   border-bottom: 1px solid
     rgba(255, 0, 0, 0.5);
+    display: block;position: relative;
+    left: 20%;
 }
 
 button {

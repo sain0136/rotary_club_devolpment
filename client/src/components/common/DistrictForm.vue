@@ -1,203 +1,280 @@
 <template>
-  <div class="container">
-    <form
-      onsubmit="event.preventDefault();"
-    >
-      <div class="fieldset">
-        <h2
-          v-if="
-            isEditOrCreate == 'Create'
-          "
-        >
-          Create a new District
-        </h2>
-        <h2 v-else>
-          Edit this District
-        </h2>
-      </div>
-      <br />
-      <div class="form-field">
-        <span>Name:</span>
-        <span
-          class="district-error"
-          id="district-name-error"
-          v-if="v$.name.$error"
-        >
-          Please enter a name for the
-          district
-          <br />
-        </span>
-        <input
-          type="text"
-          name="name"
-          v-model="name"
-          placeholder="District Name"
-          aria-label="District Name"
-        />
+  <div class="form-container">
+    <div class="auto-container1">
+      <form @submit.prevent="">
+        <div class="page-title">
+          <div class="auto-container2">
+            <div class="inner-box">
+              <h1
+                v-if="
+                  isEditOrCreate ==
+                  'Create'
+                "
+              >
+                Create a new District
+              </h1>
+              <h1 v-else>
+                Edit this District
+              </h1>
+            </div>
+          </div>
+        </div>
         <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <!-- <label for="president">District President</label> <br> -->
-        <span>President:</span>
+        <div class="row">
+          <div class="form-field">
+            <span>Name:</span>
+            <span
+              class="district-error"
+              id="district-name-error"
+              v-if="v$.name.$error"
+            >
+              Please enter a name for
+              the district
+              <br />
+            </span>
+            <input
+              type="text"
+              name="name"
+              v-model="name"
+              placeholder="District Name"
+              aria-label="District Name"
+            />
+            <br />
+            <br />
+          </div>
+          <!-- <label for="president">District President</label> <br> -->
+          <div class="form-field">
+            <span>President:</span>
 
-        <span
-          class="district-error"
-          id="district-president-error"
-          v-if="v$.president.$error"
-        >
-          Please enter a district
-          president
-          <br />
-        </span>
+            <span
+              class="district-error"
+              id="district-president-error"
+              v-if="v$.president.$error"
+            >
+              Please enter a district
+              president
+              <br />
+            </span>
 
-        <input
-          name="president"
-          type="text"
-          v-model="president"
-          placeholder="President"
-          aria-label="Presidents Name"
-        />
+            <input
+              name="president"
+              type="text"
+              v-model="president"
+              placeholder="President"
+              aria-label="Presidents Name"
+            />
+            <br />
+            <br />
+          </div>
+          <!-- <label for="Email">Email</label> <br> -->
+          <div class="form-field">
+            <span>Email:</span>
+            <span
+              class="district-error"
+              id="district-email-error"
+              v-if="v$.email.$error"
+            >
+              Please enter a valid email
+              address <br />
+            </span>
+            <input
+              type="text"
+              name="email"
+              v-model="email"
+              placeholder="Email"
+              aria-label="Email"
+            />
+            <br />
+            <br />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <!-- <label for="meeting-location"></label> -->
+            <span
+              >Meeting Location:</span
+            >
+            <span
+              class="district-error"
+              id="district-meetinglocation-error"
+              v-if="
+                v$.meetingLocation
+                  .$error
+              "
+            >
+              Please enter a meeting
+              location <br />
+            </span>
+            <input
+              type="text"
+              name="meeting-location"
+              v-model="meetingLocation"
+              aria-label="Meeting Location"
+              placeholder="Meeting Location"
+            />
+            <br />
+            <br />
+          </div>
+          <div class="form-field">
+            <span
+              >Meeting Frequency:</span
+            >
+            <span
+              class="district-error"
+              id="district-meetingfrequency-error"
+              v-if="
+                v$.meetingFrequency
+                  .$error
+              "
+            >
+              Please enter a meeting
+              frequency. Ex:Weekly,
+              Bi-Weekly
+            </span>
+            <br />
+            <input
+              type="text"
+              v-model="meetingFrequency"
+              placeholder="Meeting Frequency"
+              aria-label="Meeting Frequency"
+            />
+            <br />
+            <br />
+          </div>
+          <div class="form-field">
+            <span>Charter Date:</span>
+            <span
+              class="district-error"
+              id="district-charterdate-error"
+              v-if="
+                v$.charterdate.$error
+              "
+            >
+              Please enter a charter
+              date
+            </span>
+            <br />
+            <input
+              type="date"
+              v-model="charterdate"
+              placeholder="Charter Date"
+              aria-label="Meeting Frequency"
+            />
+            <br />
+            <br />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <span>Meeting City:</span>
+            <span
+              class="district-error"
+              id="district-meetingCity-error"
+              v-if="
+                v$.meetingCity.$error
+              "
+            >
+              Please limit city name to
+              30 characters
+            </span>
+            <br />
+            <input
+              type="text"
+              v-model="meetingCity"
+              placeholder="Meeting City"
+              aria-label="Meeting City"
+            />
+            <br />
+            <br />
+          </div>
+
+          <div class="form-field">
+            <span>District Phone:</span>
+            <span
+              class="district-error"
+              id="district-phone-error"
+              v-if="v$.phone.$error"
+            >
+              Please limit phone number
+              to 30 characters
+            </span>
+            <br />
+            <input
+              type="text"
+              v-model="phone"
+              placeholder="phone number"
+              aria-label="phone number"
+            />
+            <br />
+            <br />
+          </div>
+        </div>
+        <div class="last-row">
+          <div class="text-area">
+            <span>
+              District Description:
+              <p>
+                (100-1000 words)
+              </p></span
+            >
+            <span
+              class="district-error"
+              id="district-description-error"
+              v-if="
+                v$.description.$error
+              "
+            >
+              Please enter a description
+              between 100-1000
+              characters
+            </span>
+            <br />
+            <textarea
+              cols="90"
+              rows="10"
+              v-model="description"
+              placeholder="District Description"
+              aria-label="District Description"
+            >
+            </textarea
+            ><br />
+            <br />
+          </div>
+        </div>
         <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <!-- <label for="Email">Email</label> <br> -->
-        <span>Email:</span>
-        <span
-          class="district-error"
-          id="district-email-error"
-          v-if="v$.email.$error"
-        >
-          Please enter a valid email
-          address <br />
-        </span>
-        <input
-          type="text"
-          name="email"
-          v-model="email"
-          placeholder="Email"
-          aria-label="Email"
-        />
-        <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <!-- <label for="meeting-location"></label> -->
-        <span>Meeting Location:</span>
-        <span
-          class="district-error"
-          id="district-meetinglocation-error"
+        <div class="button-row">
+          <button
+            v-if="
+              isEditOrCreate == 'Create'
+            "
+            @click="validateDistrict"
+          >
+            Submit
+          </button>
+          <button
+            v-else
+            @click="validateDistrict"
+          >
+            Update
+          </button>
+          <button
+            id="cancel"
+            @click="() => redirect()"
+          >
+            Cancel
+          </button>
+        </div>
+        <SocialLinksSection
+          id="Socia-Section"
+          isDistrictOrClub="District"
           v-if="
-            v$.meetingLocation.$error
+            isEditOrCreate == 'Edit'
           "
-        >
-          Please enter a meeting
-          location <br />
-        </span>
-        <input
-          type="text"
-          name="meeting-location"
-          v-model="meetingLocation"
-          aria-label="Meeting Location"
-          placeholder="Meeting Location"
         />
-        <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <span>Meeting Frequency:</span>
-        <span
-          class="district-error"
-          id="district-meetingfrequency-error"
-          v-if="
-            v$.meetingFrequency.$error
-          "
-        >
-          Please enter a meeting
-          frequency. Ex:Weekly,
-          Bi-Weekly
-        </span>
-        <br />
-        <input
-          type="text"
-          v-model="meetingFrequency"
-          placeholder="Meeting Frequency"
-          aria-label="Meeting Frequency"
-        />
-        <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <span>Charter Date:</span>
-        <span
-          class="district-error"
-          id="district-charterdate-error"
-          v-if="v$.charterdate.$error"
-        >
-          Please enter a charter date
-        </span>
-        <br />
-        <input
-          type="date"
-          v-model="charterdate"
-          placeholder="Charter Date"
-          aria-label="Meeting Frequency"
-        />
-        <br />
-        <br />
-      </div>
-      <div class="form-field">
-        <span>
-          District Description: <p>(100-1000 words)</p></span
-        >
-        <span
-          class="district-error"
-          id="district-description-error"
-          v-if="v$.description.$error"
-        >
-          Please enter a description
-          between 100-1000 characters
-        </span>
-        <br />
-        <textarea
-          cols="90"
-          rows="10"
-          v-model="description"
-          placeholder="District Description"
-          aria-label="District Description"
-        >
-        </textarea
-        ><br />
-        <br />
-      </div>
-      <br />
-      <button
-        v-if="
-          isEditOrCreate == 'Create'
-        "
-        @click="validateDistrict"
-      >
-        Submit
-      </button>
-      <button
-        v-else
-        @click="validateDistrict"
-      >
-        Update
-      </button>
-      <button
-        id="cancel"
-        @click="() => redirect()"
-      >
-        Cancel
-      </button>
-      <SocialLinksSection
-        id="Socia-Section"
-        isDistrictOrClub="District"
-        v-if="isEditOrCreate == 'Edit'"
-      />
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -217,14 +294,14 @@ import {
 } from '@vuelidate/validators'
 
 export default {
-  name: 'NewDistrictForm',
+  name: 'DistrictForm',
   components: {
     SocialLinksSection,
   },
   props: {
     isEditOrCreate: String,
     pageAccessed: String,
-    districtEdit: Boolean
+    districtEdit: Boolean,
   },
   data() {
     return {
@@ -236,12 +313,20 @@ export default {
       meetingFrequency: '',
       charterdate: '',
       description: '',
+      meetingCity: '',
+      phone: '',
     }
   },
   validations() {
     return {
       name: {
         required,
+        maxLength: maxLength(30),
+      },
+      phone: {
+        maxLength: maxLength(40),
+      },
+      meetingCity: {
         maxLength: maxLength(30),
       },
       president: {
@@ -299,6 +384,8 @@ export default {
       this.meetingFrequency = await districtInfo.meeting_frequency
       this.charterdate = await districtInfo.charter_date
       this.description = await districtInfo.district_description
+      this.meetingCity = await districtInfo.meeting_city
+      this.phone = await districtInfo.district_phone
     },
 
     getDistrictData() {
@@ -314,6 +401,9 @@ export default {
         charter_date: this.charterdate,
         district_description: this
           .description,
+        meeting_city: this.meetingCity,
+        district_phone: this
+          .district_phone,
       }
     },
 
@@ -371,7 +461,9 @@ export default {
       if (
         this.pageAccessed == 'District'
       ) {
-        this.$router.push({name: 'DistrictEdit2'})
+        this.$router.push({
+          name: 'DistrictEdit2',
+        })
         //if it's from the district portal
       } else {
         if (
@@ -389,15 +481,44 @@ export default {
 </script>
 
 <style scoped>
+.form-container {
+  min-height: 60%;
+}
+.auto-container1 {
+  position: static;
+  max-width: 1200px;
+  padding: 0px 15px;
+  margin: 0 auto;
+}
+.auto-container2 {
+  position: static;
+  max-width: 1200px;
+  padding: 0px 15px;
+  margin: 0 auto;
+}
+.page-title .inner-box {
+  position: relative;
+}
+.page-title {
+  position: relative;
+  padding: 30px 0px 40px;
+  background-size: cover;
+  text-align: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(../../assets/image-3.jpg);
+}
+
 span {
   display: block;
+  text-align: center;
 }
 button {
   box-sizing: border-box;
-  width: 50%;
+  width: 40%;
   background-color: #ffb607;
-  left: 25%;
-  position: relative;
+
   color: white;
   border: 1px solid #3498db;
   border-radius: 3px;
@@ -406,19 +527,42 @@ button {
   margin-top: 1%;
   cursor: pointer;
 }
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2em;
+  column-gap: 1em;
+}
 #Socia-Section {
   width: 100%;
 }
-#cancel {
-  margin-bottom: 2%;
-}
-form {
-  width: 100%;
-  display: grid;
-  background-color: black;
-  color: azure;
-}
 
+form {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.last-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.form-field {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.text-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 input {
   background-color: #f3f3f3;
   border: none;
@@ -449,20 +593,14 @@ label {
   padding-bottom: 5%;
   padding-top: 5%;
 }
-.container {
-  box-shadow: 0px 3px 20px 0
-    rgba(0, 0, 0, 0.8);
-  width: 50%;
-  overflow: auto;
-  height: 60vh;
-  margin-top: 5%;
-  text-align: center;
-  background-color: black;
-  padding: 0%;
-}
 
-h2 {
-  font-size: 42px;
+h1 {
+  font-size: 72px;
+  margin-bottom: 0px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: capitalize;
+  text-align: center;
 }
 
 .district-error {

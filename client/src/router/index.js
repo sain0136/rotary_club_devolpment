@@ -15,6 +15,8 @@ const routes = [
   district,
   club,
   { 
+    //exit path and compent are irlevent code i believ further testing but before ente 
+    //href is what important
   path: "/exit",
   component: exit,
   beforeEnter(to, from, next) {
@@ -60,6 +62,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior: async function (to, _from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    if (to.hash) {
+      return { el: to.hash, behavior: "smooth" };
+    } else {
+      console.log("moving to top of the page");
+      window.scrollTo(0, 0);
+    }
+ },
 })
 
 export default router 

@@ -62,6 +62,29 @@
               icon="edit"
             ></font-awesome-icon>
           </button>
+          <!-- pledges Button -->
+                  <button
+            title="View pledges"
+            class="crud-buttons"
+                        @click="
+                () =>
+                  this.$router.push({
+                    name:
+                      'DistrictProjectPledgesView',
+                    params: {
+                 isThisMyPledges:'no'
+                ,
+                projectId:project.project_id
+                    },
+                  })
+              "
+          >
+       
+            <font-awesome-icon
+              class="social-icon"
+               icon="eye"
+            ></font-awesome-icon>
+          </button>
           <button
             title="Delete Project"
             class="crud-buttons"
@@ -175,4 +198,5 @@ th,
 td {
   border: 1px solid #4068823b;
 }
+
 </style>

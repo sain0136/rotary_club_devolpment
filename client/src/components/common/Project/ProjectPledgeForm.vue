@@ -68,7 +68,7 @@
             />
           </div>
         </div>
-        <div class="not-logged-section">
+        <div class="not-logged-section" v-if="!this.$store.state.isDistrictAdminLoggedIn && !this.$store.state.isSiteAdminLoggedIn">
           <h3>
             Contact Information
           </h3>
@@ -166,6 +166,7 @@ export default {
   },
   methods: {
     async createPleadge() {
+      
       const pledgeObject = this
         .nonMemeberPledge
       pledgeObject[

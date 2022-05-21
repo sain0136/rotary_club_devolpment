@@ -8,23 +8,20 @@
         >
           <h2>Send Message</h2>
           <div class="text">
-            Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit.
-            Phasellus bibendum semper
-            erat, quis consectetur odio.
-            Suspendisse aliquet, risus
-            vitae auctor dictum, erat
-            nibh viverra libero, sodales
-            maximus libero augue ut
-            ipsum.
+            Do you have any questions
+            about joining Rotary or
+            making pledges? Contact us
+            to ask any questions about
+            Rotary or how to
+            use/navigate this site. We
+            are excited to hear from
+            you!
           </div>
           <!--Contact Form-->
           <div class="contact-form">
             <form
-              method="post"
-              action="sendemail.php"
+             @submit.prevent=""
               id="contact-form"
-              novalidate="novalidate"
             >
               <div class="row clearfix">
                 <div
@@ -33,8 +30,8 @@
                   <input
                     type="text"
                     name="username"
-                    value=""
                     placeholder="Your Name"
+                    v-model="name"
                   />
                 </div>
 
@@ -44,7 +41,9 @@
                   <input
                     type="email"
                     name="email"
-                    value=""
+                    v-model="
+                      senderEmail
+                    "
                     placeholder="Your Email"
                   />
                 </div>
@@ -53,6 +52,7 @@
                   class="form-group col-md-12 col-sm-12 col-xs-12"
                 >
                   <textarea
+                    v-model="emailBody"
                     name="message"
                     placeholder="Your Message"
                   ></textarea>
@@ -62,8 +62,8 @@
                   class="form-group col-md-12 col-sm-12 col-xs-12"
                 >
                   <button
-                    type="submit"
                     class="theme-btn btn-style-one"
+                    @click="mailTo()"
                   >
                     Send Message
                   </button>
@@ -135,8 +135,8 @@
                     />
                   </svg>
                 </div>
-                <h4>Address</h4>
-                {{ this.address }}
+                <h4>Meeting</h4>
+                {{ address }} {{ city }}
               </li>
             </ul>
           </div>
@@ -148,7 +148,8 @@
 
 <script>
 import store from '../../store/index'
-import {watchEffect} from 'vue'
+import { watchEffect } from 'vue'
+import rotaryMailer from '../../api-factory/rotaryMailer'
 export default {
   name: 'ContactUs',
   props: {
@@ -158,34 +159,63 @@ export default {
     return {
       address: '',
       email: '',
-      phone: '613-330-5497',
+      phone: '',
+      city: '',
+      name: '',
+      senderEmail: '',
+      emailBody: '',
     }
   },
   created() {
     if (
       this.isDistrictOrClub ==
       'District'
-    ) { watchEffect(()=>{      const districtData =
-        store.state.currentDistrictData
-      this.address =
-        districtData.meeting_location
-       this.email =
-        districtData.district_email
-        })
-
+    ) {
+      watchEffect(() => {
+        const districtData =
+          store.state
+            .currentDistrictData
+        this.address =
+          districtData.meeting_location
+        this.email =
+          districtData.district_email
+        this.city =
+          districtData.meeting_city
+        this.phone =
+          districtData.district_phone
+      })
     } else {
       const clubData =
         store.state.currentClubData
       this.address =
         clubData.club_address
       this.email = clubData.club_email
+      this.city = clubData.meeting_city
+      this.phone =
+        clubData.district_phone
     }
   },
   computed: {
     setEmail() {
-      this.email =store.state.currentDistrictData.district_email
-      return 
-    }
+      this.email =
+        store.state.currentDistrictData.district_email
+      return
+    },
+  },
+  methods: {
+    async mailTo() {
+      await rotaryMailer.contactMailer(
+        this.name,
+        this.senderEmail,
+        this.emailBody,
+      )
+      this.redirect()
+    },
+    redirect() {
+      this.$router.push({
+        name: 'DistrictHome',
+      })
+    },
   },
 }
 </script>
@@ -353,12 +383,12 @@ export default {
   border: 2px solid #f2f2f2;
 }
 .contact-section .contact-info li {
-    position: relative;
-    display: block;
-    font-size: 16px;
-    margin-bottom: 30px;
-    color: #767676;
-    min-height: 60px;
-    padding: 0px 0px 0px 90px;
+  position: relative;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #767676;
+  min-height: 60px;
+  padding: 0px 0px 0px 90px;
 }
 </style>
