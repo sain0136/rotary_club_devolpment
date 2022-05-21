@@ -11,9 +11,12 @@ import social_links from '../api-factory/social_links'
 import club_user from '../api-factory/club_user'
 
 export default createStore({
+  // States can be accessed directly
+  // Commit is for accessing the mutations and dispatch is for the actions
+  // Use the actions for async code, and then trigger the mutations from inside them
 
   state: {
-    //Global States 
+    //Global States of logged in behavoir
     isSiteAdminLoggedIn: false,
     isSiteAdminRejected: false,
 
@@ -26,24 +29,27 @@ export default createStore({
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
     // track current district or club logged in 
-    loggedInDistrictId: 0,
+    loggedInDistrictId: Number,
     loggedInClubId: Number,
     // important for tracking who is currrently logged in 
     loggedInClubUserId: Number,
     loggedInDistrictUserId: Number,
-    //data obect for logged in user 
-    currentDistrictData: Object,
-    currentClubData: Object,
+    //store current user login infromation
+    loggedInUserData: {},
+    //data obect for logged district or club 
+    currentDistrictData: {},
+    currentClubData: {},
     //the project focused on for CRUD 
-    currentProjectData: Object,
+    currentProjectData: {},
     //deleteable? -poss
-    currentClubUsers: Object,
-    currentClubUserData: Object,
+    currentClubUsers: {},
+    currentClubUserData: {},
     // district or club social links
     districtSocials: [],
     clubSocials: [],
   },
   mutations: {
+    //succeful at log in
     adminLogin(state, loginData) {
       const roleId = loginData.roleId
       switch (roleId) {
@@ -69,8 +75,14 @@ export default createStore({
           state.isClubAdminLoggedIn = true
           state.isClubAdminRejected = false
           break
+        //Club user
+        case 7:
+          state.isClubUserLoggedIn = true
+          state.isClubUserRejected = false
+          break
       }
     },
+    //fail at  log in 
     adminReject(state, roleId) {
       switch (roleId) {
         case 0:
@@ -82,57 +94,60 @@ export default createStore({
         case 5:
           state.isClubAdminRejected = true
           break
+        case 5:
+          state.isClubUserRejected = true
+          break
         case 10:
           state.isSiteAdminRejected = false
           break
       }
     },
     //mutation for clubuser logging in 
-    async clubUserLogin(
-      state,
-      loginData,
-    ) {
-      state.isClubUserLoggedIn = true
-      state.isClubUserRejected = false
-
-      console.log(
-        'login data: ',
+    /*   async clubUserLogin(
+        state,
         loginData,
-      )
-      state.loggedInClubUserId =
-        loginData.user_id
-      state.currentClubUserData = await club_user.show(
-        loginData.user_id,
-      )
-      state.loggedInClubId =
-        loginData.club_id
-
-      console.log(
-        'here you resting:',
-        state.loggedInClubId,
-      )
-
-      if (
-        state.currentClubUserData
-          .role[0].role_type == 5
       ) {
-        state.isClubAdminLoggedIn = true
-        state.isClubAdminRejected = false
-      }
-    },
-    //district user logging in the will be an admin or titled admin i.e d chair 
-    async districtUserLogin(
-      state,
-      loginData,
-    ) {
-      state.isDistrictAdminLoggedIn = true
-      state.isClubAdminRejected = false
-
-      console.log(
-        'login data: ',
+        state.isClubUserLoggedIn = true
+        state.isClubUserRejected = false
+  
+        console.log(
+          'login data: ',
+          loginData,
+        )
+        state.loggedInClubUserId =
+          loginData.user_id
+        state.currentClubUserData = await club_user.show(
+          loginData.user_id,
+        )
+        state.loggedInClubId =
+          loginData.club_id
+  
+        console.log(
+          'here you resting:',
+          state.loggedInClubId,
+        )
+  
+        if (
+          state.currentClubUserData
+            .role[0].role_type == 5
+        ) {
+          state.isClubAdminLoggedIn = true
+          state.isClubAdminRejected = false
+        }
+      },
+      //district user logging in the will be an admin or titled admin i.e d chair 
+      async districtUserLogin(
+        state,
         loginData,
-      )
-    },
+      ) {
+        state.isDistrictAdminLoggedIn = true
+        state.isClubAdminRejected = false
+  
+        console.log(
+          'login data: ',
+          loginData,
+        )
+      }, */
     // rejection
     clubUserReject(state) {
       state.isClubUserRejected = true
@@ -141,12 +156,17 @@ export default createStore({
     signout(state) {
       state.isSiteAdminLoggedIn = false
       state.isDistrictAdminLoggedIn = false
-      state.loggedInDistrictId = Number
       state.isClubAdminLoggedIn = false
       state.isClubUserLoggedIn = false
-      state.currentClubUserData = {}
-      state.loggedInDistrictUserId = 0
-      state.loggedInClubUserId = 0
+
+      state.loggedInDistrictId = Number
+      state.loggedInClubId = Number
+
+      state.loggedInDistrictUserId = Number
+      state.loggedInClubUserId = Number
+      
+      state.loggedInUserData = {}
+
     },
     //set district data
     changeCurrentDistrictData(
@@ -155,8 +175,7 @@ export default createStore({
     ) {
       state.currentDistrictData = districtData
     },
-    //set district data
-
+    //set club data
     changeCurrentClubData(
       state,
       clubData,
@@ -177,30 +196,34 @@ export default createStore({
     ) {
       state.currentProjectData = projectData
     },
-    //changge socials 
+    //change socials 
     changeDistrictSocials(
       state,
       districtSocialsArray,
     ) {
       state.districtSocials = districtSocialsArray
     },
-    //changge socials 
-
+    //change socials 
     changeClubSocials(
       state,
       clubSocialsArray,
     ) {
       state.clubSocials = clubSocialsArray
     },
+    changeCurrentUserData(state, userData) {
+      state.loggedInUserData = userData
+    }
   },
   actions: {
+/*     ///reload d
     async validateSiteReload(
       { commit },
       data,
     ) {
       commit('adminReject', 10)
-    },
-    //sitr admin 
+    }, */
+
+    //site admin login validation
     async validateSiteAdmin(
       { commit },
       data,
@@ -219,8 +242,7 @@ export default createStore({
         commit('adminReject', 0)
       }
     },
-    //District admin 
-
+    //District admin login validation
     async validateDistrictAdmin(
       { commit },
       data,
@@ -239,8 +261,7 @@ export default createStore({
         commit('adminReject', 1)
       }
     },
-    //club user 
-
+    //club user\ admin login validation
     async validateClubUser(
       { commit },
       data,
@@ -262,7 +283,7 @@ export default createStore({
         )
       }
     },
-    //change actions
+    //change CurrentDistrictData
     async changeCurrentDistrictData(
       { commit },
       districtId,
@@ -303,7 +324,7 @@ export default createStore({
         clubUsers,
       )
     },
-    //change actions
+    //change actions changeCurrentProjectData
 
     async changeCurrentProjectData(
       { commit },
@@ -317,7 +338,7 @@ export default createStore({
         projectData,
       )
     },
-    //change actions
+    //change actions unsetProjectData
 
     async unsetCurrentProjectData(
       { commit },
@@ -327,7 +348,7 @@ export default createStore({
         {},
       )
     },
-    //change actions
+    //change actions for socials
 
     async changeDistrictSocials(
       { commit },
@@ -341,7 +362,7 @@ export default createStore({
         districtSocialsArray,
       )
     },
-    //change actions
+    //change actions for club socials
 
     async changeClubSocials(
       { commit },
@@ -355,21 +376,13 @@ export default createStore({
         clubSocialsArray,
       )
     },
-
+    //signout
     signOut({ commit }) {
       commit('signout')
     },
   },
-  getters: {
-    getLogged(state) {
-      return state.loggedInDistrictId
-    }
-
-  },
+  getters: {},
   modules: {},
   plugins: [createPersistedState()],
 })
 
-// States can be accessed directly
-// Commit is for accessing the mutations and dispatch is for the actions
-// Use the actions for async code, and then trigger the mutations from inside them

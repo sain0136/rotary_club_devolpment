@@ -3,9 +3,9 @@ import adminlogin from '../modules/admin/routes/adminlogin'
 import admin from '../modules/admin/routes/admin'
 import district from '../modules/district/routes/district'
 import club from '../modules/club/routes/club'
-import AdminLogin from '../modules/admin/views/AdminLogin.vue'
+// import AdminLogin from '../modules/admin/views/AdminLogin.vue'
 import home from '../modules/home/routes/home'
-import exit from '../router/exit.vue'
+// import exit from '../router/exit.vue'
 import store from '../store/index'
 
 const routes = [
@@ -17,8 +17,8 @@ const routes = [
   { 
     //exit path and compent are irlevent code i believ further testing but before ente 
     //href is what important
-  path: "/exit",
-  component: exit,
+ /*  path: "/exit",
+  component: exit, */
   beforeEnter(to, from, next) {
     try {
     const districtSocials  =
@@ -37,8 +37,8 @@ const routes = [
 
   },
   { 
-    path: "/exit",
-    component: exit,
+    /* path: "/exit",
+    component: exit, */
     beforeEnter(to, from, next) {
        try { 
       const districtSocials  =

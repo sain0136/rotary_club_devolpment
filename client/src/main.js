@@ -20,17 +20,14 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add(fas, fab)
-
 library.add(faCoffee)
 library.add(faEye)
-
 library.add(faSearch);
 library.add(faEnvelope);
 library.add(faMapMarker);

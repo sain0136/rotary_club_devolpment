@@ -5,8 +5,8 @@ export async function isSiteAdminValid(id, password) {
     return false
   }
 }
-
-export async function isUserValid(id, password) {
+// deleteable
+/* export async function isUserValid(id, password) {
 
   const userToVerify = {
     user_id: id,
@@ -21,7 +21,7 @@ export async function isUserValid(id, password) {
 
   const data = await res.json()
   return await data.Verified
-}
+} */
 
 export async function isValid(userData) {
 
@@ -36,3 +36,25 @@ export async function isValid(userData) {
   console.log(await data)
   return await data
 }
+/* // is email unique
+async function isUniqueEmail(
+  emailToTest,
+) {
+  const res = await fetch(
+    '74.208.135.85/district',
+    { method: 'GET' },
+  )
+  const data = await res.json()
+  const districts = data.districts
+  await districts.forEach(district => {
+    if (
+      district.district_email ==
+      emailToTest
+    ) {
+      console.log(emailToTest)
+      return false
+    }
+  })
+  return true
+}
+ */
