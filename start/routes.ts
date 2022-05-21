@@ -32,9 +32,7 @@ import 'App/Modules/Mail/routes'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
-import { extname } from 'path'
-import Route from '@ioc:Adonis/Core/Route'
-import Drive from '@ioc:Adonis/Core/Drive'
+
 
 Route.get('/userImages/local/*', async ({ request, response }) => {
   const location = request.param('*').join('/')
