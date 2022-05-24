@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import DistrictsTable from '../../admin/components/DistrictsTable.vue'
+import DistrictsTable from '../../../components/common/Tables/DistrictsTable.vue'
 
 
 export default {

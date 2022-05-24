@@ -1,26 +1,30 @@
 <template>
+  <!-- District create or edit Form container -->
   <div class="form-container">
+    <!-- banner -->
+    <div class="page-title">
+      <div class="auto-container2">
+        <div class="inner-box">
+          <h1
+            v-if="
+              isEditOrCreate == 'Create'
+            "
+          >
+            Create a new District
+          </h1>
+          <h1 v-else>
+            Edit this District
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- form container -->
     <div class="auto-container1">
       <form @submit.prevent="">
-        <div class="page-title">
-          <div class="auto-container2">
-            <div class="inner-box">
-              <h1
-                v-if="
-                  isEditOrCreate ==
-                  'Create'
-                "
-              >
-                Create a new District
-              </h1>
-              <h1 v-else>
-                Edit this District
-              </h1>
-            </div>
-          </div>
-        </div>
         <br />
-        <div class="row">
+        <!-- row 1 -->
+        <div class="form-row">
+          <!-- form name <br> -->
           <div class="form-field">
             <span>Name:</span>
             <span
@@ -42,7 +46,7 @@
             <br />
             <br />
           </div>
-          <!-- <label for="president">District President</label> <br> -->
+          <!-- form District President <br> -->
           <div class="form-field">
             <span>President:</span>
 
@@ -66,7 +70,7 @@
             <br />
             <br />
           </div>
-          <!-- <label for="Email">Email</label> <br> -->
+          <!--form Email <br> -->
           <div class="form-field">
             <span>Email:</span>
             <span
@@ -88,10 +92,10 @@
             <br />
           </div>
         </div>
-
-        <div class="row">
+        <!-- row 2 -->
+        <div class="form-row">
+          <!-- <form meeting-location -->
           <div class="form-field">
-            <!-- <label for="meeting-location"></label> -->
             <span
               >Meeting Location:</span
             >
@@ -116,6 +120,7 @@
             <br />
             <br />
           </div>
+          <!-- <form meeting-freq -->
           <div class="form-field">
             <span
               >Meeting Frequency:</span
@@ -142,6 +147,7 @@
             <br />
             <br />
           </div>
+          <!-- <form charter date -->
           <div class="form-field">
             <span>Charter Date:</span>
             <span
@@ -165,8 +171,9 @@
             <br />
           </div>
         </div>
-
-        <div class="row">
+        <!-- row 3 -->
+        <div class="form-row">
+          <!-- <form Meeting city   -->
           <div class="form-field">
             <span>Meeting City:</span>
             <span
@@ -189,7 +196,7 @@
             <br />
             <br />
           </div>
-
+          <!-- <form Phone    -->
           <div class="form-field">
             <span>District Phone:</span>
             <span
@@ -211,6 +218,7 @@
             <br />
           </div>
         </div>
+        <!-- row 4 -->
         <div class="last-row">
           <div class="text-area">
             <span>
@@ -232,7 +240,7 @@
             </span>
             <br />
             <textarea
-              cols="90"
+              cols="80"
               rows="10"
               v-model="description"
               placeholder="District Description"
@@ -244,6 +252,7 @@
           </div>
         </div>
         <br />
+        <!-- button row  -->
         <div class="button-row">
           <button
             v-if="
@@ -266,24 +275,24 @@
             Cancel
           </button>
         </div>
-        <SocialLinksSection
-          id="Socia-Section"
-          isDistrictOrClub="District"
-          v-if="
-            isEditOrCreate == 'Edit'
-          "
-        />
+        <hr class="solid" />
+        <br />
       </form>
     </div>
+    <SocialLinksSection
+      id="Socia-Section"
+      isDistrictOrClub="District"
+      v-if="isEditOrCreate == 'Edit'"
+    />
   </div>
 </template>
 
 <script>
 import SocialLinksSection from './SocialLinksSection.vue'
 
-import store from '../../store/index'
-import user from '../../api-factory/user'
-import district from '../../api-factory/district'
+import store from '../../../store/index'
+import user from '../../../api-factory/user'
+import district from '../../../api-factory/district'
 
 import useValidate from '@vuelidate/core'
 import {
@@ -490,6 +499,7 @@ export default {
   padding: 0px 15px;
   margin: 0 auto;
 }
+/* Title  Banner */
 .auto-container2 {
   position: static;
   max-width: 1200px;
@@ -507,73 +517,26 @@ export default {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(../../assets/image-3.jpg);
+  background-image: url(../../../assets/image-3.jpg);
 }
 
+h1 {
+  font-size: 5em;
+  margin-bottom: 0px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: capitalize;
+  text-align: center;
+}
+/* form fields */
 span {
   display: block;
   text-align: center;
-}
-button {
-  box-sizing: border-box;
-  width: 40%;
-  background-color: #ffb607;
-
-  color: white;
-  border: 1px solid #3498db;
-  border-radius: 3px;
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-top: 1%;
-  cursor: pointer;
-}
-.button-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 2em;
-  column-gap: 1em;
-}
-#Socia-Section {
-  width: 100%;
-}
-
-form {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-}
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.last-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.form-field {
-  width: 33.333%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.text-area {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  font-family: 'Montserrat';
+  font-size: 1.3em;
+  font-weight: 500;
 }
 input {
-  background-color: #f3f3f3;
-  border: none;
-  border-bottom: 1px solid #00090e25;
-  padding: 15px 20px;
-  border-radius: 1px;
-  margin: 5px auto;
-  background-color: #f7f7f7;
-  border: 1px solid silver;
-}
-textarea {
   background-color: #f3f3f3;
   border: none;
   border-bottom: 1px solid #00090e25;
@@ -594,18 +557,86 @@ label {
   padding-top: 5%;
 }
 
-h1 {
-  font-size: 72px;
-  margin-bottom: 0px;
-  font-weight: 800;
-  color: #ffffff;
-  text-transform: capitalize;
-  text-align: center;
-}
-
 .district-error {
   color: red;
   font-size: 12px;
   padding: 0%;
+}
+
+/* form styling  */
+
+form {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+}
+/* row stylings*/
+.form-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.last-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.form-field {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.text-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media only screen and (max-width: 600px) {
+  .text-area textarea {
+    width: 95%;
+    background-color: #f3f3f3;
+    border: none;
+    border-bottom: 1px solid #00090e25;
+    padding: 15px 20px;
+    border-radius: 1px;
+    margin: 5px auto;
+    background-color: #f7f7f7;
+    border: 1px solid silver;
+  }
+}
+@media only screen and (min-width: 601px) {
+  .text-area textarea {
+    height: auto;
+    background-color: #f3f3f3;
+    border: none;
+    border-bottom: 1px solid #00090e25;
+    padding: 15px 20px;
+    border-radius: 1px;
+    margin: 5px auto;
+    background-color: #f7f7f7;
+    border: 1px solid silver;
+  }
+}
+/* buttons  */
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2em;
+  column-gap: 1em;
+}
+button {
+  box-sizing: border-box;
+  background-color: #ffb607;
+  color: white;
+  border: 1px solid #000000;
+  border-radius: 0.2em;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 1%;
+  cursor: pointer;
+  padding: 0.5em;
 }
 </style>

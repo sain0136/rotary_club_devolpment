@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DistrictAdminForm from '../../admin/components/DistrictAdminForm.vue'
+import DistrictAdminForm from '../../../components/common/Forms/DistrictAdminForm.vue'
 
 export default {
   name: 'DistrictAdminProfile',

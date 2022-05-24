@@ -88,6 +88,7 @@ export default {
 </script>
 
 <style scoped>
+/* Form Styling */
 .container {
   margin-left: auto;
   background-color: #ffffff;
@@ -109,6 +110,7 @@ p {
   display: block;
   text-align: center;
   margin-top: 2em;
+  color: crimson;
 }
 form {
   text-align: left;
@@ -138,15 +140,6 @@ button:hover {
   background: none;
 }
 
-#error {
-  color: red;
-  font-weight: bolder;
-}
-
-#success {
-  color: green;
-  font-weight: bolder;
-}
 
 #admin-page {
   text-decoration: none;
@@ -165,6 +158,7 @@ display: flex;
     flex-wrap: wrap;
     justify-content: center;
       column-gap: .2em;
+    place-content: flex-end;
 
 }
 </style>

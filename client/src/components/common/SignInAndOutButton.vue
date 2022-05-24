@@ -3,7 +3,7 @@
     v-if="isAnybodyLoggedIn"
     @click="redirect(true)">
     Sign Out
-    <span>Hi your are signed in as the Website{{pageAccessed}}</span>
+   
   </button>
   <button 
     v-else
