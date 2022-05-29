@@ -53,18 +53,34 @@ export default class ProjectsController {
   public async store({ request, response }: HttpContextContract) {
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
-    const areaFocus: string = request.input('area_focus')
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
-    const fundingGoal: number = request.input('funding_goal')
-    const currentFunds: number = request.input('current_funds')
-    const anticipatedFunding: number = request.input('anticipated_funding')
-    const createdByUserId: number = request.input('created_by')
+
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
+
+    const areaFocus: any = JSON.stringify(request.input('area_focus'))
+
+    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
+
+    // const attachedLetters: number = request.input('attached_letters')
+    // const projectFunding: string = request.input('project_funding')
+    // const hostclubInformation: string = request.input('hostclub_information')
+    const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
+    const coOperatingOrganisationContribution: number = request.input(
+      'co_operating_organisation_contribution'
+    )
+    const districtSimplifiedGrantRequest: number = request.input(
+      'district_simplified_grant_request'
+    )
+    const fundingGoal: number = request.input('funding_goal')
+    const currentFunds: number = request.input('current_funds')
+    const anticipatedFunding: number = request.input('anticipated_funding')
+
+    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
 
     let projectImage = request.file('image')
     let imageLink: string = ''
@@ -75,14 +91,12 @@ export default class ProjectsController {
       imageLink = 'http://74.208.135.85' + theUrl
     }
 
-    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
-    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
     /*     const attachedLetters: any = JSON.stringify(request.input('attached_letters'))
     const projectFunding: any = JSON.stringify(request.input('project_funding'))
     const hostclubInformation: any = JSON.stringify(request.input('hostclub_information'))
      */
     const roleType: ProjectRoleType = request.input('role_type')
-
+    const createdByUserId: number = request.input('created_by')
     const clubId: number = request.input('club_id')
     let districtId: number = request.input('district_id')
 
@@ -143,24 +157,36 @@ export default class ProjectsController {
       }
 
       const newProject = await Project.create({
+        grantType: GrantType[grantType],
+        projectStatus: ProjectStatus[projectStatus],
+        rotaryYear: rotaryYear,
+
         projectName: projectName,
         projectTheme: projectTheme,
-        grantType: GrantType[grantType],
-        areaFocus: areaFocus,
+        country: country,
+        region: region,
         startDate: convertedStartDate,
         estimatedCompletion: convertedEstimatedCompletion,
+
+        areaFocus: areaFocus,
+
+        extraDescriptions: extraDescriptions,
+
+        itemisedBudget: itemisedBudget,
+
+        intialSponsorClubContribution: intialSponsorClubContribution,
+        coOperatingOrganisationContribution: coOperatingOrganisationContribution,
+        districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+
+        anticipatedFunding: anticipatedFunding,
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
-        anticipatedFunding: anticipatedFunding,
+
+        imageLink: imageLink,
+
         createdBy: createdByUserId,
-        region: region,
-        country: country,
-        rotaryYear: rotaryYear,
-        extraDescriptions: extraDescriptions,
-        itemisedBudget: itemisedBudget,
         clubId: clubId,
         districtId: districtId,
-        projectStatus: ProjectStatus[projectStatus],
       })
       const user: User = await User.findOrFail(createdByUserId)
       await newProject.related('projectRole').attach({

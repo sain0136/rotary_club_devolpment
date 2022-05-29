@@ -3,7 +3,6 @@ import { BaseModel, column, computed, manyToMany, ManyToMany } from '@ioc:Adonis
 import User from './User'
 import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 
-
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
   @computed()
@@ -24,7 +23,6 @@ export default class Project extends BaseModel {
   @computed()
   public projectFunding: object
 
-
   @column({ isPrimary: true })
   public projectId: number
 
@@ -34,8 +32,8 @@ export default class Project extends BaseModel {
   @column()
   public projectTheme: string
 
-  @column()
-  public areaFocus: any
+  @column({ serializeAs: null })
+  public areaFocus: String
 
   @column()
   public grantType: any
@@ -56,21 +54,28 @@ export default class Project extends BaseModel {
   public anticipatedFunding: number
 
   @column()
+  public intialSponsorClubContribution: number
+
+  @column()
+  public coOperatingOrganisationContribution: number
+
+  @column()
+  public districtSimplifiedGrantRequest: number
+
+  @column()
   public createdBy: number
 
   @column()
-  public region: any
+  public region: String
 
- @column()
+  @column()
   public rotaryYear: number
 
   @column()
   public projectStatus: any
 
-
   @column()
   public country: string
-
 
   @column()
   public currency: string
@@ -84,7 +89,7 @@ export default class Project extends BaseModel {
   @column({ serializeAs: null })
   public extraDescriptions: string
 
-    @column({ serializeAs: null })
+  @column({ serializeAs: null })
   public itemisedBudget: string
 
   @column({ serializeAs: null })
@@ -92,7 +97,6 @@ export default class Project extends BaseModel {
 
   @column({ serializeAs: null })
   public hostclub_information: string
-
 
   @column()
   public clubId: number

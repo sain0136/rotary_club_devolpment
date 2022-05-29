@@ -6,27 +6,36 @@ export default class Project extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('project_id').primary().unsigned()
+
       table.string('project_name', 50).notNullable().unique()
-      table.string('project_theme', 200).nullable()
-      table.string('area_focus', 50).notNullable()
-      table.string('grant_type', 50).notNullable()
+      table.string('project_theme', 2000).nullable()
+      table.string('country', 30).notNullable()
+      table.string('region', 30).notNullable()
       table.date('start_date').nullable()
-      table.date('estimated_completion').nullable()
-      table.double('funding_goal', 180).notNullable()
-      table.double('current_funds', 50).notNullable()
-      table.double('anticipated_funding', 50).nullable()
-      table.integer('created_by', 50).notNullable()
-      table.string('region', 50).notNullable()
-      table.integer('rotary_year', 50).notNullable()
-      table.string('project_status', 50).notNullable()
-      table.string('country', 50).notNullable()
-      table.string('currency', 50).notNullable().defaultTo('USD')
-      table.string('image_link', 250).nullable()
+      table.date('estimated_completion').notNullable()
+
+      table.jsonb('area_focus').notNullable()
+
+      table.double('funding_goal', 20).notNullable()
+      table.double('current_funds', 20).notNullable()
+      table.double('anticipated_funding', 20).nullable()
+      table.double('intial_sponsor_club_contribution', 20).nullable()
+      table.double('co_operating_Organisation_Contribution', 20).nullable()
+      table.double('district_Simplified_Grant_request', 20).nullable()
+
+      table.string('currency', 5).notNullable().defaultTo('USD')
+
       table.jsonb('attached_letters').nullable()
       table.jsonb('extra_descriptions').nullable()
       table.jsonb('itemised_budget').nullable()
       table.jsonb('project_funding').nullable()
       table.jsonb('hostclub_information').nullable()
+
+      table.integer('rotary_year', 10).notNullable()
+      table.string('project_status', 50).notNullable()
+      table.string('image_link', 250).nullable()
+      table.integer('created_by', 50).notNullable()
+      table.string('grant_type', 50).notNullable()
       table
         .integer('club_id')
         .nullable()
