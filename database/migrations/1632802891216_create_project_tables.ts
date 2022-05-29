@@ -17,7 +17,7 @@ export default class Project extends BaseSchema {
       table.jsonb('area_focus').notNullable()
 
       table.double('funding_goal', 20).notNullable()
-      table.double('current_funds', 20).notNullable()
+      table.double('current_funds', 20).nullable()
       table.double('anticipated_funding', 20).nullable()
       table.double('intial_sponsor_club_contribution', 20).nullable()
       table.double('co_operating_Organisation_Contribution', 20).nullable()
