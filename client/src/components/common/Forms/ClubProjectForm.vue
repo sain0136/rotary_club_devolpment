@@ -4,7 +4,7 @@
       <div class="auto-container">
         <div class="inner-box">
           <h1>
-            Create Or Edit Projects
+            Club Project
           </h1>
         </div>
       </div>
@@ -13,7 +13,7 @@
       <h3 style="text-align: center;">
         Name & describe your Project
       </h3>
-      <!--                     -->
+      <!--            Project Title         -->
 
       <div class="form-inputs">
         <BaseInputs
@@ -23,7 +23,7 @@
           span="Must be 5 to 10 characters long"
         />
       </div>
-      <!--                     -->
+      <!--            project description         -->
       <div class="form-inputs">
         <BaseInputs
           v-model="
@@ -34,7 +34,7 @@
           span="Must be 5 to 50 characters long"
         />
       </div>
-      <!--                     -->
+      <!--       countries              -->
 
       <div class="form-inputs">
         <BaseSelect
@@ -43,7 +43,7 @@
           :options="countryList"
         />
       </div>
-      <!--                     -->
+      <!--          Area of Focus           -->
 
       <div class="form-inputs">
         <BaseSelect
@@ -52,7 +52,7 @@
           :options="areaOfFocus"
         />
       </div>
-      <!--                     -->
+      <!--          Funding Goal           -->
       <div class="form-inputs">
         <BaseInputs
           v-model="project.funding_goal"
@@ -61,7 +61,7 @@
           span="Enter your Funding Goal in USD"
         />
       </div>
-      <!--                     -->
+      <!--          Current\Starting Funds           -->
       <div class="form-inputs">
         <BaseInputs
           v-model="
@@ -73,7 +73,7 @@
         />
       </div>
 
-      <!--                     -->
+      <!--            Region         -->
       <div class="form-inputs">
         <BaseSelect
           v-model="project.region"
@@ -81,7 +81,7 @@
           :options="regionList"
         />
       </div>
-      <!--                     -->
+      <!--         estimated completion            -->
       <div class="form-inputs">
         <BaseInputs
           v-model="
@@ -91,7 +91,7 @@
           type="date"
         />
       </div>
-      <!--                     -->
+      <!--         IMAGE UPLOAD            -->
       <div class="form-inputs">
         <input
           accept="image/*"
@@ -152,11 +152,11 @@
 </template>
 
 <script>
-import BaseInputs from '../formParts/BaseInputs.vue'
-import BaseSelect from '../formParts/BaseSelect.vue'
-import ProjectApi from '../../api-factory/project'
-import store from '../../store/index'
-import Resource from '../../Resources.js'
+import BaseInputs from '../../formParts/BaseInputs.vue'
+import BaseSelect from '../../formParts/BaseSelect.vue'
+import ProjectApi from '../../../api-factory/project'
+import store from '../../../store/index'
+import Resource from '../../../Resources.js'
 
 export default {
   components: {
@@ -345,7 +345,7 @@ export default {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(../../assets/image-3.jpg);
+  background-image: url(../../../assets/image-3.jpg);
 }
 section {
   margin-bottom: 3em;

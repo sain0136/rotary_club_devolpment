@@ -1,6 +1,6 @@
 <template>
   <!-- SiteAdmin Home -->
-  <div class="sections" id="admin-home">
+  <div class="sections" id="admin-home" key="one">
     <h2>
       Welcome to the admin portal!<br />
       This is the admin portal.

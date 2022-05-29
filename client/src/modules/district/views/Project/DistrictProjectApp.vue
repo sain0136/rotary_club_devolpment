@@ -1,5 +1,5 @@
 <template>
-  <div  class="container">
+  <div  class="wrapper">
        <router-view></router-view>
   </div>
 </template>
@@ -12,9 +12,7 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    height: 60%;
-        display: contents;
-
+.wrapper{
+padding-bottom:10em ;
 }
 </style>

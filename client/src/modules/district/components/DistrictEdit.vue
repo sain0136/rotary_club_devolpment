@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+<div class="district-page-head">
+      <h1 class="district-page-title">Edit your district!</h1>
+</div>
+  <div class="wrapper">
       <br /><br />
     <h1>Edit District Details</h1> <br> <br>
     <DistrictsTable myProfile /><br> <br> 
@@ -12,7 +15,7 @@ import DistrictsTable from '../../../components/common/Tables/DistrictsTable.vue
 
 
 export default {
-  name: 'DistrictAdminEdit',
+  name: 'DistrictEditWithTable',
   components: {
     DistrictsTable,
   },
@@ -25,7 +28,18 @@ h1 {
   font-weight: bolder;
   text-align: center;
 }
-.container{
-    height: 100%;
+.wrapper{
+    padding-bottom:10em ;
+}
+.district-page-head {
+  text-align: center;
+  background-color: #27282d;
+  padding: 50px;
+  text-transform: uppercase;
+}
+.district-page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: whitesmoke;
 }
 </style>

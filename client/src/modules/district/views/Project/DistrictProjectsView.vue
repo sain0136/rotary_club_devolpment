@@ -61,9 +61,12 @@
                   name:
                     'DistrictProjectCreate',
                   params: {
-                    projectType: 2,
+                    projectTypeProp: 2,
                     editOrCreateProp:
                       'create',
+                       projectLabel:
+                      'District'
+
                   },
                 })
             "

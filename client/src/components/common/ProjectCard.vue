@@ -1,37 +1,22 @@
 <template>
   <div
-    class="causes-block"
+    class="project_card-wrapper"
     style="border: thin solid #dedede;"
   >
     <div class="inner-box">
       <div class="image">
-        <a
-          @click="
-            () =>
-              this.$router.push({
-                name:
-                  'ProjectCardDetails',
-                params: {
-                  projectIdProp: parseInt(
-                    projectId,
-                  ),
-                },
-              })
+        <img
+          v-if="
+            project.image_link == null
           "
-        >
-          <img
-            v-if="
-              project.image_link == null
-            "
-            src="../../assets/causes-2.jpg"
-            alt=""
-          />
-          <img
-            v-else
-            :src="project.image_link"
-            alt=""
-          />
-        </a>
+          src="../../assets/causes-2.jpg"
+          alt=""
+        />
+        <img
+          v-else
+          :src="project.image_link"
+          alt=""
+        />
       </div>
       <div class="lower-box">
         <div class="content">
@@ -120,7 +105,7 @@
 <script>
 import project from '../../api-factory/project'
 export default {
-  name: 'ProjectsCard',
+  name: 'ProjectCard',
   data() {
     return {
       percentage: 0,
@@ -147,61 +132,90 @@ export default {
 </script>
 
 <style>
-.causes-block {
-  margin-bottom: 70px;
+/* Project Card Wrapper*/
+.project_card-wrapper {
+  margin-bottom: 4em;
   border: thin solid #dedede;
   flex-basis: 31.333333%;
+  display: flex;
+  flex-direction: column;
+  max-height: 80%;
 }
-.causes-block .inner-box {
-  position: relative;
+/* Project Card Upper Image */
+.project_card-wrapper .inner-box {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
-.causes-block .inner-box .image {
-  position: relative;
+.project_card-wrapper
+  .inner-box
+  .image {
+  flex-grow: 2;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+}
+.project_card-wrapper
+  .inner-box
+  .image
+  img {
+  max-width: 100%;
+  display: block;
 }
 a {
   text-decoration: none;
   cursor: pointer;
   color: #ffb607;
 }
-.causes-block .inner-box .image img {
+/* Project Card Lower Box*/
+.project_card-wrapper
+  .inner-box
+  .lower-box {
   position: relative;
-  width: 100%;
-  display: block;
-  vertical-align: middle;
-}
-.causes-block .inner-box .lower-box {
-  position: relative;
-  padding: 25px 30px;
+  padding: 1em 2em;
   overflow: hidden;
-  border: 1px solid #f0f0f0;
   border-top: 0px;
   background-color: #ffffff;
   border-bottom: 0px;
 }
-.causes-block
+/* Project Card Lower Box*/
+
+.project_card-wrapper
   .inner-box
   .lower-box
   .content {
   overflow: hidden;
 }
-.causes-block .inner-box .lower-box h3 {
+.project_card-wrapper
+  .inner-box
+  .lower-box
+  .content
+  .seperator {
+  overflow: hidden;
+}
+/* Project Card Lower Box a link and header/text*/
+
+.project_card-wrapper
+  .inner-box
+  .lower-box
+  h3 {
   position: relative;
-  font-size: 22px;
+  font-size: 1.2em;
   font-weight: 500;
   line-height: 1.4em;
-  margin-bottom: 10px;
+  margin-bottom: 0.8em;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   h3
   a {
   color: #111111;
-
   text-decoration: none;
   cursor: pointer;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .text {
@@ -210,18 +224,20 @@ a {
   margin-bottom: 25px;
   color: rgba(0, 0, 0, 0.4);
 }
-.causes-block
+/* Project Card Lower Box progress bar*/
+
+.project_card-wrapper
   .inner-box
   .lower-box
   .causes-info {
   position: relative;
   color: #b1b1b1;
-  font-size: 15px;
+  font-size: 1em;
   font-weight: 500;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .causes-info
@@ -229,7 +245,7 @@ a {
   color: #000000;
   font-family: 'Montserrat', sans-serif;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .causes-info
@@ -239,7 +255,7 @@ a {
 .theme_color {
   color: #ffb607;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .donate-bar {
@@ -247,7 +263,7 @@ a {
   width: 100%;
   margin-bottom: 15px;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .bar-inner {
@@ -256,7 +272,7 @@ a {
   height: 10px;
   background: #f1f1f1;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .donate-bar.animated
@@ -264,7 +280,7 @@ a {
   .bar {
   left: -1px;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .bar-inner
@@ -280,7 +296,7 @@ a {
   -moz-transition: all 2000ms ease;
   transition: all 2000ms ease;
 }
-.causes-block
+.project_card-wrapper
   .inner-box
   .lower-box
   .bar-inner
@@ -291,7 +307,7 @@ a {
   width: 35px;
   height: 35px;
   color: #000000;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 600;
   line-height: 30px;
   text-align: center;

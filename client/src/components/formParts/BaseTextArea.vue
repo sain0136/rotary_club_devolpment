@@ -1,8 +1,9 @@
 <template>
   <label>{{ label }}</label>
-  <input
+  <textarea
+    cols="5"
+    rows="5"
     v-bind="$attrs"
-    class="col-md-4 control-label"
     :placeholder="label"
     :value="modelValue"
     @input="
@@ -11,7 +12,8 @@
         $event.target.value,
       )
     "
-  />
+  >
+  </textarea>
 
   <span
     id="titleHelpInline"
@@ -43,36 +45,29 @@ export default {
 
 <style scoped>
 label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: auto;
-  margin-top: auto;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
   font-size: 1em;
   color: #777777;
   line-height: 1.8em;
-  position: relative;
-  min-height: 1px;
+  flex-grow: 1;
+  align-self: center;
+  text-align: end;
+  width: 33.33333%;
   padding-right: 1em;
-  padding-left: 1em;
-  width: 33.33333333%;
-  text-align: right;
+    padding-left: 1em;
 }
-@media (min-width: 768px) {
-  label {
-    padding-top: 7px;
-    margin-bottom: 0;
-    text-align: right;
-    max-width: 100%;
-    margin-bottom: auto;
-    margin-top: auto;
-  }
+span {
+  flex-grow: 1;
+  width: 11.666666%;
+  align-self: center;
+  padding-left: .5em;
 }
 
-input {
-  width: 33.33333333%;
-  max-width: 100%;
+textarea {
+  flex-grow: 2;
+  width: 56.66666%;
+  border: solid black;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -87,11 +82,5 @@ input {
       0.15s,
     box-shadow ease-in-out 0.15s;
   font-family: 'Lato', sans-serif;
-}
-span {
-  text-align: left;
-  width: 33.33333333%;
-  padding-top: 0.5em;
-  margin-left: 1em;
 }
 </style>

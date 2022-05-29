@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import DistrictOrClubProjectForm from '../../../../components/common/DistrictOrClubProjectForm.vue'
+import DistrictOrClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
 
 export default {
   

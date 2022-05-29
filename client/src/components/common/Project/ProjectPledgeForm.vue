@@ -152,15 +152,18 @@ export default {
   },
   async created() {
     if (
-      store.state.loggedInDistrictUserId
+      store.state.isDistrictAdminLoggedIn
     ) {
       this.userId =
         store.state.loggedInDistrictUserId
     } else if (
-      store.state.loggedInClubUserId
+      store.state.isClubAdminLoggedIn || store.state.isClubUserLoggedIn
     ) {
       this.userId =
         store.state.loggedInClubUserId
+    }
+    else{
+      this.userId =1 
     }
     this.projectId = this.projectIdProp
   },
@@ -174,10 +177,10 @@ export default {
       ] = this.userId
       pledgeObject[
         'project_id'
-      ] = this.projectId
+      ] = parseInt(this.projectId)
       pledgeObject[
         'pledge_amount'
-      ] = parseInt(this.pledgeAmount)
+      ] = parseFloat(this.pledgeAmount)
 
       await pledgeApi.create(pledgeObject)
       this.redirect()

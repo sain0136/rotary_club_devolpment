@@ -1,17 +1,14 @@
 <template>
-<body class="body">
-   <div class="district-background">
+  <body class="body">
+    <div class="district-background">
       <header>
         <DistrictInfoHeader />
         <DistrictHeader />
       </header>
-
       <router-view></router-view>
       <DistrictFooter />
     </div>
-</body>
-   
-  
+  </body>
 </template>
 
 <script>
@@ -46,7 +43,8 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    next(comp => {
+    //To prevent user to be logged in to multiple districts
+    next(() => {
       store.dispatch(
         'changeCurrentDistrictData',
         parseInt(to.params.id),
@@ -55,7 +53,6 @@ export default {
         isThisDistrict: true,
         object_id: to.params.id,
       }
-
       store.dispatch(
         'changeDistrictSocials',
         districtSocialQueryObject,
@@ -80,7 +77,6 @@ export default {
     console.log(
       store.state.loggedInDistrictId(),
     )
-    //To prevent user to be logged in to multiple districts
   },
   //test method i believe deleteable?
   async created() {
@@ -88,7 +84,6 @@ export default {
   },
   methods: {
     //test method i believe deleteable?
-
     async timeOut(ms) {
       setTimeout(() => {
         console.log(
@@ -106,13 +101,11 @@ export default {
         'changeCurrentDistrictData',
         this.currentDistrictId,
       )
-
       const districtSocialQueryObject = {
         isThisDistrict: true,
         object_id: this
           .currentDistrictId,
       }
-
       store.dispatch(
         'changeDistrictSocials',
         districtSocialQueryObject,
@@ -123,25 +116,21 @@ export default {
 </script>
 
 <style>
-
 .district-background {
   background-color: #ffffff;
   height: 100%;
   /*  allows scroll and still lets overflow to be cut */
-      overflow-x:clip;
-
+  overflow-x: clip;
 }
-
 .district-page-head {
   text-align: center;
   background-color: #27282d;
   padding: 50px;
   text-transform: uppercase;
 }
-
 .district-page-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   color: whitesmoke;
-} 
+}
 </style>

@@ -10,9 +10,10 @@
           <div class="text">
             Do you have any questions
             about joining Rotary or
-            making pledges? Contact us
-            to ask any questions about
-            Rotary or how to
+            making pledges? Fill out the
+            form below to ask any
+            questions about Rotary,how
+            to make a pledge or how to
             use/navigate this site. We
             are excited to hear from
             you!
@@ -20,7 +21,7 @@
           <!--Contact Form-->
           <div class="contact-form">
             <form
-             @submit.prevent=""
+              @submit.prevent=""
               id="contact-form"
             >
               <div class="row clearfix">

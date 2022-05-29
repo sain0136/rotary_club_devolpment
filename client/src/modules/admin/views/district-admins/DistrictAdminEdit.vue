@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
     <DistrictAdminForm
       isEditOrCreate="Edit"
     />
@@ -16,3 +16,7 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+</style>

@@ -375,8 +375,10 @@ button {
    box-shadow:transparent;
    
  }
-.btn-secondary:hover, .btn-secondary:focus {
-
+.dropdown-item:active {
+      color: #fff;
+    text-decoration: none;
+    background-color:rgb(255, 182, 7);
 }
 .btn-secondary:active:focus{
   box-shadow: unset;

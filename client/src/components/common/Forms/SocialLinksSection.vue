@@ -45,6 +45,7 @@
           </td>
         </tr>
       </table>
+  
       <div v-else>
         <h1>No links</h1>
       </div>
@@ -59,7 +60,8 @@
       >
         Edit the Link
       </legend>
-      <legend v-else>Add a Link</legend>
+          <!-- add links form -->
+      <legend v-else-if="links.length < 2">Add a Link</legend>
       <select
         v-model="linkTypeToCreate"
       >
@@ -88,7 +90,7 @@
         Update
       </button>
       <button
-        v-else
+        v-else-if="links.length < 2"
         @click="createLink"
       >
         Add
@@ -149,6 +151,11 @@ export default {
         'Instagram',
       )
       this.linkTypesDict.set('Other', 4)
+
+            this.linkTypesDict.set( 'Facebook',1)
+      this.linkTypesDict.set( 'Twitter',2)
+      this.linkTypesDict.set('Instagram',3 )
+      this.linkTypesDict.set( 'Other',4)
     },
 
     async getLinks() {
@@ -345,6 +352,7 @@ button {
 input {
   border: 0.1em solid #000000;
   font-size: 1.5em;
+  min-width: 25em;
 }
 /* Table stylings */
 table {
