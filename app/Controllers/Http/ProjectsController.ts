@@ -12,13 +12,13 @@ import Drive from '@ioc:Adonis/Core/Drive'
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
     let allProjects: Project[] = await Project.all()
-    for await (const project of allProjects) {
+ 
       for await (const project of allProjects) {
         project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
         project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
         project.areaFocusObject = JSON.parse(project.areaFocus)
       }
-    }
+    
     return response.json({ allProjects })
   }
 
@@ -336,7 +336,7 @@ export default class ProjectsController {
     return response.json({ projectPermited: projectAdmins })
   }
   public async update({}: HttpContextContract) {}
-  
+
   public async updateById({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
 
