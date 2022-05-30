@@ -23,6 +23,9 @@ export default class Project extends BaseModel {
   @computed()
   public projectFunding: object
 
+  @computed()
+  public areaFocusObject: object
+
   @column({ isPrimary: true })
   public projectId: number
 
@@ -33,7 +36,7 @@ export default class Project extends BaseModel {
   public projectTheme: string
 
   @column({ serializeAs: null })
-  public areaFocus: String
+  public areaFocus: string
 
   @column()
   public grantType: any

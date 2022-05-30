@@ -13,8 +13,11 @@ export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
     let allProjects: Project[] = await Project.all()
     for await (const project of allProjects) {
-      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
-      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+      for await (const project of allProjects) {
+        project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+        project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+        project.areaFocusObject = JSON.parse(project.areaFocus)
+      }
     }
     return response.json({ allProjects })
   }
@@ -62,9 +65,9 @@ export default class ProjectsController {
     const projectStatus: string = request.input('project_status')
     const country: string = request.input('country')
 
-    const areaFocus: any = JSON.stringify(request.input('area_focus'))
+    const areaFocus: any = request.input('area_focus')
 
-    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
+    const extraDescriptions: any = request.input('extra_descriptions')
 
     // const attachedLetters: number = request.input('attached_letters')
     // const projectFunding: string = request.input('project_funding')
@@ -80,7 +83,7 @@ export default class ProjectsController {
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
 
-    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
+    const itemisedBudget: any = request.input('itemised_budget')
 
     let projectImage = request.file('image')
     let imageLink: string = ''
@@ -197,6 +200,9 @@ export default class ProjectsController {
       const roleTitle = ProjectRoleType[roleType]
       newProject['projectRoleTitle'] = roleTitle
 
+      newProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+      newProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
+      newProject.areaFocusObject = JSON.parse(areaFocus)
       return response.json({
         newProject,
         details:
@@ -225,6 +231,9 @@ export default class ProjectsController {
   public async showProjectByIdPost({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
     const ProjectById: Project = await Project.findOrFail(projectId)
+    ProjectById.extraDescriptionsObject = JSON.parse(ProjectById.extraDescriptions)
+    ProjectById.itemisedBudgetArray = JSON.parse(ProjectById.itemisedBudget)
+    ProjectById.areaFocusObject = JSON.parse(ProjectById.areaFocus)
     const projectAdmins: any[] = await ProjectById.related('projectRole')
       .pivotQuery()
       .where({ project_id: projectId })
@@ -236,10 +245,12 @@ export default class ProjectsController {
     const user: User = await User.findOrFail(userId)
     const usersProjects: Project[] = []
     const projects: Project[] = await Project.query().select().where({ created_by: user.userId })
-    if (!projects.length == false) {
-      projects.forEach((element) => {
-        usersProjects.push(element)
-      })
+    if (projects.length != 0) {
+      for await (const project of projects) {
+        project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+        project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+        project.areaFocusObject = JSON.parse(project.areaFocus)
+      }
     }
     return response.json({ usersProjects })
   }
@@ -251,12 +262,12 @@ export default class ProjectsController {
       const usersProjects: Project[] = await Project.query()
         .select()
         .where({ created_by: user.userId })
-      if (!usersProjects.length == false) {
-        usersProjects.forEach((element) => {
-          element.extraDescriptionsObject = JSON.parse(element.extraDescriptions)
-          element.itemisedBudgetArray = JSON.parse(element.itemisedBudget)
-          projects.push(element)
-        })
+      if (usersProjects.length != 0) {
+        for await (const project of usersProjects) {
+          project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+          project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+          project.areaFocusObject = JSON.parse(project.areaFocus)
+        }
       }
     }
 
@@ -265,6 +276,11 @@ export default class ProjectsController {
   public async showAllProjectsByDistrict({ request, response }: HttpContextContract) {
     const districtId: number = request.input('district_id')
     const allProjects: Project[] = await Project.query().where({ districtId: districtId })
+    for await (const project of allProjects) {
+      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+      project.areaFocusObject = JSON.parse(project.areaFocus)
+    }
     /* const projects: any[] = []
          for await (const user of allMembers) {
       const usersProjects: Project[] = await Project.query()
@@ -319,26 +335,47 @@ export default class ProjectsController {
       .where({ project_id: projectId })
     return response.json({ projectPermited: projectAdmins })
   }
-
   public async update({}: HttpContextContract) {}
+  
   public async updateById({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
 
-    const grantType: GrantType = request.input('grant_type')
-
     const projectName: string = request.input('project_name')
     const projectTheme: string = request.input('project_theme')
-    const areaFocus: string = request.input('area_focus')
+    const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
+
+    const region: string = request.input('region')
+    const rotaryYear: number = request.input('rotary_year')
+    const projectStatus: string = request.input('project_status')
+    const country: string = request.input('country')
+
+    const areaFocus: any = request.input('area_focus')
+
+    const extraDescriptions: any = request.input('extra_descriptions')
+
+    const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
+    const coOperatingOrganisationContribution: number = request.input(
+      'co_operating_organisation_contribution'
+    )
+    const districtSimplifiedGrantRequest: number = request.input(
+      'district_simplified_grant_request'
+    )
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
-    const region: string = request.input('region')
-    const country: string = request.input('country')
 
-    const extraDescriptions: any = JSON.stringify(request.input('extra_descriptions'))
-    const itemisedBudget: any = JSON.stringify(request.input('itemised_budget'))
+    const itemisedBudget: any = request.input('itemised_budget')
+
+    let projectImage = request.file('image')
+    let imageLink: string = ''
+    if (projectImage) {
+      await projectImage.moveToDisk('local')
+      const fileName = projectImage.fileName
+      const theUrl = await Drive.getUrl(String('local/' + fileName))
+      imageLink = 'http://74.208.135.85' + theUrl
+    }
 
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
 
@@ -371,32 +408,49 @@ export default class ProjectsController {
 
       let updatedProject: Project = await projectToBeUpdated
         .merge({
+          grantType: GrantType[grantType],
+          projectStatus: ProjectStatus[projectStatus],
+          rotaryYear: rotaryYear,
+
           projectName: projectName,
           projectTheme: projectTheme,
-          grantType: GrantType[grantType],
-          areaFocus: areaFocus,
+          country: country,
+          region: region,
           startDate: convertedStartDate,
           estimatedCompletion: convertedEstimatedCompletion,
+
+          areaFocus: areaFocus,
+
+          extraDescriptions: extraDescriptions,
+
+          itemisedBudget: itemisedBudget,
+
+          intialSponsorClubContribution: intialSponsorClubContribution,
+          coOperatingOrganisationContribution: coOperatingOrganisationContribution,
+          districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+
+          anticipatedFunding: anticipatedFunding,
           fundingGoal: fundingGoal,
           currentFunds: currentFunds,
-          anticipatedFunding: anticipatedFunding,
-          region: region,
-          country: country,
-          extraDescriptions: extraDescriptions,
-          itemisedBudget: itemisedBudget,
+
+          imageLink: imageLink,
         })
         .save()
       oldProject.extraDescriptionsObject = JSON.parse(oldProject.extraDescriptions)
       oldProject.itemisedBudgetArray = JSON.parse(oldProject.itemisedBudget)
+      oldProject.areaFocusObject = JSON.parse(oldProject.areaFocus)
+
       updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
+      updatedProject.areaFocusObject = JSON.parse(updatedProject.areaFocus)
+
       return response.json({
         updatedProject,
         Hello: 'old file below',
         oldPoject: oldProject,
       })
     } else {
-      return response.json('fdfd')
+      return response.json('error')
     }
   }
 

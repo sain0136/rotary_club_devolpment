@@ -144,7 +144,8 @@ export default class PopulateSeeder extends BaseSeeder {
       projectName: 'Restoration of African Water',
       grantType: GrantType[1],
       country: 'Ghana',
-      areaFocus:"{\"Peace_Conflict_Prevention\":false,\"Disease_Prevention_And_Treatment\":true,\"Water_And_Sanitation\":true,\"Maternal_And_Child_Health\":false,\"Basic_Education_And_Literacy\":false,\"Economic_And_Community_Development\":false,\"Environment\":false}",
+      areaFocus:
+        '{"Peace_Conflict_Prevention":false,"Disease_Prevention_And_Treatment":true,"Water_And_Sanitation":true,"Maternal_And_Child_Health":false,"Basic_Education_And_Literacy":false,"Economic_And_Community_Development":false,"Environment":false}',
       districtId: 1,
       createdBy: 2,
       region: Region[1],
@@ -165,7 +166,8 @@ export default class PopulateSeeder extends BaseSeeder {
       projectName: 'Cornwall Ontario Park',
       grantType: GrantType[1],
       country: 'Canada',
-      areaFocus: "{\"Peace_Conflict_Prevention\":false,\"Disease_Prevention_And_Treatment\":true,\"Water_And_Sanitation\":true,\"Maternal_And_Child_Health\":false,\"Basic_Education_And_Literacy\":false,\"Economic_And_Community_Development\":false,\"Environment\":false}",
+      areaFocus:
+        '{"Peace_Conflict_Prevention":false,"Disease_Prevention_And_Treatment":true,"Water_And_Sanitation":true,"Maternal_And_Child_Health":false,"Basic_Education_And_Literacy":false,"Economic_And_Community_Development":false,"Environment":false}',
       districtId: 1,
       createdBy: 2,
       region: Region[1],
@@ -179,6 +181,67 @@ export default class PopulateSeeder extends BaseSeeder {
     const user2: User = await User.findOrFail(1)
     await secPro.related('projectRole').attach({
       [user2.userId]: {
+        role: 1,
+      },
+    })
+
+    const thirdPro: Project = await Project.create({
+      projectName: 'Africa Project',
+      grantType: GrantType[2],
+      country: 'France',
+      areaFocus: JSON.stringify({
+        Peace_Conflict_Prevention: true,
+        Disease_Prevention_And_Treatment: false,
+        Water_And_Sanitation: false,
+        Maternal_And_Child_Health: true,
+        Basic_Education_And_Literacy: false,
+        Economic_And_Community_Development: false,
+        Environment: false,
+      }),
+      extraDescriptions: JSON.stringify({
+        benefit_community_description:
+          'follows the introduction; discusses the controlling idea, using facts, arguments, analysis, examples, and other information.',
+        non_financial_participation:
+          'SCIENTISTS HAVE LEARNED TO SUPPLEMENT THE SENSE OF SIGHT IN NUMEROUS WAYS. In front of the tiny pupil of the eye they put, on Mount Palomar, a great monocle 200 inches in diameter, and with it see 2000 times farther into the depths of space',
+        co_operating_organisation_letter:
+          'In a coherent paragraph, each sentence relates clearly to the topic sentence or controlling idea, but there is more to coherence than this. If a paragraph is coherent, each sentence flows smoothly into the next without obvious shifts or jumps. ',
+        primary_contact: {
+          name: 'John Smith',
+          address: '2625 Carling Ave, Ottawa, ON K2B 6V3',
+          phone: '613-898-5444',
+          email: 'lop@fred.com',
+          fax: '',
+        },
+        secondary_contact: {
+          name: 'Jam Butteers',
+          address: '2625 Carling Ave, Ottawa, ON K2B 6V3',
+          phone: '613-955-8888',
+          email: 'jssr#4@gmail.com',
+          fax: '',
+        },
+      }),
+      itemisedBudget: JSON.stringify([
+        { itemName: 'TV', itemCost: 2000 },
+        { itemName: 'Pool', itemCost: 500 },
+      ]),
+      startDate: DateTime.fromFormat('7/23/2022', 'D'),
+      intialSponsorClubContribution: 500,
+      coOperatingOrganisationContribution: 100,
+      districtSimplifiedGrantRequest: 250,
+      districtId: 1,
+      createdBy: 2,
+      region: Region[4],
+      rotaryYear: 2022,
+      fundingGoal: 2500,
+      anticipatedFunding: 850,
+      projectStatus: ProjectStatus[1],
+      projectTheme:
+        'the first section of a paragraph; should include the topic sentence and any other sentences at the beginning of the paragraph that give background information or provide a transition.',
+      estimatedCompletion: DateTime.fromFormat('5/14/2022', 'D'),
+    })
+    const user3: User = await User.findOrFail(1)
+    await thirdPro.related('projectRole').attach({
+      [user3.userId]: {
         role: 1,
       },
     })
