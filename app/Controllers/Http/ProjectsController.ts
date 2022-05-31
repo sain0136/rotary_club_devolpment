@@ -30,6 +30,11 @@ export default class ProjectsController {
       .select('*')
       .where({ districtId: districtId })
       .paginate(currentPage, limit)
+
+    for await (const project of projects) {
+      project.areaFocusObject = JSON.parse(project.areaFocus)
+
+    }
     return response.json({ projects })
   }
 
@@ -407,7 +412,6 @@ export default class ProjectsController {
 
       let updatedProject: Project = await projectToBeUpdated
         .merge({
-          grantType: GrantType[grantType],
           projectStatus: ProjectStatus[projectStatus],
           rotaryYear: rotaryYear,
 
