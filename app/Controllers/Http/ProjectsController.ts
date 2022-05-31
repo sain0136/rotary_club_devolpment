@@ -243,16 +243,15 @@ export default class ProjectsController {
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {
     const userId: number = request.input('user_id')
     const user: User = await User.findOrFail(userId)
-    const usersProjects: Project[] = []
     const projects: Project[] = await Project.query().select().where({ created_by: user.userId })
-    if (projects.length != 0) {
+    if (projects.length >0) {
       for await (const project of projects) {
         project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
         project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
         project.areaFocusObject = JSON.parse(project.areaFocus)
       }
     }
-    return response.json({ usersProjects })
+    return response.json({ projects })
   }
   public async showAllProjectsByClub({ request, response }: HttpContextContract) {
     const clubID: number = request.input('club_id')
