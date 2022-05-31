@@ -39,8 +39,12 @@
           <button
             title="Edit Project"
             class="crud-buttons"
-                        @click="
-                () =>
+            @click="
+              () => {
+                if (
+                  project.grant_type ==
+                  'Club Project'
+                ) {
                   this.$router.push({
                     name:
                       'DistrictProjectEdit',
@@ -51,38 +55,58 @@
                       projectLabel:
                         'District',
                       currentProjectPropObj: project,
-                      projectIdProp: project.project_id,
+                      projectIdProp:
+                        project.project_id,
                     },
                   })
-              "
+                } else if (
+                  project.grant_type ==
+                  'District Simplified Project'
+                ) {
+                  this.$router.push({
+                    name:
+                      'DistrictProjectEdit',
+                    params: {
+                      projectTypeProp: 2,
+                      editOrCreateProp:
+                        'edit',
+                      projectLabel:
+                        'District',
+                      currentProjectPropObj: project,
+                      projectIdProp:
+                        project.project_id,
+                    },
+                  })
+                }
+              }
+            "
           >
-       
             <font-awesome-icon
               class="social-icon"
               icon="edit"
             ></font-awesome-icon>
           </button>
           <!-- pledges Button -->
-                  <button
+          <button
             title="View pledges"
             class="crud-buttons"
-                        @click="
-                () =>
-                  this.$router.push({
-                    name:
-                      'DistrictProjectPledgesView',
-                    params: {
-                 isThisMyPledges:'no'
-                ,
-                projectId:project.project_id
-                    },
-                  })
-              "
+            @click="
+              () =>
+                this.$router.push({
+                  name:
+                    'DistrictProjectPledgesView',
+                  params: {
+                    isThisMyPledges:
+                      'no',
+                    projectId:
+                      project.project_id,
+                  },
+                })
+            "
           >
-       
             <font-awesome-icon
               class="social-icon"
-               icon="eye"
+              icon="eye"
             ></font-awesome-icon>
           </button>
           <button
@@ -144,7 +168,6 @@ export default {
           .loggedInDistrictUserId,
       )
       watchEffect(() => {
-   
         this.myDistrictProjects = projectObject
       })
     }
@@ -181,7 +204,7 @@ export default {
         this.redirect()
       }
     },
-   
+
     redirect(code) {
       this.$router.go()
     },
@@ -198,5 +221,4 @@ th,
 td {
   border: 1px solid #4068823b;
 }
-
 </style>

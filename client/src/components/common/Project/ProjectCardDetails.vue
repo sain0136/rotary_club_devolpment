@@ -15,17 +15,27 @@
             </h2>
             <div class="finances">
               <div class="causes-info">
-                <strong>Raised</strong>
+                <strong>Raised:</strong>
                 ${{
-                  currentProject.current_funds
+                  currentProject.anticipated_funding
                 }}
-                /
-                <span
-                  class="theme_color"
-                  >${{
-                    currentProject.funding_goal
-                  }}</span
-                >
+                <div>
+                  <strong
+                    style="
+                      display: inline;
+                    "
+                    >Goal:
+                  </strong>
+                  <span
+                    style="
+                      display: inline;
+                    "
+                    class="theme_color"
+                    >${{
+                      currentProject.funding_goal
+                    }}
+                  </span>
+                </div>
                 <span
                   style="
                     display: block;
@@ -55,9 +65,12 @@
                       this.$router.push(
                         {
                           name:
-                            'ProjectPledgeForm',params:{
-                                projectIdProp:parseInt(projectIdProp)
-                            }
+                            'ProjectPledgeForm',
+                          params: {
+                            projectIdProp: parseInt(
+                              projectIdProp,
+                            ),
+                          },
                         },
                       )
                   "
@@ -95,10 +108,11 @@
               }}
             </li>
             <li>
-              Rotary Area of Focus:
-              {{
-                currentProject.area_focus
-              }}
+              Rotary Areas of Focus:
+            <ul>
+              <li v-for="area in areaOfFocus" :key="area">
+               &#8594 {{area}}</li>
+            </ul>
             </li>
           </ul>
         </blockquote>
@@ -165,6 +179,7 @@
 <script>
 import ProjectApi from '../../../api-factory/project'
 import store from '../../../store/index'
+import Resources from '../../../Resources'
 
 export default {
   name: 'ProjectCardDetails',
@@ -174,34 +189,56 @@ export default {
   data() {
     return {
       currentProject: {},
+      areaOfFocus: [],
     }
   },
 
   async created() {
-      console.log(this.projectIdProp)
-            console.log(   store.state.currentProjectData)
+    console.log(this.projectIdProp)
+    console.log(
+      store.state.currentProjectData,
+    )
 
     if (
-      (this.projectIdProp === null) ||(this.projectIdProp ==
-      undefined) ||(this.projectIdProp =='undefined')
+      this.projectIdProp === null ||
+      this.projectIdProp == undefined ||
+      this.projectIdProp == 'undefined'
     ) {
       this.currentProject =
         store.state.currentProjectData
     } else {
-     await store.dispatch(
+      await store.dispatch(
         'changeCurrentProjectData',
         this.projectIdProp,
       )
       this.currentProject =
         store.state.currentProjectData
     }
-  },
- async beforeUnmount() {
-      await store.dispatch(
-        'changeCurrentProjectData',
-        this.projectIdProp,
-      )
 
+    let areaOfFocusMap = Resources.reverseTermConversionMap()
+
+    const asArray = Object.entries(
+      this.currentProject.areaFocusObject,
+    )
+        console.log(asArray)
+
+    const filtered = asArray.filter(
+      ([key, value]) =>
+        value == true,
+    )
+    console.log(filtered)
+
+    filtered.forEach((index) => {
+      console.log(index)
+      this.areaOfFocus.push(areaOfFocusMap.get(index[0])) 
+    })
+    console.log(this.areaOfFocus)
+  },
+  async beforeUnmount() {
+    await store.dispatch(
+      'changeCurrentProjectData',
+      this.projectIdProp,
+    )
   },
 }
 </script>

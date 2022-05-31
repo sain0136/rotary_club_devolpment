@@ -179,6 +179,38 @@
             />
           </div>
         </div>
+        <hr />
+        <!--         IMAGE UPLOAD            -->
+        <h5>Upload Cover Image</h5>
+        <h6 style="text-align: center;">
+          *If you dont upload one a
+          default image will be shown.
+        </h6>
+        <div
+          class="form-inputs"
+          style="
+            justify-content: center;
+            margin-top: 3em;
+          "
+        >
+          <input
+            accept="image/*"
+            type="file"
+            class="col-md-4 control-label"
+            @change="
+              handleFileChange(
+                $event.target.files,
+              )
+            "
+          />
+          <label>{{ Image }}</label>
+          <span
+            id="titleHelpInline"
+            class="form-text"
+          >
+            Upload an img
+          </span>
+        </div>
       </form>
     </div>
     <!-- page 2  Simplifed Form -->
@@ -203,7 +235,9 @@
         <div class="form-inputs">
           <BaseTextArea
             v-model="
-              benefit_community_description
+              simplifiedProject
+                .extra_descriptions
+                .benefit_community_description
             "
             label="Describe how the project will benefit the community or address a community need"
             span="Must be 150 to 2000 characters long"
@@ -213,7 +247,9 @@
         <div class="form-inputs">
           <BaseTextArea
             v-model="
-              non_financial_participation
+              simplifiedProject
+                .extra_descriptions
+                .non_financial_participation
             "
             label="Describe the non-financial participation by Rotarians in the project"
             span="Must be 150 to 2000 characters long"
@@ -223,7 +259,9 @@
         <div class="form-inputs">
           <BaseTextArea
             v-model="
-              co_operating_organisation_letter
+              simplifiedProject
+                .extra_descriptions
+                .co_operating_organisation_letter
             "
             label="If a co-operating organisation will be involved in the project, provide a letter stating its role in the project and how Rotarians will interface with the organisation."
             span="Must be 150 to 2000 characters long"
@@ -239,7 +277,10 @@
 
               <BaseInputs
                 v-model="
-               simplifiedProject.extra_descriptions.primary_contact.name
+                  simplifiedProject
+                    .extra_descriptions
+                    .primary_contact
+                    .name
                 "
                 type="text"
                 label="Name"
@@ -249,7 +290,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.primary_contact.address
+                  simplifiedProject
+                    .extra_descriptions
+                    .primary_contact
+                    .address
                 "
                 label="Address"
                 span="Enter address"
@@ -259,7 +303,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.primary_contact.email
+                  simplifiedProject
+                    .extra_descriptions
+                    .primary_contact
+                    .email
                 "
                 label="Email"
                 span="Enter Email"
@@ -269,7 +316,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.primary_contact.phone
+                  simplifiedProject
+                    .extra_descriptions
+                    .primary_contact
+                    .phone
                 "
                 label="phone"
                 span="Enter phone"
@@ -279,7 +329,9 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.primary_contact.fax
+                  simplifiedProject
+                    .extra_descriptions
+                    .primary_contact.fax
                 "
                 label="fax"
                 span="Enter fax#"
@@ -298,7 +350,10 @@
 
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.secondary_contact.name
+                  simplifiedProject
+                    .extra_descriptions
+                    .secondary_contact
+                    .name
                 "
                 type="text"
                 label="Name"
@@ -308,7 +363,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.secondary_contact.address
+                  simplifiedProject
+                    .extra_descriptions
+                    .secondary_contact
+                    .address
                 "
                 label="Address"
                 span="Enter address"
@@ -318,7 +376,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.secondary_contact.email
+                  simplifiedProject
+                    .extra_descriptions
+                    .secondary_contact
+                    .email
                 "
                 label="Email"
                 span="Enter Email"
@@ -328,7 +389,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.secondary_contact.phone
+                  simplifiedProject
+                    .extra_descriptions
+                    .secondary_contact
+                    .phone
                 "
                 label="phone"
                 span="Enter phone"
@@ -338,7 +402,10 @@
             <div>
               <BaseInputs
                 v-model="
-                  simplifiedProject.extra_descriptions.secondary_contact.fax
+                  simplifiedProject
+                    .extra_descriptions
+                    .secondary_contact
+                    .fax
                 "
                 label="fax"
                 span="Enter fax#"
@@ -521,12 +588,33 @@
         <hr />
         <div class="styled-pagination">
           <ul class="clearfix">
-            <li>
+            <li
+              v-if="
+                isThisEditOrCreateProp ==
+                'create'
+              "
+            >
               <a
                 @click="
                   createDsgProject()
                 "
                 >Create DSG Project</a
+              >
+            </li>
+            <li
+              v-else-if="
+                isThisEditOrCreateProp ==
+                'edit'
+              "
+            >
+              <a
+                @click="
+                  updateProject(
+                    projectIdProp,
+                  )
+                "
+                >Update this DSG
+                Project</a
               >
             </li>
           </ul>
@@ -536,35 +624,8 @@
           no later than April 30, 2022
           for review.
         </h2>
-        <!--         IMAGE UPLOAD            -->
-        <div
-          class="form-inputs"
-          style="
-            justify-content: center;
-            margin-top: 3em;
-          "
-        >
-          <input
-            accept="image/*"
-            type="file"
-            class="col-md-4 control-label"
-            @change="
-              handleFileChange(
-                $event.target.files,
-              )
-            "
-          />
-          <label>{{ Image }}</label>
-          <span
-            id="titleHelpInline"
-            class="form-text"
-          >
-            Upload an img
-          </span>
-        </div>
       </form>
     </div>
-
     <!--Form Page Buttons -->
     <div class="styled-pagination">
       <ul class="clearfix">
@@ -574,7 +635,7 @@
             @click="
               mutateCurrentPage(1)
             "
-            >Previous</a
+            >Previous Page</a
           >
         </li>
         <li
@@ -588,7 +649,7 @@
             @click="
               mutateCurrentPage(2)
             "
-            >Next</a
+            >Next Page</a
           >
         </li>
       </ul>
@@ -615,6 +676,7 @@ export default {
   props: {
     isThisEditOrCreateProp: String,
     isThisDistrictOrClubProp: String,
+    projectIdProp: Number,
   },
   data() {
     return {
@@ -684,10 +746,6 @@ export default {
         club_id: 0,
       },
 
-      benefit_community_description: '',
-      non_financial_participation: '',
-      co_operating_organisation_letter:
-        '',
       budgetItemCost: 0,
       budgetItemName: '',
 
@@ -698,14 +756,15 @@ export default {
       countryList:
         Resources.countryList,
       regionList: Resources.regionList,
-
       formPage: 1,
     }
   },
   created() {
     if (
       this.isThisDistrictOrClubProp ==
-      'District'
+        'District' &&
+      this.isThisEditOrCreateProp ==
+        'create'
     ) {
       this.simplifiedProject.created_by = parseInt(
         store.state
@@ -714,7 +773,10 @@ export default {
       this.simplifiedProject.district_id = parseInt(
         store.state.loggedInDistrictId,
       )
-    } else {
+    } else if (
+      this.isThisEditOrCreateProp ==
+      'create'
+    ) {
       this.simplifiedProject.created_by = parseInt(
         store.state.loggedInClubUserId,
       )
@@ -730,51 +792,64 @@ export default {
     }
   },
   methods: {
-    mutateCurrentPage(nextOrPrev) {
-      if (nextOrPrev == 1) {
-        this.formPage =
-          this.formPage - 1
-      } else {
-        this.formPage =
-          this.formPage + 1
+    async prePopulateFields() {
+      const projectToEdit = await ProjectApi.show(
+        this.projectIdProp,
+      )
+      this.simplifiedProject.project_name =
+        projectToEdit.project_name
+      this.simplifiedProject.project_theme =
+        projectToEdit.project_theme
+      this.simplifiedProject.country =
+        projectToEdit.country
+      this.simplifiedProject.region =
+        projectToEdit.region
+
+      this.simplifiedProject.start_date =
+        projectToEdit.start_date
+      this.simplifiedProject.estimated_completion =
+        projectToEdit.estimated_completion
+
+      this.simplifiedProject.funding_goal =
+        projectToEdit.funding_goal
+      this.simplifiedProject.anticipated_funding =
+        projectToEdit.anticipated_funding
+      this.simplifiedProject.intial_sponsor_club_contribution =
+        projectToEdit.intial_sponsor_club_contribution
+      this.simplifiedProject.co_operating_organisation_contribution =
+        projectToEdit.co_operating_organisation_contribution
+      this.simplifiedProject.district_simplified_grant_request =
+        projectToEdit.district_simplified_grant_request
+
+      this.simplifiedProject.rotary_year =
+        projectToEdit.rotary_year
+
+      this.simplifiedProject.image_link =
+        projectToEdit.image_link
+      this.simplifiedProject.created_by =
+        projectToEdit.created_by
+
+      this.simplifiedProject.extra_descriptions =
+        projectToEdit.extraDescriptionsObject
+      this.simplifiedProject.itemised_budget =
+        projectToEdit.itemisedBudgetArray
+      this.simplifiedProject.area_focus =
+        projectToEdit.areaFocusObject
+      //could delete
+      if (projectToEdit.club_id > 0) {
+        this.simplifiedProject.club_id =
+          projectToEdit.club_id
       }
-    },
-    addToBudget(itemName, itemCost) {
-      const budgetItemObject = {}
-      budgetItemObject.itemName = itemName
-      budgetItemObject.itemCost = parseInt(
-        itemCost,
-      )
-
-      this.simplifiedProject.itemised_budget.push(
-        budgetItemObject,
-      )
-      console.log(
-        JSON.stringify(
-          this.simplifiedProject
-            .itemised_budget,
-        ),
-      )
-    },
-    deleteItemByIndex(index) {
-      this.simplifiedProject.itemised_budget.splice(
-        index,
-        1,
-      )
-    },
-    handleFileChange(event) {
-      // handle file changes
-
-      this.simplifiedProject.image =
-        event[0]
+      this.simplifiedProject.district_id =
+        projectToEdit.district_id
     },
     async createDsgProject() {
       console.log(
         'creating new project',
       )
-      this.simplifiedProject.extra_descriptions.benefit_community_description = this.benefit_community_description
+      /* this.simplifiedProject.extra_descriptions.benefit_community_description = this.benefit_community_description
       this.simplifiedProject.extra_descriptions.non_financial_participation = this.non_financial_participation
-      this.simplifiedProject.extra_descriptions.co_operating_organisation_letter = this.co_operating_organisation_letter
+      this.simplifiedProject.extra_descriptions.co_operating_organisation_letter = this.co_operating_organisation_letter */
 
       this.simplifiedProject.intial_sponsor_club_contribution = parseFloat(
         this.simplifiedProject
@@ -798,9 +873,67 @@ export default {
         this.simplifiedProject
           .district_simplified_grant_request
 
-      this.simplifiedProject.extra_descriptions.benefit_community_description = this.benefit_community_description
-      this.simplifiedProject.extra_descriptions.non_financial_participation = this.non_financial_participation
-      this.simplifiedProject.extra_descriptions.co_operating_organisation_letter = this.co_operating_organisation_letter
+      var mydate1 = new Date(
+        this.simplifiedProject.start_date,
+      )
+      var mydate2 = new Date(
+        this.simplifiedProject.estimated_completion,
+      )
+
+      this.simplifiedProject.estimated_completion = mydate2.toLocaleDateString(
+        'en-US',
+      )
+      this.simplifiedProject.start_date = mydate1.toLocaleDateString(
+        'en-US',
+      )
+
+      const projectToCreate = this
+        .simplifiedProject
+      if (
+        this.isThisDistrictOrClubProp ==
+        'District'
+      ) {
+        delete projectToCreate.club_id
+        await ProjectApi.createDsg(
+          projectToCreate,
+        )
+      } else {
+        await ProjectApi.createDsg(
+          projectToCreate,
+        )
+      }
+      this.redirect()
+    },
+    async updateProject(projectId) {
+      console.log(
+        'updating new project',
+      )
+   
+      this.simplifiedProject.intial_sponsor_club_contribution = parseFloat(
+        this.simplifiedProject
+          .intial_sponsor_club_contribution,
+      )
+      this.simplifiedProject.co_operating_organisation_contribution = parseFloat(
+        this.simplifiedProject
+          .co_operating_organisation_contribution,
+      )
+      this.simplifiedProject.district_simplified_grant_request = parseFloat(
+        this.simplifiedProject
+          .district_simplified_grant_request,
+      )
+
+      this.simplifiedProject.funding_goal = this.sumOfItemsCost
+      this.simplifiedProject.anticipated_funding =
+        this.simplifiedProject
+          .intial_sponsor_club_contribution +
+        this.simplifiedProject
+          .co_operating_organisation_contribution +
+        this.simplifiedProject
+          .district_simplified_grant_request
+      
+      var mydate1 = new Date(
+        this.simplifiedProject.start_date,
+      )
 
       var mydate1 = new Date(
         this.simplifiedProject.start_date,
@@ -815,12 +948,71 @@ export default {
         'en-US',
       )
 
-      const projectToCreate = this
+      const projectToUpdate = this
         .simplifiedProject
-      console.log(projectToCreate)
-      await ProjectApi.createDsg(
-        projectToCreate,
+ 
+      if (
+        this.isThisDistrictOrClubProp ==
+        'District'
+      ) {
+        delete projectToUpdate.club_id
+        console.log(projectToUpdate)
+        await ProjectApi.updateDsg(
+          projectToUpdate,
+          projectId,
+        )
+      } else {
+        console.log(projectToUpdate)
+        await ProjectApi.updateDsg(
+          projectToUpdate,
+          projectId,
+        )
+      }
+
+      console.log('updated')
+      this.redirect()
+    },
+    mutateCurrentPage(nextOrPrev) {
+      if (nextOrPrev == 1) {
+        this.formPage =
+          this.formPage - 1
+      } else {
+        this.formPage =
+          this.formPage + 1
+      }
+    },
+    redirect(code) {
+      this.$router.push({
+        name: 'DistrictProjectsView',
+      })
+    },
+    addToBudget(itemName, itemCost) {
+      const budgetItemObject = {}
+      budgetItemObject.itemName = itemName
+      budgetItemObject.itemCost = parseFloat(
+        itemCost,
       )
+
+      this.simplifiedProject.itemised_budget.push(
+        budgetItemObject,
+      )
+      console.log(
+        JSON.stringify(
+          this.simplifiedProject
+            .itemised_budget,
+        ),
+      )
+    },
+    deleteItemByIndex(index) {
+      this.simplifiedProject.itemised_budget.splice(
+        index,
+        1,
+      )
+    },
+    handleFileChange(event) {
+      // handle file change event and store imag
+      this.simplifiedProject.image =
+        event[0]
     },
   },
   computed: {
@@ -1005,12 +1197,10 @@ a {
   text-align: center;
   height: 35px;
   font-size: 1em;
-  -webkit-transition: all 500ms ease;
 }
 li a:hover {
   color: #ffffff;
   background-color: #ffb607;
-  -webkit-transition: all 500ms ease;
 }
 .button-sub {
   display: flex;

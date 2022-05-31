@@ -7,9 +7,9 @@
         </div>
       </div>
     </section>
-    <section class="services-section">
+    <section class="about_us-section">
       <div class="auto-container">
-        <div class="services-title">
+        <div class="about_us-items">
           <h2>
             Welcome to
             {{
@@ -27,6 +27,59 @@
                 .currentDistrictData
                 .district_description
             }}
+          </div>
+          <hr
+            style="
+              border:#ffb607 0.1em solid
+                ;
+            "
+          />
+          <div class="details-list">
+            <ul>
+              <li>
+                <Strong>
+                  District
+                  President:</Strong
+                >
+                {{
+                  $store.state
+                    .currentDistrictData
+                    .district_president
+                }}
+              </li>
+              <li>
+                <Strong
+                  >Meeting City:</Strong
+                >
+
+                {{
+                  $store.state
+                    .currentDistrictData
+                    .meeting_city
+                }}
+              </li>
+              <li>
+                <Strong
+                  >Meeting Site:</Strong
+                >
+                {{
+                  $store.state
+                    .currentDistrictData
+                    .meeting_location
+                }}
+              </li>
+              <li>
+                <Strong>
+                  Meeting
+                  Schedule\Frequency:</Strong
+                >
+                {{
+                  $store.state
+                    .currentDistrictData
+                    .meeting_frequency
+                }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -119,39 +172,7 @@ export default {
 </script>
 
 <style scoped>
-.services-section
-  .services-title
-  .description-container {
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 18px;
-  line-height: 1.8em;
-  font-weight: 400;
-  font-family: 'Lato', sans-serif;
-}
-.services-section .services-title h2 {
-  position: relative;
-  color: #111111;
-  font-size: 36px;
-  line-height: 1.3em;
-  margin-bottom: 25px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-}
-.services-section .services-title {
-  position: relative;
-  text-align: center;
-  margin-bottom: 100px;
-}
-.auto-container {
-  position: static;
-  max-width: 1200px;
-  padding: 0px 15px;
-  margin: 0 auto;
-}
-.services-section {
-  position: relative;
-  padding: 110px 0px 80px;
-}
+/* title */
 .page-title h1 {
   font-size: 72px;
   margin-bottom: 0px;
@@ -172,6 +193,51 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(../assets/image-3.jpg);
+}
+/* about us  */
+.about_us-section {
+  padding: 110px 0px 80px;
+}
+.auto-container {
+  position: static;
+  max-width: 1200px;
+  padding: 0px 15px;
+  margin: 0 auto;
+}
+.about_us-items {
+  display: flex;
+  flex-direction: column;
+}
+.about_us-section
+  .about_us-items
+  .description-container {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 18px;
+  line-height: 1.8em;
+  font-weight: 400;
+  font-family: 'Lato', sans-serif;
+}
+.about_us-section .about_us-items h2 {
+  position: relative;
+  color: #111111;
+  font-size: 36px;
+  line-height: 1.3em;
+  margin-bottom: 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+.about_us-section .about_us-items {
+  position: relative;
+  text-align: center;
+  margin-bottom: 100px;
+}
+.about_us-section .details-list {
+  display: flex;
+  justify-content: center;
+}
+.about_us-section .details-list ul {
+  padding-top: 2em;
+  text-align: left;
 }
 
 /* who we are section */
@@ -202,9 +268,9 @@ export default {
     width: 33.33333333%;
   }
 }
-@media (max-width:992px ) {
+@media (max-width: 992px) {
   .services .inner-box {
-      border: solid 1px;
+    border: solid 1px;
   }
 }
 .services .inner-box {

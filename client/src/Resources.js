@@ -326,7 +326,37 @@ export default class Resources {
         'Economic And Community Development',
         'Environment',
     ]
+    // status list 
 
+    static statusList = [
+        'Looking for funding',
+        'Fully funded',
+        'Pending approval',
+        'Approved',
+        'Completed',
+    ]
 
+    static searchTermConversionMap() {
+        const searchTermConversionMap = new Map();
+        searchTermConversionMap.set('Peace Conflict Prevention', 'Peace_Conflict_Prevention');
+        searchTermConversionMap.set('Disease Prevention And Treatment', 'Disease_Prevention_And_Treatment');
+        searchTermConversionMap.set('Water And Sanitation', 'Water_And_Sanitation');
+        searchTermConversionMap.set('Maternal And Child Health', 'Maternal_And_Child_Health');
+        searchTermConversionMap.set('Basic Education And Literacy', 'Basic_Education_And_Literacy');
+        searchTermConversionMap.set('Economic And Community Development', 'Economic_And_Community_Development');
+        searchTermConversionMap.set('Environment', 'Environment');
+        return searchTermConversionMap
+    }
 
+    static reverseTermConversionMap() {
+        const searchTermConversionMap = new Map();
+        searchTermConversionMap.set( 'Peace_Conflict_Prevention','Peace Conflict Prevention');
+        searchTermConversionMap.set( 'Disease_Prevention_And_Treatment','Disease Prevention And Treatment');
+        searchTermConversionMap.set( 'Water_And_Sanitation','Water And Sanitation');
+        searchTermConversionMap.set( 'Maternal_And_Child_Health','Maternal And Child Health');
+        searchTermConversionMap.set( 'Basic_Education_And_Literacy','Basic Education And Literacy');
+        searchTermConversionMap.set( 'Economic_And_Community_Development','Economic And Community Development');
+        searchTermConversionMap.set('Environment', 'Environment');
+        return searchTermConversionMap
+    }
 }

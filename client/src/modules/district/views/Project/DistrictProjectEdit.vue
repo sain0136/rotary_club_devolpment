@@ -8,18 +8,26 @@
     :projectIdProp="this.projectIdProp"
     
 /> 
-
+<DistrictSimplifiedProjectForm v-else-if="projectTypeProp == 2 "
+    :isThisEditOrCreateProp='this.editOrCreateProp'
+    :isThisDistrictOrClubProp="this.projectLabel"
+    :projectIdProp="this.projectIdProp"
+    
+/> 
  </div>
 </template>
 
 <script>
 import DistrictOrClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
+import DistrictSimplifiedProjectForm from '../../../../components/common/Forms/DistrictSimplifiedProjectForm.vue'
 
 export default {
   
   name: "DistrictProjectEditView",
+  
 components:{
   DistrictOrClubProjectForm,
+  DistrictSimplifiedProjectForm
   },
   props:{
     //dtermine v-if for the proper project type

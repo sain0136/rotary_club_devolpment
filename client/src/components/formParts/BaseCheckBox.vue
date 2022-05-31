@@ -14,7 +14,7 @@
     <label v-if="label">{{
       label
     }}</label>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -42,9 +42,9 @@ div {
   font-size: 1em;
   line-height: 1.8em;
   color: #777777;
+  width: 33.3333%;
 }
-label{
-  padding-left: .4rem;
+label {
+  padding-left: 0.4rem;
 }
-
 </style>

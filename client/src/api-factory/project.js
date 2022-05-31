@@ -95,7 +95,7 @@ export default {
 
     const data = await res.json()
     const projects =
-      await data.usersProjects
+      await data.projects
     return await projects
   },
 
@@ -127,15 +127,14 @@ export default {
 
   async create(data) {
 
-
     let fd = new FormData();
     fd.append('project_image', data.image)
     fd.append('project_name', data.project_name)
     fd.append('project_theme', data.project_theme)
-    fd.append('area_focus', data.area_focus)
+    fd.append('area_focus', JSON.stringify(data.area_focus))
     fd.append('estimated_completion', data.estimated_completion)
     fd.append('funding_goal', data.funding_goal)
-    fd.append('current_funds', data.current_funds)
+    fd.append('anticipated_funding', data.anticipated_funding)
     fd.append('created_by', data.created_by)
     fd.append('region', data.region)
     fd.append('rotary_year', data.rotary_year)
@@ -202,14 +201,14 @@ export default {
     fd.append('area_focus', JSON.stringify(data.area_focus))
 
     fd.append('extra_descriptions', JSON.stringify(data.extra_descriptions))
-    
+
 
 
     fd.append('itemised_budget', JSON.stringify(data.itemised_budget))
 
     fd.append('attached_letters', JSON.stringify(data.attached_letters))
     fd.append('project_funding', JSON.stringify(data.project_funding))
-    fd.append('hostclub_information',JSON.stringify( data.hostclub_information))
+    fd.append('hostclub_information', JSON.stringify(data.hostclub_information))
 
     fd.append('intial_sponsor_club_contribution', data.intial_sponsor_club_contribution)
     fd.append('co_operating_organisation_contribution', data.co_operating_organisation_contribution)
@@ -225,9 +224,12 @@ export default {
 
     fd.append('created_by', data.created_by)
     fd.append('district_id', data.district_id)
-    fd.append('club_id', data.club_id)
+    if (data.club_id != null) {
+      fd.append('club_id', data.club_id)
+    }
 
-  
+
+
 
     axios
       .post("http://74.208.135.85/project", fd, {
@@ -263,19 +265,114 @@ export default {
 
   },
   async update(id, data) {
-    data['project_id'] = id
-    const res = await fetch(
-      'http://74.208.135.85/project/updateById',
-      {
-        method: 'POST',
+    let fd = new FormData();
+    fd.append('project_id', id)
+    fd.append('project_name', data.project_name)
+    fd.append('project_theme', data.project_theme)
+    fd.append('area_focus', JSON.stringify(data.area_focus))
+    fd.append('estimated_completion', data.estimated_completion)
+    fd.append('funding_goal', data.funding_goal)
+    fd.append('anticipated_funding', data.anticipated_funding)
+    fd.append('created_by', data.created_by)
+    fd.append('region', data.region)
+    fd.append('rotary_year', data.rotary_year)
+    fd.append('project_status', data.project_status)
+    fd.append('country', data.country)
+    fd.append('grant_type', 1)
+    if (data.image == null) {
+      fd.append('image', data.image_link)
+      }else{
+      fd.append('image', data.image)
+      fd.append('project_image', data.image)  
+      }
+    axios
+      .post("http://74.208.135.85/project/updateById", fd, {
         headers: {
-          'Content-Type':
-            'application/json',
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Request-Method": "POST"
+
         },
-        body: JSON.stringify(data),
-      },
-    )
+      })
+      .then((res) => {
+        console.log(res);
+        return res
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
+  async updateDsg(data, projectID) {
+
+
+    let fd = new FormData();
+    fd.append('project_id', projectID)
+
+    fd.append('role_type', data.role_type)
+    fd.append('grant_type', 2)
+    fd.append('rotary_year', data.rotary_year)
+
+
+
+
+    fd.append('project_name', data.project_name)
+    fd.append('project_theme', data.project_theme)
+    fd.append('country', data.country)
+    fd.append('region', data.region)
+    fd.append('start_date', data.start_date)
+    fd.append('estimated_completion', data.estimated_completion)
+
+    fd.append('area_focus', JSON.stringify(data.area_focus))
+
+    fd.append('extra_descriptions', JSON.stringify(data.extra_descriptions))
+
+
+
+    fd.append('itemised_budget', JSON.stringify(data.itemised_budget))
+
+    fd.append('attached_letters', JSON.stringify(data.attached_letters))
+    fd.append('project_funding', JSON.stringify(data.project_funding))
+    fd.append('hostclub_information', JSON.stringify(data.hostclub_information))
+
+    fd.append('intial_sponsor_club_contribution', data.intial_sponsor_club_contribution)
+    fd.append('co_operating_organisation_contribution', data.co_operating_organisation_contribution)
+    fd.append('district_simplified_grant_request', data.district_simplified_grant_request)
+
+
+
+    fd.append('funding_goal', data.funding_goal)
+    fd.append('anticipated_funding', data.anticipated_funding)
+    if (data.image == null) {
+    fd.append('image', data.image_link)
+    }else{
+    fd.append('image', data.image)
+    fd.append('project_image', data.image)  
+    }
+   
+
+    fd.append('created_by', data.created_by)
+    fd.append('district_id', data.district_id)
+    if (data.club_id != null) {
+      fd.append('club_id', data.club_id)
+    }
+    axios
+      .post("http://74.208.135.85/project/updateById", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Request-Method": "POST"
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        return res
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  },
+
+
+
   async deleteById(id) {
 
     const queryHelper = {

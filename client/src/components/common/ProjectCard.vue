@@ -5,18 +5,35 @@
   >
     <div class="inner-box">
       <div class="image">
-        <img
-          v-if="
-            project.image_link == null
+        <a
+          @click="
+            () =>
+              this.$router.push({
+                name:
+                  'ProjectCardDetails',
+                params: {
+                  projectIdProp: parseInt(
+                    projectId,
+                  ),
+                },
+              })
           "
-          src="../../assets/causes-2.jpg"
-          alt=""
-        />
-        <img
-          v-else
-          :src="project.image_link"
-          alt=""
-        />
+        >
+          <img
+            v-if="
+              project.image_link ==
+                null ||
+              project.image_link == ''
+            "
+            src="../../assets/causes-2.jpg"
+            alt=""
+          />
+          <img
+            v-else
+            :src="project.image_link"
+            alt=""
+          />
+        </a>
       </div>
       <div class="lower-box">
         <div class="content">
@@ -85,7 +102,7 @@
           <div class="causes-info">
             <strong>Raised</strong> ${{
               Math.trunc(
-                project.current_funds,
+                project.anticipated_funding,
               )
             }}/
             <span class="theme_color"
@@ -123,7 +140,8 @@ export default {
       30,
     )
     this.percentage = Math.trunc(
-      (this.project.current_funds /
+      (this.project
+        .anticipated_funding /
         this.project.funding_goal) *
         100,
     )

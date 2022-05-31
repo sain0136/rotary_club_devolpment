@@ -133,8 +133,13 @@
         </div>
         <!-- grid-->
 
-        <div class="project-grid" v-if="filteredProj.length !=0 ">
-          <ProjectCard 
+        <div
+          class="project-grid"
+          v-if="
+            filteredProj.length != 0
+          "
+        >
+          <ProjectCard
             v-for="project in filteredProj"
             :key="project.id"
             :project="project"
@@ -194,6 +199,7 @@ import store from '../../store/index'
 import project from '../../api-factory/project'
 import ProjectCard from '../../components/common/ProjectCard.vue'
 import { watchEffect } from 'vue'
+import Resources from '../../Resources'
 
 export default {
   name: 'ProjectsTable',
@@ -212,15 +218,9 @@ export default {
       region: '',
       areaFocus: '',
       year: Number,
-      areaOfFocus: [
-        'Peace Conflict Prevention',
-        'Disease Prevention And Treatment',
-        'Water And Sanitation',
-        'Maternal And Child Health',
-        'Basic Education And Literacy',
-        'Economic And Community Development',
-        'Environment',
-      ],
+      areaOfFocus:
+        Resources.areaOfFocus,
+
       apiData: {
         current_page: 1,
         limit: 6,
@@ -228,24 +228,10 @@ export default {
         noSearch: true,
       },
       meta: Object,
-      regionList: [
-        'Africa',
-        'Central America',
-        'North America',
-        'South America',
-        'Asia',
-        'South East Asia',
-        'Eastern Europe',
-        'Western Europe',
-        'Middle East',
-      ],
-      statusList: [
-        'Looking for funding',
-        'Fully funded',
-        'Pending approval',
-        'Approved',
-        'Completed',
-      ],
+      regionList: Resources.regionList,
+      statusList: Resources.statusList,
+      searchTermConversionMap:
+        Resources.searchTermConversionMap(),
     }
   },
   computed: {
@@ -318,10 +304,19 @@ export default {
         this.filteredProj = this.projects.filter(
           project => {
             if (this.areaFocus != '') {
-              if (
-                project.area_focus ==
-                this.areaFocus
-              ) {
+               let searchTerm = this.searchTermConversionMap.get(
+                this.areaFocus,
+              )
+              const asArray = Object.entries(
+                project.areaFocusObject,
+              )
+              const filtered = asArray.filter(
+                ([key, value]) =>
+                  key ==
+                    searchTerm &&
+                  value == true,
+              )
+              if (filtered.length > 0) {
                 return project
               }
             }
