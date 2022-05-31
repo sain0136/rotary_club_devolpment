@@ -123,7 +123,7 @@ export default class ProjectsController {
         areaFocus: areaFocus,
         estimatedCompletion: convertedEstimatedCompletion,
         fundingGoal: fundingGoal,
-        currentFunds: currentFunds,
+        anticipatedFunding: anticipatedFunding,
         createdBy: createdByUserId,
         region: region,
         rotaryYear: rotaryYear,
