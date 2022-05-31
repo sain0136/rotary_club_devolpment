@@ -63,8 +63,8 @@ export default class PledgesController {
     project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
     project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
 
-    const oldFunds: number = project.currentFunds
-    const newAmount: number = project.currentFunds + pledgeAmount
+    const oldFunds: number = project.anticipatedFunding
+    const newAmount: number = project.anticipatedFunding + pledgeAmount
     const user: User = await User.findOrFail(userId)
     await project.related('pledges').attach({
       [user.userId]: {
@@ -77,7 +77,7 @@ export default class PledgesController {
     })
     await project
       .merge({
-        currentFunds: newAmount,
+        anticipatedFunding: newAmount,
       })
       .save()
     return response.json({
@@ -127,11 +127,11 @@ export default class PledgesController {
       .pivotQuery()
       .select()
       .where({ pledge_id: pledgeId })
-    const oldFunds: number = project.currentFunds
+    const oldFunds: number = project.anticipatedFunding
     const newAmount: number = oldFunds - pledge[0].pledge_amount
     await project
       .merge({
-        currentFunds: newAmount,
+        anticipatedFunding: newAmount,
       })
       .save()
     await project.related('pledges').pivotQuery().where({ pledge_id: pledgeId }).del()
