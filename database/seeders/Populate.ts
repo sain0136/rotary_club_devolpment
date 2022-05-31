@@ -141,7 +141,7 @@ export default class PopulateSeeder extends BaseSeeder {
       },
     })
     const newProj: Project = await Project.create({
-      projectName: 'Restoration of African Water',
+      projectName: 'Peter and Ghana',
       grantType: GrantType[1],
       country: 'Ghana',
       areaFocus: JSON.stringify({
@@ -149,7 +149,7 @@ export default class PopulateSeeder extends BaseSeeder {
         Disease_Prevention_And_Treatment: true,
         Water_And_Sanitation: false,
         Maternal_And_Child_Health: false,
-        Basic_Education_And_Literacy: false,
+        Basic_Education_And_Literacy: true,
         Economic_And_Community_Development: false,
         Environment: false,
       }),
@@ -161,7 +161,7 @@ export default class PopulateSeeder extends BaseSeeder {
       anticipatedFunding: 500,
       projectStatus: ProjectStatus[1],
       estimatedCompletion: DateTime.fromFormat('2/14/2032', 'D'),
-      projectTheme: 'This is an advanced life saveing project to save african water. God blessed',
+      projectTheme: 'This is an advanced life saveing project to save african water in Ghana! To the the moon! ',
     })
     const user1: User = await User.findOrFail(1)
     await newProj.related('projectRole').attach({
