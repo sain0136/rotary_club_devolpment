@@ -12,13 +12,13 @@ import Drive from '@ioc:Adonis/Core/Drive'
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
     let allProjects: Project[] = await Project.all()
- 
-      for await (const project of allProjects) {
-        project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
-        project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
-        project.areaFocusObject = JSON.parse(project.areaFocus)
-      }
-    
+
+    for await (const project of allProjects) {
+      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+      project.areaFocusObject = JSON.parse(project.areaFocus)
+    }
+
     return response.json({ allProjects })
   }
 
@@ -30,10 +30,9 @@ export default class ProjectsController {
       .select('*')
       .where({ districtId: districtId })
       .paginate(currentPage, limit)
-      let typeCastProjects = projects as unknown as Project[]
+    let typeCastProjects = projects as unknown as Project[]
     for await (const project of typeCastProjects) {
       project.areaFocusObject = JSON.parse(project.areaFocus)
-
     }
     return response.json({ projects })
   }
@@ -249,7 +248,7 @@ export default class ProjectsController {
     const userId: number = request.input('user_id')
     const user: User = await User.findOrFail(userId)
     const projects: Project[] = await Project.query().select().where({ created_by: user.userId })
-    if (projects.length >0) {
+    if (projects.length > 0) {
       for await (const project of projects) {
         project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
         project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
@@ -371,6 +370,8 @@ export default class ProjectsController {
     const anticipatedFunding: number = request.input('anticipated_funding')
 
     const itemisedBudget: any = request.input('itemised_budget')
+    const oldImageLink: any = request.input('image_link')
+
 
     let projectImage = request.file('image')
     let imageLink: string = ''
@@ -379,6 +380,9 @@ export default class ProjectsController {
       const fileName = projectImage.fileName
       const theUrl = await Drive.getUrl(String('local/' + fileName))
       imageLink = 'http://74.208.135.85' + theUrl
+    }
+    else{
+      imageLink=oldImageLink
     }
 
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
@@ -399,6 +403,8 @@ export default class ProjectsController {
           anticipatedFunding: anticipatedFunding,
           region: region,
           country: country,
+          imageLink: imageLink,
+          
         })
         .save()
 

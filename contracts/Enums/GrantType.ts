@@ -1,7 +1,7 @@
 enum GrantType {
-  'Club/District Project' = 1,
-  'District Simple' = 2,
-  'District Matching' = 3,
+  'Club Project' = 1,
+  'District Simplified Project' = 2,
+  'District Matching Project' = 3,
   'Global Project' = 4,
 }
 
