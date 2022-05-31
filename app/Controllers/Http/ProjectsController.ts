@@ -30,8 +30,8 @@ export default class ProjectsController {
       .select('*')
       .where({ districtId: districtId })
       .paginate(currentPage, limit)
-
-    for await (const project of projects) {
+      let typeCastProjects = projects as Project[]
+    for await (const project of typeCastProjects) {
       project.areaFocusObject = JSON.parse(project.areaFocus)
 
     }
