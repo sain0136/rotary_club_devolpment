@@ -9,12 +9,12 @@ import AboutUs from '../views/About.vue'
 
 
 export default {
-path:'/',
+path:'/Home',
 name:'Home',
 component: AppHome,
 children: [
   {
-    path: '/',
+    path: '/Home',
     component: Home,
     name: 'Home',
   },

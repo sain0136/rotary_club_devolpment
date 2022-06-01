@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <!-- Admin Login Form Conatiner -->
+  <div class="container">
+    <img
+      src="../assets/logo-rotary.png"
+      alt=""
+    />
     <form>
-      <img
-        src="../assets/logo-rotary.png" class="logo-img"
-        alt=""
-      />
+      <!-- Verification Error -->
       <p
         v-if="
           $store.state
@@ -14,29 +16,32 @@
       >
         Credentials are not valid!
       </p>
-      <span>Username:    <input
-        type="text"
-        name="username"
-        placeholder="username"
-        v-model="username"
-        
-      /></span>
-  
+      <div class="wrapper">
+        <span>Username:</span>
+        <input
+          type="text"
+          name="username"
+          placeholder="username"
+          v-model="username"
+        />
+      </div>
+      <div class="wrapper">
+        <span> Password:</span>
+        <input
+          type="password"
+          placeholder="password"
+          v-model="password"
+        />
+      </div>
       <br />
       <br />
-      <span> Password:    <input
-        type="password"
-        placeholder="password"
-        v-model="password"
-      /></span>
-    
-      <br />
-      <br />
-      <br />
+
+      <button
+        @click="adminLoginHandler"
+      >
+        Login
+      </button>
     </form>
-    <button @click="adminLoginHandler">
-      Login
-    </button>
   </div>
 </template>
 
@@ -44,7 +49,7 @@
 import store from '../../../store/index'
 
 export default {
-  name: 'AdminLogin',
+  name: 'AdminLoginForm',
   data() {
     return {
       username: '',
@@ -53,7 +58,6 @@ export default {
   },
   methods: {
     adminLoginHandler() {
-      
       store.dispatch(
         'validateSiteAdmin',
         {
@@ -61,43 +65,71 @@ export default {
           password: this.password,
         },
       )
-      var x = document.getElementById("error");
-       x.style.display = "none";
+      var x = document.getElementById(
+        'error',
+      )
+      x.style.display = 'none'
       function sleep(ms) {
-       return new Promise(resolve => setTimeout(resolve, ms));
-}
-sleep(500).then(() => { x.style.display = "block";});
-          //
-
+        return new Promise(resolve =>
+          setTimeout(resolve, ms),
+        )
+      }
+      sleep(500).then(() => {
+        x.style.display = 'block'
+      })
+      //
     },
   },
 }
 </script>
 
 <style scoped>
-img {
-  height:auto;
-  margin-bottom: 0.1em;
-}
-
-div {
+/* Form Styling */
+.container {
+  margin-left: auto;
   background-color: #ffffff;
-  width: 350px;
   margin-top: 10%;
+  border-radius: 15px;
+  border: 4px solid #ffb607;
+  padding: 1em 2.5em 2.5em 2em;
+  max-width: fit-content;
+}
+img {
+  margin-bottom: 2em;
+  max-width: 100%;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 15px;
-  border: 2px solid #ffb607;
-  width: 420px;
-  height: 420px;
-  padding: 35px 100px 15px 100px;
-  align: center;
+  display: block;
 }
-
+.wrapper {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.2em;
+  place-content: flex-end;
+}
+input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: .2em;
+  color: black;
+}
+input:hover {
+    background-color: #ffb607;
+}
+p {
+  display: block;
+  text-align: center;
+  margin-top: 2em;
+  color: crimson;
+}
 form {
   text-align: left;
-  
-  font-size: 18px;
+  font-size: 1.1em;
 }
 
 legend {
@@ -105,33 +137,22 @@ legend {
   font-weight: bolder;
 }
 
-
-button{
-	position: relative;
-    padding: 5px 75px;
-    line-height: 24px;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-	  margin: auto;
-    background-color: #ffb607;
-    border: 2px solid #ffb607;
-    text-transform: uppercase;
-	}
+button {
+  padding: 0.5em 3em;
+  line-height: 24px;
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 500;
+  margin: auto;
+  background-color: #ffb607;
+  border: 2px solid #ffb607;
+  text-transform: uppercase;
+  display: block;
+}
 
 button:hover {
-	color:#ffb607;
-	background:none;
-}
-
-#error {
-  color: red;
-  font-weight: bolder;
-}
-
-#success {
-  color: green;
-  font-weight: bolder;
+  color: #ffb607;
+  background: none;
 }
 
 #admin-page {
@@ -141,8 +162,7 @@ button:hover {
 #admin-page:hover {
   color: #ffb607;
 }
-span{
-    font-size: larger;
-
+span {
+  font-size: larger;
 }
 </style>

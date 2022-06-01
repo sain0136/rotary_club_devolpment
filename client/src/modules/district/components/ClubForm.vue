@@ -133,7 +133,7 @@
 import useValidate from '@vuelidate/core'
 import { required, maxLength, minLength, email } from '@vuelidate/validators'
 
-import SocialLinksSection from '../../../components/common/SocialLinksSection.vue'
+import SocialLinksSection from '../../../components/common/Forms/SocialLinksSection.vue'
 
 import club from '../../../api-factory/club'
 

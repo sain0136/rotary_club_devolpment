@@ -16,7 +16,20 @@ export default {
 <style>
 
 @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Lobster+Two:400,400i,700,700i|Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
-
+html, body {
+    max-width: 100%;
+/*     overflow-x:calc(100%);
+ */    height: 100%;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+}
+*, ::after, ::before {
+    /* box-sizing: border-box; */
+}
 /*Create button style*/
 .plus {
   position: relative;
@@ -84,8 +97,13 @@ td {
   width: 25%;
 }
 
-h2{
-  font-family: 'Lato', sans-serif;
+h1,h2,h3,h4,h5,h6{
+  position: relative;
+    font-weight: 700;
+    margin: 0px;
+    background: none;
+    line-height: 1.6em;
+    font-family: 'Montserrat', sans-serif;
     
 
 }

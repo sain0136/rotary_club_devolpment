@@ -1,7 +1,6 @@
 <template>
   <div class="admin-login">
-    <!-- <img src="../assets/admin-login-background.png" alt=""> -->
-    <AdminLoginForm />
+    <AdminLoginForm  />
   </div>
 </template>
 
@@ -16,30 +15,22 @@ export default {
     AdminLoginForm,
   },
   created() {
-    if (store.state.isSiteAdminLoggedIn) {
-      this.$router.push({name:'AdminHome'})
+    if (
+      store.state.isSiteAdminLoggedIn
+    ) {
+      this.$router.push({
+        name: 'AdminHome',
+      })
     }
   },
 }
 </script>
 
 <style scoped>
-
-.page-wrapper{
-	position:fixed;
-	top:0px;
-	left:0px;
-	padding:0px 15px;
-	margin:0 auto;
-	width: 100%;
-	height:100%;
-	background-color:#AEAEAE;
-}
-
 .admin-login {
-  position:relative;
-	display:block;
-	width:100%;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-left: auto;
 }
-
 </style>

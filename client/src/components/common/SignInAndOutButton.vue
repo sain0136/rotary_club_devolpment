@@ -3,7 +3,7 @@
     v-if="isAnybodyLoggedIn"
     @click="redirect(true)">
     Sign Out
-    <span>Hi your are signed in as the Website{{pageAccessed}}</span>
+   
   </button>
   <button 
     v-else
@@ -19,7 +19,8 @@ import store from '../../store/index'
 export default {
   name: 'SignInAndOutButton',
   props: {
-    pageAccessed: String
+    pageAccessed: String,
+    districtId: String,
   },
   computed: {
     isAnybodyLoggedIn() {
@@ -42,6 +43,7 @@ export default {
         this.$router.push("/adminlogin")
 
       } else if(this.pageAccessed == 'District') {
+        console
         this.$router.push(`/district/${this.districtId}/login`)
 
       } else if(this.pageAccessed == 'Club') {

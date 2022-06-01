@@ -2,10 +2,6 @@
   <div class="admin-page">
     <AdminHeader />
     <router-view />
-  <!--   v-slot="{ Component }"  <transition name="fade">
-        <component :is="Component"/>
-      </transition> -->
-    
     <AdminFooter class="admin-footer"/>
 
   </div>

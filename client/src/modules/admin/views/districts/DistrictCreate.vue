@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import DistrictForm from '../../../../components/common/DistrictForm.vue'
+import DistrictForm from '../../../../components/common/Forms/DistrictForm.vue'
 
 export default {
   name: 'DistrictCreate',

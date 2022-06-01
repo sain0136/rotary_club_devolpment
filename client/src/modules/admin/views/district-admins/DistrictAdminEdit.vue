@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
     <DistrictAdminForm
       isEditOrCreate="Edit"
     />
@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import DistrictAdminForm from '../../components/DistrictAdminForm.vue'
+import DistrictAdminForm from '../../../../components/common/Forms/DistrictAdminForm.vue'
 
 export default {
   name: 'DistrictAdminEdit',
@@ -16,3 +16,7 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+</style>

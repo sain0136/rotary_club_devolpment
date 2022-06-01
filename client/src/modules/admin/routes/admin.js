@@ -1,12 +1,9 @@
 import Admin from '../views/AppAdmin'
-
 import AdminHome from '../views/AdminHome'
-
 import Districts from '../views/districts/AppDistricts'
 import DistrictsViews from '../views/districts/DistrictsView'
 import DistrictCreate from '../views/districts/DistrictCreate'
 import DistrictEdit from '../views/districts/DistrictEdit'
-
 import DistrictAdmins from '../views/district-admins/AppDistrictAdmins'
 import DistrictAdminsViews from '../views/district-admins/DistrictAdminsView'
 import DistrictAdminCreate from '../views/district-admins/DistrictAdminCreate'
@@ -47,12 +44,13 @@ export default {
         {
           path: 'create',
           component: DistrictCreate,
-          name: 'NewDistrict',
+          name: 'DistrictCreate',
         },
         {
           path: ':id/edit',
           component: DistrictEdit,
-          // name: 'DistrictEdit',
+          name: 'SiteAdminDistrictEdit',
+          props:true,
         },
       ],
     },

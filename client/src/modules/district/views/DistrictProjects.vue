@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="district-page-head">
-    <h1 class="district-page-title">Projects</h1>
+    <h1 class="district-page-title">Our Projects</h1>
   </div> <br> <br>
   <div class="projects-container">
     <ProjectsTable

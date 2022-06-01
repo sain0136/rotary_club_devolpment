@@ -1,76 +1,161 @@
 <template>
-  <div class="login-container">
-    <br>
-    <img src="../assets/login-icon.png" alt="">
-    <form>
-      <p v-if="$store.state.isDistrictAdminRejected" id="error">Credentials not valid!</p>
-      <div v-if="$store.state.isDistrictAdminLoggedIn && !$store.state.isDistrictAdminRejected">
-        <p id="success">Logged In!</p>
-        <!-- <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br>  -->
+  <div class="wrapper">
+    <div class="login-container">
+      <br />
+      <div class="image-wrapper">
+        <img
+          src="../assets/login-icon.png"
+          alt=""
+        />
       </div>
-      <input type="text" name="userId" placeholder="ID"
-        v-model="userId"> <br> <br>
-      <input type="password" placeholder="password"
-        v-model="password"> <br> <br>
-    </form>
-      <button @click="districtAdminLoginHandler">
-      Login</button>
+      <form>
+        <p
+          v-if="
+            $store.state
+              .isDistrictAdminRejected
+          "
+          id="error"
+        >
+          Credentials not valid!
+        </p>
+        <div
+          v-if="
+            $store.state
+              .isDistrictAdminLoggedIn &&
+            !$store.state
+              .isDistrictAdminRejected
+          "
+        >
+          <p id="success">Logged In!</p>
+          <!-- <router-link id="admin-page" to="/admin">Admin Page</router-link> <br> <br>  -->
+        </div>
+        <label for="email"
+          >Email Address:</label
+        >
+        <input
+          type="text"
+          name="userId"
+          placeholder="ID"
+          v-model="email"
+        />
+        <br />
+        <br />
+        <label for="password"
+          >Password:</label
+        >
+        <input
+          type="password"
+          placeholder="password"
+          v-model="password"
+        />
+        <br />
+        <br />
+      </form>
+      <button
+        @click="
+          districtAdminLoginHandler
+        "
+      >
+        Login
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-
 import store from '../../../store/index'
 
 export default {
-  name: 'DistrictLogin',
+  name: 'DistrictLoginForm',
   data() {
     return {
-      userId: '',
-      password: ''
+      email: '',
+      password: '',
     }
   },
   methods: {
     async districtAdminLoginHandler() {
-      await store.dispatch('validateDistrictAdmin', {
-          id: this.$router.currentRoute.value.params.id,
-          user_id: this.userId,
-          password: this.password, 
-        })
-      this.redirect()
+      await store.dispatch(
+        'validateDistrictAdmin',
+        {
+          id: this.$router.currentRoute
+            .value.params.id,
+          email: this.email,
+          password: this.password,
+        },
+      )
+      if (
+        store.state
+          .isDistrictAdminLoggedIn
+      ) {
+        this.redirect()
+      } else {
+        var x = document.getElementById(
+          'error',
+        )
+        x.style.display = 'none'
+        await this.timeOut(500)
+      }
+    },
+    async timeOut(ms) {
+      setTimeout(() => {
+        var x = document.getElementById(
+          'error',
+        )
+        x.style.display = 'block'
+      }, ms)
     },
     redirect() {
-      if(store.state.isDistrictAdminLoggedIn) {
-        console.log('hello')
-        this.$router.push('./home')
-      }
-    }
-  }
+      window.location.replace(
+        `/district/${this.$router.currentRoute.value.params.id}/home`,
+      )
+    },
+  },
 }
-
 </script>
 
 <style scoped>
+/* Wrapper */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  font-family: 'Montserrat', sans-serif;
 
-img {
-  height: 50px;
-  margin-left: 40%;
 }
-
+/* login */
 .login-container {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: rgba(0, 0, 0, 0.171);
-  width: 20%;
-  height: 350px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.171
+  );
+  padding: 2em;
 }
-
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
+img {
+  height: 4em;
+}
+/* login */
+#error {
+  color: red;
+  font-weight: bolder;
+  padding-top: .2em;
+}
 form {
   text-align: center;
-  margin: auto; 
-  /* width: 50%; */
-  margin-top: 10%;
-  font-size: 18px;
+  margin: auto;
+  font-size: 1em;
+}
+label {
+  font-weight: bolder;
 }
 
 legend {
@@ -79,30 +164,22 @@ legend {
 
 input {
   border: none;
-  background-color: transparent;
-  border-bottom: 1px solid rgba(255,0,0,0.5);
+  display: block;
+  font-size: 1em;
 }
-
+/* submit button */
 button {
   background-color: #ffb607;
   color: whitesmoke;
-  font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
   border: none;
-  width: 30%;
-  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
+  box-shadow: 0px 1px 5px 0
+    rgba(0, 0, 0, 0.425);
   border-radius: 5%;
-  padding: 12px;
-  margin-left: 35%;
+  padding: .8em;
 }
 
 button:hover {
   opacity: 0.5;
 }
-
-#error {
-  color: red;
-  font-weight: bolder;
-}
-
 </style>

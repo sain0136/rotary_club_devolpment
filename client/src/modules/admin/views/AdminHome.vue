@@ -1,45 +1,61 @@
 <template>
-  <div class="sections" id="admin-home">
-    <h2>Welcome to the admin portal!<br /> This is the admin portal.</h2> <br>
-    <img src="../assets/admin-logo-2.png">
+  <!-- SiteAdmin Home -->
+  <div class="sections" id="admin-home" key="one">
+    <h2>
+      Welcome to the admin portal!<br />
+      This is the admin portal.
+    </h2>
+    <br />
+    <div class="image">
+      <img
+        src="../assets/admin-logo-2.png"
+      />
+    </div>
+
     <p>
-      From this page; you can create, edit, and delete districts and district admins. <br>
-      You can also assign admins to the districts once they are created.
+      From this page you can create,
+      edit, and delete districts. <br />
+      You can additionally assign admins
+      to the districts once they are
+      created.
     </p>
-    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AdminHome',
+  name: 'SiteAdminHome',
   components: {},
 }
 </script>
 
 <style scoped>
-
+/* Site Admin Home Styling */
 .sections {
-  height: 650px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3em;
 }
-
+.image {
+  display: flex;
+  justify-content: center;
+}
 img {
-  margin-left: 45%;
-  height: 150px;
-}
+ max-width: 10%;
+  height: auto;}
 
 h2 {
   margin-top: 5%;
   text-align: center;
   text-transform: uppercase;
-  color: #1A374D;
+  color: #1a374d;
 }
 
 p {
-  color: #1A374D;
+  margin-top: 2em;
+  color: #1a374d;
   text-align: center;
   font-weight: normal;
   font-size: 20px;
 }
-
 </style>
