@@ -15,10 +15,13 @@ const routes = [
   district,
   club,
   {
+    path: '/', redirect: `/district/${1}/home`
+  },
+  {
     //exit path and compent are irlevent code i believ further testing but before ente 
     //href is what important
-      path: "/exit",
-     component: exit, 
+    path: "/exit",
+    component: exit,
     beforeEnter(to, from, next) {
       try {
         const districtSocials =
@@ -38,7 +41,7 @@ const routes = [
   },
   {
     path: "/exit",
-    component: exit, 
+    component: exit,
     beforeEnter(to, from, next) {
       try {
         const districtSocials =

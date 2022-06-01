@@ -17,28 +17,24 @@
         Credentials are not valid!
       </p>
       <div class="wrapper">
-
-        <span
-        >Username:</span>
+        <span>Username:</span>
         <input
           type="text"
           name="username"
           placeholder="username"
           v-model="username"
-      />
+        />
       </div>
       <div class="wrapper">
-           <span>
-        Password:</span>
+        <span> Password:</span>
         <input
           type="password"
           placeholder="password"
           v-model="password"
-      />
-</div>
+        />
+      </div>
       <br />
       <br />
- 
 
       <button
         @click="adminLoginHandler"
@@ -106,6 +102,25 @@ img {
   margin-right: auto;
   display: block;
 }
+.wrapper {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.2em;
+  place-content: flex-end;
+}
+input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: .2em;
+  color: black;
+}
+input:hover {
+    background-color: #ffb607;
+}
 p {
   display: block;
   text-align: center;
@@ -140,7 +155,6 @@ button:hover {
   background: none;
 }
 
-
 #admin-page {
   text-decoration: none;
 }
@@ -150,15 +164,5 @@ button:hover {
 }
 span {
   font-size: larger;
-}
-.wrapper{
-margin-bottom: 1em;
-display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-      column-gap: .2em;
-    place-content: flex-end;
-
 }
 </style>
