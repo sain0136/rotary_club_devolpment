@@ -171,6 +171,7 @@ export default class PopulateSeeder extends BaseSeeder {
         role: 1,
       },
     })
+
     const secPro: Project = await Project.create({
       projectName: 'Cornwall Ontario Park',
       grantType: GrantType[1],
@@ -255,9 +256,41 @@ export default class PopulateSeeder extends BaseSeeder {
         'the first section of a paragraph; should include the topic sentence and any other sentences at the beginning of the paragraph that give background information or provide a transition.',
       estimatedCompletion: DateTime.fromFormat('5/14/2022', 'D'),
     })
-    const user3: User = await User.findOrFail(1)
+    const user3: User = await User.findOrFail(2)
     await thirdPro.related('projectRole').attach({
       [user3.userId]: {
+        role: 1,
+      },
+    })
+
+    const fourthProj: Project = await Project.create({
+      projectName: 'Cornwall Rebuilding',
+      grantType: GrantType[1],
+      country: 'France',
+      areaFocus: JSON.stringify({
+        Peace_Conflict_Prevention: true,
+        Disease_Prevention_And_Treatment: true,
+        Water_And_Sanitation: false,
+        Maternal_And_Child_Health: false,
+        Basic_Education_And_Literacy: true,
+        Economic_And_Community_Development: true,
+        Environment: false,
+      }),
+      districtId: 1,
+      clubId: 1,
+      createdBy: 2,
+      region: Region[1],
+      rotaryYear: 2022,
+      fundingGoal: 2500,
+      anticipatedFunding: 1400,
+      projectStatus: ProjectStatus[1],
+      estimatedCompletion: DateTime.fromFormat('2/14/2032', 'D'),
+      projectTheme:
+        'This is an advanced life saveing project to save african water in Ghana! To the the moon! ',
+    })
+    const user4: User = await User.findOrFail(3)
+    await fourthProj.related('projectRole').attach({
+      [user4.userId]: {
         role: 1,
       },
     })
