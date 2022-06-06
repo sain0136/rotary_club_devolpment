@@ -40,7 +40,7 @@ export default class ProjectsController {
     } else {
       const projects: ModelPaginatorContract<Project> = await Project.query()
         .select('*')
-        .where({ id: id })
+        .where({ clubId: id })
         .paginate(currentPage, limit)
       let typeCastProjects = projects as unknown as Project[]
       for await (const project of typeCastProjects) {
