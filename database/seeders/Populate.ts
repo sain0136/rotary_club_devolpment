@@ -134,6 +134,7 @@ export default class PopulateSeeder extends BaseSeeder {
       password: '123456',
       clubId: 1,
     })
+    role = 7
     await clubUser.related('clubRole').attach({
       [1]: {
         club_role: RoleType[role],
@@ -161,7 +162,8 @@ export default class PopulateSeeder extends BaseSeeder {
       anticipatedFunding: 500,
       projectStatus: ProjectStatus[1],
       estimatedCompletion: DateTime.fromFormat('2/14/2032', 'D'),
-      projectTheme: 'This is an advanced life saveing project to save african water in Ghana! To the the moon! ',
+      projectTheme:
+        'This is an advanced life saveing project to save african water in Ghana! To the the moon! ',
     })
     const user1: User = await User.findOrFail(1)
     await newProj.related('projectRole').attach({
