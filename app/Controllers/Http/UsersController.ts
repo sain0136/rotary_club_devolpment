@@ -24,41 +24,30 @@ export default class UsersController {
     const email: number = request.input('email')
     const districtOrClubId: number = request.input('id')
 
-    let userByEmail: User[] = await User.query().select().where({email:email})
-    let user :User = userByEmail[0]
-    
+    let userByEmail: User[] = await User.query().select().where({ email: email })
+    let user: User = userByEmail[0]
+
     let verifiedAndAccessGranted: Boolean = false
-    if (
-      (await Hash.verify(user.password, password)) &&
-      user.districtId == districtOrClubId
-    ) {
+    if ((await Hash.verify(user.password, password)) && user.districtId == districtOrClubId) {
       verifiedAndAccessGranted = true
-    } else if (
-      (await Hash.verify(user.password, password)) &&
-      user.clubId == districtOrClubId
-    ) {
+    } else if ((await Hash.verify(user.password, password)) && user.clubId == districtOrClubId) {
       verifiedAndAccessGranted = true
     } else {
       return response.json({ Verified: verifiedAndAccessGranted })
     }
 
     if (user.clubId !== null && user.clubId !== undefined) {
-      user.role = await user
-        .related('clubRole')
-        .pivotQuery()
-        .where({ user_id: user.userId })
+      user.role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
     } else {
-      user.role = await user
-        .related('districtRole')
-        .pivotQuery()
-        .where({ user_id: user.userId })
+      user.role = await user.related('districtRole').pivotQuery().where({ user_id: user.userId })
     }
     return response.json({
       Verified: verifiedAndAccessGranted,
       Hash: user.password,
       PlainText: password,
-      email:email,
-      user_id:user.userId
+      email: email,
+      user_id: user.userId,
+      role: user.role,
     })
   }
   public async jsonGetById({ request, response }: HttpContextContract) {
