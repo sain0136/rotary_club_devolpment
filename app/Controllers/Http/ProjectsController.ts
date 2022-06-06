@@ -23,18 +23,31 @@ export default class ProjectsController {
   }
 
   public async paginationIndex({ request, response }: HttpContextContract) {
-    const districtId: number = request.input('district_id')
+    const districtBoolean: number = request.input('district_boolean')
+    const id: number = request.input('district_id')
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
-    const projects: ModelPaginatorContract<Project> = await Project.query()
-      .select('*')
-      .where({ districtId: districtId })
-      .paginate(currentPage, limit)
-    let typeCastProjects = projects as unknown as Project[]
-    for await (const project of typeCastProjects) {
-      project.areaFocusObject = JSON.parse(project.areaFocus)
+    if (districtBoolean) {
+      const projects: ModelPaginatorContract<Project> = await Project.query()
+        .select('*')
+        .where({ districtId: id })
+        .paginate(currentPage, limit)
+      let typeCastProjects = projects as unknown as Project[]
+      for await (const project of typeCastProjects) {
+        project.areaFocusObject = JSON.parse(project.areaFocus)
+      }
+      return response.json({ projects })
+    } else {
+      const projects: ModelPaginatorContract<Project> = await Project.query()
+        .select('*')
+        .where({ id: id })
+        .paginate(currentPage, limit)
+      let typeCastProjects = projects as unknown as Project[]
+      for await (const project of typeCastProjects) {
+        project.areaFocusObject = JSON.parse(project.areaFocus)
+      }
+      return response.json({ projects })
     }
-    return response.json({ projects })
   }
 
   public async create({}: HttpContextContract) {}
@@ -372,7 +385,6 @@ export default class ProjectsController {
     const itemisedBudget: any = request.input('itemised_budget')
     const oldImageLink: any = request.input('image_link')
 
-
     let projectImage = request.file('image')
     let imageLink: string = ''
     if (projectImage) {
@@ -380,9 +392,8 @@ export default class ProjectsController {
       const fileName = projectImage.fileName
       const theUrl = await Drive.getUrl(String('local/' + fileName))
       imageLink = 'http://74.208.135.85' + theUrl
-    }
-    else{
-      imageLink=oldImageLink
+    } else {
+      imageLink = oldImageLink
     }
 
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
@@ -404,7 +415,6 @@ export default class ProjectsController {
           region: region,
           country: country,
           imageLink: imageLink,
-          
         })
         .save()
 
