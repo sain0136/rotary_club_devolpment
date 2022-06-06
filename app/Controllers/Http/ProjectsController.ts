@@ -24,7 +24,7 @@ export default class ProjectsController {
 
   public async paginationIndex({ request, response }: HttpContextContract) {
     const districtBoolean: number = request.input('district_boolean')
-    const id: number = request.input('district_id')
+    const id: number = request.input('id')
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
     if (districtBoolean) {
