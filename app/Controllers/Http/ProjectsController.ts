@@ -151,7 +151,16 @@ export default class ProjectsController {
           role: roleType,
         },
       })
-
+      if (
+        newProject.anticipatedFunding == newProject.fundingGoal &&
+        newProject.projectStatus == 'Looking for funding'
+      ) {
+        await newProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
       const roleTitle = ProjectRoleType[roleType]
 
       newProject['projectRoleTitle'] = roleTitle
@@ -214,6 +223,16 @@ export default class ProjectsController {
           role: roleType,
         },
       })
+      if (
+        newProject.anticipatedFunding == newProject.fundingGoal &&
+        newProject.projectStatus == 'Looking for funding'
+      ) {
+        await newProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
       const roleTitle = ProjectRoleType[roleType]
       newProject['projectRoleTitle'] = roleTitle
 
@@ -417,7 +436,16 @@ export default class ProjectsController {
           imageLink: imageLink,
         })
         .save()
-
+      if (
+        updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
+        updatedProject.projectStatus == 'Looking for funding'
+      ) {
+        await updatedProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
       return response.json({
         updatedProject,
         Hello: 'old file below',
@@ -462,7 +490,16 @@ export default class ProjectsController {
       updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
       updatedProject.areaFocusObject = JSON.parse(updatedProject.areaFocus)
-
+      if (
+        updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
+        updatedProject.projectStatus == 'Looking for funding'
+      ) {
+        await updatedProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
       return response.json({
         updatedProject,
         Hello: 'old file below',

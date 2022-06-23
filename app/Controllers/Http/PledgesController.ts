@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Project from 'App/Models/Project'
 import User from 'App/Models/User'
-
+import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 
 export default class PledgesController {
   public async index({ response }: HttpContextContract) {
@@ -80,6 +80,16 @@ export default class PledgesController {
         anticipatedFunding: newAmount,
       })
       .save()
+    if (
+      project.anticipatedFunding == project.fundingGoal &&
+      project.projectStatus == 'Looking for funding'
+    ) {
+      await project
+        .merge({
+          projectStatus: ProjectStatus[2],
+        })
+        .save()
+    }
     return response.json({
       ProjectyouPledged: 'You pledged to this old amount' + oldFunds + ' to this project:',
       project,
@@ -99,9 +109,9 @@ export default class PledgesController {
     const user: User = await User.findOrFail(userId)
     const pledge: any[] = await Database.query().from('pledge').where({ user_id: user.userId })
     for await (const pled of pledge) {
-      let projectId:Number = pled.project_id
-      let project:Project = await Project.findOrFail(projectId)
-      pled['project_name'] = project.projectName;
+      let projectId: Number = pled.project_id
+      let project: Project = await Project.findOrFail(projectId)
+      pled['project_name'] = project.projectName
     }
     return response.json({ Yourpledges: pledge })
   }
