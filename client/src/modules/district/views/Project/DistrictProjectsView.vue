@@ -43,7 +43,7 @@
                     editOrCreateProp:
                       'create',
                     projectLabel:
-                      'District'
+                      'District',
                   },
                 })
             "
@@ -64,9 +64,8 @@
                     projectTypeProp: 2,
                     editOrCreateProp:
                       'create',
-                       projectLabel:
-                      'District'
-
+                    projectLabel:
+                      'District',
                   },
                 })
             "
@@ -119,7 +118,7 @@
 </template>
 
 <script>
-import MyLoggedProjectsTable from '../../../../components/common/MyLoggedProjectsTable.vue'
+import MyLoggedProjectsTable from '../../../../components/common/Tables/MyLoggedProjectsTable.vue'
 export default {
   name: 'DistrictProjectsView',
   components: {

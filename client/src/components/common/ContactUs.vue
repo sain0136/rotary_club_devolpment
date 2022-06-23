@@ -191,9 +191,8 @@ export default {
       this.address =
         clubData.club_address
       this.email = clubData.club_email
-      this.city = clubData.meeting_city
-      this.phone =
-        clubData.district_phone
+      this.city = clubData.club_city
+      this.phone = clubData.club_phone
     }
   },
   computed: {

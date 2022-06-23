@@ -1,49 +1,51 @@
 <template>
   <div class="container">
-    <ClubProjectForm
+    <DistrictOrClubProjectForm
       v-if="projectTypeProp == 1"
       :editOrCreateProp="
         this.editOrCreateProp
       "
       :projectLabel="this.projectLabel"
+      :projectIdProp="
+        this.projectIdProp
+      "
     />
     <DistrictSimplifiedProjectForm
       v-else-if="projectTypeProp == 2"
       :isThisEditOrCreateProp="
-        editOrCreateProp
+        this.editOrCreateProp
       "
       :isThisDistrictOrClubProp="
-        projectLabel
+        this.projectLabel
+      "
+      :projectIdProp="
+        this.projectIdProp
       "
     />
   </div>
 </template>
 
 <script>
-import ClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
 import DistrictSimplifiedProjectForm from '../../../../components/common/Forms/DistrictSimplifiedProjectForm.vue'
+import DistrictOrClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
+
 export default {
-  name: 'DistrictProjectCreateView',
+  name: 'ClubProjectEdit',
   components: {
-    ClubProjectForm,
+    DistrictOrClubProjectForm,
     DistrictSimplifiedProjectForm,
   },
   props: {
+    //dtermine v-if for the proper project type
     projectTypeProp: Number,
+    //determine what project it is by id
+    projectIdProp: Number,
+    //edit or create explict
     editOrCreateProp: String,
+    //label
     projectLabel: String,
-  },
-  created() {
-    console.log(
-      this.projectIdProp +
-        this.editOrCreateProp,
-    ) // => 2
   },
 }
 </script>
 
-<style scoped>
-.container {
-  height: 60%;
-}
-</style>
+<style scoped></style>

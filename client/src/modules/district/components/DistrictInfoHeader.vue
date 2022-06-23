@@ -40,7 +40,9 @@
                   .isSiteAdminLoggedIn
               )
             "
-            :to="`/district/${this.$router.currentRoute.value.params.id}/login`"
+            :to="
+              `/district/${this.$router.currentRoute.value.params.id}/login`
+            "
           >
             <i
               v-if="
@@ -75,16 +77,6 @@ export default {
   },
   async created() {
     watchEffect(() => {
-      console.log(
-        store.state.currentDistrictData,
-      )
-      console.log(
-        store.state.currentDistrictData
-          .district_email,
-      )
-      console.log(
-        store.state.districtSocials,
-      )
       const districtData =
         store.state.currentDistrictData
       const districtSocials =

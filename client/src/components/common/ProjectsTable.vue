@@ -175,7 +175,7 @@
         <li
           v-if="
             apiData.current_page !==
-            apiData.last_page
+              apiData.last_page
           "
         >
           <a
@@ -230,8 +230,7 @@ export default {
       meta: Object,
       regionList: Resources.regionList,
       statusList: Resources.statusList,
-      searchTermConversionMap:
-        Resources.searchTermConversionMap(),
+      searchTermConversionMap: Resources.searchTermConversionMap(),
     }
   },
   computed: {
@@ -304,7 +303,7 @@ export default {
         this.filteredProj = this.projects.filter(
           project => {
             if (this.areaFocus != '') {
-               let searchTerm = this.searchTermConversionMap.get(
+              let searchTerm = this.searchTermConversionMap.get(
                 this.areaFocus,
               )
               const asArray = Object.entries(
@@ -312,8 +311,7 @@ export default {
               )
               const filtered = asArray.filter(
                 ([key, value]) =>
-                  key ==
-                    searchTerm &&
+                  key == searchTerm &&
                   value == true,
               )
               if (filtered.length > 0) {
@@ -333,10 +331,13 @@ export default {
         this.pageToDisplay == 'District'
       ) {
         const projectObject = await project.indexPagination(
-          this.$router.currentRoute
-            .value.params.id,
+          parseInt(
+            this.$router.currentRoute
+              .value.params.id,
+          ),
           this.apiData.limit,
           this.apiData.current_page,
+          true,
         )
         this.filteredProj =
           projectObject.projects.data
@@ -348,10 +349,22 @@ export default {
       } else if (
         this.pageToDisplay == 'Club'
       ) {
-        this.projects = await project.clubIndex(
-          this.$router.currentRoute
-            .value.params.id,
+        const projectObject = await project.indexPagination(
+          parseInt(
+            this.$router.currentRoute
+              .value.params.id,
+          ),
+          this.apiData.limit,
+          this.apiData.current_page,
+          false,
         )
+        this.filteredProj =
+          projectObject.projects.data
+        this.projects =
+          projectObject.projects.data
+        this.meta =
+          projectObject.projects.meta
+        this.apiData.last_page = this.meta.last_page
       } else {
         this.projects = await project.userIndex(
           store.state
@@ -475,7 +488,6 @@ h3 {
   margin-bottom: 1em;
 }
 .form-entry label {
-  float: left;
   padding: 0.5em;
   display: inline-block;
   max-width: 100%;

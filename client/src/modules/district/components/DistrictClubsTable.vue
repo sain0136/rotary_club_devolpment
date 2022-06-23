@@ -11,6 +11,7 @@
         <td>{{ club.club_id }}</td>
         <td>{{ club.club_name }}</td>
         <td>
+          <!-- View button -->
           <button
             title="View Club"
             class="crud-buttons"
@@ -26,14 +27,15 @@
               icon="external-link-alt"
             ></font-awesome-icon>
           </button>
+          <!-- edit button -->
           <button
             title="Edit Club"
             class="crud-buttons"
             v-if="
               $store.state
                 .isSiteAdminLoggedIn ||
-              $store.state
-                .isDistrictAdminLoggedIn
+                $store.state
+                  .isDistrictAdminLoggedIn
             "
             @click="
               () =>
@@ -47,14 +49,41 @@
               icon="edit"
             ></font-awesome-icon>
           </button>
+          <!-- Create new users -->
+          <button
+            title="Create New Users"
+            class="crud-buttons"
+            v-if="
+              $store.state
+                .isSiteAdminLoggedIn ||
+                $store.state
+                  .isDistrictAdminLoggedIn
+            "
+            @click="
+              () =>
+                this.$router.push({
+                  name: 'userEditApp',
+                  params: {
+                    clubIdProp:
+                      club.club_id,
+                  },
+                })
+            "
+          >
+            <font-awesome-icon
+              class="social-icon"
+              icon="coffee"
+            ></font-awesome-icon>
+          </button>
+          <!-- delete -->
           <button
             title="Delete Club"
             class="crud-buttons"
             v-if="
               $store.state
                 .isSiteAdminLoggedIn ||
-              $store.state
-                .isDistrictAdminLoggedIn
+                $store.state
+                  .isDistrictAdminLoggedIn
             "
             @click="
               deleteClub(club.club_id)

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ClubForm isEditOrCreate="Create" />
+    <ClubForm
+      isEditOrCreate="Edit"
+      fromClubEditViewProp="true"
+    />
   </div>
 </template>
 
@@ -8,9 +11,11 @@
 import ClubForm from '../../../../components/common/Forms/ClubForm.vue'
 
 export default {
-  name: 'ClubCreate',
+  name: 'EditClub',
   components: {
     ClubForm,
   },
 }
 </script>
+
+<style scooped></style>

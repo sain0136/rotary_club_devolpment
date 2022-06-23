@@ -283,7 +283,7 @@
               class="form-field"
               v-if="
                 isEditOrCreate ==
-                'Create'
+                  'Create'
               "
             >
               <span>Password:</span>
@@ -459,7 +459,7 @@ export default {
       },
       password: {
         required: requiredIf(
-          function () {
+          function() {
             return (
               this.isEditOrCreate ==
               'Create'

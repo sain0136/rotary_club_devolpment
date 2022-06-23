@@ -3,11 +3,31 @@
     <table v-if="pledges.length != 0">
       <th>Pledge Id</th>
       <th>Amount</th>
-      <th v-if="isThisMyPledges != 'yes' ">Name </th>
-      <th v-if="isThisMyPledges != 'yes' ">Email</th>
-      <th v-if="isThisMyPledges != 'yes' ">Phone</th>
-      <th v-if="isThisMyPledges == 'yes' ">ProjectId</th>
-      <th v-if="isThisMyPledges == 'yes' ">Project Name</th>
+      <th
+        v-if="isThisMyPledges != 'yes'"
+      >
+        Name
+      </th>
+      <th
+        v-if="isThisMyPledges != 'yes'"
+      >
+        Email
+      </th>
+      <th
+        v-if="isThisMyPledges != 'yes'"
+      >
+        Phone
+      </th>
+      <th
+        v-if="isThisMyPledges == 'yes'"
+      >
+        ProjectId
+      </th>
+      <th
+        v-if="isThisMyPledges == 'yes'"
+      >
+        Project Name
+      </th>
       <tr
         id="pledges-project-info"
         v-for="pledge in pledges"
@@ -19,24 +39,45 @@
         <td>
           {{ pledge.pledge_amount }}
         </td>
-        <td v-if="isThisMyPledges != 'yes' ">
+        <td
+          v-if="
+            isThisMyPledges != 'yes'
+          "
+        >
           {{ pledge.firstname }}
           {{ pledge.lastname }}
         </td>
-        <td v-if="isThisMyPledges != 'yes' ">
+        <td
+          v-if="
+            isThisMyPledges != 'yes'
+          "
+        >
           {{ pledge.email }}
         </td>
-        <td v-if="isThisMyPledges != 'yes' ">
+        <td
+          v-if="
+            isThisMyPledges != 'yes'
+          "
+        >
           {{ pledge.phone }}
         </td>
-           <td v-if="isThisMyPledges == 'yes' ">
+        <td
+          v-if="
+            isThisMyPledges == 'yes'
+          "
+        >
           {{ pledge.project_id }}
         </td>
-           <td v-if="isThisMyPledges == 'yes' ">
+        <td
+          v-if="
+            isThisMyPledges == 'yes'
+          "
+        >
           {{ pledge.project_name }}
         </td>
       </tr>
     </table>
+
     <h1 v-else>No Pledges</h1>
   </div>
 </template>
@@ -50,30 +91,31 @@ export default {
   props: {
     isThisMyPledges: String,
     projectIds: String,
+    userIdProp: Number,
   },
   data() {
     return {
       pledges: [],
       project_id: 0,
-      myPledges:''
+      myPledges: '',
     }
   },
-   beforeUpdate() {
-
-  },
+  beforeUpdate() {},
   async created() {
-
- watchEffect(async () => {
-    if (this.isThisMyPledges == 'yes') {
-       console.log('first check' + this.myPledges)
-      await this.callForUsersPledges()
-
-    } else {
-      console.log(this.projectIds)
-      await this.tot()
-    }
- })
-
+    watchEffect(async () => {
+      if (
+        this.isThisMyPledges == 'yes'
+      ) {
+        console.log(
+          'first check' +
+            this.myPledges,
+        )
+        await this.callForUsersPledges()
+      } else {
+        console.log(this.projectIds)
+        await this.tot()
+      }
+    })
   },
   methods: {
     async tot() {
@@ -84,12 +126,19 @@ export default {
         project.project.pledgesAssociated
     },
     async callForUsersPledges() {
-      const project = await pledgeApi.showPledgesByUser(
-       this.$store.state.loggedInDistrictUserId,
-      )
-  console.log(project)
-      this.pledges =
-        project.Yourpledges
+      let project = {}
+      if (this.userIdProp) {
+        project = await pledgeApi.showPledgesByUser(
+          this.userIdProp,
+        )
+      } else {
+        project = await pledgeApi.showPledgesByUser(
+          this.$store.state
+            .loggedInDistrictUserId,
+        )
+      }
+
+      this.pledges = project.Yourpledges
     },
   },
 }

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ClubForm from '../../components/ClubForm.vue'
+import ClubForm from '../../../../components/common/Forms/ClubForm.vue'
 
 export default {
   name: 'ClubEdit',

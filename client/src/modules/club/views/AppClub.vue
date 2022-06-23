@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <ClubInfoHeader />
-    <ClubHeader />
-    <router-view
-      class="view"
-    ></router-view>
-    <ClubFooter />
+  <!-- outer div  -->
+  <div class="body">
+    <!-- app div -->
+    <div class="club-background">
+      <ClubInfoHeader />
+      <ClubHeader />
+      <div class="view">
+        <router-view></router-view>
+      </div>
+      <div class="footer-wrapper">
+        <ClubFooter />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,7 +19,6 @@
 import ClubInfoHeader from '../components/ClubInfoHeader.vue'
 import ClubHeader from '../components/ClubHeader.vue'
 import ClubFooter from '../components/ClubFooter.vue'
-
 import store from '../../../store/index'
 
 export default {
@@ -25,72 +30,65 @@ export default {
   },
   data() {
     return {
-      currentClubId: this.$router.currentRoute.value.params.id
+      currentClubId: this.$router
+        .currentRoute.value.params.id,
     }
   },
   async created() {
     await this.setClubData()
-    console.log(store.state.currentClubUserData.firstname)
-    if(store.state.loggedInClubId != this.currentClubId) {
-      store.dispatch('logout', 5)
-      store.dispatch('logout', 7)
-    }
+
+    // if (
+    //   store.state.loggedInClubId !=
+    //   this.currentClubId
+    // ) {
+    //   store.dispatch('logout', 5)
+    //   store.dispatch('logout', 7)
+    // }
   },
   methods: {
     async setClubData() {
-      await store.dispatch('changeCurrentClubData', this.currentClubId)
-
+      // call to change the current clubs data
+      await store.dispatch(
+        'changeCurrentClubData',
+        this.currentClubId,
+      )
+      //  change social media data
       const clubSocialQueryObject = {
         isThisDistrict: false,
-        object_id: this.currentClubId
+        object_id: this.currentClubId,
       }
 
-      store.dispatch('changeClubSocials', clubSocialQueryObject)
-
-      store.dispatch('changeCurrentClubUsers', this.currentClubId)
-    }
-  }
+      store.dispatch(
+        'changeClubSocials',
+        clubSocialQueryObject,
+      )
+      //  change the list of club users
+      store.dispatch(
+        'changeCurrentClubUsers',
+        this.currentClubId,
+      )
+    },
+  },
 }
 </script>
 
 <style>
+/* styling on app div  */
+.club-background {
+  background-color: #ffffff;
+  height: 100%;
+  /*  allows scroll and still lets overflow to be cut */
+  overflow-x: clip;
+}
 .view {
-  margin-top: auto;
+  min-height: 40rem;
 }
-
-.club-page-head {
-  text-align: center;
-  background-color: #232323;
-  padding: 50px;
-  text-transform: uppercase;
+.footer-wrapper {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  position: relative;
 }
-
-.club-page-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  color: whitesmoke;
-}
-
-.positive-button {
-  background-color: #ffb607;
-  color: whitesmoke;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bolder;
-  border: none;
-  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
-  border-radius: 5%;
-  padding: 12px;
-}
-
-.cancel-button {
-  background-color: #232323;
-  color: whitesmoke;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bolder;
-  border: none;
-  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.425);
-  border-radius: 5%;
-  padding: 12px;
-}
-
 </style>

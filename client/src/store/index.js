@@ -28,18 +28,20 @@ export default createStore({
 
     isClubUserLoggedIn: false,
     isClubUserRejected: false,
-    // track current district or club logged in 
+    // track current district or club logged in
     loggedInDistrictId: Number,
     loggedInClubId: Number,
-    // important for tracking who is currrently logged in 
+    // important for tracking who is currrently logged in
     loggedInClubUserId: Number,
     loggedInDistrictUserId: Number,
     //store current user login infromation
     loggedInUserData: {},
-    //data obect for logged district or club 
+    //data obect for logged district or club
     currentDistrictData: {},
-    currentClubData: {},
-    //the project focused on for CRUD 
+    currentClubData: {
+      club_name: '',
+    },
+    //the project focused on for CRUD
     currentProjectData: {},
     //deleteable? -poss
     currentClubUsers: {},
@@ -82,7 +84,7 @@ export default createStore({
           break
       }
     },
-    //fail at  log in 
+    //fail at  log in
     adminReject(state, roleId) {
       switch (roleId) {
         case 0:
@@ -94,7 +96,7 @@ export default createStore({
         case 5:
           state.isClubAdminRejected = true
           break
-        case 5:
+        case 7:
           state.isClubUserRejected = true
           break
         case 10:
@@ -102,52 +104,48 @@ export default createStore({
           break
       }
     },
-    //mutation for clubuser logging in 
-    /*   async clubUserLogin(
-        state,
-        loginData,
-      ) {
+    //mutation for clubuser logging in
+    async clubUserLogin(
+      state,
+      loginData,
+    ) {
+      if (loginData.roleId == 5) {
+        state.isClubAdminLoggedIn = true
+        state.isClubAdminRejected = false
+      } else {
         state.isClubUserLoggedIn = true
         state.isClubUserRejected = false
-  
-        console.log(
-          'login data: ',
-          loginData,
-        )
-        state.loggedInClubUserId =
-          loginData.user_id
-        state.currentClubUserData = await club_user.show(
-          loginData.user_id,
-        )
-        state.loggedInClubId =
-          loginData.club_id
-  
-        console.log(
-          'here you resting:',
-          state.loggedInClubId,
-        )
-  
-        if (
-          state.currentClubUserData
-            .role[0].role_type == 5
-        ) {
-          state.isClubAdminLoggedIn = true
-          state.isClubAdminRejected = false
-        }
-      },
-      //district user logging in the will be an admin or titled admin i.e d chair 
-      async districtUserLogin(
-        state,
+      }
+      console.log(
+        'login data: ',
         loginData,
-      ) {
-        state.isDistrictAdminLoggedIn = true
-        state.isClubAdminRejected = false
-  
-        console.log(
-          'login data: ',
-          loginData,
-        )
-      }, */
+      )
+      state.loggedInClubUserId =
+        loginData.userOrAdminId
+      state.currentClubUserData = await club_user.show(
+        loginData.userOrAdminId,
+      )
+      state.loggedInClubId =
+        state.currentClubUserData.club_id
+
+      console.log(
+        'here you resting:',
+        state.loggedInClubId,
+      )
+    },
+    //district user logging in the will be an admin or titled admin i.e d chair
+    async districtUserLogin(
+      state,
+      loginData,
+    ) {
+      state.isDistrictAdminLoggedIn = true
+      state.isClubAdminRejected = false
+
+      console.log(
+        'login data: ',
+        loginData,
+      )
+    },
     // rejection
     clubUserReject(state) {
       state.isClubUserRejected = true
@@ -158,15 +156,16 @@ export default createStore({
       state.isDistrictAdminLoggedIn = false
       state.isClubAdminLoggedIn = false
       state.isClubUserLoggedIn = false
+      state.isClubUserRejected = false
+      state.isClubAdminRejected = false
 
       state.loggedInDistrictId = Number
       state.loggedInClubId = Number
 
       state.loggedInDistrictUserId = Number
       state.loggedInClubUserId = Number
-      
-      state.loggedInUserData = {}
 
+      state.loggedInUserData = {}
     },
     //set district data
     changeCurrentDistrictData(
@@ -196,26 +195,29 @@ export default createStore({
     ) {
       state.currentProjectData = projectData
     },
-    //change socials 
+    //change socials
     changeDistrictSocials(
       state,
       districtSocialsArray,
     ) {
       state.districtSocials = districtSocialsArray
     },
-    //change socials 
+    //change socials
     changeClubSocials(
       state,
       clubSocialsArray,
     ) {
       state.clubSocials = clubSocialsArray
     },
-    changeCurrentUserData(state, userData) {
+    changeCurrentUserData(
+      state,
+      userData,
+    ) {
       state.loggedInUserData = userData
-    }
+    },
   },
   actions: {
-/*     ///reload d
+    /*     ///reload d
     async validateSiteReload(
       { commit },
       data,
@@ -250,11 +252,14 @@ export default createStore({
       const loginData = {
         districtId: data.id,
         roleId: 1,
-        adminId: 0
+        adminId: 0,
       }
-      const response = await isValid(data)
+      const response = await isValid(
+        data,
+      )
       if (response.Verified) {
-        loginData.adminId = response.user_id
+        loginData.adminId =
+          response.user_id
         commit('adminLogin', loginData)
         console.log('valid')
       } else {
@@ -267,20 +272,26 @@ export default createStore({
       data,
     ) {
       const loginData = {
-        user_id: data.user_id,
-        club_id: data.id,
+        clubId: data.id,
+        roleId: 0,
+        userOrAdminId: 0,
       }
-
-      if (await isValid(data)) {
+      const response = await isValid(
+        data,
+      )
+      if (response.Verified) {
+        loginData.userOrAdminId =
+          response.user_id
+        loginData.roleId =
+          response.role[0].role_type
         commit(
           'clubUserLogin',
           loginData,
         )
+        return true
       } else {
-        commit(
-          'clubUserReject',
-          data.user_id,
-        )
+        commit('adminReject', 5)
+        commit('adminReject', 7)
       }
     },
     //change CurrentDistrictData
@@ -340,9 +351,9 @@ export default createStore({
     },
     //change actions unsetProjectData
 
-    async unsetCurrentProjectData(
-      { commit },
-    ) {
+    async unsetCurrentProjectData({
+      commit,
+    }) {
       commit(
         'changeCurrentProjectData',
         {},
@@ -385,4 +396,3 @@ export default createStore({
   modules: {},
   plugins: [createPersistedState()],
 })
-

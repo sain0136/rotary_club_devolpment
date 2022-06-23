@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="app-container">
     <div class="district-page-head">
-      <h1 class="district-page-title">Our Clubs</h1>
+      <h1 class="district-page-title">
+        Our Clubs
+      </h1>
     </div>
     <router-view></router-view>
   </div>
@@ -14,4 +16,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.app-container {
+  height: auto;
+}
+</style>

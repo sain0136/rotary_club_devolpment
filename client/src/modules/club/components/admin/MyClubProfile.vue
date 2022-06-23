@@ -1,33 +1,35 @@
 <template>
-  <div class="contact-us-container">
+  <div>
     <section class="page-title">
-      <div class="auto-container">
-        <div class="inner-box">
-          <h1 class="club-page-title">
-            Connect with us
-          </h1>
-        </div>
+      <div class="inner-box">
+        <h1 class="club-page-title">
+          My Profile
+        </h1>
       </div>
     </section>
-    <br />
-    <br />
-    <ContactUs
-      isDistrictOrClub="Club"
+    <ClubUserForm
+      isEditOrCreate="Edit"
+      :clubIdProp="clubID"
     />
   </div>
 </template>
 
 <script>
-import store from '../../../store/index'
-import ContactUs from '../../../components/common/ContactUs.vue'
-
+import ClubUserForm from '../../../../components/common/Forms/ClubUserForm.vue'
+import store from '../../../../store/index'
 export default {
-  name: 'ClubContactUs',
+  name: 'MyClubProfile',
   components: {
-    ContactUs,
+    ClubUserForm,
   },
   data() {
-    return {}
+    return {
+      clubID: 0,
+    }
+  },
+  created() {
+    this.clubID =
+      store.state.currentClubData.club_id
   },
 }
 </script>
@@ -48,15 +50,9 @@ export default {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(../assets/image-3.jpg);
+  background-image: url(../../assets/image-3.jpg);
 }
 .inner-box {
   position: relative;
-}
-.auto-container {
-  position: static;
-  max-width: 1200px;
-  padding: 0px 15px;
-  margin: 0 auto;
 }
 </style>

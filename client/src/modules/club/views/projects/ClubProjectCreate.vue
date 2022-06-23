@@ -12,9 +12,7 @@
       :isThisEditOrCreateProp="
         editOrCreateProp
       "
-      :isThisDistrictOrClubProp="
-        projectLabel
-      "
+      isThisDistrictOrClubProp="Club"
     />
   </div>
 </template>
@@ -22,8 +20,9 @@
 <script>
 import ClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
 import DistrictSimplifiedProjectForm from '../../../../components/common/Forms/DistrictSimplifiedProjectForm.vue'
+
 export default {
-  name: 'DistrictProjectCreateView',
+  name: 'ClubProjectCreate',
   components: {
     ClubProjectForm,
     DistrictSimplifiedProjectForm,

@@ -3,17 +3,23 @@ import AppClub from '../views/AppClub'
 import ClubAbout from '../views/ClubAbout'
 import ClubContactUs from '../views/ClubContactUs'
 import ClubHome from '../views/ClubHome'
-import ClubLogin from '../views/ClubLogin'
-
-import ClubUsers from '../views/users/AppClubUsers'
-import ClubUsersView from '../views/users/ClubUsersView'
-import CreateClubUser from '../views/users/ClubUserCreate'
-import ClubUserEdit from '../views/users/ClubUserEdit'
-import ClubUserProfile from '../views/users/ClubUserProfile'
-
-import project from './project'
+import ClubLoginApp from '../views/ClubLogin'
+import ClubProjects from '../views/ClubProjects.vue'
+import ClubAdminTabApp from '../../club/views/admin/ClubAdminTabApp.vue'
+import MyClubProfile from '../components/admin/MyClubProfile.vue'
 
 import store from '../../../store/index'
+import ProjectCardDetailsApp from '../../../components/common/Project/ProjectCardDetailsApp.vue'
+import ProjectCardDetails from '../../../components/common/Project/ProjectCardDetails.vue'
+import ProjectPledgeForm from '../../../components/common/Project/ProjectPledgeForm'
+
+import ClubMembers from '../../club/views/users/ClubMembers.vue'
+import EditClub from '../views/admin/EditClub.vue'
+import MyClubProjectsApp from '../views/projects/MyClubProjectsApp.vue'
+import ClubProjectsView from '../views/projects/ClubProjectsView.vue'
+import ClubProjectCreate from '../views/projects/ClubProjectCreate.vue'
+import ClubProjectPledgesView from '../views/projects/pledges/ClubProjectPledgesView.vue'
+import ClubProjectEdit from '../views/projects/ClubProjectEdit.vue'
 
 export default {
   path: '/club/:id',
@@ -31,14 +37,39 @@ export default {
       name: 'ClubContactUs',
     },
     {
+      path: 'projects',
+      component: ClubProjects,
+      name: 'ClubProjects',
+    },
+    {
+      path: 'details',
+      component: ProjectCardDetailsApp,
+      name: 'ProjectCardDetailsApp',
+      props: true,
+      children: [
+        {
+          path: '',
+          component: ProjectCardDetails,
+          name: 'ProjectCardDetails',
+          props: true,
+        },
+        {
+          path: 'pledge',
+          component: ProjectPledgeForm,
+          name: 'ProjectPledgeForm',
+          props: true,
+        },
+      ],
+    },
+    {
       path: 'home',
       component: ClubHome,
       name: 'ClubHome',
     },
     {
       path: 'login',
-      component: ClubLogin,
-      name: 'ClubLogin',
+      component: ClubLoginApp,
+      name: 'ClubLoginApp',
       beforeEnter: (to, from, next) => {
         if (
           store.state
@@ -46,7 +77,8 @@ export default {
           store.state
             .isDistrictAdminLoggedIn ||
           store.state
-            .isSiteAdminLoggedIn
+            .isSiteAdminLoggedIn ||
+          store.state.isClubUserLoggedIn
         ) {
           next(false)
           window.location.replace(
@@ -57,45 +89,63 @@ export default {
         }
       },
     },
+
     {
-      path: 'users',
-      component: ClubUsers,
-      name: 'AppClubUsers',
-      beforeEnter: (to, from, next) => {
-        if (
-          store.state.isClubAdminLoggedIn ||
-          store.state.isDistrictAdminLoggedIn ||
-          store.state.isSiteAdminLoggedIn
-        ) {
-          next()
-        } else {
-          next(false)
-          window.location.replace('../login')
-        }
-      },
+      path: 'admin',
+      component: ClubAdminTabApp,
+      name: 'ClubAdminTabApp',
       children: [
         {
-          path: 'view',
-          component: ClubUsersView,
-          name: 'ClubUsersView',
+          path: 'profile',
+          component: MyClubProfile,
+          name: 'MyClubProfile',
         },
         {
-          path: 'create',
-          component: CreateClubUser,
-          name: 'CreateClubUser',
+          path: 'members',
+          component: ClubMembers,
+          name: 'ClubMembers',
         },
         {
-          path: ':userid/edit',
-          component: ClubUserEdit,
-          name: 'ClubUserEdit',
+          path: 'editclub',
+          component: EditClub,
+          name: 'EditClub',
         },
         {
-          path: ':userid/profile',
-          component: ClubUserProfile,
-          name: 'ClubUserProfile'
-        }
+          path: 'myprojects',
+          component: MyClubProjectsApp,
+          name: 'MyClubProjectsApp',
+          children: [
+            {
+              //view your Club projects
+              path: 'view',
+              component: ClubProjectsView,
+              name: 'ClubProjectsView',
+            },
+            {
+              //create page, pass up props to form,
+              path: 'create',
+              component: ClubProjectCreate,
+              name: 'ClubProjectCreate',
+              props: true,
+            },
+            {
+              //create page, pass up props to form,
+              path: 'edit',
+              component: ClubProjectEdit,
+              name: 'ClubProjectEdit',
+              props: true,
+            },
+            {
+              //create page, pass up props to form,
+              path: 'pledges',
+              component: ClubProjectPledgesView,
+              name:
+                'ClubProjectPledgesView',
+              props: true,
+            },
+          ],
+        },
       ],
     },
-    project,
   ],
 }

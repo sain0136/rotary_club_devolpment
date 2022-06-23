@@ -51,19 +51,43 @@
         </div>
         <div class="input-wrapper">
           <!--            Project Title         -->
-          <div class="form-inputs">
-            <div class="form-inputs">
-              <BaseInputs
-                v-model="
-                  simplifiedProject.project_name
-                "
-                label="Project Title"
-                type="text"
-                span="Must be 5 to 10 characters long"
-              />
-            </div>
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="
+                v$.project_name.$error
+              "
+            >
+              Must fill project title
+              name
+            </span>
           </div>
+          <div class="form-inputs">
+            <BaseInputs
+              v-model="
+                simplifiedProject.project_name
+              "
+              label="Project Title"
+              type="text"
+              span="Must be 5 to 10 characters long"
+            />
+          </div>
+
           <!--     project description         -->
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="
+                v$.project_theme.$error
+              "
+            >
+              Project description must
+              be between 150 to 2000
+              character long
+            </span>
+          </div>
           <div class="form-inputs">
             <BaseTextArea
               v-model="
@@ -74,6 +98,15 @@
             />
           </div>
           <!--       countries              -->
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="v$.country.$error"
+            >
+              You must choose a country.
+            </span>
+          </div>
           <div class="form-inputs">
             <BaseSelect
               v-model="
@@ -84,6 +117,15 @@
             />
           </div>
           <!--            Region         -->
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="v$.region.$error"
+            >
+              You must choose a region.
+            </span>
+          </div>
           <div class="form-inputs">
             <BaseSelect
               v-model="
@@ -94,6 +136,18 @@
             />
           </div>
           <!--         start date            -->
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="
+                v$.start_date.$error
+              "
+            >
+              You must choose a start
+              date.
+            </span>
+          </div>
           <div class="form-inputs">
             <BaseInputs
               v-model="
@@ -104,6 +158,19 @@
             />
           </div>
           <!--         estimated completion date           -->
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="
+                v$.estimated_completion
+                  .$error
+              "
+            >
+              You must choose a a
+              completed date.
+            </span>
+          </div>
           <div class="form-inputs">
             <BaseInputs
               v-model="
@@ -119,6 +186,18 @@
             class="form-inputs-checkboxes"
           >
             <hr />
+            <div class="error-div">
+              <span
+                class="form-error"
+                id="area-form-error"
+                v-if="
+                  v$.area_focus.$error
+                "
+              >
+                You must choose at least
+                one are of focus
+              </span>
+            </div>
             <h5>Areas of Focus</h5>
 
             <BaseCheckBox
@@ -232,6 +311,20 @@
           Project--Page 2
         </h3>
         <!--          Extra Discription        -->
+        <div class="error-div">
+          <span
+            class="form-error"
+            id="area-form-error"
+            v-if="
+              v$
+                .benefit_community_description
+                .$error
+            "
+          >
+            Your description is not 150
+            to 2000 characters long.
+          </span>
+        </div>
         <div class="form-inputs">
           <BaseTextArea
             v-model="
@@ -244,6 +337,20 @@
           />
         </div>
         <!--          Extra Discription        -->
+        <div class="error-div">
+          <span
+            class="form-error"
+            id="area-form-error"
+            v-if="
+              v$
+                .non_financial_participation
+                .$error
+            "
+          >
+            This area cannot exceed 2000
+            characters
+          </span>
+        </div>
         <div class="form-inputs">
           <BaseTextArea
             v-model="
@@ -256,6 +363,20 @@
           />
         </div>
         <!--          Extra Discription        -->
+        <div class="error-div">
+          <span
+            class="form-error"
+            id="area-form-error"
+            v-if="
+              v$
+                .co_operating_organisation_letter
+                .$error
+            "
+          >
+            This area cannot exceed 2000
+            characters
+          </span>
+        </div>
         <div class="form-inputs">
           <BaseTextArea
             v-model="
@@ -474,7 +595,7 @@
         <table
           v-if="
             simplifiedProject.itemised_budget !=
-            0
+              0
           "
         >
           <th>Item Name</th>
@@ -524,26 +645,56 @@
           project funding
         </h3>
         <!--          Sponsor club contribution       -->
+        <div class="error-div">
+          <span
+            class="form-error"
+            id="area-form-error"
+            v-if="
+              v$
+                .intial_sponsor_club_contribution
+                .$error
+            "
+          >
+            Your total anticapted
+            funding cannot exceed your
+            budget estimatied costs!
+          </span>
+        </div>
         <div class="form-inputs">
           <BaseInputs
             v-model="
               simplifiedProject.intial_sponsor_club_contribution
             "
             type="number"
-            label="Sponsor club contribution"
+            label="Sponsor club contribution:"
           />
         </div>
         <!--          Co-operating organisation contribution      -->
+
         <div class="form-inputs">
           <BaseInputs
             v-model="
               simplifiedProject.co_operating_organisation_contribution
             "
-            label="Co-operating organisation contribution."
+            label="Co-operating organisation contribution:"
             type="number"
           />
         </div>
         <!-- District Simplified Grant request*:-->
+        <div class="error-div">
+          <span
+            class="form-error"
+            id="area-form-error"
+            v-if="
+              v$
+                .district_simplified_grant_request
+                .$error
+            "
+          >
+            Your request cannot exceed
+            the DSG Grant request limit.
+          </span>
+        </div>
         <div class="form-inputs">
           <BaseInputs
             v-model="
@@ -586,30 +737,46 @@
           USD
         </h5>
         <hr />
+        <div>
+          <h5
+            style="color:red"
+            v-if="thereIsErrors == true"
+          >
+            Cannot submit-Form Errors
+            please review form
+          </h5>
+        </div>
         <div class="styled-pagination">
           <ul class="clearfix">
             <li
               v-if="
                 isThisEditOrCreateProp ==
-                'create'
+                  'create'
               "
             >
-              <a
-                @click="
-                  createDsgProject()
-                "
+              <a @click="validateForm()"
                 >Create DSG Project</a
+              >
+            </li>
+            <li
+              v-if="
+                isThisEditOrCreateProp ==
+                  'create'
+              "
+            >
+              <a @click="cancel()"
+                >Cancel</a
               >
             </li>
             <li
               v-else-if="
                 isThisEditOrCreateProp ==
-                'edit'
+                  'edit'
               "
             >
               <a
                 @click="
-                  updateProject(
+                  validateForm(
                     projectIdProp,
                   )
                 "
@@ -641,7 +808,7 @@
         <li
           v-if="
             formPage >= 1 &&
-            formPage < 3
+              formPage < 3
           "
         >
           <a
@@ -665,6 +832,17 @@ import BaseSelect from '../../formParts/BaseSelect.vue'
 import BaseTextArea from '../../formParts/BaseTextArea.vue'
 import ProjectApi from '../../../api-factory/project'
 import store from '../../../store/index'
+import useValidate from '@vuelidate/core'
+import {
+  maxValue,
+  required,
+  maxLength,
+  minLength,
+  email,
+  requiredIf,
+} from '@vuelidate/validators'
+import { watchEffect } from 'vue-demi'
+
 export default {
   name: 'DistrictSimplifiedProjectForm',
   components: {
@@ -724,6 +902,7 @@ export default {
             fax: '',
           },
         },
+        //Validation variables
 
         itemised_budget: [],
 
@@ -745,10 +924,10 @@ export default {
         district_id: 0,
         club_id: 0,
       },
-
+      v$: useValidate(),
       budgetItemCost: 0,
       budgetItemName: '',
-
+      thereIsErrors: false,
       areaOfFocus:
         Resources.areaOfFocus,
       criteriaList:
@@ -791,7 +970,156 @@ export default {
       this.prePopulateFields()
     }
   },
+  validations() {
+    return {
+      project_name: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .project_name == '',
+        ),
+      },
+      project_theme: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .project_theme == '' ||
+            this.simplifiedProject
+              .project_theme.length <
+              200 ||
+            this.simplifiedProject
+              .project_theme.length >
+              2000,
+        ),
+      },
+      country: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .country == '',
+        ),
+      },
+      region: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .region == '',
+        ),
+      },
+      start_date: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .start_date == '',
+        ),
+      },
+      estimated_completion: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .estimated_completion == '',
+        ),
+      },
+      area_focus: {
+        validateAreaOFocus: this
+          .validateAreaOFocus,
+      },
+      benefit_community_description: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .extra_descriptions
+            .benefit_community_description ==
+            '' ||
+            this.simplifiedProject
+              .extra_descriptions
+              .benefit_community_description
+              .length > 2000 ||
+            this.simplifiedProject
+              .extra_descriptions
+              .benefit_community_description
+              .length > 150,
+        ),
+      },
+      non_financial_participation: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .extra_descriptions
+            .non_financial_participation
+            .length > 2000,
+        ),
+      },
+      co_operating_organisation_letter: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .extra_descriptions
+            .co_operating_organisation_letter
+            .length > 2000,
+        ),
+      },
+      intial_sponsor_club_contribution: {
+        requiredIf: this
+          .validateFunding,
+      },
+      district_simplified_grant_request: {
+        requiredIfFuction: requiredIf(
+          this.simplifiedProject
+            .district_simplified_grant_request >
+            this
+              .districtSimplifiedGrantRequestLimit,
+        ),
+      },
+    }
+  },
   methods: {
+    cancel() {
+      this.redirect()
+    },
+    validateFunding() {
+      let sum = 0
+      this.simplifiedProject.itemised_budget.forEach(
+        item => {
+          sum = sum + item.itemCost
+        },
+      )
+      let total = this
+        .sumOfAnticipatedFunding
+      if (total > sum) {
+        return false
+      } else {
+        return true
+      }
+    },
+    validateAreaOFocus() {
+      const asArray = Object.entries(
+        this.simplifiedProject
+          .area_focus,
+      )
+      const filtered = asArray.filter(
+        ([key, value]) => value == true,
+      )
+      if (filtered.length > 0) {
+        return true
+      } else return false
+    },
+    async validateForm(prop) {
+      await this.v$.$validate()
+      console.log(this.v$.$errors)
+      if (!this.v$.$error) {
+        this.thereIsErrors = false
+        if (
+          this.isThisEditOrCreateProp ==
+          'edit'
+        ) {
+          this.updateProject(prop)
+        } else this.createDsgProject()
+      } else {
+        this.thereAreErrors()
+      }
+    },
+    async thereAreErrors() {
+      this.thereIsErrors = true
+      watchEffect(() => {
+        if (this.v$.$error) {
+          this.thereIsErrors = true
+        } else {
+          this.thereIsErrors = false
+        }
+      })
+    },
     async prePopulateFields() {
       const projectToEdit = await ProjectApi.show(
         this.projectIdProp,
@@ -908,7 +1236,7 @@ export default {
       console.log(
         'updating new project',
       )
-   
+
       this.simplifiedProject.intial_sponsor_club_contribution = parseFloat(
         this.simplifiedProject
           .intial_sponsor_club_contribution,
@@ -930,7 +1258,7 @@ export default {
           .co_operating_organisation_contribution +
         this.simplifiedProject
           .district_simplified_grant_request
-      
+
       var mydate1 = new Date(
         this.simplifiedProject.start_date,
       )
@@ -950,7 +1278,7 @@ export default {
 
       const projectToUpdate = this
         .simplifiedProject
- 
+
       if (
         this.isThisDistrictOrClubProp ==
         'District'
@@ -982,9 +1310,16 @@ export default {
       }
     },
     redirect(code) {
-      this.$router.push({
-        name: 'DistrictProjectsView',
-      })
+      if (
+        this.isThisDistrictOrClubProp ==
+        'Club'
+      ) {
+        this.$router.push('../../home')
+      } else {
+        this.$router.push({
+          name: 'DistrictProjectsView',
+        })
+      }
     },
     addToBudget(itemName, itemCost) {
       const budgetItemObject = {}
@@ -1206,5 +1541,14 @@ li a:hover {
   display: flex;
   flex-direction: row;
   column-gap: 0.5em;
+}
+/* Errro */
+.form-error {
+  color: red;
+  font-size: 12px;
+  padding: 0%;
+}
+.error-div {
+  text-align: center;
 }
 </style>

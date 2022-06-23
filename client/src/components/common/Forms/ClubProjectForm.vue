@@ -14,7 +14,15 @@
         Name & describe your Project
       </h3>
       <!--            Project Title         -->
-
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.project_name.$error"
+        >
+          Must fill in name
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseInputs
           v-model="project.project_name"
@@ -24,6 +32,16 @@
         />
       </div>
       <!--            project description         -->
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.project_theme.$error"
+        >
+          Your description is not 150 to
+          2000 characters long
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseTextArea
           v-model="
@@ -34,7 +52,15 @@
         />
       </div>
       <!--       countries              -->
-
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.country.$error"
+        >
+          You must pick a country
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseSelect
           v-model="project.country"
@@ -50,7 +76,14 @@
         <h3 style="padding-top: 1em;">
           Areas of Focus
         </h3>
-
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.area_focus.$error"
+        >
+          Please choose at least one
+          area of focus!
+        </span>
         <BaseCheckBox
           v-model="
             project.area_focus
@@ -109,6 +142,15 @@
         />
       </div> -->
       <!--          Funding Goal           -->
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.funding_goal.$error"
+        >
+          Your funding goal is required!
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseInputs
           v-model="project.funding_goal"
@@ -118,6 +160,20 @@
         />
       </div>
       <!--          Current\Starting Funds           -->
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="
+            v$.anticipated_funding
+              .$error
+          "
+        >
+          Your anticipated funds cannot
+          be greater then your funding
+          goals!
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseInputs
           v-model="
@@ -130,6 +186,15 @@
       </div>
 
       <!--            Region         -->
+      <div class="error-div">
+        <span
+          class="form-error"
+          id="area-form-error"
+          v-if="v$.region.$error"
+        >
+          You must choose a region!
+        </span>
+      </div>
       <div class="form-inputs">
         <BaseSelect
           v-model="project.region"
@@ -180,7 +245,7 @@
               editOrCreateProp == 'edit'
             "
             @click="
-              () => updateProject()
+              () => validateForm()
             "
           >
             Update
@@ -189,7 +254,7 @@
             @submit.prevent=""
             v-else
             @click="
-              () => createProject()
+              () => validateForm()
             "
           >
             Submit
@@ -214,6 +279,15 @@ import store from '../../../store/index'
 import Resource from '../../../Resources.js'
 import BaseCheckBox from '../../formParts/BaseCheckBox.vue'
 import BaseTextArea from '../../formParts/BaseTextArea.vue'
+import useValidate from '@vuelidate/core'
+import {
+  maxValue,
+  required,
+  maxLength,
+  minLength,
+  email,
+  requiredIf,
+} from '@vuelidate/validators'
 
 export default {
   components: {
@@ -260,6 +334,8 @@ export default {
       countryList: Resource.countryList,
       regionList: Resource.regionList,
       areaOfFocus: Resource.areaOfFocus,
+      //Validation variables
+      v$: useValidate(),
     }
   },
   created() {
@@ -282,7 +358,99 @@ export default {
       this.prePopulateFields()
     }
   },
+  validations() {
+    return {
+      area_focus: {
+        validateAreaOFocus: this
+          .validateAreaOFocus,
+      },
+      project_name: {
+        requiredIfFuction: requiredIf(
+          this.project.project_name ==
+            '',
+        ),
+      },
+      project_theme: {
+        requiredIfFuction: requiredIf(
+          this.project.project_theme ==
+            '' ||
+            this.project.project_theme
+              .length < 200 ||
+            this.project.project_theme
+              .length > 2000,
+        ),
+      },
+      country: {
+        required: this.validateCountry,
+      },
+      funding_goal: {
+        required: requiredIf(
+          this.project.funding_goal <=
+            0,
+        ),
+      },
+      anticipated_funding: {
+        maxValue: this.validateFunding,
+      },
+      region: {
+        required: this.validateRegion,
+      },
+    }
+  },
   methods: {
+    validateRegion() {
+      if (this.project.region != '') {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateCountry() {
+      if (this.project.country != '') {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateFunding() {
+      if (
+        parseFloat(
+          this.project
+            .anticipated_funding,
+        ) >
+        parseFloat(
+          this.project.funding_goal,
+        )
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
+
+    validateAreaOFocus() {
+      const asArray = Object.entries(
+        this.project.area_focus,
+      )
+      const filtered = asArray.filter(
+        ([key, value]) => value == true,
+      )
+      if (filtered.length > 0) {
+        return true
+      } else return false
+    },
+    async validateForm() {
+      await this.v$.$validate()
+      console.log(this.v$.$errors)
+      if (!this.v$.$error) {
+        if (
+          this.editOrCreateProp ==
+          'edit'
+        ) {
+          this.updateProject()
+        } else this.createProject()
+      }
+    },
     handleFileChange(event) {
       // handle file changes
       let file = event[0]
@@ -365,9 +533,7 @@ export default {
       this.redirect()
     },
     redirect(code) {
-      this.$router.push({
-        name: 'DistrictProjectsView',
-      })
+      this.$router.push('../../home')
     },
   },
 }
@@ -449,5 +615,13 @@ button:hover {
   flex-direction: column;
   align-items: center;
   margin-bottom: 2em;
+}
+.form-error {
+  color: red;
+  font-size: 12px;
+  padding: 0%;
+}
+.error-div {
+  text-align: center;
 }
 </style>

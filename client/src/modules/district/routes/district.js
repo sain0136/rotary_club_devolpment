@@ -16,7 +16,7 @@ import store from '../../../store/index'
 import ProjectPledgeForm from '../../../components/common/Project/ProjectPledgeForm'
 import ProjectCardDetailsApp from '../../../components/common/Project/ProjectCardDetailsApp.vue'
 import adminTab from '../views/DistrictAdminApp.vue'
-
+import userEditApp from '../../district/views/ClubUsers/userEditApp.vue'
 import DistrictProfile from '../views/DistrictAdminProfile.vue'
 import DistrictEdit2 from '../components/DistrictEdit.vue'
 import DistrictProjectApp from '../../district/views/Project/DistrictProjectApp.vue'
@@ -32,9 +32,8 @@ export default {
   component: AppDistrict,
   name: 'AppDistrict',
   beforeEnter: (to, from, next) => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
     next()
-
   },
   children: [
     {
@@ -92,19 +91,20 @@ export default {
           component: ProjectPledgeForm,
           name: 'ProjectPledgeForm',
           props: true,
-        }
-      ]
-    }
+        },
+      ],
+    },
 
-
-    ,
     {
       path: 'edit',
       component: DistrictEdit,
       name: 'DistrictEdit',
       beforeEnter: (to, from, next) => {
-        if (store.state.isDistrictAdminLoggedIn ||
-          store.state.isSiteAdminLoggedIn
+        if (
+          store.state
+            .isDistrictAdminLoggedIn ||
+          store.state
+            .isSiteAdminLoggedIn
         ) {
           next()
         } else {
@@ -126,9 +126,16 @@ export default {
           path: 'create',
           component: ClubCreate,
           name: 'ClubCreate',
-          beforeEnter: (to, from, next) => {
-            if (store.state.isDistrictAdminLoggedIn ||
-              store.state.isSiteAdminLoggedIn
+          beforeEnter: (
+            to,
+            from,
+            next,
+          ) => {
+            if (
+              store.state
+                .isDistrictAdminLoggedIn ||
+              store.state
+                .isSiteAdminLoggedIn
             ) {
               next()
             } else {
@@ -137,12 +144,24 @@ export default {
           },
         },
         {
+          path: 'user',
+          component: userEditApp,
+          name: 'userEditApp',
+          props: true,
+        },
+        {
           path: ':clubid/edit',
           component: ClubEdit,
-          beforeEnter: (to, from, next) => {
+          beforeEnter: (
+            to,
+            from,
+            next,
+          ) => {
             if (
-              store.state.isDistrictAdminLoggedIn ||
-              store.state.isSiteAdminLoggedIn
+              store.state
+                .isDistrictAdminLoggedIn ||
+              store.state
+                .isSiteAdminLoggedIn
             ) {
               next()
             } else {
@@ -177,8 +196,7 @@ export default {
               component: DistrictEditForm,
               name: 'DistrictEditForm',
             },
-
-          ]
+          ],
         },
         {
           path: 'myprojects',
@@ -189,35 +207,36 @@ export default {
               //view your district projects
               path: 'view',
               component: DistrictProjectsView,
-              name: 'DistrictProjectsView',
+              name:
+                'DistrictProjectsView',
             },
             {
               //create page, pass up props to form,
               path: 'create',
               component: DistrictProjectCreate,
-              name: 'DistrictProjectCreate',
-              props: true
+              name:
+                'DistrictProjectCreate',
+              props: true,
             },
             {
               //create page, pass up props to form,
               path: 'edit',
               component: DistrictProjectEdit,
-              name: 'DistrictProjectEdit',
-              props: true
-
+              name:
+                'DistrictProjectEdit',
+              props: true,
             },
             {
               //create page, pass up props to form,
               path: 'pledges',
               component: DistrictProjectPledgesView,
-              name: 'DistrictProjectPledgesView',
-              props: true
-
+              name:
+                'DistrictProjectPledgesView',
+              props: true,
             },
-          ]
+          ],
         },
-      ]
-
+      ],
     },
   ],
 }

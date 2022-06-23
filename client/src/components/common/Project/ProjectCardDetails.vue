@@ -70,6 +70,8 @@
                             projectIdProp: parseInt(
                               projectIdProp,
                             ),
+                            thisProjectsFundingGoalProp:parseFloat(currentProject.funding_goal),
+                            thisProjectsAnticipatedFundingProp:parseFloat(currentProject.anticipated_funding)
                           },
                         },
                       )
@@ -379,8 +381,7 @@ li {
   list-style-type: none;
   line-height: 2;
 }
-.two-column {
-}
+
 .clear-fix {
   position: relative;
   display: flex;

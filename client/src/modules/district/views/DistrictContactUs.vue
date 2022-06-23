@@ -1,14 +1,19 @@
 <template>
   <div class="contact-us-container">
     <div class="district-page-head">
-      <h1 class="district-page-title">Connect with us!</h1>
-    </div> <br> <br>
-    <ContactUs isDistrictOrClub="District"/>
-  </div> 
+      <h1 class="district-page-title">
+        Connect with us!
+      </h1>
+    </div>
+    <br />
+    <br />
+    <ContactUs
+      isDistrictOrClub="District"
+    />
+  </div>
 </template>
 
 <script>
-
 import ContactUs from '../../../components/common/ContactUs.vue'
 
 export default {
@@ -23,7 +28,6 @@ export default {
 </script>
 
 <style scoped>
-
 .send-message-container {
   float: left;
   width: 60%;
@@ -58,7 +62,8 @@ textarea {
   width: 600px;
 }
 
-input, textarea {
+input,
+textarea {
   border: 1px solid rgba(0, 0, 0, 0.253);
   background-color: transparent;
 }
@@ -67,6 +72,4 @@ input, textarea {
   text-align: left;
   font-size: 24px;
 }
-
-
 </style>

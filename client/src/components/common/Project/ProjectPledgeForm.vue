@@ -56,8 +56,23 @@
         <div class="form-porlet">
           <h3>
             How much would you like to
-            pledge?
+            pledge?(Max-Amount: ${{
+              maxAmountThatCanBePledge
+            }})
           </h3>
+
+          <div class="error-div">
+            <span
+              class="form-error"
+              id="area-form-error"
+              v-if="
+                v$.pledgeAmount.$error
+              "
+            >
+              You cant pledge past the
+              max pledge amount!
+            </span>
+          </div>
           <div class="amount">
             <BaseInputs
               v-model="pledgeAmount"
@@ -68,7 +83,19 @@
             />
           </div>
         </div>
-        <div class="not-logged-section" v-if="!this.$store.state.isDistrictAdminLoggedIn && !this.$store.state.isSiteAdminLoggedIn">
+        <div
+          class="not-logged-section"
+          v-if="
+            !this.$store.state
+              .isDistrictAdminLoggedIn &&
+              !this.$store.state
+                .isSiteAdminLoggedIn &&
+              !this.$store.state
+                .isClubUserLoggedIn &&
+              !this.$store.state
+                .isClubUserLoggedIn
+          "
+        >
           <h3>
             Contact Information
           </h3>
@@ -113,7 +140,7 @@
           <button
             type="submit"
             @click="
-              () => createPleadge()
+              () => validateForm()
             "
           >
             Submit
@@ -128,17 +155,28 @@
 import BaseInputs from '../../formParts/BaseInputs.vue'
 import store from '../../../store/index'
 import pledgeApi from '../../../api-factory/pledge'
-
+import useValidate from '@vuelidate/core'
+import {
+  required,
+  maxLength,
+  minLength,
+  email,
+  requiredIf,
+} from '@vuelidate/validators'
 export default {
   name: 'ProjectPledgeForm',
   components: {
     BaseInputs,
   },
-  props:{
-      projectIdProp:Number
+  props: {
+    projectIdProp: Number,
+    thisProjectsFundingGoalProp: Number,
+    thisProjectsAnticipatedFundingProp: Number,
   },
   data() {
     return {
+      v$: useValidate(),
+
       userId: 1,
       projectId: 0,
       pledgeAmount: 0,
@@ -152,24 +190,54 @@ export default {
   },
   async created() {
     if (
-      store.state.isDistrictAdminLoggedIn
+      store.state
+        .isDistrictAdminLoggedIn
     ) {
       this.userId =
         store.state.loggedInDistrictUserId
     } else if (
-      store.state.isClubAdminLoggedIn || store.state.isClubUserLoggedIn
+      store.state.isClubAdminLoggedIn ||
+      store.state.isClubUserLoggedIn
     ) {
       this.userId =
         store.state.loggedInClubUserId
-    }
-    else{
-      this.userId =1 
+    } else {
+      this.userId = 1
     }
     this.projectId = this.projectIdProp
   },
+  validations() {
+    return {
+      pledgeAmount: {
+        maxPledgeAmount: this
+          .validatePledge,
+      },
+    }
+  },
   methods: {
+    async validateForm() {
+      await this.v$.$validate()
+      console.log(this.v$.$errors)
+      if (!this.v$.$error) {
+        this.createPleadge()
+      }
+    },
+    validatePledge() {
+      let maxAmountToBePledged =
+        this
+          .thisProjectsFundingGoalProp -
+        this
+          .thisProjectsAnticipatedFundingProp
+      if (
+        this.pledgeAmount >
+        maxAmountToBePledged
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
     async createPleadge() {
-      
       const pledgeObject = this
         .nonMemeberPledge
       pledgeObject[
@@ -182,20 +250,52 @@ export default {
         'pledge_amount'
       ] = parseFloat(this.pledgeAmount)
 
-      await pledgeApi.create(pledgeObject)
+      await pledgeApi.create(
+        pledgeObject,
+      )
       this.redirect()
     },
-
     redirect() {
-      this.$router.push({
-        name: 'DistrictProjects',
-      })
+      if (
+        store.state
+          .isClubAdminLoggedIn ||
+        store.state.isClubUserLoggedIn
+      ) {
+        this.$router.push({
+          name: 'ClubHome',
+        })
+      } else {
+        this.$router.push({
+          name: 'DistrictProjects',
+        })
+      }
+    },
+  },
+  computed: {
+    // a computed getter
+    maxAmountThatCanBePledge() {
+      // `this` points to the component instance
+      return (
+        this
+          .thisProjectsFundingGoalProp -
+        this
+          .thisProjectsAnticipatedFundingProp
+      )
     },
   },
 }
 </script>
 
 <style scoped>
+/* Error */
+.form-error {
+  color: red;
+  font-size: 12px;
+  padding: 0%;
+}
+.error-div {
+  text-align: center;
+}
 /* title container */
 .page-title h1 {
   font-size: 72px;

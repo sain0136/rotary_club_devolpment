@@ -1,44 +1,48 @@
 <template>
-  <div class="contact-us-container">
+  <div>
     <section class="page-title">
       <div class="auto-container">
         <div class="inner-box">
-          <h1 class="club-page-title">
-            Connect with us
-          </h1>
+          <h1>Our Projects</h1>
         </div>
       </div>
     </section>
     <br />
     <br />
-    <ContactUs
-      isDistrictOrClub="Club"
-    />
+    <div class="projects-container">
+      <ProjectsTable
+        pageToDisplay="Club"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import store from '../../../store/index'
-import ContactUs from '../../../components/common/ContactUs.vue'
+import ProjectsTable from '../../../components/common/ProjectsTable.vue'
 
 export default {
-  name: 'ClubContactUs',
+  name: 'ClubProjects',
   components: {
-    ContactUs,
-  },
-  data() {
-    return {}
+    ProjectsTable,
   },
 }
 </script>
 
 <style scoped>
+div {
+  text-align: center;
+}
+/* title */
 .page-title h1 {
   font-size: 72px;
   margin-bottom: 0px;
   font-weight: 800;
   color: #ffffff;
   text-transform: capitalize;
+}
+
+.page-title .inner-box {
+  position: relative;
 }
 .page-title {
   position: relative;
@@ -49,14 +53,5 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(../assets/image-3.jpg);
-}
-.inner-box {
-  position: relative;
-}
-.auto-container {
-  position: static;
-  max-width: 1200px;
-  padding: 0px 15px;
-  margin: 0 auto;
 }
 </style>
