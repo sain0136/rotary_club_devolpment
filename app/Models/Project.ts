@@ -66,6 +66,9 @@ export default class Project extends BaseModel {
   public districtSimplifiedGrantRequest: number
 
   @column()
+  public districtMatchingGrantRequest: number
+
+  @column()
   public createdBy: number
 
   @column()
@@ -99,7 +102,7 @@ export default class Project extends BaseModel {
   public project_funding: string
 
   @column({ serializeAs: null })
-  public hostclub_information: string
+  public hostclubInformation: string
 
   @column()
   public clubId: number

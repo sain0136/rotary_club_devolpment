@@ -88,7 +88,7 @@ export default class ProjectsController {
 
     // const attachedLetters: number = request.input('attached_letters')
     // const projectFunding: string = request.input('project_funding')
-    // const hostclubInformation: string = request.input('hostclub_information')
+    let hostclubInformation: string = request.input('hostclub_information')
     const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
     const coOperatingOrganisationContribution: number = request.input(
       'co_operating_organisation_contribution'
@@ -251,6 +251,87 @@ export default class ProjectsController {
           ' --->This project grant type is ' +
           newProject.grantType,
       })
+    } else if (grantType == 3) {
+      let hostclub_information = JSON.parse(hostclubInformation)
+      const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+      const convertedDateCurrency: DateTime = DateTime.fromFormat(
+        hostclub_information.currency_date_entered,
+        'D'
+      )
+      hostclub_information.currency_date_entered = convertedDateCurrency
+      hostclubInformation = JSON.stringify(hostclub_information)
+      if (districtId == null || districtId == undefined) {
+        const club: Club[] = await Club.query().where({ club_id: clubId })
+        districtId = club[0].districtId
+      }
+      const newProject = await Project.create({
+        grantType: GrantType[grantType],
+        projectStatus: ProjectStatus[projectStatus],
+        rotaryYear: rotaryYear,
+
+        projectName: projectName,
+        projectTheme: projectTheme,
+        country: country,
+        region: region,
+        startDate: convertedStartDate,
+        estimatedCompletion: convertedEstimatedCompletion,
+
+        areaFocus: areaFocus,
+
+        extraDescriptions: extraDescriptions,
+        hostclubInformation: hostclubInformation,
+
+        itemisedBudget: itemisedBudget,
+
+        intialSponsorClubContribution: intialSponsorClubContribution,
+        coOperatingOrganisationContribution: coOperatingOrganisationContribution,
+        districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+
+        anticipatedFunding: anticipatedFunding,
+        fundingGoal: fundingGoal,
+        currentFunds: currentFunds,
+
+        imageLink: imageLink,
+
+        createdBy: createdByUserId,
+        clubId: clubId,
+        districtId: districtId,
+      })
+      const user: User = await User.findOrFail(createdByUserId)
+      await newProject.related('projectRole').attach({
+        [user.userId]: {
+          role: roleType,
+        },
+      })
+      if (
+        newProject.anticipatedFunding == newProject.fundingGoal &&
+        newProject.projectStatus == 'Looking for funding'
+      ) {
+        await newProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
+      const roleTitle = ProjectRoleType[roleType]
+      newProject['projectRoleTitle'] = roleTitle
+
+      newProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+      newProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
+      newProject.areaFocusObject = JSON.parse(areaFocus)
+      newProject.hostclubInformation = JSON.parse(hostclubInformation)
+      return response.json({
+        newProject,
+        details:
+          'Created by ' +
+          user.firstname +
+          ' ' +
+          user.lastname +
+          ' whose role is: ' +
+          roleTitle +
+          ' --->This project grant type is ' +
+          newProject.grantType,
+      })
     } else {
       return response.json('no')
     }
@@ -389,6 +470,7 @@ export default class ProjectsController {
     const areaFocus: any = request.input('area_focus')
 
     const extraDescriptions: any = request.input('extra_descriptions')
+    let hostclubInformation: string = request.input('hostclub_information')
 
     const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
     const coOperatingOrganisationContribution: number = request.input(
@@ -490,6 +572,69 @@ export default class ProjectsController {
       updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
       updatedProject.areaFocusObject = JSON.parse(updatedProject.areaFocus)
+      if (
+        updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
+        updatedProject.projectStatus == 'Looking for funding'
+      ) {
+        await updatedProject
+          .merge({
+            projectStatus: ProjectStatus[2],
+          })
+          .save()
+      }
+      return response.json({
+        updatedProject,
+        Hello: 'old file below',
+        oldPoject: oldProject,
+      })
+    } else if (grantType == 3) {
+      const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+      let hostclub_information = JSON.parse(hostclubInformation)
+      const convertedDateCurrency: DateTime = DateTime.fromFormat(
+        hostclub_information.currency_date_entered,
+        'D'
+      )
+      hostclub_information.currency_date_entered = convertedDateCurrency
+      hostclubInformation = JSON.stringify(hostclub_information)
+
+      let updatedProject: Project = await projectToBeUpdated
+        .merge({
+          projectStatus: ProjectStatus[projectStatus],
+          rotaryYear: rotaryYear,
+
+          projectName: projectName,
+          projectTheme: projectTheme,
+          country: country,
+          region: region,
+          startDate: convertedStartDate,
+          estimatedCompletion: convertedEstimatedCompletion,
+
+          areaFocus: areaFocus,
+          hostclubInformation: hostclubInformation,
+          extraDescriptions: extraDescriptions,
+
+          itemisedBudget: itemisedBudget,
+
+          intialSponsorClubContribution: intialSponsorClubContribution,
+          coOperatingOrganisationContribution: coOperatingOrganisationContribution,
+          districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+
+          anticipatedFunding: anticipatedFunding,
+          fundingGoal: fundingGoal,
+          currentFunds: currentFunds,
+
+          imageLink: imageLink,
+        })
+        .save()
+      oldProject.extraDescriptionsObject = JSON.parse(oldProject.extraDescriptions)
+      oldProject.itemisedBudgetArray = JSON.parse(oldProject.itemisedBudget)
+      oldProject.areaFocusObject = JSON.parse(oldProject.areaFocus)
+      oldProject.hostclubInformation = JSON.parse(oldProject.hostclubInformation)
+
+      updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
+      updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
+      updatedProject.areaFocusObject = JSON.parse(areaFocus)
+      updatedProject.hostclubInformation = JSON.parse(hostclubInformation)
       if (
         updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
         updatedProject.projectStatus == 'Looking for funding'

@@ -22,6 +22,7 @@ export default class Project extends BaseSchema {
       table.double('intial_sponsor_club_contribution', 20).nullable()
       table.double('co_operating_organisation_contribution', 20).nullable()
       table.double('district_simplified_grant_request', 20).nullable()
+      table.double('district_matching_grant_request', 20).nullable()
 
       table.string('currency', 5).notNullable().defaultTo('USD')
 
