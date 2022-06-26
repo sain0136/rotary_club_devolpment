@@ -384,6 +384,139 @@ export default {
      )
      console.log(await res.json())  */
   },
+  async createMatching(data) {
+    let fd = new FormData()
+    fd.append(
+      'role_type',
+      data.role_type,
+    )
+    fd.append(
+      'grant_type',
+      data.grant_type,
+    )
+    fd.append(
+      'rotary_year',
+      data.rotary_year,
+    )
+    fd.append(
+      'project_status',
+      data.project_status,
+    )
+
+    fd.append(
+      'project_name',
+      data.project_name,
+    )
+    fd.append(
+      'project_theme',
+      data.project_theme,
+    )
+    fd.append('country', data.country)
+    fd.append('region', data.region)
+    fd.append(
+      'start_date',
+      data.start_date,
+    )
+    fd.append(
+      'estimated_completion',
+      data.estimated_completion,
+    )
+
+    fd.append(
+      'area_focus',
+      JSON.stringify(data.area_focus),
+    )
+
+    fd.append(
+      'extra_descriptions',
+      JSON.stringify(
+        data.extra_descriptions,
+      ),
+    )
+
+    fd.append(
+      'itemised_budget',
+      JSON.stringify(
+        data.itemized_budget,
+      ),
+    )
+
+    fd.append(
+      'attached_letters',
+      JSON.stringify(
+        data.attached_letters,
+      ),
+    )
+
+    fd.append(
+      'hostclub_information',
+      JSON.stringify(
+        data.hostclub_information,
+      ),
+    )
+
+    fd.append(
+      'intial_sponsor_club_contribution',
+      data.intial_sponsor_club_contribution,
+    )
+    fd.append(
+      'co_operating_organisation_contribution',
+      data.co_operating_organisation_contribution,
+    )
+    fd.append(
+      'district_matching_grant_request',
+      data.district_matching_grant_request,
+    )
+
+    fd.append(
+      'funding_goal',
+      data.funding_goal,
+    )
+    fd.append(
+      'anticipated_funding',
+      data.anticipated_funding,
+    )
+
+    fd.append('image', data.image)
+    fd.append(
+      'project_image',
+      data.image,
+    )
+
+    fd.append(
+      'created_by',
+      data.created_by,
+    )
+    fd.append(
+      'district_id',
+      data.district_id,
+    )
+    if (data.club_id != null) {
+      fd.append('club_id', data.club_id)
+    }
+
+    axios
+      .post(
+        'http://74.208.135.85/project',
+        fd,
+        {
+          headers: {
+            'Content-Type':
+              'multipart/form-data',
+            'Access-Control-Request-Method':
+              'POST',
+          },
+        },
+      )
+      .then(res => {
+        console.log(res)
+        return res
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
   async update(id, data) {
     let fd = new FormData()
     fd.append('project_id', id)
@@ -575,6 +708,143 @@ export default {
     if (data.club_id != null) {
       fd.append('club_id', data.club_id)
     }
+    axios
+      .post(
+        'http://74.208.135.85/project/updateById',
+        fd,
+        {
+          headers: {
+            'Content-Type':
+              'multipart/form-data',
+            'Access-Control-Request-Method':
+              'POST',
+          },
+        },
+      )
+      .then(res => {
+        console.log(res)
+        return res
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  async updateMatching(
+    data,
+    projectID,
+  ) {
+    let fd = new FormData()
+    fd.append('project_id', projectID)
+
+    fd.append(
+      'role_type',
+      data.role_type,
+    )
+    fd.append(
+      'grant_type',
+      data.grant_type,
+    )
+    fd.append(
+      'rotary_year',
+      data.rotary_year,
+    )
+    fd.append(
+      'project_status',
+      data.project_status,
+    )
+
+    fd.append(
+      'project_name',
+      data.project_name,
+    )
+    fd.append(
+      'project_theme',
+      data.project_theme,
+    )
+    fd.append('country', data.country)
+    fd.append('region', data.region)
+    fd.append(
+      'start_date',
+      data.start_date,
+    )
+    fd.append(
+      'estimated_completion',
+      data.estimated_completion,
+    )
+
+    fd.append(
+      'area_focus',
+      JSON.stringify(data.area_focus),
+    )
+
+    fd.append(
+      'extra_descriptions',
+      JSON.stringify(
+        data.extra_descriptions,
+      ),
+    )
+
+    fd.append(
+      'itemised_budget',
+      JSON.stringify(
+        data.itemized_budget,
+      ),
+    )
+
+    fd.append(
+      'attached_letters',
+      JSON.stringify(
+        data.attached_letters,
+      ),
+    )
+
+    fd.append(
+      'hostclub_information',
+      JSON.stringify(
+        data.hostclub_information,
+      ),
+    )
+
+    fd.append(
+      'intial_sponsor_club_contribution',
+      data.intial_sponsor_club_contribution,
+    )
+    fd.append(
+      'co_operating_organisation_contribution',
+      data.co_operating_organisation_contribution,
+    )
+    fd.append(
+      'district_matching_grant_request',
+      data.district_matching_grant_request,
+    )
+
+    fd.append(
+      'funding_goal',
+      data.funding_goal,
+    )
+    fd.append(
+      'anticipated_funding',
+      data.anticipated_funding,
+    )
+
+    fd.append('image', data.image)
+    fd.append(
+      'project_image',
+      data.image,
+    )
+
+    fd.append(
+      'created_by',
+      data.created_by,
+    )
+    fd.append(
+      'district_id',
+      data.district_id,
+    )
+    if (data.club_id != null) {
+      fd.append('club_id', data.club_id)
+    }
+
     axios
       .post(
         'http://74.208.135.85/project/updateById',
