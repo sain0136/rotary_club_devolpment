@@ -194,8 +194,8 @@
                   v$.area_focus.$error
                 "
               >
-                You must choose at least
-                one are of focus
+                You must choose
+                objective measures
               </span>
             </div>
             <h5>Areas of Focus</h5>
@@ -655,7 +655,7 @@
                 .$error
             "
           >
-            Your total anticapted
+            Your total anticipated
             funding cannot exceed your
             budget estimatied costs!
           </span>
@@ -713,11 +713,11 @@
           "
         ></div>
         <h6>
-          Total Anticapted Cost:$
+          Total Anticipated Cost:$
           {{ sumOfItemsCost }} USD
         </h6>
         <h6>
-          Total Anticapted
+          Total Anticipated
           Funding/Current Funds:$
           {{ sumOfAnticipatedFunding }}
           USD

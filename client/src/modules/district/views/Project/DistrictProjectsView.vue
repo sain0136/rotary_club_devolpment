@@ -83,9 +83,11 @@
                   name:
                     'DistrictProjectCreate',
                   params: {
-                    projectType: 3,
+                    projectTypeProp: 3,
                     editOrCreateProp:
                       'create',
+                    projectLabel:
+                      'District',
                   },
                 })
             "
@@ -119,6 +121,7 @@
 
 <script>
 import MyLoggedProjectsTable from '../../../../components/common/Tables/MyLoggedProjectsTable.vue'
+
 export default {
   name: 'DistrictProjectsView',
   components: {

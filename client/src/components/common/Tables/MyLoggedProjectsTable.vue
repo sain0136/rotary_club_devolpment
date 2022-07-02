@@ -125,6 +125,44 @@
                       },
                     })
                   }
+                } else if (
+                  project.grant_type ==
+                  'District Matching Project'
+                ) {
+                  if (
+                    adminToDisplayProp ==
+                    'Club'
+                  ) {
+                    this.$router.push({
+                      name:
+                        'ClubProjectEdit',
+                      params: {
+                        projectTypeProp: 3,
+                        editOrCreateProp:
+                          'edit',
+                        projectLabel:
+                          'Club',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  } else {
+                    this.$router.push({
+                      name:
+                        'DistrictProjectEdit',
+                      params: {
+                        projectTypeProp: 3,
+                        editOrCreateProp:
+                          'edit',
+                        projectLabel:
+                          'District',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  }
                 }
               }
             "

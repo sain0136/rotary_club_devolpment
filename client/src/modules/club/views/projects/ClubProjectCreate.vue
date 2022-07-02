@@ -14,18 +14,32 @@
       "
       isThisDistrictOrClubProp="Club"
     />
+    <DistrictMatchingProjectForm
+      v-else-if="
+        projectTypeProp == 3 ||
+          projectTypeProp == '3'
+      "
+      :isThisEditOrCreateProp="
+        editOrCreateProp
+      "
+      :isThisDistrictOrClubProp="
+        projectLabel
+      "
+    />
   </div>
 </template>
 
 <script>
 import ClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
 import DistrictSimplifiedProjectForm from '../../../../components/common/Forms/DistrictSimplifiedProjectForm.vue'
+import DistrictMatchingProjectForm from '../../../../components/common/Forms/DistrictMatchingProjectForm.vue'
 
 export default {
   name: 'ClubProjectCreate',
   components: {
     ClubProjectForm,
     DistrictSimplifiedProjectForm,
+    DistrictMatchingProjectForm,
   },
   props: {
     projectTypeProp: Number,

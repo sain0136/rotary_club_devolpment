@@ -60,7 +60,7 @@
                     editOrCreateProp:
                       'create',
                     projectLabel:
-                      'District',
+                      'Club',
                   },
                 })
             "
@@ -76,11 +76,13 @@
               () =>
                 this.$router.push({
                   name:
-                    'DistrictProjectCreate',
+                    'ClubProjectCreate',
                   params: {
-                    projectType: 3,
+                    projectTypeProp: 3,
                     editOrCreateProp:
                       'create',
+                    projectLabel:
+                      'Club',
                   },
                 })
             "

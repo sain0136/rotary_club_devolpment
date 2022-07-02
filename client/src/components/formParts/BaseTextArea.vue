@@ -55,13 +55,13 @@ label {
   text-align: end;
   width: 33.33333%;
   padding-right: 1em;
-    padding-left: 1em;
+  padding-left: 1em;
 }
 span {
   flex-grow: 1;
   width: 11.666666%;
   align-self: center;
-  padding-left: .5em;
+  padding-left: 0.5em;
 }
 
 textarea {
@@ -82,5 +82,6 @@ textarea {
       0.15s,
     box-shadow ease-in-out 0.15s;
   font-family: 'Lato', sans-serif;
+  margin-bottom: 0.5rem;
 }
 </style>
