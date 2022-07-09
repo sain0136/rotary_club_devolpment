@@ -96,6 +96,7 @@ export default class ProjectsController {
     const districtSimplifiedGrantRequest: number = request.input(
       'district_simplified_grant_request'
     )
+    const districtMatchingGrantRequest: number = request.input('district_matching_grant_request')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
@@ -285,7 +286,7 @@ export default class ProjectsController {
 
         intialSponsorClubContribution: intialSponsorClubContribution,
         coOperatingOrganisationContribution: coOperatingOrganisationContribution,
-        districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+        districtMatchingGrantRequest: districtMatchingGrantRequest,
 
         anticipatedFunding: anticipatedFunding,
         fundingGoal: fundingGoal,
@@ -479,6 +480,7 @@ export default class ProjectsController {
     const districtSimplifiedGrantRequest: number = request.input(
       'district_simplified_grant_request'
     )
+    const districtMatchingGrantRequest: number = request.input('district_matching_grant_request')
     const fundingGoal: number = request.input('funding_goal')
     const currentFunds: number = request.input('current_funds')
     const anticipatedFunding: number = request.input('anticipated_funding')
@@ -617,7 +619,7 @@ export default class ProjectsController {
 
           intialSponsorClubContribution: intialSponsorClubContribution,
           coOperatingOrganisationContribution: coOperatingOrganisationContribution,
-          districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
+          districtMatchingGrantRequest: districtMatchingGrantRequest,
 
           anticipatedFunding: anticipatedFunding,
           fundingGoal: fundingGoal,
