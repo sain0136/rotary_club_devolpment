@@ -17,6 +17,7 @@ export default class ProjectsController {
       project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
       project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
       project.areaFocusObject = JSON.parse(project.areaFocus)
+      project.hostclubInformationObject = JSON.parse(project.hostclubInformation)
     }
 
     return response.json({ allProjects })
@@ -314,7 +315,7 @@ export default class ProjectsController {
       newProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       newProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
       newProject.areaFocusObject = JSON.parse(areaFocus)
-      newProject.hostclubInformation = JSON.parse(hostclubInformation)
+      newProject.hostclubInformationObject = JSON.parse(hostclubInformation)
       return response.json({
         newProject,
         details:
@@ -346,7 +347,7 @@ export default class ProjectsController {
     ProjectById.extraDescriptionsObject = JSON.parse(ProjectById.extraDescriptions)
     ProjectById.itemisedBudgetArray = JSON.parse(ProjectById.itemisedBudget)
     ProjectById.areaFocusObject = JSON.parse(ProjectById.areaFocus)
-    ProjectById.hostclubInformation = JSON.parse(ProjectById.hostclubInformation)
+    ProjectById.hostclubInformationObject = JSON.parse(ProjectById.hostclubInformation)
 
     const projectAdmins: any[] = await ProjectById.related('projectRole')
       .pivotQuery()
@@ -363,6 +364,7 @@ export default class ProjectsController {
         project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
         project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
         project.areaFocusObject = JSON.parse(project.areaFocus)
+        project.hostclubInformationObject = JSON.parse(project.hostclubInformation)
       }
     }
     return response.json({ projects })
@@ -380,6 +382,7 @@ export default class ProjectsController {
           project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
           project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
           project.areaFocusObject = JSON.parse(project.areaFocus)
+          project.hostclubInformationObject = JSON.parse(project.hostclubInformation)
         }
       }
     }
@@ -393,6 +396,7 @@ export default class ProjectsController {
       project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
       project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
       project.areaFocusObject = JSON.parse(project.areaFocus)
+      project.hostclubInformationObject = JSON.parse(project.hostclubInformation)
     }
     /* const projects: any[] = []
          for await (const user of allMembers) {
@@ -570,6 +574,7 @@ export default class ProjectsController {
       updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
       updatedProject.areaFocusObject = JSON.parse(updatedProject.areaFocus)
+
       if (
         updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
         updatedProject.projectStatus == 'Looking for funding'
@@ -627,12 +632,12 @@ export default class ProjectsController {
       oldProject.extraDescriptionsObject = JSON.parse(oldProject.extraDescriptions)
       oldProject.itemisedBudgetArray = JSON.parse(oldProject.itemisedBudget)
       oldProject.areaFocusObject = JSON.parse(oldProject.areaFocus)
-      oldProject.hostclubInformation = JSON.parse(oldProject.hostclubInformation)
+      oldProject.hostclubInformationObject = JSON.parse(oldProject.hostclubInformation)
 
       updatedProject.extraDescriptionsObject = JSON.parse(extraDescriptions)
       updatedProject.itemisedBudgetArray = JSON.parse(itemisedBudget)
       updatedProject.areaFocusObject = JSON.parse(areaFocus)
-      updatedProject.hostclubInformation = JSON.parse(hostclubInformation)
+      updatedProject.hostclubInformationObject = JSON.parse(hostclubInformation)
       if (
         updatedProject.anticipatedFunding == updatedProject.fundingGoal &&
         updatedProject.projectStatus == 'Looking for funding'

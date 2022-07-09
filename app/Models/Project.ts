@@ -21,6 +21,9 @@ export default class Project extends BaseModel {
   public attachedLetters: object
 
   @computed()
+  public hostclubInformationObject: object
+
+  @computed()
   public projectFunding: object
 
   @computed()
