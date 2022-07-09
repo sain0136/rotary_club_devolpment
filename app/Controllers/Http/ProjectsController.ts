@@ -85,10 +85,8 @@ export default class ProjectsController {
     const areaFocus: any = request.input('area_focus')
 
     const extraDescriptions: any = request.input('extra_descriptions')
+    let hostclubInformation: any = request.input('hostclub_information')
 
-    // const attachedLetters: number = request.input('attached_letters')
-    // const projectFunding: string = request.input('project_funding')
-    let hostclubInformation: string = request.input('hostclub_information')
     const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
     const coOperatingOrganisationContribution: number = request.input(
       'co_operating_organisation_contribution'
@@ -112,10 +110,6 @@ export default class ProjectsController {
       imageLink = 'http://74.208.135.85' + theUrl
     }
 
-    /*     const attachedLetters: any = JSON.stringify(request.input('attached_letters'))
-    const projectFunding: any = JSON.stringify(request.input('project_funding'))
-    const hostclubInformation: any = JSON.stringify(request.input('hostclub_information'))
-     */
     const roleType: ProjectRoleType = request.input('role_type')
     const createdByUserId: number = request.input('created_by')
     const clubId: number = request.input('club_id')
@@ -256,10 +250,10 @@ export default class ProjectsController {
       let hostclub_information = JSON.parse(hostclubInformation)
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
       const convertedDateCurrency: DateTime = DateTime.fromFormat(
-        hostclub_information.currency_date_entered,
+        hostclub_information.sectionF.currency_date_entered,
         'D'
       )
-      hostclub_information.currency_date_entered = convertedDateCurrency
+      hostclub_information.sectionF.currency_date_entered = convertedDateCurrency
       hostclubInformation = JSON.stringify(hostclub_information)
       if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
