@@ -248,8 +248,9 @@ export default class ProjectsController {
           newProject.grantType,
       })
     } else if (grantType == 3) {
-      let hostclub_information = JSON.parse(hostclubInformation)
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+
+      let hostclub_information = JSON.parse(hostclubInformation)
       const convertedDateCurrency: DateTime = DateTime.fromFormat(
         hostclub_information.sectionF.currency_date_entered,
         'D'
