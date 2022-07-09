@@ -77,7 +77,7 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
-    const currencyDate: string = request.input(' currency_date_entered')
+    const currencyDate: any = request.input('currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -459,7 +459,7 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
-    const currencyDate: string = request.input(' currency_date_entered')
+    const currencyDate: any = request.input('currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
