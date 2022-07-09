@@ -250,9 +250,10 @@ export default class ProjectsController {
       })
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-
+      let parsed = JSON.parse(hostclubInformation)
       const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
-      hostclubInformation.sectionF.currency_date_entered = convertedDateCurrency
+      parsed.sectionF.currency_date_entered = convertedDateCurrency
+      parsed = JSON.stringify(parsed)
       if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
@@ -272,7 +273,7 @@ export default class ProjectsController {
         areaFocus: areaFocus,
 
         extraDescriptions: extraDescriptions,
-        hostclubInformation: hostclubInformation,
+        hostclubInformation: parsed,
 
         itemisedBudget: itemisedBudget,
 
@@ -591,8 +592,10 @@ export default class ProjectsController {
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
 
+      let parsed = JSON.parse(hostclubInformation)
       const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
-      hostclubInformation.sectionF.currency_date_entered = convertedDateCurrency
+      parsed.sectionF.currency_date_entered = convertedDateCurrency
+      parsed = JSON.stringify(parsed)
       let updatedProject: Project = await projectToBeUpdated
         .merge({
           projectStatus: ProjectStatus[projectStatus],
@@ -606,7 +609,7 @@ export default class ProjectsController {
           estimatedCompletion: convertedEstimatedCompletion,
 
           areaFocus: areaFocus,
-          hostclubInformation: hostclubInformation,
+          hostclubInformation: parsed,
           extraDescriptions: extraDescriptions,
 
           itemisedBudget: itemisedBudget,
