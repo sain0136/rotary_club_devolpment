@@ -77,6 +77,7 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
+    const currencyDate: string = request.input(' currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -86,7 +87,7 @@ export default class ProjectsController {
     const areaFocus: any = request.input('area_focus')
 
     const extraDescriptions: any = request.input('extra_descriptions')
-    let hostclubInformation: any = request.input('hostclub_information')
+    const hostclubInformation: any = request.input('hostclub_information')
 
     const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
     const coOperatingOrganisationContribution: number = request.input(
@@ -250,13 +251,8 @@ export default class ProjectsController {
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
 
-      let hostclub_information = JSON.parse(hostclubInformation)
-      const convertedDateCurrency: DateTime = DateTime.fromFormat(
-        hostclub_information.sectionF.currency_date_entered,
-        'D'
-      )
-      hostclub_information.sectionF.currency_date_entered = convertedDateCurrency
-      hostclubInformation = JSON.stringify(hostclub_information)
+      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
+      hostclubInformation.sectionF.currency_date_entered = convertedDateCurrency
       if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
@@ -463,6 +459,7 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
+    const currencyDate: string = request.input(' currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -472,7 +469,7 @@ export default class ProjectsController {
     const areaFocus: any = request.input('area_focus')
 
     const extraDescriptions: any = request.input('extra_descriptions')
-    let hostclubInformation: string = request.input('hostclub_information')
+    const hostclubInformation: any = request.input('hostclub_information')
 
     const intialSponsorClubContribution: number = request.input('intial_sponsor_club_contribution')
     const coOperatingOrganisationContribution: number = request.input(
@@ -593,14 +590,9 @@ export default class ProjectsController {
       })
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-      let hostclub_information = JSON.parse(hostclubInformation)
-      const convertedDateCurrency: DateTime = DateTime.fromFormat(
-        hostclub_information.currency_date_entered,
-        'D'
-      )
-      hostclub_information.currency_date_entered = convertedDateCurrency
-      hostclubInformation = JSON.stringify(hostclub_information)
 
+      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
+      hostclubInformation.sectionF.currency_date_entered = convertedDateCurrency
       let updatedProject: Project = await projectToBeUpdated
         .merge({
           projectStatus: ProjectStatus[projectStatus],
