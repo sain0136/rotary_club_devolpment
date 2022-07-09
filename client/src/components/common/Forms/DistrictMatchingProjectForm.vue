@@ -652,14 +652,15 @@
           </span>
         </div>
         <div class="form-inputs">
-          <BaseTextArea
+          <BaseInputs
             v-model="
               matchingProject
                 .hostclub_information
-                .location_community
+                .location_city
             "
             label="What City/Village will the project take place?"
             span="Required"
+            type="text"
           />
         </div>
         <!--          Extra Discription        -->
@@ -675,7 +676,7 @@
           </span>
         </div>
         <div class="form-inputs">
-          <BaseTextArea
+          <BaseSelect
             v-model="
               matchingProject
                 .hostclub_information
@@ -683,6 +684,7 @@
             "
             label="What Country will the project take place?"
             span="Required"
+            :options="countryList"
           />
         </div>
         <h5>
@@ -770,7 +772,7 @@
                 .$error
             "
           >
-            Must be between 150 - 2000
+            Must be between 50 - 2000
             characters long!
           </span>
         </div>
@@ -782,7 +784,7 @@
                 .host_sponsor_planned_project_description
             "
             label="1. Describe how the Host sponsor (in other country) planned this project."
-            span="Must be 150 to 2000 characters long"
+            span="Must be 50 to 2000 characters long"
           />
         </div>
 
@@ -796,7 +798,7 @@
                 .$error
             "
           >
-            Must be between 150 - 2000
+            Must be between 50 - 2000
             characters long!
           </span>
         </div>
@@ -808,7 +810,7 @@
                 .host_commit_description
             "
             label="2. Describe how the host sponsor will commit their time and expertise during the implementation of the project to ensure success. Provide specific examples of activities or tasks for which the host sponsor will be responsibility."
-            span="Must be 150 to 2000 characters long"
+            span="Must be 50 to 2000 characters long"
           />
         </div>
 
@@ -824,7 +826,7 @@
                 .$error
             "
           >
-            Must be between 150 - 2000
+            Must be between 50 - 2000
             characters long!
           </span>
         </div>
@@ -836,7 +838,7 @@
                 .international_commit_description
             "
             label="3. Describe how the international sponsor will commit their time and expertise during the implementation of the project to ensure success. Provide specific examples of activities or tasks for which the international sponsor will be responsibility."
-            span="Must be 150 to 2000 characters long"
+            span="Must be 50 to 2000 characters long"
           />
         </div>
 
@@ -852,7 +854,7 @@
                 .$error
             "
           >
-            Must be between 150 - 2000
+            Must be between 50 - 2000
             characters long!
           </span>
         </div>
@@ -864,7 +866,7 @@
                 .sponsor_publicize_description
             "
             label="4. How do the sponsors plan to publicize this project?"
-            span="Must be 150 to 2000 characters long"
+            span="Must be 50 to 2000 characters long"
           />
         </div>
         <!-- Section C -->
@@ -1197,7 +1199,7 @@
             v-model="
               matchingProject
                 .extra_descriptions
-                .sectionD
+                .sectionE
                 .project_sustainment
             "
             label="2. How will the outcomes of the project be sustained over time after the funding has been expended?"
@@ -1222,7 +1224,7 @@
             <span
               class="form-error"
               id="area-form-error"
-              v-if="v$.sectionD.$error"
+              v-if="v$.sectionE.$error"
             >
               You must choose at least
               one
@@ -1238,9 +1240,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
-                  .Surveys
+                  .sectionE.e.Surveys
               "
               :label="
                 measurableHtmlList[0]
@@ -1250,8 +1250,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Questionnaires
               "
               :label="
@@ -1262,8 +1261,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Observations
               "
               :label="
@@ -1274,8 +1272,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Tests_Of_Knowledge
               "
               :label="
@@ -1286,9 +1283,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
-                  .Interviews
+                  .sectionE.e.Interviews
               "
               :label="
                 measurableHtmlList[4]
@@ -1298,8 +1293,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Focus_Groups
               "
               :label="
@@ -1310,8 +1304,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Video_Media
               "
               :label="
@@ -1322,8 +1315,7 @@
               v-model="
                 matchingProject
                   .extra_descriptions
-                  .sectionE
-                  .progress_measures
+                  .sectionE.e
                   .Documents_Materials_Collections
               "
               :label="
@@ -1580,14 +1572,6 @@
           class="form-inputs"
           style="display: flex;/* justify-content: center; */margin-top: 1em;flex-direction: column;align-items: center;"
         >
-          <h6
-            style="
-    margin-top: 1rem;
-"
-          >
-            Total Anticipated Cost:$
-            {{ sumOfItemsCost }} USD
-          </h6>
           <h6>
             Total Anticipated Cost In
             Local Currency:$
@@ -1600,6 +1584,15 @@
                 .local_currency_name
             }}
           </h6>
+          <h6
+            style="
+    margin-top: 1rem;
+"
+          >
+            Total Anticipated Cost:$
+            {{ sumOfItemsCost }} USD
+          </h6>
+
           <h6>
             Total Anticipated
             Funding/Current Funds:$
@@ -1643,7 +1636,7 @@
               "
             >
               <a @click="validateForm()"
-                >Create DSG Project</a
+                >Create DM Project</a
               >
             </li>
             <li
@@ -1721,14 +1714,7 @@ import BaseTextArea from '../../formParts/BaseTextArea.vue'
 import ProjectApi from '../../../api-factory/project'
 import store from '../../../store/index'
 import useValidate from '@vuelidate/core'
-import {
-  maxValue,
-  required,
-  maxLength,
-  minLength,
-  email,
-  requiredIf,
-} from '@vuelidate/validators'
+import { requiredIf } from '@vuelidate/validators'
 import { watchEffect } from 'vue-demi'
 export default {
   name: 'DistrictMatchingProjectForm',
@@ -1810,8 +1796,16 @@ export default {
           sectionE: {
             project_capacity: '',
             project_sustainment: '',
-            progress_measures:
-              Resources.measurable,
+            e: {
+              Surveys: false,
+              Questionnaires: false,
+              Observations: false,
+              Tests_Of_Knowledge: false,
+              Interviews: false,
+              Focus_Groups: false,
+              Video_Media: false,
+              Documents_Materials_Collections: false,
+            },
           },
         },
         hostclub_information: {
@@ -1911,7 +1905,8 @@ export default {
         store.state.loggedInClubUserId,
       )
       this.matchingProject.club_id = parseInt(
-        store.state.loggedInClubId,
+        store.state.currentClubData
+          .club_id,
       )
     }
     if (
@@ -2024,12 +2019,12 @@ export default {
             '' ||
             this.matchingProject
               .hostclub_information
-              .host_sponsor_planned_project_description <
-              250 ||
+              .host_sponsor_planned_project_description
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
-              .host_sponsor_planned_project_description >
-              3000,
+              .host_sponsor_planned_project_description
+              .length > 3000,
         ),
       },
       host_commit_description: {
@@ -2040,12 +2035,12 @@ export default {
             '' ||
             this.matchingProject
               .hostclub_information
-              .host_commit_description <
-              250 ||
+              .host_commit_description
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
-              .host_commit_description >
-              3000,
+              .host_commit_description
+              .length > 3000,
         ),
       },
       international_commit_description: {
@@ -2056,12 +2051,12 @@ export default {
             '' ||
             this.matchingProject
               .hostclub_information
-              .international_commit_description <
-              250 ||
+              .international_commit_description
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
-              .international_commit_description >
-              3000,
+              .international_commit_description
+              .length > 3000,
         ),
       },
       district_matching_grant_request: {
@@ -2084,12 +2079,12 @@ export default {
             '' ||
             this.matchingProject
               .hostclub_information
-              .sponsor_publicize_description <
-              250 ||
+              .sponsor_publicize_description
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
-              .sponsor_publicize_description >
-              3000,
+              .sponsor_publicize_description
+              .length > 3000,
         ),
       },
       sectionC: {
@@ -2106,29 +2101,32 @@ export default {
             this.matchingProject
               .hostclub_information
               .sectionC
-              .cooperating_organizations_roles_description <
-              250 ||
+              .cooperating_organizations_roles_description
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
               .sectionC
-              .cooperating_organizations_roles_description >
-              3000,
+              .cooperating_organizations_roles_description
+              .length > 3000,
         ),
       },
       cooperating_organizations_identify_members: {
         requiredIf: requiredIf(
           this.matchingProject
             .hostclub_information
+            .sectionC
             .cooperating_organizations_identify_members ==
             '' ||
             this.matchingProject
               .hostclub_information
-              .cooperating_organizations_identify_members <
-              250 ||
+              .sectionC
+              .cooperating_organizations_identify_members
+              .length < 50 ||
             this.matchingProject
               .hostclub_information
-              .cooperating_organizations_identify_members >
-              3000,
+              .sectionC
+              .cooperating_organizations_identify_members
+              .length > 3000,
         ),
       },
       sectionD: {
@@ -2156,7 +2154,7 @@ export default {
       for (let [
         key,
         value,
-      ] of Object.entries(element)) {
+      ] of Object.entries(questions)) {
         if (
           value == '' ||
           value < 100 ||
@@ -2164,6 +2162,11 @@ export default {
         ) {
           validErrors = true
         }
+      }
+      if (validErrors) {
+        return false
+      } else {
+        return true
       }
     },
     verifySectionF() {
@@ -2174,10 +2177,15 @@ export default {
       for (let [
         key,
         value,
-      ] of Object.entries(element)) {
+      ] of Object.entries(questions)) {
         if (value == '') {
           validErrors = true
         }
+      }
+      if (validErrors) {
+        return false
+      } else {
+        return true
       }
     },
     verifySectionE() {
@@ -2185,22 +2193,36 @@ export default {
       let questions = this
         .matchingProject
         .extra_descriptions.sectionE
+
       for (let [
         key,
         value,
-      ] of Object.entries(element)) {
-        if (
-          key == 'progress_measures'
-        ) {
+      ] of Object.entries(questions)) {
+        if (key == 'e') {
         } else {
           if (
             value == '' ||
-            value < 100 ||
-            value > 1000
+            value.length < 100 ||
+            value.length > 1000
           ) {
             validErrors = true
           }
         }
+      }
+      const asArray = Object.entries(
+        questions.e,
+      )
+      const filtered = asArray.filter(
+        ([key, value]) => value == true,
+      )
+      if (filtered.length > 0) {
+      } else {
+        validErrors = true
+      }
+      if (validErrors) {
+        return false
+      } else {
+        return true
       }
     },
     async validateSectionC() {
@@ -2297,7 +2319,8 @@ export default {
           'edit'
         ) {
           this.updateProject(prop)
-        } else this.createDsgProject()
+        } else
+          this.createDistrictMatchingProject()
       } else {
         this.thereAreErrors()
       }
