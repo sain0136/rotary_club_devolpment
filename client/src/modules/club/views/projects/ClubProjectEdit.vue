@@ -22,16 +22,30 @@
         this.projectIdProp
       "
     />
+    <DistrictMatchingProjectForm
+      v-else-if="projectTypeProp == 3"
+      :isThisEditOrCreateProp="
+        this.editOrCreateProp
+      "
+      :isThisDistrictOrClubProp="
+        this.projectLabel
+      "
+      :projectIdProp="
+        this.projectIdProp
+      "
+    />
   </div>
 </template>
 
 <script>
 import DistrictSimplifiedProjectForm from '../../../../components/common/Forms/DistrictSimplifiedProjectForm.vue'
 import DistrictOrClubProjectForm from '../../../../components/common/Forms/ClubProjectForm.vue'
+import DistrictMatchingProjectForm from '../../../../components/common/Forms/DistrictMatchingProjectForm.vue'
 
 export default {
   name: 'ClubProjectEdit',
   components: {
+    DistrictMatchingProjectForm,
     DistrictOrClubProjectForm,
     DistrictSimplifiedProjectForm,
   },

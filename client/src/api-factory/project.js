@@ -421,7 +421,10 @@ export default {
       'estimated_completion',
       data.estimated_completion,
     )
-
+    fd.append(
+      'currency_date_entered',
+      data.currency_date_entered,
+    )
     fd.append(
       'area_focus',
       JSON.stringify(data.area_focus),
@@ -771,7 +774,10 @@ export default {
       'estimated_completion',
       data.estimated_completion,
     )
-
+    fd.append(
+      'currency_date_entered',
+      data.currency_date_entered,
+    )
     fd.append(
       'area_focus',
       JSON.stringify(data.area_focus),

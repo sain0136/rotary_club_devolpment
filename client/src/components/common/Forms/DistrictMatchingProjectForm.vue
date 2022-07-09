@@ -1378,10 +1378,7 @@
         <div class="form-inputs">
           <BaseInputs
             v-model="
-              matchingProject
-                .hostclub_information
-                .sectionF
-                .currency_date_entered
+              matchingProject.currency_date_entered
             "
             label="Date Entered:"
             type="date"
@@ -1639,18 +1636,9 @@
                 >Create DM Project</a
               >
             </li>
+
             <li
               v-if="
-                isThisEditOrCreateProp ==
-                  'create'
-              "
-            >
-              <a @click="cancel()"
-                >Cancel</a
-              >
-            </li>
-            <li
-              v-else-if="
                 isThisEditOrCreateProp ==
                   'edit'
               "
@@ -1661,8 +1649,13 @@
                     projectIdProp,
                   )
                 "
-                >Update this DSG
+                >Update this DM
                 Project</a
+              >
+            </li>
+            <li>
+              <a @click="cancel()"
+                >Cancel</a
               >
             </li>
           </ul>
@@ -1745,6 +1738,8 @@ export default {
         region: '',
         start_date: '',
         estimated_completion: '',
+        currency_date_entered: '',
+
         area_focus: {
           Peace_Conflict_Prevention: false,
           Disease_Prevention_And_Treatment: false,
@@ -2352,18 +2347,19 @@ export default {
         projectToEdit.intial_sponsor_club_contribution
       this.matchingProject.co_operating_organisation_contribution =
         projectToEdit.co_operating_organisation_contribution
-      this.matchingProject.district_simplified_grant_request =
-        projectToEdit.district_simplified_grant_request
+      this.matchingProject.district_matching_grant_request =
+        projectToEdit.district_matching_grant_request
 
       this.matchingProject.rotary_year =
         projectToEdit.rotary_year
-
+      this.matchingProject.currency_date_entered =
+        projectToEdit.currency_date_entered
       this.matchingProject.image_link =
         projectToEdit.image_link
       this.matchingProject.created_by =
         projectToEdit.created_by
       this.matchingProject.hostclub_information =
-        projectToEdit.hostclub_information
+        projectToEdit.hostclubInformationObject
       this.matchingProject.extra_descriptions =
         projectToEdit.extraDescriptionsObject
       this.matchingProject.itemized_budget =
@@ -2410,7 +2406,7 @@ export default {
         this.matchingProject.estimated_completion,
       )
       var mydate3 = new Date(
-        this.matchingProject.hostclub_information.currency_date_entered,
+        this.matchingProject.currency_date_entered,
       )
       this.matchingProject.start_date = mydate1.toLocaleDateString(
         'en-US',
@@ -2418,7 +2414,10 @@ export default {
       this.matchingProject.estimated_completion = mydate2.toLocaleDateString(
         'en-US',
       )
-      this.matchingProject.hostclub_information.currency_date_entered = mydate3.toLocaleDateString(
+      this.matchingProject.currency_date_entered = mydate3.toLocaleDateString(
+        'en-US',
+      )
+      this.matchingProject.hostclub_information.sectionF.currency_date_entered = mydate3.toLocaleDateString(
         'en-US',
       )
       //   creation
@@ -2471,7 +2470,7 @@ export default {
         this.matchingProject.estimated_completion,
       )
       var mydate3 = new Date(
-        this.matchingProject.hostclub_information.currency_date_entered,
+        this.matchingProject.currency_date_entered,
       )
       this.matchingProject.start_date = mydate1.toLocaleDateString(
         'en-US',
@@ -2479,7 +2478,10 @@ export default {
       this.matchingProject.estimated_completion = mydate2.toLocaleDateString(
         'en-US',
       )
-      this.matchingProject.hostclub_information.currency_date_entered = mydate3.toLocaleDateString(
+      this.matchingProject.currency_date_entered = mydate3.toLocaleDateString(
+        'en-US',
+      )
+      this.matchingProject.hostclub_information.sectionF.currency_date_entered = mydate3.toLocaleDateString(
         'en-US',
       )
       //   update
