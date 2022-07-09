@@ -352,6 +352,8 @@ export default class ProjectsController {
     ProjectById.extraDescriptionsObject = JSON.parse(ProjectById.extraDescriptions)
     ProjectById.itemisedBudgetArray = JSON.parse(ProjectById.itemisedBudget)
     ProjectById.areaFocusObject = JSON.parse(ProjectById.areaFocus)
+    ProjectById.hostclubInformation = JSON.parse(ProjectById.hostclubInformation)
+
     const projectAdmins: any[] = await ProjectById.related('projectRole')
       .pivotQuery()
       .where({ project_id: projectId })
