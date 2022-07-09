@@ -123,7 +123,7 @@ export default class ProjectsController {
     const convertedEstimatedCompletion: DateTime = DateTime.fromFormat(estimatedCompletion, 'D')
 
     if (grantType == 1) {
-      if (districtId == null || districtId == undefined) {
+      if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
       }
@@ -180,7 +180,7 @@ export default class ProjectsController {
       })
     } else if (grantType == 2) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-      if (districtId == null || districtId == undefined) {
+      if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
       }
@@ -260,7 +260,7 @@ export default class ProjectsController {
       )
       hostclub_information.currency_date_entered = convertedDateCurrency
       hostclubInformation = JSON.stringify(hostclub_information)
-      if (districtId == null || districtId == undefined) {
+      if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
       }
