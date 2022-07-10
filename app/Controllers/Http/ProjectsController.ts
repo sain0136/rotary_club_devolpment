@@ -77,7 +77,6 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
-    const currencyDate: any = request.input('currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -250,7 +249,6 @@ export default class ProjectsController {
       })
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
       if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
@@ -282,7 +280,6 @@ export default class ProjectsController {
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
 
-        exchangeDate: convertedDateCurrency,
         imageLink: imageLink,
 
         createdBy: createdByUserId,
@@ -458,7 +455,6 @@ export default class ProjectsController {
     const grantType: GrantType = request.input('grant_type')
     const startDate: string = request.input('start_date')
     const estimatedCompletion: string = request.input('estimated_completion')
-    const currencyDate: any = request.input('currency_date_entered')
 
     const region: string = request.input('region')
     const rotaryYear: number = request.input('rotary_year')
@@ -534,7 +530,6 @@ export default class ProjectsController {
       })
     } else if (grantType == 2) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
 
       let updatedProject: Project = await projectToBeUpdated
         .merge({
@@ -553,7 +548,6 @@ export default class ProjectsController {
           extraDescriptions: extraDescriptions,
 
           itemisedBudget: itemisedBudget,
-          exchangeDate: convertedDateCurrency,
           intialSponsorClubContribution: intialSponsorClubContribution,
           coOperatingOrganisationContribution: coOperatingOrganisationContribution,
           districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
@@ -591,10 +585,6 @@ export default class ProjectsController {
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
 
-      let parsed = JSON.parse(hostclubInformation)
-      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
-      parsed.sectionF.currency_date_entered = convertedDateCurrency
-      parsed = JSON.stringify(parsed)
       let updatedProject: Project = await projectToBeUpdated
         .merge({
           projectStatus: ProjectStatus[projectStatus],
@@ -608,7 +598,7 @@ export default class ProjectsController {
           estimatedCompletion: convertedEstimatedCompletion,
 
           areaFocus: areaFocus,
-          hostclubInformation: parsed,
+          hostclubInformation: hostclubInformation,
           extraDescriptions: extraDescriptions,
 
           itemisedBudget: itemisedBudget,

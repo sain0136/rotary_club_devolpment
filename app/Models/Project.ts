@@ -27,9 +27,6 @@ export default class Project extends BaseModel {
   public projectFunding: object
 
   @computed()
-  public convertedDateCurrency: String
-
-  @computed()
   public areaFocusObject: object
 
   @column({ isPrimary: true })
@@ -52,9 +49,6 @@ export default class Project extends BaseModel {
 
   @column.date()
   public estimatedCompletion: DateTime
-
-  @column.date()
-  public exchangeDate: DateTime
 
   @column()
   public fundingGoal: number
