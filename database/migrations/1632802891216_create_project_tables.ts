@@ -13,7 +13,7 @@ export default class Project extends BaseSchema {
       table.string('region', 30).notNullable()
       table.date('start_date').nullable()
       table.date('estimated_completion').notNullable()
-      table.date('exchange_date').notNullable()
+      table.date('exchange_date').nullable()
 
       table.jsonb('area_focus').notNullable()
 
