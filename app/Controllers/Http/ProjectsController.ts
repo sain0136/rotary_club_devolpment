@@ -250,10 +250,7 @@ export default class ProjectsController {
       })
     } else if (grantType == 3) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
-      let parsed = JSON.parse(hostclubInformation)
       const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
-      parsed.sectionF.currency_date_entered = convertedDateCurrency
-      parsed = JSON.stringify(parsed)
       if (districtId == null || districtId == undefined || districtId < 1) {
         const club: Club[] = await Club.query().where({ club_id: clubId })
         districtId = club[0].districtId
@@ -273,7 +270,7 @@ export default class ProjectsController {
         areaFocus: areaFocus,
 
         extraDescriptions: extraDescriptions,
-        hostclubInformation: parsed,
+        hostclubInformation: hostclubInformation,
 
         itemisedBudget: itemisedBudget,
 
@@ -285,6 +282,7 @@ export default class ProjectsController {
         fundingGoal: fundingGoal,
         currentFunds: currentFunds,
 
+        exchangeDate: convertedDateCurrency,
         imageLink: imageLink,
 
         createdBy: createdByUserId,
@@ -536,6 +534,7 @@ export default class ProjectsController {
       })
     } else if (grantType == 2) {
       const convertedStartDate: DateTime = DateTime.fromFormat(startDate, 'D')
+      const convertedDateCurrency: DateTime = DateTime.fromFormat(currencyDate, 'D')
 
       let updatedProject: Project = await projectToBeUpdated
         .merge({
@@ -554,7 +553,7 @@ export default class ProjectsController {
           extraDescriptions: extraDescriptions,
 
           itemisedBudget: itemisedBudget,
-
+          exchangeDate: convertedDateCurrency,
           intialSponsorClubContribution: intialSponsorClubContribution,
           coOperatingOrganisationContribution: coOperatingOrganisationContribution,
           districtSimplifiedGrantRequest: districtSimplifiedGrantRequest,
