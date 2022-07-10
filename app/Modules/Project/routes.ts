@@ -12,3 +12,4 @@ Route.post('/project/showProjectByIdPost', 'ProjectsController.showProjectByIdPo
 
 Route.post('/project/updateById', 'ProjectsController.updateById')
 Route.post('/project/imageUpload', 'ProjectsController.imageUpload')
+Route.post('/project/projectStatus', 'ProjectsController.updateProjectStatus')

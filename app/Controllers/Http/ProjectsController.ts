@@ -447,6 +447,19 @@ export default class ProjectsController {
   }
   public async update({}: HttpContextContract) {}
 
+  public async updateProjectStatus({ request, response }: HttpContextContract) {
+    const projectId: number = request.input('project_id')
+    const projectStatus: string = request.input('project_status')
+
+    const projectToBeUpdated: Project = await Project.findOrFail(projectId)
+
+    await projectToBeUpdated
+      .merge({
+        projectStatus: ProjectStatus[projectStatus],
+      })
+      .save()
+  }
+
   public async updateById({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
 
