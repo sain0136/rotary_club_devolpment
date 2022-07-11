@@ -447,7 +447,7 @@ export default class ProjectsController {
   }
   public async update({}: HttpContextContract) {}
 
-  public async updateProjectStatus({ request, response }: HttpContextContract) {
+  public async updateProjectStatus({ request }: HttpContextContract) {
     const projectId: number = request.input('project_id')
     const projectStatus: string = request.input('project_status')
 
