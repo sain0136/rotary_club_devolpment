@@ -112,7 +112,7 @@ export default class PopulateSeeder extends BaseSeeder {
       password: '123456',
       districtId: 1,
     })
-    role = 5
+    role = 1
     await newUser.related('districtRole').attach({
       [1]: {
         district_role: RoleType[role],

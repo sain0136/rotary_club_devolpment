@@ -23,6 +23,7 @@ export default class UsersController {
     const password: string = request.input('password')
     const email: number = request.input('email')
     const districtOrClubId: number = request.input('id')
+    const formType: string = request.input('form_type')
 
     let userByEmail: User[] = await User.query().select().where({ email: email })
     let user: User = userByEmail[0]
@@ -37,10 +38,25 @@ export default class UsersController {
     }
 
     if (user.clubId !== null && user.clubId !== undefined) {
+      const roleCheck: any = await user
+        .related('clubRole')
+        .pivotQuery()
+        .where({ user_id: user.userId })
+      if (formType !== 'club_form' && roleCheck.role_type! > 4) {
+        verifiedAndAccessGranted = false
+      }
       user.role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
     } else {
+      const roleCheck: any = await user
+        .related('districtRole')
+        .pivotQuery()
+        .where({ user_id: user.userId })
+      if (formType !== 'district_form' && roleCheck.role_type! <= 4) {
+        verifiedAndAccessGranted = false
+      }
       user.role = await user.related('districtRole').pivotQuery().where({ user_id: user.userId })
     }
+
     return response.json({
       Verified: verifiedAndAccessGranted,
       Hash: user.password,
