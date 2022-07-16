@@ -71,6 +71,8 @@ export default createStore({
             loginData.districtId
           state.loggedInDistrictUserId =
             loginData.adminId
+          state.loggedInUserData =
+            loginData.adminData
           break
         //Club Admin
         case 5:
@@ -166,6 +168,7 @@ export default createStore({
       state.loggedInClubUserId = Number
 
       state.loggedInUserData = {}
+      state.currentClubUserData = {}
     },
     //set district data
     changeCurrentDistrictData(
@@ -253,6 +256,7 @@ export default createStore({
         districtId: data.id,
         roleId: 1,
         adminId: 0,
+        adminData: {},
       }
       const response = await isValid(
         data,
@@ -260,6 +264,9 @@ export default createStore({
       if (response.Verified) {
         loginData.adminId =
           response.user_id
+        loginData.adminData = await club_user.show(
+          loginData.adminId,
+        )
         commit('adminLogin', loginData)
         console.log('valid')
       } else {

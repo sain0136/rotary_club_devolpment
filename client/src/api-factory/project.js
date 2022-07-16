@@ -79,6 +79,34 @@ export default {
 
     return await projects
   },
+  async changeProjectStatus(
+    id,
+    status,
+  ) {
+    const queryHelper = {
+      project_id: id,
+      project_status: status,
+    }
+
+    const res = await fetch(
+      'http://74.208.135.85/project/projectStatus',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
+        body: JSON.stringify(
+          queryHelper,
+        ),
+      },
+    )
+
+    const data = await res.json()
+    const projects = await data.projects
+
+    return await projects
+  },
 
   async userIndex(id) {
     const queryHelper = {

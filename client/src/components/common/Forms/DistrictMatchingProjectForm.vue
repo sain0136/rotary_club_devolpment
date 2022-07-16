@@ -435,7 +435,12 @@
             Rotary name!
           </span>
         </div>
-        <div class="form-inputs">
+        <div
+          class="form-inputs"
+          style="
+    margin-bottom: .5rem;
+"
+        >
           <BaseInputs
             v-model="
               matchingProject
@@ -460,7 +465,12 @@
             district Number!
           </span>
         </div>
-        <div class="form-inputs">
+        <div
+          class="form-inputs"
+          style="
+    margin-bottom: .5rem;
+"
+        >
           <BaseInputs
             v-model="
               matchingProject
@@ -473,7 +483,12 @@
           />
         </div>
         <!-- district country   -->
-        <div class="error-div">
+        <div
+          class="error-div"
+          style="
+    margin-bottom: .5rem;
+"
+        >
           <span
             class="form-error"
             id="area-form-error"
@@ -486,15 +501,14 @@
           </span>
         </div>
         <div class="form-inputs">
-          <BaseInputs
+          <BaseSelect
             v-model="
               matchingProject
                 .hostclub_information
                 .district_country
             "
-            label="District Country:"
-            type="text"
-            span="Required "
+            label="Country"
+            :options="countryList"
           />
         </div>
         <!-- district primary contact    -->
@@ -582,16 +596,30 @@
         <hr />
         <!--         IMAGE UPLOAD            -->
         <h3
+          v-if="
+            isThisEditOrCreateProp !=
+              'view'
+          "
           style="text-decoration:underline;"
         >
           Upload Cover Image
         </h3>
-        <h6 style="text-align: center;">
+        <h6
+          v-if="
+            isThisEditOrCreateProp !=
+              'view'
+          "
+          style="text-align: center;"
+        >
           *If you dont upload your own
           cover image, then a default
           image will be shown.
         </h6>
         <div
+          v-if="
+            isThisEditOrCreateProp !=
+              'view'
+          "
           class="form-inputs"
           style="
             justify-content: center;
@@ -700,7 +728,13 @@
             type="text"
           />
         </div>
-        <div class="styled-pagination">
+        <div
+          class="styled-pagination"
+          v-if="
+            isThisEditOrCreateProp !=
+              'view'
+          "
+        >
           <ul class="clearfix">
             <li>
               <a
@@ -736,6 +770,10 @@
             </td>
             <td>
               <button
+                v-if="
+                  isThisEditOrCreateProp !=
+                    'view'
+                "
                 title="Delete Project"
                 class="crud-buttons"
                 @click="
@@ -755,6 +793,7 @@
 
         <!-- Section B -->
         <!--          Extra Discription Q1        -->
+        <hr />
         <h4
           style="
     text-decoration: underline;
@@ -1089,6 +1128,11 @@
           />
         </div>
         <!-- Section D -->
+
+        <hr
+          style="margin-top: 5rem; margin-bottom: 5rem;"
+        />
+
         <h3
           style="text-decoration: underline;"
         >
@@ -1166,6 +1210,9 @@
           />
         </div>
         <!-- Section E -->
+        <hr
+          style="margin-top: 5rem; margin-bottom: 5rem;"
+        />
         <h3
           style="text-decoration: underline;"
         >
@@ -1333,11 +1380,12 @@
     >
       <form @submit.prevent="">
         <h3>
-          Name & describe your
-          Project--Page 4
+          Page 4
         </h3>
 
-        <h4>
+        <h4
+          style="margin-top: 5rem; margin-bottom: 5rem;"
+        >
           Section F - Budget Summary and
           Financing Summary
         </h4>
@@ -1375,7 +1423,7 @@
             span=""
           />
         </div>
-        <div class="form-inputs">
+        <!-- <div class="form-inputs">
           <BaseInputs
             v-model="
               matchingProject.currency_date_entered
@@ -1383,8 +1431,7 @@
             label="Date Entered:"
             type="date"
           />
-        </div>
-        <hr />
+        </div> -->
         <h5>
           Provide a complete, detailed
           and itemised budget for the
@@ -1423,7 +1470,13 @@
             type="number"
           />
         </div>
-        <div class="styled-pagination">
+        <div
+          class="styled-pagination"
+          v-if="
+            isThisEditOrCreateProp !=
+              'view'
+          "
+        >
           <ul class="clearfix">
             <li>
               <a
@@ -1451,7 +1504,14 @@
           <th>Supplier/Vendor</th>
           <th>Local Currency Cost</th>
           <th>Cost</th>
-          <th>Delete Item</th>
+          <th
+            v-if="
+              isThisEditOrCreateProp !=
+                'view'
+            "
+          >
+            Delete Item
+          </th>
           <tr
             id="budget-information"
             v-for="(item,
@@ -1472,8 +1532,17 @@
             <td>
               {{ item.itemCost }}
             </td>
-            <td>
+            <td
+              v-if="
+                isThisEditOrCreateProp !=
+                  'view'
+              "
+            >
               <button
+                v-if="
+                  isThisEditOrCreateProp !=
+                    'view'
+                "
                 title="Delete Project"
                 class="crud-buttons"
                 @click="
@@ -1590,7 +1659,11 @@
             {{ sumOfItemsCost }} USD
           </h6>
 
-          <h6>
+          <h6
+            v-if="
+              isThisEditOrCreateProp
+            "
+          >
             Total Anticipated
             Funding/Current Funds:$
             {{
@@ -1708,7 +1781,10 @@ import ProjectApi from '../../../api-factory/project'
 import store from '../../../store/index'
 import useValidate from '@vuelidate/core'
 import { requiredIf } from '@vuelidate/validators'
-import { watchEffect } from 'vue-demi'
+import {
+  onBeforeUpdate,
+  watchEffect,
+} from 'vue-demi'
 export default {
   name: 'DistrictMatchingProjectForm',
   components: {
@@ -1848,7 +1924,6 @@ export default {
           sectionF: {
             local_currency_name: '',
             exchange_rate: '',
-            currency_date_entered: '',
           },
         },
         attached_letters: {},
@@ -1875,10 +1950,12 @@ export default {
       thereIsErrors: false,
       //   track what page of the application we are on
       formPage: 1,
+      // intial amount on edit
+      pledgeAmountIntial: 0,
     }
   },
   //   created hook
-  created() {
+  async created() {
     if (
       this.isThisDistrictOrClubProp ==
         'District' &&
@@ -1908,7 +1985,103 @@ export default {
       this.isThisEditOrCreateProp ==
       'edit'
     ) {
-      this.prePopulateFields()
+      await this.prePopulateFields()
+      let otherAmount =
+        parseFloat(
+          this.matchingProject
+            .intial_sponsor_club_contribution,
+        ) +
+        parseFloat(
+          this.matchingProject
+            .co_operating_organisation_contribution,
+        ) +
+        parseFloat(
+          this.matchingProject
+            .district_matching_grant_request,
+        )
+
+      this.pledgeAmountIntial =
+        parseFloat(
+          this.matchingProject
+            .anticipated_funding,
+        ) - parseFloat(otherAmount)
+      console.log(
+        'this intial ' +
+          parseFloat(
+            this.pledgeAmountIntial,
+          ),
+      )
+    }
+    if (
+      this.isThisEditOrCreateProp ==
+      'view'
+    ) {
+      await this.prePopulateFields()
+      const collection = document.getElementsByTagName(
+        'input',
+      )
+      const textareaCollection = document.getElementsByTagName(
+        'textarea',
+      )
+      const selectCollection = document.getElementsByTagName(
+        'select',
+      )
+      collection.forEach(element => {
+        element.readOnly = true
+      })
+      textareaCollection.forEach(
+        element => {
+          element.readOnly = true
+        },
+        element.setAttribute(
+          'disabled',
+          '',
+        ),
+      )
+      selectCollection.forEach(
+        element => {
+          element.setAttribute(
+            'disabled',
+            '',
+          )
+        },
+      )
+    }
+  },
+  async updated() {
+    if (
+      this.isThisEditOrCreateProp ==
+      'view'
+    ) {
+      const collection = document.getElementsByTagName(
+        'input',
+      )
+      const textareaCollection = document.getElementsByTagName(
+        'textarea',
+      )
+      const selectCollection = document.getElementsByTagName(
+        'select',
+      )
+      collection.forEach(element => {
+        element.readOnly = true
+        element.setAttribute(
+          'disabled',
+          '',
+        )
+      })
+      textareaCollection.forEach(
+        element => {
+          element.readOnly = true
+        },
+      )
+      selectCollection.forEach(
+        element => {
+          element.setAttribute(
+            'disabled',
+            '',
+          )
+        },
+      )
     }
   },
   //   Validation hook for vueladiate
@@ -2353,7 +2526,7 @@ export default {
       this.matchingProject.rotary_year =
         projectToEdit.rotary_year
       this.matchingProject.currency_date_entered =
-        projectToEdit.currency_date_entered
+        projectToEdit.hostclubInformationObject.sectionF.currency_date_entered
       this.matchingProject.image_link =
         projectToEdit.image_link
       this.matchingProject.created_by =
@@ -2417,9 +2590,7 @@ export default {
       this.matchingProject.currency_date_entered = mydate3.toLocaleDateString(
         'en-US',
       )
-      this.matchingProject.hostclub_information.sectionF.currency_date_entered = mydate3.toLocaleDateString(
-        'en-US',
-      )
+
       //   creation
       const projectToCreate = this
         .matchingProject
@@ -2461,7 +2632,8 @@ export default {
         this.matchingProject
           .co_operating_organisation_contribution +
         this.matchingProject
-          .district_matching_grant_request
+          .district_matching_grant_request +
+        this.pledgeAmountIntial
       //   dates setting
       var mydate1 = new Date(
         this.matchingProject.start_date,
@@ -2629,25 +2801,50 @@ export default {
       } else {
         limit = 10000.0
       }
-      return limit
+      return parseFloat(limit)
     },
     sumOfAnticipatedFunding() {
       let sum = 0
-      sum =
-        parseFloat(
-          this.matchingProject
-            .intial_sponsor_club_contribution,
-        ) +
-        parseFloat(
-          this.matchingProject
-            .co_operating_organisation_contribution,
-        ) +
-        parseFloat(
-          this.matchingProject
-            .district_matching_grant_request,
-        )
-
-      return sum
+      if (
+        this.isThisEditOrCreateProp ==
+        'create'
+      ) {
+        let intial = (sum =
+          parseFloat(
+            this.matchingProject
+              .intial_sponsor_club_contribution,
+          ) +
+          parseFloat(
+            this.matchingProject
+              .co_operating_organisation_contribution,
+          ) +
+          parseFloat(
+            this.matchingProject
+              .district_matching_grant_request,
+          ))
+        return sum
+      } else if (
+        this.isThisEditOrCreateProp ==
+        'edit'
+      ) {
+        sum =
+          parseFloat(
+            this.matchingProject
+              .intial_sponsor_club_contribution,
+          ) +
+          parseFloat(
+            this.matchingProject
+              .co_operating_organisation_contribution,
+          ) +
+          parseFloat(
+            this.matchingProject
+              .district_matching_grant_request,
+          ) +
+          parseFloat(
+            this.pledgeAmountIntial,
+          )
+        return sum
+      }
     },
   },
 }
@@ -2725,6 +2922,7 @@ form .input-wrapper {
   flex-wrap: nowrap;
   row-gap: 0.5em;
   justify-content: center;
+  margin-bottom: 0.5rem;
 }
 .form-inputs h3 {
   align-self: center;

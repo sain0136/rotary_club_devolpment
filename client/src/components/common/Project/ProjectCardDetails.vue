@@ -13,6 +13,11 @@
                 currentProject.project_name
               }}
             </h2>
+            <div>
+              <Strong>
+                Project Type:
+              </Strong> {{currentProject.grant_type}}
+            </div>
             <div class="finances">
               <div class="causes-info">
                 <strong>Raised:</strong>
@@ -85,11 +90,14 @@
           <div class="lower-box">
             <div class="dark-text">
               <p>
-                Project description:
+                 Description:
               </p>
-              {{
+              <p id="indented">
+  {{
                 currentProject.project_theme
               }}
+              </p>
+            
             </div>
           </div>
         </div>
@@ -399,6 +407,12 @@ li {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+}
+#indented{
+  font-size: 1rem;
+  font-weight: unset;
+  margin-left: 3rem;
+
 }
 .content-column {
   display: block;

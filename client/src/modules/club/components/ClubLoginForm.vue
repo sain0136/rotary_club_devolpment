@@ -92,6 +92,7 @@ export default {
           ),
           email: this.userEmail,
           password: this.password,
+          form_type: 'club_form',
         },
       )
       if ((this.loggin = true)) {

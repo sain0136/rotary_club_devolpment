@@ -4,6 +4,10 @@
   <div class="admin-container">
     <div class="auto-container">
       <!--Form for admins edit or create  -->
+      <h1 style="text-align:center">
+        Hello {{ firstName }} your role
+        is {{ adminType }}
+      </h1>
       <form
         onsubmit="event.preventDefault();"
       >
@@ -305,6 +309,54 @@
               <br />
               <br />
             </div>
+            <div
+              class="form-field"
+              v-if="
+                isEditOrCreate ==
+                  'Create'
+              "
+            >
+              <span>Role:</span>
+              <span
+                class="admin-error"
+                id="admin-adminType-error"
+                v-if="
+                  v$.adminType.$error
+                "
+              >
+                Please enter the admin
+                type
+              </span>
+              <select
+                style="
+                    flex-grow: 0.5;
+                    height: fit-content;
+                    margin-top: 2.2rem;
+                  "
+                id="select-province"
+                name="roles"
+                v-model="adminType"
+              >
+                <option value="1"
+                  >Admin</option
+                >
+                <option value="2"
+                  >Grants Chair</option
+                >
+                <option value="3"
+                  >Foundations
+                  Chair</option
+                >
+                <option value="4"
+                  >International
+                  Chair</option
+                >
+              </select>
+              <br />
+
+              <br />
+              <br />
+            </div>
           </div>
           <br />
         </div>
@@ -400,8 +452,7 @@ export default {
       v$: useValidate(),
 
       //Const values
-      districtRole: 'District Admin',
-      roleType: 1,
+      districtRole: null,
 
       //Others
       districtId: 0,
@@ -416,6 +467,7 @@ export default {
       phone: '',
       email: '',
       password: '',
+      adminType: '',
 
       /**
        * For the dropdown to choose which district
@@ -457,6 +509,9 @@ export default {
         required,
         email,
       },
+      adminType: {
+        required,
+      },
       password: {
         required: requiredIf(
           function() {
@@ -471,7 +526,7 @@ export default {
   },
   async created() {
     this.districts = await district.index()
-    this.setUserRoles()
+    // this.setUserRoles()
     /**
      * If the form is to be used for update, the data is pre-populated
      * with the specific district's data coming from the API. If it's to be
@@ -496,19 +551,19 @@ export default {
   },
 
   methods: {
-    setUserRoles() {
-      this.roles.set(1, 'Admin')
-      this.roles.set(
-        2,
-        'District Admin',
-      )
+    // setUserRoles() {
+    //   this.roles.set(1, 'Admin')
+    //   this.roles.set(
+    //     2,
+    //     'District Admin',
+    //   )
 
-      this.roles.set('Admin', 1)
-      this.roles.set(
-        'District Admin',
-        2,
-      )
-    },
+    //   this.roles.set('Admin', 1)
+    //   this.roles.set(
+    //     'District Admin',
+    //     2,
+    //   )
+    // },
 
     async prePopulateFields(
       district_idDistrictView,
@@ -553,11 +608,11 @@ export default {
     getUserData() {
       return {
         district_id: this.districtId,
-        membership_id: this
-          .membershipId,
-        role_type: this.roleType,
         district_role: this
           .districtRole,
+        membership_id: this
+          .membershipId,
+        role_type: this.adminType,
         firstname: this.firstName,
         lastname: this.lastName,
         address: this.address,
@@ -613,6 +668,7 @@ export default {
       }
 
       const userToUpdate = this.getUserData()
+      delete userToUpdate.district_role
       await district_admin.update(
         id,
         userToUpdate,

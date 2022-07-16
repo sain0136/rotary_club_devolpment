@@ -144,6 +144,14 @@
                             .clubId,
                         },
                       }"
+                      v-if="
+                        this.$store
+                          .state
+                          .isClubAdminLoggedIn ||
+                          this.$store
+                            .state
+                            .isClubUserLoggedIn
+                      "
                       >My
                       Profile</router-link
                     >
@@ -159,7 +167,13 @@
                       }"
                       v-if="
                         isTheClubAdminLoggedIn ==
-                          true
+                          true ||
+                          this.$store
+                            .state
+                            .isSiteAdminLoggedIn ||
+                          this.$store
+                            .state
+                            .isDistrictAdminLoggedIn
                       "
                       >Edit
                       Club</router-link
@@ -180,7 +194,13 @@
                       }"
                       v-if="
                         isTheClubAdminLoggedIn ==
-                          true
+                          true ||
+                          this.$store
+                            .state
+                            .isSiteAdminLoggedIn ||
+                          this.$store
+                            .state
+                            .isDistrictAdminLoggedIn
                       "
                       >Club
                       Members</router-link
@@ -199,6 +219,14 @@
                             .clubId,
                         },
                       }"
+                      v-if="
+                        this.$store
+                          .state
+                          .isClubAdminLoggedIn ||
+                          this.$store
+                            .state
+                            .isClubUserLoggedIn
+                      "
                       >My Club
                       Projects</router-link
                     >
@@ -218,6 +246,14 @@
                             'yes',
                         },
                       }"
+                      v-if="
+                        this.$store
+                          .state
+                          .isClubAdminLoggedIn ||
+                          this.$store
+                            .state
+                            .isClubUserLoggedIn
+                      "
                       >My
                       Pledges</router-link
                     >

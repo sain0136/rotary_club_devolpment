@@ -36,7 +36,7 @@ export default {
   },
   async created() {
     await this.setClubData()
-
+    await this.timeOut(500)
     // if (
     //   store.state.loggedInClubId !=
     //   this.currentClubId
@@ -45,7 +45,13 @@ export default {
     //   store.dispatch('logout', 7)
     // }
   },
+
   methods: {
+    async timeOut(ms) {
+      setTimeout(() => {
+        console.log()
+      }, ms)
+    },
     async setClubData() {
       // call to change the current clubs data
       await store.dispatch(

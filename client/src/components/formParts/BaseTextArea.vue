@@ -4,7 +4,6 @@
     cols="5"
     rows="5"
     v-bind="$attrs"
-    :placeholder="label"
     :value="modelValue"
     @input="
       $emit(

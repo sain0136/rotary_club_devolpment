@@ -24,17 +24,119 @@
             @click="
               () => {
                 if (
-                  adminToDisplayProp ==
-                  'Club'
+                  project.grant_type ==
+                  'Club Project'
                 ) {
-                  this.$router.push({
-                    name: 'ClubHome',
-                  })
-                } else {
-                  this.$router.push({
-                    name:
-                      'DistrictProjects',
-                  })
+                  if (
+                    adminToDisplayProp ==
+                    'Club'
+                  ) {
+                    this.$router.push({
+                      name:
+                        'ClubProjectEdit',
+                      params: {
+                        projectTypeProp: 1,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'Club',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  } else {
+                    this.$router.push({
+                      name:
+                        'DistrictProjectEdit',
+                      params: {
+                        projectTypeProp: 1,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'District',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  }
+                } else if (
+                  project.grant_type ==
+                  'District Simplified Project'
+                ) {
+                  if (
+                    adminToDisplayProp ==
+                    'Club'
+                  ) {
+                    this.$router.push({
+                      name:
+                        'ClubProjectEdit',
+                      params: {
+                        projectTypeProp: 2,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'Club',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  } else {
+                    this.$router.push({
+                      name:
+                        'DistrictProjectEdit',
+                      params: {
+                        projectTypeProp: 2,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'District',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  }
+                } else if (
+                  project.grant_type ==
+                  'District Matching Project'
+                ) {
+                  if (
+                    adminToDisplayProp ==
+                    'Club'
+                  ) {
+                    this.$router.push({
+                      name:
+                        'ClubProjectEdit',
+                      params: {
+                        projectTypeProp: 3,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'Club',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  } else {
+                    this.$router.push({
+                      name:
+                        'DistrictProjectEdit',
+                      params: {
+                        projectTypeProp: 3,
+                        editOrCreateProp:
+                          'view',
+                        projectLabel:
+                          'District',
+                        currentProjectPropObj: project,
+                        projectIdProp:
+                          project.project_id,
+                      },
+                    })
+                  }
                 }
               }
             "
@@ -318,19 +420,39 @@ export default {
       ) {
         case 'Club Project':
           projectToUpdate.project_status = 3
-          await projectApi.update(
+          await projectApi.changeProjectStatus(
             projectToUpdate.project_id,
-            projectToUpdate,
+            projectToUpdate.project_status,
           )
           break
         case 'District Simplified Project':
           projectToUpdate.project_status = 3
-          await projectApi.updateDsg(
-            projectToUpdate,
+          await projectApi.changeProjectStatus(
             projectToUpdate.project_id,
+            projectToUpdate.project_status,
           )
           break
         case 'District Matching Project':
+          var txt
+          if (
+            confirm(
+              'Are you sure you want to Submit for approval',
+            )
+          ) {
+            projectToUpdate.project_status = 3
+            projectToUpdate.grant_type = 3
+
+            await projectApi.changeProjectStatus(
+              projectToUpdate.project_id,
+              projectToUpdate.project_status,
+            )
+            alert(
+              'Project Submitted for approval!',
+            )
+          } else {
+            txt = 'Canceled'
+          }
+
           break
         case 'Global Project':
           break

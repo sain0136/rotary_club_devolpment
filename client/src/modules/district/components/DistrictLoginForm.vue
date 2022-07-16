@@ -22,8 +22,8 @@
           v-if="
             $store.state
               .isDistrictAdminLoggedIn &&
-            !$store.state
-              .isDistrictAdminRejected
+              !$store.state
+                .isDistrictAdminRejected
           "
         >
           <p id="success">Logged In!</p>
@@ -82,6 +82,7 @@ export default {
             .value.params.id,
           email: this.email,
           password: this.password,
+          form_type: 'district_form',
         },
       )
       if (
@@ -122,7 +123,6 @@ export default {
   align-items: center;
   padding: 2em 0;
   font-family: 'Montserrat', sans-serif;
-
 }
 /* login */
 .login-container {
@@ -147,7 +147,7 @@ img {
 #error {
   color: red;
   font-weight: bolder;
-  padding-top: .2em;
+  padding-top: 0.2em;
 }
 form {
   text-align: center;
@@ -176,7 +176,7 @@ button {
   box-shadow: 0px 1px 5px 0
     rgba(0, 0, 0, 0.425);
   border-radius: 5%;
-  padding: .8em;
+  padding: 0.8em;
 }
 
 button:hover {
