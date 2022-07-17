@@ -45,7 +45,7 @@
           </td>
         </tr>
       </table>
-  
+
       <div v-else>
         <h1>No links</h1>
       </div>
@@ -60,8 +60,12 @@
       >
         Edit the Link
       </legend>
-          <!-- add links form -->
-      <legend v-else-if="links.length < 2">Add a Link</legend>
+      <!-- add links form -->
+      <legend
+        v-else-if="links.length < 2"
+      >
+        Add a Link
+      </legend>
       <select
         v-model="linkTypeToCreate"
       >
@@ -89,9 +93,21 @@
       >
         Update
       </button>
+      <span
+        v-if="
+          v$.linkTypeToCreate.$error
+        "
+        style="
+    color: red;
+    font-weight: 900;
+    font-size: 1.5rem;
+"
+      >
+        Please choose a link type
+      </span>
       <button
         v-else-if="links.length < 2"
-        @click="createLink"
+        @click="validateAddLink"
       >
         Add
       </button>
@@ -113,6 +129,8 @@
 <script>
 import store from '../../../store/index'
 import social_links from '../../../api-factory/social_links'
+import useValidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
   name: 'SocialLinksSection',
@@ -121,6 +139,10 @@ export default {
   },
   data() {
     return {
+      v$: useValidate({
+        $scope: false,
+      }),
+
       links: [],
 
       linkToCreate: '',
@@ -132,10 +154,18 @@ export default {
       isEditOrCreateLink: '',
     }
   },
+  validations() {
+    return {
+      linkTypeToCreate: {
+        required,
+      },
+    }
+  },
   async created() {
     this.setLinkTypes()
     this.links = await this.getLinks()
   },
+
   methods: {
     setLinkTypes() {
       this.linkTypesDict.set(
@@ -152,10 +182,19 @@ export default {
       )
       this.linkTypesDict.set('Other', 4)
 
-            this.linkTypesDict.set( 'Facebook',1)
-      this.linkTypesDict.set( 'Twitter',2)
-      this.linkTypesDict.set('Instagram',3 )
-      this.linkTypesDict.set( 'Other',4)
+      this.linkTypesDict.set(
+        'Facebook',
+        1,
+      )
+      this.linkTypesDict.set(
+        'Twitter',
+        2,
+      )
+      this.linkTypesDict.set(
+        'Instagram',
+        3,
+      )
+      this.linkTypesDict.set('Other', 4)
     },
 
     async getLinks() {
@@ -187,9 +226,17 @@ export default {
       }
     },
 
+    validateAddLink() {
+      this.v$.$validate()
+      if (!this.v$.$error) {
+        this.createLink()
+      }
+    },
+
     async createLink() {
       let isDistrict = false
       let objectId
+      const regex = /https:\/\/|http:\/\//
 
       if (
         this.isDistrictOrClub ==
@@ -210,7 +257,10 @@ export default {
         url_type: this.linkTypesDict.get(
           this.linkTypeToCreate,
         ),
-        url: this.linkToCreate,
+        url: this.linkToCreate.replace(
+          regex,
+          '',
+        ),
       }
 
       await social_links.create(

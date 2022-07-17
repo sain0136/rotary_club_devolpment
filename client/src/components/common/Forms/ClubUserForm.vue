@@ -300,9 +300,14 @@
               >Submit</a
             >
           </li>
+          <li>
+            <a @click="redirect(1)"
+              >Cancel</a
+            >
+          </li>
         </ul>
       </div>
-      <div
+      <!-- <div
         class="styled-pagination"
         v-else
       >
@@ -321,7 +326,7 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
     </form>
   </div>
 </template>
@@ -479,8 +484,17 @@ export default {
         this.roleType = 7
       }
       const userToCreate = this.getUserData()
-      await apiUser.create(userToCreate)
-      this.redirect(true)
+      const emailError = await apiUser.create(
+        userToCreate,
+      )
+      console.log(emailError)
+      if (!emailError) {
+        alert(
+          'This email is already taken try another ! ',
+        )
+      } else {
+        this.redirect(true)
+      }
     },
     async updateUser() {
       const userToCreate = this.getUserData()
@@ -490,16 +504,22 @@ export default {
       )
       this.redirect(true)
     },
-    redirect() {
+    redirect(cancel) {
+      if (cancel == 1) {
+        this.$router.push({
+          name: 'ClubsView',
+        })
+        return true
+      }
       if (
         this.isEditOrCreate == 'Edit'
       ) {
         this.$router.push({
-          name: 'ClubHome',
+          name: 'ClubsView',
         })
       } else {
         this.$router.push({
-          name: 'userEditApp',
+          name: 'ClubsView',
         })
       }
     },
@@ -521,6 +541,9 @@ export default {
             phone: this.phone,
             email: this.email,
             password: this.password,
+            club_id: parseInt(
+              this.clubIdProp,
+            ),
           }
         else
           return {
@@ -612,13 +635,15 @@ hr {
 }
 .styled-pagination ul {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  flex-wrap: wrap;
   margin-bottom: 0rem;
 }
 .styled-pagination li {
   position: relative;
   display: block;
   padding-top: 0.5rem;
+  margin: 1rem;
 }
 .styled-pagination li a {
   color: #ffffff;

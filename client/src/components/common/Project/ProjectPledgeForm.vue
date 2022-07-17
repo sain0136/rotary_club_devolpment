@@ -145,6 +145,12 @@
           >
             Submit
           </button>
+          <button
+            type="submit"
+            @click="() => redirect()"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>
@@ -450,6 +456,8 @@ export default {
 /*submit bttn */
 .bttn-text {
   text-align: left;
+  display: inline-flex;
+  column-gap: 1rem;
 }
 .bttn-text button {
   margin-top: 15px;

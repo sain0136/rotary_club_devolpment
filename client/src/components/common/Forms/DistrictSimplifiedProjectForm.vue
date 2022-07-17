@@ -819,6 +819,11 @@
             >Next Page</a
           >
         </li>
+        <li>
+          <a @click="cancel()"
+            >Cancel</a
+          >
+        </li>
       </ul>
     </div>
   </div>

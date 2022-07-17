@@ -18,6 +18,28 @@ export default {
     const data = await res.json()
     return await data.userById
   },
+  async showJson(id) {
+    const queryHelper = {
+      user_id: id,
+    }
+
+    const res = await fetch(
+      'http://74.208.135.85/user/json',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
+        body: JSON.stringify(
+          queryHelper,
+        ),
+      },
+    )
+
+    const data = await res.json()
+    return await data.userById
+  },
 
   async create(data) {
     const res = await fetch(
@@ -31,6 +53,11 @@ export default {
         body: JSON.stringify(data),
       },
     )
+    if (res.status == 500) {
+      return false
+    } else {
+      return true
+    }
   },
 
   async update(id, data) {

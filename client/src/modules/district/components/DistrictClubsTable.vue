@@ -86,7 +86,7 @@
                   .isDistrictAdminLoggedIn
             "
             @click="
-              deleteClub(club.club_id)
+              deleteClub(club.club_name)
             "
           >
             <font-awesome-icon
@@ -125,7 +125,7 @@ export default {
     async deleteClub(clubId) {
       if (
         confirm(
-          `Are you sure you want to delete club ${clubId}?`,
+          `Are you sure you want to delete this club: ${clubId}?`,
         )
       ) {
         await club.delete(clubId)

@@ -22,9 +22,11 @@ export default {
         body: JSON.stringify(data),
       },
     )
-
-    // console.log(userToCreate)
-    // console.log(await res.json())
+    if (res.status == 500) {
+      return false
+    } else {
+      return true
+    }
   },
 
   async update(id, data) {
@@ -39,6 +41,11 @@ export default {
         body: JSON.stringify(data),
       },
     )
+    if (res.status == 500) {
+      return false
+    } else {
+      return true
+    }
   },
 
   async delete(id) {

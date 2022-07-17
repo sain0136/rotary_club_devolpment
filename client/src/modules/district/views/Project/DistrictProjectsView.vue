@@ -30,7 +30,7 @@
       style="display: none;"
     >
       <ul class="clearfix">
-        <li>
+        <li v-if="!isDistrict">
           <a
             class="type-buttons"
             @click="
@@ -47,7 +47,7 @@
                   },
                 })
             "
-            >District Project</a
+            >Club Project</a
           >
         </li>
       </ul>
@@ -121,17 +121,26 @@
 
 <script>
 import MyLoggedProjectsTable from '../../../../components/common/Tables/MyLoggedProjectsTable.vue'
-
+import store from '../../../../store/index'
 export default {
   name: 'DistrictProjectsView',
   components: {
     MyLoggedProjectsTable,
   },
   data() {
-    return {}
+    return {
+      isDistrict: false,
+    }
   },
 
-  created() {},
+  created() {
+    if (
+      store.state
+        .isDistrictAdminLoggedIn
+    ) {
+      this.isDistrict = true
+    }
+  },
   methods: {
     showChocies() {
       let x = document.getElementById(
@@ -159,13 +168,11 @@ h1 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-top: 3em;
-  margin-bottom: 3em;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+  justify-content: center;
 }
 
-.clearfix {
-  left: 10%;
-}
 a {
   color: #337ab7;
   text-decoration: none;

@@ -4,9 +4,17 @@
   <div class="admin-container">
     <div class="auto-container">
       <!--Form for admins edit or create  -->
-      <h1 style="text-align:center">
+      <h1
+        style="text-align:center; margin-bottom: 2rem;
+"
+      >
         Hello {{ firstName }} your role
-        is {{ adminType }}
+        is:
+        <strong
+          style="text-decoration: underline;"
+        >
+          {{ districtRole }}</strong
+        >
       </h1>
       <form
         onsubmit="event.preventDefault();"
@@ -510,7 +518,14 @@ export default {
         email,
       },
       adminType: {
-        required,
+        required: requiredIf(
+          function() {
+            return (
+              this.isEditOrCreate ==
+              'Create'
+            )
+          },
+        ),
       },
       password: {
         required: requiredIf(
@@ -585,13 +600,14 @@ export default {
         console.log(userIdToEdit)
       }
 
-      const userInfo = await user.show(
+      const userInfo = await user.showJson(
         userIdToEdit,
       )
 
       this.districtId = await userInfo.district_id
       this.membershipId = await userInfo.membership_id
-      this.districtRole = await userInfo.district_role
+      this.districtRole = await userInfo
+        .role[0].district_role
       this.roleType = await userInfo.role_type
       this.firstName = await userInfo.firstname
       this.lastName = await userInfo.lastname
@@ -629,12 +645,12 @@ export default {
     validateDistrictAdmin() {
       this.v$.$validate()
       console.log(this.v$.$errors)
-
       if (!this.v$.$error) {
         if (
           this.isEditOrCreate ==
           'Create'
         ) {
+          console.log('dsad')
           this.createAdmin()
         } else {
           console.log('here')
@@ -645,14 +661,20 @@ export default {
 
     async createAdmin() {
       const userToCreate = this.getUserData()
-      await district_admin.create(
+      const emailError = await district_admin.create(
         userToCreate,
       )
-      this.redirect(true)
+      console.log(emailError)
+      if (!emailError) {
+        alert(
+          'This email is already taken try another ! ',
+        )
+      } else {
+        this.redirect(true)
+      }
     },
 
     async updateExistingAdmin() {
-      console.log('ok')
       let id = ''
       if (
         this.isEditOrCreate == 'Edit' &&
@@ -673,6 +695,7 @@ export default {
         id,
         userToUpdate,
       )
+
       this.redirect(false)
     },
 
