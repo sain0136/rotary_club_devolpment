@@ -18,6 +18,9 @@ export default class Club extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
 
   @computed()
+  public titledRoles: any[]
+
+  @computed()
   public socialmedia: Url[]
 
   @column({ isPrimary: true })

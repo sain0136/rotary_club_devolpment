@@ -53,7 +53,20 @@ export default class ClubsController {
 
   public async show({ response, params }: HttpContextContract) {
     const clubID: number = parseInt(params.id)
-    const clubById: Club = await Club.findOrFail(clubID)
+    let clubById: Club = await Club.findOrFail(clubID)
+    clubById.titledRoles = []
+
+    const allMembers: User[] = await User.query().where({ clubId: clubID })
+    for await (const user of allMembers) {
+      const role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
+      if (role[0].role_type == 6) {
+        clubById.titledRoles.push({
+          name: user.firstname + user.lastname,
+          title: role[0].club_role,
+        })
+      }
+    }
+
     return response.json({ clubsById: clubById })
   }
 
