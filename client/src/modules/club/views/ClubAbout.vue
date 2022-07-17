@@ -87,6 +87,25 @@
               </li>
             </ul>
           </div>
+          <div
+            class="details-list"
+            v-if="
+              clubData.titledRoles != 0
+            "
+          >
+            <ul>
+              <li
+                v-for="role in clubData.titledRoles"
+                :key="role"
+              >
+                <Strong>
+                  {{
+                    role.title
+                  }}</Strong
+                >: {{ role.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
