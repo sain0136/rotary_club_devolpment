@@ -10,6 +10,26 @@
       onsubmit="event.preventDefault();"
     >
       <!-- form feild -->
+      <div
+        class="form-field"
+        v-if="isEditOrCreate == 'Edit'"
+      >
+        <div
+          style="margin-top: 1rem"
+          class="input-field"
+          id="role-field"
+        >
+          <BaseInputs
+            v-model="
+              prePopulateClubRole
+            "
+            label="Member Title"
+            type="text"
+          />
+        </div>
+      </div>
+      <!-- form feild -->
+      <!-- form feild -->
       <div class="form-field">
         <div class="center">
           <span
@@ -296,37 +316,34 @@
       >
         <ul>
           <li>
-            <a @click="validateUser()"
+            <a @click="validateUser(1)"
               >Submit</a
             >
           </li>
           <li>
-            <a @click="redirect(1)"
+            <a @click="redirect(0)"
               >Cancel</a
             >
           </li>
         </ul>
       </div>
-      <!-- <div
+      <div
         class="styled-pagination"
         v-else
       >
         <ul>
           <li>
-            <a @click="updateUser()"
+            <a @click="updateUser(1)"
               >Update</a
             >
           </li>
-          <li
-            style="margin-top: 0.5rem;
-"
-          >
-            <a @click="redirect()"
+          <li>
+            <a @click="redirect(0)"
               >Cancel</a
             >
           </li>
         </ul>
-      </div> -->
+      </div>
     </form>
   </div>
 </template>
@@ -339,7 +356,6 @@ import BaseSelect from '../../formParts/BaseSelect.vue'
 import Resource from '../../../Resources.js'
 import store from '../../../store/index'
 import user from '../../../api-factory/user'
-
 import {
   required,
   maxLength,
@@ -386,9 +402,11 @@ export default {
         'Club Admin',
       ],
       userToEdit: {},
+      prePopulateClubRole: '',
       clubUserId:
         store.state.loggedInClubUserId,
       changePassword: false,
+      isThisAClubRoute: String,
     }
   },
   validations() {
@@ -433,9 +451,15 @@ export default {
     }
   },
   async created() {
+    if (
+      store.state.isClubUserLoggedIn ||
+      store.state.isClubAdminLoggedIn
+    ) {
+      this.isThisAClubRoute = 'Yes'
+    }
     this.clubId = this.clubIdProp
     if (this.isEditOrCreate == 'Edit') {
-      this.prePopulateFields(
+      await this.prePopulateFields(
         this.clubUserId,
       )
     } else {
@@ -445,19 +469,26 @@ export default {
     async prePopulateFields(
       clubUserId,
     ) {
-      this.userToEdit = await user.show(
+      let userToEdit = await user.showJson(
         clubUserId,
       )
-
-      this.firstName = this.userToEdit.firstname
-      this.lastName = this.userToEdit.lastname
-      this.address = this.userToEdit.address
-      this.city = this.userToEdit.user_city
-      this.postal = this.userToEdit.user_postal
-      this.province = this.userToEdit.user_province
-      this.country = this.userToEdit.user_country
-      this.phone = this.userToEdit.phone
-      this.email = this.userToEdit.email
+      this.userToEdit = userToEdit
+      this.firstName =
+        userToEdit.firstname
+      this.lastName =
+        userToEdit.lastname
+      this.address = userToEdit.address
+      this.city = userToEdit.user_city
+      this.postal =
+        userToEdit.user_postal
+      this.province =
+        userToEdit.user_province
+      this.country =
+        userToEdit.user_country
+      this.phone = userToEdit.phone
+      this.email = userToEdit.email
+      this.prePopulateClubRole =
+        userToEdit.role[0].club_role
     },
     async revealChangePassword() {
       if (
@@ -502,25 +533,33 @@ export default {
         this.clubUserId,
         userToCreate,
       )
-      this.redirect(true)
+      this.redirect()
     },
     redirect(cancel) {
-      if (cancel == 1) {
-        this.$router.push({
-          name: 'ClubsView',
-        })
-        return true
-      }
       if (
-        this.isEditOrCreate == 'Edit'
+        this.isThisAClubRoute == 'Yes'
       ) {
         this.$router.push({
-          name: 'ClubsView',
+          name: 'ClubHome',
         })
       } else {
-        this.$router.push({
-          name: 'ClubsView',
-        })
+        if (cancel == 0) {
+          this.$router.push({
+            name: 'ClubsView',
+          })
+          return true
+        }
+        if (
+          this.isEditOrCreate == 'Edit'
+        ) {
+          this.$router.push({
+            name: 'ClubsView',
+          })
+        } else {
+          this.$router.push({
+            name: 'ClubsView',
+          })
+        }
       }
     },
 

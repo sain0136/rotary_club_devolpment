@@ -50,13 +50,14 @@ export default {
         headers: {
           'Content-Type':
             'application/json',
-        },body: JSON.stringify(data),
+        },
+        body: JSON.stringify(data),
       },
     )
     const page = await res.json()
     return page
   },
-  
+
   async update(id, data) {
     const res = await fetch(
       `http://74.208.135.85/district/${id}`,
@@ -78,5 +79,24 @@ export default {
     )
     const data = await res.json()
     return data.districts
+  },
+
+  async allClubsInDistrict(districtId) {
+    const payload = {
+      district_id: districtId,
+    }
+    const res = await fetch(
+      'http://74.208.135.85/districtClubs',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
+        body: JSON.stringify(payload),
+      },
+    )
+    const data = await res.json()
+    return data
   },
 }

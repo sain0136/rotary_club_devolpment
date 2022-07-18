@@ -13,6 +13,16 @@
                 currentProject.project_name
               }}
             </h2>
+             <div v-if="districtOrClubInformation.clubName != ''">
+              <Strong>
+                Rotary Club:
+              </Strong> {{districtOrClubInformation.clubName}}
+            </div>
+              <div v-if="districtOrClubInformation.districtName != ''">
+              <Strong>
+                Rotary Distict:
+              </Strong> {{districtOrClubInformation.districtName}}
+            </div>
             <div>
               <Strong>
                 Project Type:
@@ -63,7 +73,7 @@
                   }}</span
                 >
               </div>
-              <div class="btn-column">
+              <div v-if="currentProject.anticipated_funding != currentProject.funding_goal" class="btn-column">
                 <a
                   @click="
                     () =>
@@ -83,6 +93,13 @@
                   "
                   class="theme-btn btn-style-four"
                   >Make a pledge</a
+                >
+              </div>
+               <div v-else class="btn-column">
+                <a
+                 
+                  class="theme-btn-2"
+                  >Fully Funded!</a
                 >
               </div>
             </div>
@@ -187,7 +204,6 @@
 </template>
 
 <script>
-import ProjectApi from '../../../api-factory/project'
 import store from '../../../store/index'
 import Resources from '../../../Resources'
 
@@ -200,6 +216,10 @@ export default {
     return {
       currentProject: {},
       areaOfFocus: [],
+      districtOrClubInformation:{
+        clubName:'',
+        districtName:''
+      }
     }
   },
 
@@ -216,6 +236,14 @@ export default {
     ) {
       this.currentProject =
         store.state.currentProjectData
+        console.log()
+      if (this.currentProject.districtOrClubInformation.clubName) {
+        this.districtOrClubInformation.clubName = this.currentProject.districtOrClubInformation.clubName
+      } 
+      if(this.currentProject.districtOrClubInformation.district_name){
+        this.districtOrClubInformation.districtName = this.currentProject.districtOrClubInformation.district_name
+      }
+
     } else {
       await store.dispatch(
         'changeCurrentProjectData',
@@ -223,6 +251,12 @@ export default {
       )
       this.currentProject =
         store.state.currentProjectData
+         if (this.currentProject.districtOrClubInformation.clubName) {
+        this.districtOrClubInformation.clubName = this.currentProject.districtOrClubInformation.clubName
+      } 
+      if(this.currentProject.districtOrClubInformation.district_name){
+        this.districtOrClubInformation.districtName = this.currentProject.districtOrClubInformation.district_name
+      }
     }
 
     let areaOfFocusMap = Resources.reverseTermConversionMap()
@@ -331,6 +365,22 @@ a:visited {
   color: #ffffff;
   background: #ffb607;
   border-color: #ffb607;
+}
+.theme-btn-2{
+    position: relative;
+  padding: 10px 25px;
+  line-height: 24px;
+   color: #ffffff;
+  font-size: 13px;
+  background: #ffb607;
+ cursor:unset;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 2px solid #ffb607;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .lower-box {

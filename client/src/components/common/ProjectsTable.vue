@@ -26,6 +26,33 @@
                 />
               </div>
             </div>
+            <!-- Search by club  -->
+            <div
+              v-if="
+                pageToDisplay ==
+                  'District'
+              "
+              class="form-entry"
+              style="margin-left: 25px;"
+            >
+              <label for="status"
+                >Rotary Club</label
+              >
+              <select
+                name="Clubs"
+                v-model="belongsToClub"
+                id=""
+              >
+                <option value=""
+                  >All Clubs</option
+                >
+                <option
+                  v-for="club in clubList"
+                  :key="club"
+                  >{{ club }}</option
+                >
+              </select>
+            </div>
             <!-- Status input-->
             <div
               class="form-entry"
@@ -197,6 +224,8 @@
 <script>
 import store from '../../store/index'
 import project from '../../api-factory/project'
+import DistrictApi from '../../api-factory/district'
+
 import ProjectCard from '../../components/common/ProjectCard.vue'
 import { watchEffect } from 'vue'
 import Resources from '../../Resources'
@@ -214,6 +243,7 @@ export default {
       projects: [],
       filteredProj: [],
       searchText: '',
+      belongsToClub: '',
       status: '',
       region: '',
       areaFocus: '',
@@ -231,6 +261,8 @@ export default {
       regionList: Resources.regionList,
       statusList: Resources.statusList,
       searchTermConversionMap: Resources.searchTermConversionMap(),
+      clubList: [],
+      clubListObjectArray: [],
     }
   },
   computed: {
@@ -239,13 +271,35 @@ export default {
   async created() {
     watchEffect(async () => {
       this.projects = {}
-      console.log(this.apiData)
+      console.log({ api: this.apiData })
       await this.populateTable()
     })
   },
   methods: {
     filter() {
       let ticker = true
+      if (this.belongsToClub != '') {
+        ticker = false
+        this.filteredProj = this.projects.filter(
+          project => {
+            let returnObject = this.clubListObjectArray.find(
+              o =>
+                o.clubName ==
+                this.belongsToClub,
+            )
+
+            let clubId =
+              returnObject.clubId
+            if (
+              project.club_id == clubId
+            ) {
+              return true
+            } else {
+              return false
+            }
+          },
+        )
+      }
       if (this.searchText != '') {
         ticker = false
 
@@ -330,6 +384,28 @@ export default {
       if (
         this.pageToDisplay == 'District'
       ) {
+        const clubArray = await DistrictApi.allClubsInDistrict(
+          store.state
+            .currentDistrictData
+            .district_id,
+        )
+        clubArray.allClubs.forEach(
+          el => {
+            this.clubList.push(
+              el.club_name,
+            )
+          },
+        )
+        clubArray.allClubs.forEach(
+          el => {
+            this.clubListObjectArray.push(
+              {
+                clubName: el.club_name,
+                clubId: el.club_id,
+              },
+            )
+          },
+        )
         const projectObject = await project.indexPagination(
           parseInt(
             this.$router.currentRoute

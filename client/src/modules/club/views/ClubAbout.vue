@@ -189,11 +189,7 @@
 
 <script>
 import store from '../../../store/index'
-import {
-  onUnmounted,
-  ref,
-  watchEffect,
-} from 'vue'
+import { watchEffect } from 'vue'
 
 export default {
   name: 'ClubAbout',

@@ -23,7 +23,7 @@
             v-if="
               project.image_link ==
                 null ||
-              project.image_link == ''
+                project.image_link == ''
             "
             src="../../assets/causes-2.jpg"
             alt=""
@@ -134,6 +134,19 @@ export default {
     project: Object,
   },
   async created() {
+    this.projectId = this.project.project_id
+    this.truncatedDesc = this.project.project_theme.slice(
+      0,
+      30,
+    )
+    this.percentage = Math.trunc(
+      (this.project
+        .anticipated_funding /
+        this.project.funding_goal) *
+        100,
+    )
+  },
+  beforeUpdate() {
     this.projectId = this.project.project_id
     this.truncatedDesc = this.project.project_theme.slice(
       0,
