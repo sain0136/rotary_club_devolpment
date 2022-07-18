@@ -276,7 +276,6 @@ export default class PopulateSeeder extends BaseSeeder {
         Economic_And_Community_Development: true,
         Environment: false,
       }),
-      districtId: 1,
       clubId: 1,
       createdBy: 2,
       region: Region[1],

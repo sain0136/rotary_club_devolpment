@@ -8,6 +8,7 @@ import { DateTime } from 'luxon'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import ProjectStatus from 'Contracts/Enums/ProjectStatus'
 import Drive from '@ioc:Adonis/Core/Drive'
+import District from 'App/Models/District'
 
 export default class ProjectsController {
   public async index({ response }: HttpContextContract) {
@@ -336,16 +337,27 @@ export default class ProjectsController {
   }
   public async showProjectByIdPost({ request, response }: HttpContextContract) {
     const projectId: number = request.input('project_id')
-    const ProjectById: Project = await Project.findOrFail(projectId)
-    ProjectById.extraDescriptionsObject = JSON.parse(ProjectById.extraDescriptions)
-    ProjectById.itemisedBudgetArray = JSON.parse(ProjectById.itemisedBudget)
-    ProjectById.areaFocusObject = JSON.parse(ProjectById.areaFocus)
-    ProjectById.hostclubInformationObject = JSON.parse(ProjectById.hostclubInformation)
-
-    const projectAdmins: any[] = await ProjectById.related('projectRole')
+    const projectById: Project = await Project.findOrFail(projectId)
+    projectById.extraDescriptionsObject = JSON.parse(projectById.extraDescriptions)
+    projectById.itemisedBudgetArray = JSON.parse(projectById.itemisedBudget)
+    projectById.areaFocusObject = JSON.parse(projectById.areaFocus)
+    projectById.hostclubInformationObject = JSON.parse(projectById.hostclubInformation)
+    const district: District = await District.findOrFail(projectById.districtId)
+    const districtName: string = district.districtName
+    let clubName: any = null
+    if (projectById.clubId) {
+      const club: Club = await Club.findOrFail(projectById.districtId)
+      clubName = club.clubName
+    }
+    projectById.districtOrClubInformation = {
+      district_name: districtName,
+      clubName: clubName,
+    }
+    const projectAdmins: any[] = await projectById
+      .related('projectRole')
       .pivotQuery()
       .where({ project_id: projectId })
-    return response.json({ ProjectById, projectPermited: projectAdmins })
+    return response.json({ ProjectById: projectById, projectPermited: projectAdmins })
   }
 
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {

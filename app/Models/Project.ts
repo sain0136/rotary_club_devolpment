@@ -6,6 +6,9 @@ import { NonPlurizeNamingStrategy } from 'Contracts/NonPlurizeNamingStrategy'
 export default class Project extends BaseModel {
   public static namingStrategy = new NonPlurizeNamingStrategy()
   @computed()
+  public districtOrClubInformation: object
+
+  @computed()
   public grantString: String
 
   @computed()

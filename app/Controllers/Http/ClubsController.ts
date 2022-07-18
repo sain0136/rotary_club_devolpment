@@ -61,7 +61,7 @@ export default class ClubsController {
       const role = await user.related('clubRole').pivotQuery().where({ user_id: user.userId })
       if (role[0].role_type == 6) {
         clubById.titledRoles.push({
-          name: user.firstname + user.lastname,
+          name: user.firstname + ' ' + user.lastname,
           title: role[0].club_role,
         })
       }
