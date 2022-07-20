@@ -9,6 +9,7 @@ Route.post('/project/projectAdmins/', 'ProjectsController.showAllAdminsForProjec
 Route.post('/project/paginate', 'ProjectsController.paginationIndex')
 Route.post('/project/delete', 'ProjectsController.deleteProjectByProjectId')
 Route.post('/project/showProjectByIdPost', 'ProjectsController.showProjectByIdPost')
+Route.post('/project/projectsForApproval', 'ProjectsController.showAllProjectsForApproval')
 
 Route.post('/project/updateById', 'ProjectsController.updateById')
 Route.post('/project/imageUpload', 'ProjectsController.imageUpload')

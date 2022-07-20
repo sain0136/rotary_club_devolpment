@@ -360,6 +360,22 @@ export default class ProjectsController {
     return response.json({ ProjectById: projectById, projectPermited: projectAdmins })
   }
 
+  public async showAllProjectsForApproval({ request, response }: HttpContextContract) {
+    const districtId: number = request.input('district_id')
+    const allProjectsForApproval: Project[] = await Project.query().where({
+      districtId: districtId,
+      projectStatus: 'Pending approval',
+    })
+    for await (const project of allProjectsForApproval) {
+      project.extraDescriptionsObject = JSON.parse(project.extraDescriptions)
+      project.itemisedBudgetArray = JSON.parse(project.itemisedBudget)
+      project.areaFocusObject = JSON.parse(project.areaFocus)
+      project.hostclubInformationObject = JSON.parse(project.hostclubInformation)
+    }
+
+    return response.json({ allProjectsForApproval })
+  }
+
   public async showAllProjectsByUser({ request, response }: HttpContextContract) {
     const userId: number = request.input('user_id')
     const user: User = await User.findOrFail(userId)
