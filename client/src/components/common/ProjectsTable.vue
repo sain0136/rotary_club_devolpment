@@ -269,11 +269,11 @@ export default {
     async filteredProjects() {},
   },
   async created() {
-    watchEffect(async () => {
-      this.projects = {}
-      console.log({ api: this.apiData })
-      await this.populateTable()
-    })
+    // watchEffect(async () => {
+    this.projects = {}
+    console.log({ api: this.apiData })
+    await this.populateTable()
+    // })
   },
   methods: {
     filter() {
@@ -391,6 +391,7 @@ export default {
         )
         clubArray.allClubs.forEach(
           el => {
+            console.log('fsjkhfjksad')
             this.clubList.push(
               el.club_name,
             )

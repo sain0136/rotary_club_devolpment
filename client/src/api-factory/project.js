@@ -131,7 +131,31 @@ export default {
     const projects = await data.projects
     return await projects
   },
+  // call for all district projects that need approval
+  async projectsForApproval(id) {
+    const queryHelper = {
+      district_id: id,
+    }
 
+    const res = await fetch(
+      'http://74.208.135.85/project/projectsForApproval',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/json',
+        },
+        body: JSON.stringify(
+          queryHelper,
+        ),
+      },
+    )
+
+    const data = await res.json()
+    const projects =
+      data.allProjectsForApproval
+    return await projects
+  },
   /**
    * This call is used as the "get project by id" route
    */
@@ -155,7 +179,7 @@ export default {
     )
 
     const data = await res.json()
-    return await data.ProjectById
+    return await data
   },
 
   async create(data) {
@@ -583,10 +607,6 @@ export default {
     fd.append(
       'rotary_year',
       data.rotary_year,
-    )
-    fd.append(
-      'project_status',
-      data.project_status,
     )
     fd.append('country', data.country)
     fd.append('grant_type', 1)

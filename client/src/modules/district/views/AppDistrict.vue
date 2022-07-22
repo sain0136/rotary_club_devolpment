@@ -89,10 +89,12 @@ export default {
         console.log(
           store.state
             .loggedInDistrictId,
+          'hi',
         )
         console.log(
           store.state
             .currentDistrictData,
+          'data',
         )
       }, ms)
     },

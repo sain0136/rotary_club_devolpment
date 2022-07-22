@@ -1,5 +1,11 @@
-export async function isSiteAdminValid(id, password) {
-  if(id == 'admin' && password == 'password1234') {
+export async function isSiteAdminValid(
+  id,
+  password,
+) {
+  if (
+    id == 'admin' &&
+    password == 'password1234'
+  ) {
     return true
   } else {
     return false
@@ -23,18 +29,24 @@ export async function isSiteAdminValid(id, password) {
   return await data.Verified
 } */
 
-export async function isValid(userData) {
-
+export async function isValid(
+  userData,
+) {
   console.log(userData)
 
-  const res = await fetch('http://74.208.135.85/user/verify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
-  })
+  const res = await fetch(
+    'http://74.208.135.85/user/verify',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type':
+          'application/json',
+      },
+      body: JSON.stringify(userData),
+    },
+  )
   const data = await res.json()
-  console.log(await data)
-  return await data
+  return data
 }
 /* // is email unique
 async function isUniqueEmail(

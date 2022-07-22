@@ -27,6 +27,9 @@ import ProjectCardDetails from '../../../components/common/Project/ProjectCardDe
 import DistrictProjectPledgesView from '../../district/views/DistrictProjectPledgesView.vue'
 import DistrictEditForm from '../../district/components/DistrictEditForm.vue'
 import DistrictEditHome from '../../district/views/DistrictEditHome.vue'
+import DistrictProjectsApprovals from '../../district/views/Project/DistrictProjectsApprovals.vue'
+import ProjectsViewAndApprove from '../../district/views/Project/ProjectsView/ProjectsViewAndApprove.vue'
+
 export default {
   path: '/district/:id',
   component: AppDistrict,
@@ -232,6 +235,20 @@ export default {
               component: DistrictProjectPledgesView,
               name:
                 'DistrictProjectPledgesView',
+              props: true,
+            },
+            {
+              //view your district projects for approval
+              path: 'approvals',
+              component: DistrictProjectsApprovals,
+              name:
+                'DistrictProjectsApprovals',
+            },
+            {
+              path: 'approve',
+              component: ProjectsViewAndApprove,
+              name:
+                'ProjectsViewAndApprove',
               props: true,
             },
           ],

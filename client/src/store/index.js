@@ -124,9 +124,8 @@ export default createStore({
       )
       state.loggedInClubUserId =
         loginData.userOrAdminId
-      state.currentClubUserData = await club_user.show(
-        loginData.userOrAdminId,
-      )
+      state.currentClubUserData =
+        loginData.userData
       state.loggedInClubId =
         state.currentClubUserData.club_id
 
@@ -282,6 +281,7 @@ export default createStore({
         clubId: data.id,
         roleId: 0,
         userOrAdminId: 0,
+        userData: {},
       }
       const response = await isValid(
         data,
@@ -291,6 +291,9 @@ export default createStore({
           response.user_id
         loginData.roleId =
           response.role[0].role_type
+        loginData.userData = await club_user.show(
+          loginData.userOrAdminId,
+        )
         commit(
           'clubUserLogin',
           loginData,

@@ -6,7 +6,8 @@
           <img
             src="../assets/rotary-logo.png"
             alt="District Logo"
-            class="img-fluid" />
+            class="img-fluid"
+          />
           <!-- <h1>{{ $store.state.currentDistrictData.district_name }}</h1> -->
         </li>
       </ul>
@@ -18,7 +19,8 @@
           navbar-expand-lg
           navbar-light
           bg-white
-        ">
+        "
+      >
         <div class="container-fluid">
           <button
             class="navbar-toggler"
@@ -27,29 +29,34 @@
             data-bs-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span
               class="
                 navbar-toggler-icon
-              "></span>
+              "
+            ></span>
           </button>
           <div
             class="
               collapse
               navbar-collapse
             "
-            id="navbarTogglerDemo01">
+            id="navbarTogglerDemo01"
+          >
             <ul
               class="
                 navbar-nav
                 me-auto
                 mb-2 mb-lg-0
-              ">
+              "
+            >
               <li class="nav-item">
                 <router-link
                   class="link"
                   :to="{
-                    name: 'DistrictHome',
+                    name:
+                      'DistrictHome',
                     params: {
                       id: this
                         .districtId,
@@ -62,7 +69,8 @@
                 <router-link
                   class="link"
                   :to="{
-                    name: 'DistrictAbout',
+                    name:
+                      'DistrictAbout',
                     params: {
                       id: this
                         .districtId,
@@ -88,7 +96,8 @@
                 <router-link
                   class="link"
                   :to="{
-                    name: 'DistrictProjects',
+                    name:
+                      'DistrictProjects',
                     params: {
                       id: this
                         .districtId,
@@ -101,7 +110,8 @@
                 <router-link
                   class="link"
                   :to="{
-                    name: 'DistrictContactUs',
+                    name:
+                      'DistrictContactUs',
                     params: {
                       id: this
                         .districtId,
@@ -116,9 +126,10 @@
                 v-if="
                   $store.state
                     .isDistrictAdminLoggedIn ||
-                  $store.state
-                    .isSiteAdminLoggedIn
-                ">
+                    $store.state
+                      .isSiteAdminLoggedIn
+                "
+              >
                 <button
                   class="
                     btn btn-secondary
@@ -127,73 +138,110 @@
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
-                  aria-expanded="false">
+                  aria-expanded="false"
+                >
                   Admin
                 </button>
                 <ul
                   class="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton1">
+                  aria-labelledby="dropdownMenuButton1"
+                >
                   <li>
-                  <router-link
-                   class="
+                    <router-link
+                      class="
                         dropdown-item
                       "
-                  :to="{
-                    name: 'ProfileView',
-                    params: {
-                      id: this
-                        .districtId,
-                    },
-                  }"
-                  >My Profile</router-link
-                >
-              
+                      :to="{
+                        name:
+                          'ProfileView',
+                        params: {
+                          id: this
+                            .districtId,
+                        },
+                      }"
+                      >My
+                      Profile</router-link
+                    >
                   </li>
                   <li>
-               <router-link
-                   class="
+                    <router-link
+                      class="
                         dropdown-item
                       "
-                  :to="{
-                    name: 'DistrictEdit2',
-                    params: {
-                      id: this
-                        .districtId,
-                    },
-                  }"
-                  >Edit District</router-link
-                >
+                      :to="{
+                        name:
+                          'DistrictEdit2',
+                        params: {
+                          id: this
+                            .districtId,
+                        },
+                      }"
+                      >Edit
+                      District</router-link
+                    >
                   </li>
                   <li>
-                  <router-link
-                   class="
+                    <router-link
+                      class="
                         dropdown-item
                       "
-                  :to="{
-                    name: 'DistrictProjectsView',
-                    params: {
-                      id: this
-                        .districtId,
-                    },
-                  }"
-                  >My District Projects</router-link
-                >
+                      :to="{
+                        name:
+                          'DistrictProjectsView',
+                        params: {
+                          id: this
+                            .districtId,
+                        },
+                      }"
+                      >My District
+                      Projects</router-link
+                    >
                   </li>
-                   <li>
-                  <router-link
-                   class="
+                  <li>
+                    <router-link
+                      class="
                         dropdown-item
                       "
-                  :to="{
-                    name: 'DistrictProjectPledgesView',
-                    params: {
-                      id: this
-                        .districtId,
-                        isThisMyPledges:'yes'
-                    },
-                  }"
-                  >My Pledges</router-link
-                >
+                      :to="{
+                        name:
+                          'DistrictProjectPledgesView',
+                        params: {
+                          id: this
+                            .districtId,
+                          isThisMyPledges:
+                            'yes',
+                        },
+                      }"
+                      >My
+                      Pledges</router-link
+                    >
+                  </li>
+                  <li
+                    v-if="
+                      this.$store.state
+                        .loggedInUserData
+                        .role[0]
+                        .district_role ==
+                        'District Grants Chair'
+                    "
+                  >
+                    <router-link
+                      class="
+                        dropdown-item
+                      "
+                      :to="{
+                        name:
+                          'DistrictProjectsApprovals',
+                        params: {
+                          id: parseInt(
+                            this
+                              .districtId,
+                          ),
+                        },
+                      }"
+                      >Project
+                      Aprrovals</router-link
+                    >
                   </li>
                 </ul>
               </div>
@@ -204,7 +252,8 @@
                   pageAccessed="District"
                   :districtId="
                     districtId
-                  " />
+                  "
+                />
               </li>
               <li v-else>
                 <a
@@ -222,13 +271,15 @@
                 "
                 type="search"
                 placeholder="Search"
-                aria-label="Search" />
+                aria-label="Search"
+              />
               <button
                 class="
                   btn
                   btn-outline-success
                 "
-                type="submit">
+                type="submit"
+              >
                 Search
               </button>
             </form>
@@ -253,9 +304,8 @@ export default {
   data() {
     return {
       districtName: null,
-      districtId:
-        this.$router.currentRoute.value
-          .params.id,
+      districtId: this.$router
+        .currentRoute.value.params.id,
       loggin: false,
     }
   },
@@ -344,43 +394,39 @@ button {
   background-color: white;
   border: none;
 }
-.btn{
+.btn {
   padding: unset;
-  margin-right: 2.0em;
+  margin-right: 2em;
   text-decoration: none;
   color: #27282d;
   font-family: 'Montserrat';
   font-size: 1em;
- 
 }
-.btn:hover{
-    color: #ffb607;
+.btn:hover {
+  color: #ffb607;
   transition: color 0.5s;
-    background-color: #ffffff;
-
+  background-color: #ffffff;
 }
- .btn-secondary:focus {
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
-    border-color: rgb(255, 182, 7);
-    box-shadow: none;
+.btn-secondary:focus {
+  color: rgb(0, 0, 0);
+  background-color: #ffffff;
+  border-color: rgb(255, 182, 7);
+  box-shadow: none;
 }
- .btn-secondary:active{
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
-    border-color: transparent;
-
- }
- .btn-secondary:active:focus{
-   box-shadow:transparent;
-   
- }
+.btn-secondary:active {
+  color: rgb(0, 0, 0);
+  background-color: #ffffff;
+  border-color: transparent;
+}
+.btn-secondary:active:focus {
+  box-shadow: transparent;
+}
 .dropdown-item:active {
-      color: #fff;
-    text-decoration: none;
-    background-color:rgb(255, 182, 7);
+  color: #fff;
+  text-decoration: none;
+  background-color: rgb(255, 182, 7);
 }
-.btn-secondary:active:focus{
+.btn-secondary:active:focus {
   box-shadow: unset;
 }
 </style>

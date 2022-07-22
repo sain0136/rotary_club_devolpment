@@ -174,7 +174,7 @@
           <div class="input-field">
             <BaseTextArea
               v-model="description"
-              label="Describe the project and its objectives"
+              label="Club Description"
               span="Must be 100 to 1000 characters long"
             />
           </div>
@@ -271,7 +271,7 @@
             @click="
               () =>
                 this.$router.push(
-                  `/district/${this.$router.currentRoute.value.params.id}/clubs/view`,
+                  '../home',
                 )
             "
           >
@@ -300,7 +300,7 @@ import store from '../../../store/index'
 import Resource from '../../../Resources.js'
 import BaseCheckBox from '../../formParts/BaseCheckBox.vue'
 import BaseTextArea from '../../formParts/BaseTextArea.vue'
-
+import moment from 'moment'
 import club from '../../../api-factory/club'
 
 export default {
@@ -417,6 +417,9 @@ export default {
       this.description = await clubInfo.club_description
       this.motherClub = await clubInfo.mother_club
       this.charterDate = await clubInfo.charter_date
+      this.charterDate = moment(
+        this.charterDate,
+      ).format('YYYY-MM-DD')
     },
 
     getClubData() {

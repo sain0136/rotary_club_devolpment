@@ -213,7 +213,14 @@
         />
       </div>
       <!--         IMAGE UPLOAD            -->
-      <div class="form-inputs">
+      <div
+        class="form-inputs"
+        v-if="
+          editOrCreateProp != 'view' &&
+            editOrCreateProp !=
+              'approval'
+        "
+      >
         <input
           accept="image/*"
           type="file"
@@ -252,7 +259,10 @@
           </button>
           <button
             @submit.prevent=""
-            v-else
+            v-else-if="
+              editOrCreateProp ==
+                'create'
+            "
             @click="
               () => validateForm()
             "
@@ -260,12 +270,82 @@
             Submit
           </button>
           <button
+            v-if="
+              editOrCreateProp != 'view'
+            "
             @submit.prevent=""
             @click="() => redirect()"
           >
             Cancel
           </button>
+          <button
+            v-if="
+              editOrCreateProp == 'view'
+            "
+            @submit.prevent=""
+            @click="() => redirect()"
+          >
+            Back
+          </button>
         </ul>
+      </div>
+      <div class="approval-box">
+        <div class="inner-approval">
+          <div class="project-facts">
+            <h1
+              style="
+    text-align: center;
+"
+            >
+              Creater Contact
+            </h1>
+            <ul>
+              <li>
+                <strong
+                  >Project
+                  creator:</strong
+                >{{
+                  projectCreatorInformation.createdByName
+                }}
+              </li>
+              <li>
+                <strong
+                  >Creator email: </strong
+                >{{
+                  projectCreatorInformation.email
+                }}
+              </li>
+              <li>
+                <strong
+                  >Creator
+                  phone#:</strong
+                >{{
+                  projectCreatorInformation.phoneNumber
+                }}
+              </li>
+
+              <li>
+                <strong>Club:</strong
+                >{{
+                  projectCreatorInformation.clubName
+                }}
+              </li>
+            </ul>
+            <div
+              class="styled-pagination text-center"
+            >
+              <ul class="clearfix">
+                <button
+                  @click="
+                    () => approve()
+                  "
+                >
+                  Approve this Project
+                </button>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -304,6 +384,12 @@ export default {
   },
   data() {
     return {
+      projectCreatorInformation: {
+        createdByName: '',
+        email: '',
+        phoneNumber: '',
+        clubName: '',
+      },
       project: {
         area_focus: {
           Peace_Conflict_Prevention: false,
@@ -338,7 +424,7 @@ export default {
       v$: useValidate(),
     }
   },
-  created() {
+  async created() {
     if (
       this.projectLabel === 'District'
     ) {
@@ -355,9 +441,58 @@ export default {
     if (
       this.editOrCreateProp == 'edit'
     ) {
-      this.prePopulateFields()
+      await this.prePopulateFields()
+    }
+    if (
+      this.editOrCreateProp == 'view' ||
+      this.editOrCreateProp ==
+        'approval'
+    ) {
+      await this.prePopulateFields()
+      const collection = document.getElementsByTagName(
+        'input',
+      )
+      const textareaCollection = document.getElementsByTagName(
+        'textarea',
+      )
+      const selectCollection = document.getElementsByTagName(
+        'select',
+      )
+      const checkboxCollection = document.querySelectorAll(
+        'input[type=checkbox]',
+      )
+
+      collection.forEach(element => {
+        element.readOnly = true
+      })
+      checkboxCollection.forEach(
+        element => {
+          element.setAttribute(
+            'disabled',
+            '',
+          )
+        },
+      )
+      textareaCollection.forEach(
+        element => {
+          element.readOnly = true
+          element.setAttribute(
+            'disabled',
+            '',
+          )
+        },
+      )
+      selectCollection.forEach(
+        element => {
+          element.setAttribute(
+            'disabled',
+            '',
+          )
+        },
+      )
     }
   },
+
   validations() {
     return {
       area_focus: {
@@ -398,6 +533,19 @@ export default {
     }
   },
   methods: {
+    async approve() {
+      if (
+        confirm(
+          'Are you sure you want to approve this project?',
+        ) == true
+      ) {
+        await ProjectApi.changeProjectStatus(
+          this.projectIdProp,
+          4,
+        )
+        this.redirect()
+      }
+    },
     validateRegion() {
       if (this.project.region != '') {
         return true
@@ -460,10 +608,35 @@ export default {
     },
 
     async prePopulateFields() {
-      const projectToEdit = await ProjectApi.show(
+      const projectToEditMaster = await ProjectApi.show(
         this.projectIdProp,
       )
-      console.log(projectToEdit)
+      console.log(projectToEditMaster)
+      this.projectCreatorInformation.createdByName =
+        ' ' +
+        projectToEditMaster
+          .creatorInformation.fullName
+      this.projectCreatorInformation.email =
+        ' ' +
+        projectToEditMaster
+          .creatorInformation.email
+      this.projectCreatorInformation.phoneNumber =
+        ' ' +
+        projectToEditMaster
+          .creatorInformation.phone
+      if (
+        projectToEditMaster.districtName
+      ) {
+        this.projectCreatorInformation.districtName =
+          ' ' +
+          projectToEditMaster.districtName
+      }
+
+      this.projectCreatorInformation.clubName =
+        ' ' +
+        projectToEditMaster.clubName
+      const projectToEdit =
+        projectToEditMaster.ProjectById
       this.project.area_focus =
         projectToEdit.areaFocusObject
       this.project.project_name =
@@ -502,6 +675,7 @@ export default {
       )
 
       const projectToEdit = this.project
+
       console.log(
         'updating new project',
         projectToEdit,
@@ -532,14 +706,42 @@ export default {
       console.log('hi')
       this.redirect()
     },
-    redirect(code) {
-      this.$router.push('../../home')
+    redirect() {
+      if (
+        this.projectLabel ==
+        'DistrictChairApproval'
+      ) {
+        this.$router.push({
+          name: 'DistrictHome',
+        })
+      } else {
+        this.$router.push('../../home')
+      }
     },
   },
 }
 </script>
 
 <style scoped>
+.approval-box {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.inner-approval {
+  height: 20rem;
+
+  box-shadow: #ffb607 0px 2px 8px 0px;
+  width: 50%;
+}
+.project-facts {
+  min-height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .form-container {
   display: flex;
   flex-direction: column;
