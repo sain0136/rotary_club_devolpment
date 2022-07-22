@@ -360,14 +360,26 @@ export default class ProjectsController {
     const projectCreaterInfo: any = await projectById
       .related('projectRole')
       .pivotQuery()
-      .where({ project_id: projectId, role: 1 })
-    const userId = projectCreaterInfo.user_id
+      .where({ project_id: projectId, role: '1' })
+    const createrInfo = projectCreaterInfo[0]
+    const userId = createrInfo.user_id
     const createrInfoObject: User = await User.findOrFail(userId)
-
+    let dName = ''
+    let cName = ''
+    if (createrInfoObject.districtId) {
+      const district = await District.findOrFail(createrInfoObject.districtId)
+      dName = district.districtName
+    }
+    if (createrInfoObject.clubId) {
+      const club = await Club.findOrFail(createrInfoObject.clubId)
+      cName = club.clubName
+    }
     return response.json({
       ProjectById: projectById,
       projectPermited: projectAdmins,
       creatorInformation: createrInfoObject,
+      districtName: dName,
+      clubName: cName,
     })
   }
 

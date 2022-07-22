@@ -165,7 +165,7 @@ export default class PopulateSeeder extends BaseSeeder {
       projectTheme:
         'This is an advanced life saveing project to save african water in Ghana! To the the moon! ',
     })
-    const user1: User = await User.findOrFail(1)
+    const user1: User = await User.findOrFail(2)
     await newProj.related('projectRole').attach({
       [user1.userId]: {
         role: 1,
@@ -195,7 +195,7 @@ export default class PopulateSeeder extends BaseSeeder {
       projectTheme: 'Fixing up Cornwall appearence with the best park',
       estimatedCompletion: DateTime.fromFormat('5/14/2022', 'D'),
     })
-    const user2: User = await User.findOrFail(1)
+    const user2: User = await User.findOrFail(2)
     await secPro.related('projectRole').attach({
       [user2.userId]: {
         role: 1,
