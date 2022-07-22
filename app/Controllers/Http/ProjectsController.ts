@@ -357,7 +357,18 @@ export default class ProjectsController {
       .related('projectRole')
       .pivotQuery()
       .where({ project_id: projectId })
-    return response.json({ ProjectById: projectById, projectPermited: projectAdmins })
+    const projectCreaterInfo: any = await projectById
+      .related('projectRole')
+      .pivotQuery()
+      .where({ project_id: projectId, user_id: 1 })
+    const userId = projectCreaterInfo.user_id
+    const createrInfoObject: User = await User.findOrFail(userId)
+
+    return response.json({
+      ProjectById: projectById,
+      projectPermited: projectAdmins,
+      creatorInformation: createrInfoObject,
+    })
   }
 
   public async showAllProjectsForApproval({ request, response }: HttpContextContract) {
