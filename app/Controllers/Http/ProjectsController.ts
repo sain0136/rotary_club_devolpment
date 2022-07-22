@@ -360,7 +360,7 @@ export default class ProjectsController {
     const projectCreaterInfo: any = await projectById
       .related('projectRole')
       .pivotQuery()
-      .where({ project_id: projectId, user_id: 1 })
+      .where({ project_id: projectId, role: 1 })
     const userId = projectCreaterInfo.user_id
     const createrInfoObject: User = await User.findOrFail(userId)
 
