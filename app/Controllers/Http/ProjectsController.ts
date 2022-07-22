@@ -500,7 +500,7 @@ export default class ProjectsController {
 
   public async updateProjectStatus({ request }: HttpContextContract) {
     const projectId: number = request.input('project_id')
-    const projectStatus: string = request.input('project_status')
+    const projectStatus: number = request.input('project_status')
 
     const projectToBeUpdated: Project = await Project.findOrFail(projectId)
 
