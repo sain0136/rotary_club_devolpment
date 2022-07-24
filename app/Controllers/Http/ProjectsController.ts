@@ -51,6 +51,84 @@ export default class ProjectsController {
       return response.json({ projects })
     }
   }
+  public async paginationFilter({ request, response }: HttpContextContract) {
+    let ticker: boolean = true
+    const belongsToClubId: number = request.input('club_id')
+    const currentPage: number = request.input('current_page')
+    const limit: number = request.input('limit')
+    const searchText: string = request.input('search_text')
+    const projectStatus: string = request.input('project_status')
+    const projectRegion: string = request.input('project_region')
+    const areaOfFocus: string = request.input('area_of_focus')
+
+    let projects: any = await Project.query().select('*').paginate(currentPage, limit)
+    for await (const project of projects) {
+      project.areaFocusObject = JSON.parse(project.areaFocus)
+    }
+    let converter = JSON.stringify(projects)
+    let dataArray: any[] = []
+    let filteredProjectsObject = { meta: {}, data: dataArray }
+    filteredProjectsObject = JSON.parse(converter)
+    let meta = filteredProjectsObject.meta
+    let data = filteredProjectsObject.data
+    if (belongsToClubId > 0 && belongsToClubId) {
+      ticker = false
+      data = data.filter((project) => {
+        if (project.club_id == belongsToClubId) {
+          return true
+        } else {
+          return false
+        }
+      })
+    }
+
+    if (searchText != '' && searchText) {
+      ticker = false
+      data = data.filter((project) => {
+        const projectName = project.project_name.toString().toLowerCase()
+        const searchTerm = searchText.toLowerCase()
+        if (projectName.includes(searchTerm)) {
+          return true
+        }
+      })
+    }
+    if (projectStatus != '' && projectStatus) {
+      ticker = false
+      data = data.filter((project) => {
+        if (project.project_status == projectStatus) {
+          return true
+        } else {
+          return false
+        }
+      })
+    }
+    if (projectRegion != '' && projectRegion) {
+      ticker = false
+      data = data.filter((project) => {
+        if (project.region == projectRegion) {
+          return true
+        } else {
+          return false
+        }
+      })
+    }
+    if (areaOfFocus != '' && areaOfFocus) {
+      ticker = false
+
+      data = data.filter((project) => {
+        if (areaOfFocus != '') {
+          let searchTerm = areaOfFocus
+          const asArray = Object.entries(project.areaFocusObject)
+          const filtered = asArray.filter(([key, value]) => key == searchTerm && value == true)
+          if (filtered.length > 0) {
+            return project
+          }
+        }
+      })
+    }
+
+    return response.json({ meta: meta, data: data })
+  }
 
   public async create({}: HttpContextContract) {}
 
