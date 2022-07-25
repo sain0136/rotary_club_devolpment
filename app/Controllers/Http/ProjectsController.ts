@@ -53,9 +53,10 @@ export default class ProjectsController {
   }
   public async paginationFilter({ request, response }: HttpContextContract) {
     let ticker: boolean = true
-    const belongsToClubId: number = request.input('club_id')
+
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
+    const belongsToClubId: number = request.input('club_id')
     const searchText: string = request.input('search_text')
     const projectStatus: string = request.input('project_status')
     const projectRegion: string = request.input('project_region')
