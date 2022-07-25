@@ -53,7 +53,7 @@ export default class ProjectsController {
   }
   public async paginationFilter({ request, response }: HttpContextContract) {
     let ticker: boolean = true
-
+    ticker = true
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
     const belongsToClubId: number = request.input('club_id')
