@@ -52,8 +52,6 @@ export default class ProjectsController {
     }
   }
   public async paginationFilter({ request, response }: HttpContextContract) {
-    let ticker: boolean = true
-    ticker = true
     const currentPage: number = request.input('current_page')
     const limit: number = request.input('limit')
     const belongsToClubId: number = request.input('club_id')
@@ -73,7 +71,6 @@ export default class ProjectsController {
     let meta = filteredProjectsObject.meta
     let data = filteredProjectsObject.data
     if (belongsToClubId > 0 && belongsToClubId) {
-      ticker = false
       data = data.filter((project) => {
         if (project.club_id == belongsToClubId) {
           return true
@@ -84,7 +81,6 @@ export default class ProjectsController {
     }
 
     if (searchText != '' && searchText) {
-      ticker = false
       data = data.filter((project) => {
         const projectName = project.project_name.toString().toLowerCase()
         const searchTerm = searchText.toLowerCase()
@@ -94,7 +90,6 @@ export default class ProjectsController {
       })
     }
     if (projectStatus != '' && projectStatus) {
-      ticker = false
       data = data.filter((project) => {
         if (project.project_status == projectStatus) {
           return true
@@ -104,7 +99,6 @@ export default class ProjectsController {
       })
     }
     if (projectRegion != '' && projectRegion) {
-      ticker = false
       data = data.filter((project) => {
         if (project.region == projectRegion) {
           return true
@@ -114,8 +108,6 @@ export default class ProjectsController {
       })
     }
     if (areaOfFocus != '' && areaOfFocus) {
-      ticker = false
-
       data = data.filter((project) => {
         if (areaOfFocus != '') {
           let searchTerm = areaOfFocus
