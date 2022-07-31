@@ -60,16 +60,15 @@ export default class ProjectsController {
     const projectRegion: string = request.input('project_region')
     const areaOfFocus: string = request.input('area_of_focus')
 
-    let projects: any = await Project.query().select('*').paginate(currentPage, limit)
+    let projects: any = await Project.all()
     for await (const project of projects) {
       project.areaFocusObject = JSON.parse(project.areaFocus)
     }
     let converter = JSON.stringify(projects)
     let dataArray: any[] = []
-    let filteredProjectsObject = { meta: {}, data: dataArray }
-    filteredProjectsObject = JSON.parse(converter)
-    let meta = filteredProjectsObject.meta
-    let data = filteredProjectsObject.data
+    let toBeFilteredProjectsObject = { data: dataArray }
+    toBeFilteredProjectsObject.data = JSON.parse(converter)
+    let data: any = toBeFilteredProjectsObject.data
     if (belongsToClubId > 0 && belongsToClubId) {
       data = data.filter((project) => {
         if (project.club_id == belongsToClubId) {
@@ -119,8 +118,28 @@ export default class ProjectsController {
         }
       })
     }
+    let dataMeta = {
+      current_page: 0,
+      first_page: 0,
+      last_page: 0,
+      per_page: 0,
+      total: 0,
+    }
+    dataMeta.total = data.length
+    dataMeta.per_page = limit
+    dataMeta.current_page = currentPage
+    dataMeta.last_page = Math.round(dataMeta.total / limit)
+    dataMeta.first_page = 1
+    let startIndex = 0
 
-    return response.json({ meta: meta, data: data })
+    if (dataMeta.current_page == 1) {
+      startIndex = 0
+    } else {
+      startIndex = (dataMeta.current_page - 1) * limit
+    }
+    let endIndex = startIndex + dataMeta.per_page
+    data = data.slice(startIndex, endIndex)
+    return response.json({ meta: dataMeta, data: data })
   }
 
   public async create({}: HttpContextContract) {}
