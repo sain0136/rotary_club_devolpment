@@ -128,7 +128,7 @@ export default class ProjectsController {
     dataMeta.total = data.length
     dataMeta.per_page = limit
     dataMeta.current_page = currentPage
-    dataMeta.last_page = Math.round(dataMeta.total / limit)
+    dataMeta.last_page = Math.ceil(dataMeta.total / limit)
     dataMeta.first_page = 1
     let startIndex = 0
 
