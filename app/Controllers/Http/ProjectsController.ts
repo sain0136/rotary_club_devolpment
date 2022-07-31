@@ -139,6 +139,9 @@ export default class ProjectsController {
     }
     let endIndex = startIndex + dataMeta.per_page
     data = data.slice(startIndex, endIndex)
+    if (dataMeta.last_page == 0) {
+      dataMeta.last_page = 1
+    }
     return response.json({ meta: dataMeta, data: data })
   }
 
